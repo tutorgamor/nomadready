@@ -17,6 +17,7 @@ import { ScamsSection }      from "@/components/ready/ScamsSection";
 import { PhrasesSection }    from "@/components/ready/PhrasesSection";
 import { EmergencySection }  from "@/components/ready/EmergencySection";
 import { ChecklistSection }  from "@/components/ready/ChecklistSection";
+import { TravelScoreSection } from "@/components/ready/TravelScoreSection";
 
 const destinations = destinationsData as Destination[];
 const passports = passportsData as Passport[];
@@ -231,6 +232,7 @@ export default async function ReadyPage({ params }: Props) {
           paddingBottom: "3.5rem",
         }}
       >
+        {dest.travel_score && <TravelScoreSection score={dest.travel_score} />}
         <div id="visa"       style={SECTION_OFFSET}><VisaSection       visa={data.visa} /></div>
         <div id="insurance"  style={SECTION_OFFSET}><InsuranceSection  insurance={data.insurance} /></div>
         <div id="season"     style={SECTION_OFFSET}><BestSeasonSection bestSeason={data.best_season} /></div>

@@ -15,6 +15,16 @@ export interface Passport {
   currency: string; // e.g. "EUR", "GBP" — reference currency for budget display
 }
 
+export interface TravelScore {
+  overall: number;       // 0–100 composite
+  visa_ease: number;
+  budget: number;
+  safety: number;
+  internet: number;
+  transport: number;
+  nomad_friendly: number;
+}
+
 export interface Destination {
   id: string;           // e.g. "thailand"
   label: string;        // e.g. "Thailand"
@@ -22,6 +32,7 @@ export interface Destination {
   hero_tag: string;     // e.g. "Temples, beaches & street food"
   cover_color: string;  // hex, used for card accent
   region: string;       // e.g. "Southeast Asia"
+  travel_score?: TravelScore;
 }
 
 // ─── Shared ───────────────────────────────────────────────────

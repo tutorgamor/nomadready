@@ -6,7 +6,16 @@
     "hero_tag": "Temples, beaches & street food",
     "cover_color": "#F59E0B",
     "region": "Southeast Asia",
-    "ready_file": "fr-thailand"
+    "ready_file": "fr-thailand",
+    "travel_score": {
+      "overall": 85,
+      "visa_ease": 92,
+      "budget": 90,
+      "safety": 70,
+      "internet": 82,
+      "transport": 78,
+      "nomad_friendly": 91
+    }
   },
   {
     "id": "malaysia",
@@ -15,7 +24,16 @@
     "hero_tag": "Rainforests, cities & roti canai",
     "cover_color": "#10B981",
     "region": "Southeast Asia",
-    "ready_file": "fr-malaysia"
+    "ready_file": "fr-malaysia",
+    "travel_score": {
+      "overall": 86,
+      "visa_ease": 90,
+      "budget": 78,
+      "safety": 85,
+      "internet": 92,
+      "transport": 84,
+      "nomad_friendly": 87
+    }
   },
   {
     "id": "indonesia",
@@ -24,7 +42,16 @@
     "hero_tag": "Volcanoes, rice fields & surf",
     "cover_color": "#EF4444",
     "region": "Southeast Asia",
-    "ready_file": "fr-indonesia"
+    "ready_file": "fr-indonesia",
+    "travel_score": {
+      "overall": 77,
+      "visa_ease": 82,
+      "budget": 88,
+      "safety": 67,
+      "internet": 70,
+      "transport": 64,
+      "nomad_friendly": 81
+    }
   },
   {
     "id": "georgia",
@@ -33,7 +60,16 @@
     "hero_tag": "Wine, mountains & ancient churches",
     "cover_color": "#8B5CF6",
     "region": "Caucasus",
-    "ready_file": "fr-georgia"
+    "ready_file": "fr-georgia",
+    "travel_score": {
+      "overall": 83,
+      "visa_ease": 97,
+      "budget": 91,
+      "safety": 80,
+      "internet": 77,
+      "transport": 66,
+      "nomad_friendly": 82
+    }
   },
   {
     "id": "turkey",
@@ -42,6 +78,15 @@
     "hero_tag": "History, hammams & bazaars",
     "cover_color": "#EC4899",
     "region": "Eurasia",
-    "ready_file": "fr-turkey"
+    "ready_file": "fr-turkey",
+    "travel_score": {
+      "overall": 78,
+      "visa_ease": 80,
+      "budget": 73,
+      "safety": 71,
+      "internet": 75,
+      "transport": 86,
+      "nomad_friendly": 76
+    }
   }
 ]

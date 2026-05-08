@@ -1,0 +1,119 @@
+{
+  "passport": "us",
+  "destination": "georgia",
+  "last_reviewed": "2026-05-08",
+  "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
+
+  "visa": {
+    "type": "Visa-free entry",
+    "duration_days": 365,
+    "extendable": false,
+    "cost_eur": 0,
+    "multiple_entry": true,
+    "notes": "US passport holders can stay in Georgia visa-free for up to 1 year. No pre-registration needed. Passport must be valid for the duration of your stay. This is one of the most generous visa policies in the world.",
+    "verify_required": true,
+    "verify_note": "Georgia's visa policy is exceptionally liberal but confirm current rules at geoconsul.gov.ge or the Georgian embassy before travel."
+  },
+
+  "insurance": {
+    "required": false,
+    "recommended": true,
+    "notes": "Not required but recommended. Private healthcare is affordable in Tbilisi but limited in rural areas. Medical evacuation from the Caucasus mountains can be costly. Ensure cover if planning skiing in Gudauri or trekking in Svaneti.",
+    "verify_required": false
+  },
+
+  "best_season": {
+    "overall_best_months": ["Apr", "May", "Jun", "Sep", "Oct"],
+    "regions": [
+      { "area": "Tbilisi & Eastern Georgia",  "best": ["Apr", "May", "Jun", "Sep", "Oct"],        "avoid": ["Jul", "Aug"],                     "notes": "Jul–Aug is very hot (35°C+) and busiest. Spring and autumn have perfect temperatures." },
+      { "area": "Svaneti & Trekking Regions", "best": ["Jun", "Jul", "Aug", "Sep"],               "avoid": ["Nov", "Dec", "Jan", "Feb", "Mar"], "notes": "Mestia is accessible year-round but high mountain trails (Ushguli) open Jun–Sep only." },
+      { "area": "Gudauri (Skiing)",           "best": ["Jan", "Feb", "Mar"],                       "avoid": ["Jun", "Jul", "Aug", "Sep"],        "notes": "Ski season roughly Dec–Apr depending on snowfall." },
+      { "area": "Batumi & Black Sea Coast",   "best": ["Jun", "Jul", "Aug"],                       "avoid": ["Nov", "Dec", "Jan"],               "notes": "Beach season Jun–Sep. Can be rainy in spring." }
+    ]
+  },
+
+  "budget": {
+    "currency": "GEL",
+    "currency_symbol": "₾",
+    "exchange_rates": { "EUR": 3.0, "GBP": 3.5, "USD": 2.7, "CAD": 2.0, "AUD": 1.8 },
+    "verify_required": true,
+    "verify_note": "Rates are approximate. Check xe.com before travel.",
+    "tiers": {
+      "budget": { "label": "Backpacker", "daily_gel": 50,  "includes": "Guesthouse (family B&B), local restaurant 3x, marshrutka transport, 1 beer" },
+      "mid":    { "label": "Comfort",    "daily_gel": 120, "includes": "Boutique guesthouse, restaurants + wine, taxi or car hire" },
+      "high":   { "label": "Boutique",   "daily_gel": 280, "includes": "Boutique hotel, wine tastings, private driver, fine dining" }
+    },
+    "cost_anchors": [
+      { "item": "Khinkali dumplings (8 pieces)",     "gel": 8  },
+      { "item": "Restaurant meal",                    "gel": 25 },
+      { "item": "Georgian wine (bottle, restaurant)", "gel": 20 },
+      { "item": "Bolt/taxi (5km, Tbilisi)",           "gel": 5  },
+      { "item": "Guesthouse private room",            "gel": 40 },
+      { "item": "Dorm bed (Tbilisi hostel)",          "gel": 20 },
+      { "item": "Marshrutka (Tbilisi–Mtskheta)",      "gel": 1  }
+    ]
+  },
+
+  "useful_apps": [
+    { "name": "Bolt",        "use": "Main ride-hailing app in Tbilisi — cheaper than taxis",              "platform": "iOS/Android" },
+    { "name": "Yandex Go",   "use": "Ride-hailing and maps — popular alternative to Bolt",               "platform": "iOS/Android" },
+    { "name": "Google Maps", "use": "Navigation — works well in cities; less reliable in rural Georgia",  "platform": "iOS/Android" },
+    { "name": "Maps.me",     "use": "Offline maps — excellent for mountain trails and rural roads",       "platform": "iOS/Android" },
+    { "name": "Airalo",      "use": "eSIM data — buy before landing",                                    "platform": "iOS/Android" },
+    { "name": "XE Currency", "use": "Live GEL exchange rates",                                            "platform": "iOS/Android" }
+  ],
+
+  "transport": [
+    "Tbilisi has a metro system (₾1 per ride) and a Metromoney card — buy at any metro station.",
+    "Bolt and Yandex are the go-to apps for taxis in Tbilisi; far cheaper than hailing on the street.",
+    "Marshrutkas (shared minibuses) are the main intercity transport — cheap but erratic schedules. Ask your guesthouse for departure points.",
+    "For Svaneti (Mestia), there is a daily flight from Tbilisi (weather-dependent) and a 10h marshrutka — book the flight on Georgian Airways app.",
+    "Renting a car is highly recommended for wine country (Kakheti) and rural areas — roads in the mountains are rough, 4WD preferred.",
+    "Tbilisi to Batumi: night train is comfortable and scenic — book at railway.ge."
+  ],
+
+  "scams": [
+    { "name": "Unofficial taxi at Tbilisi airport", "description": "Drivers outside arrivals quote flat high rates. Walk past them and use Bolt — set your pickup point just outside the terminal." },
+    { "name": "Currency exchange at bad rates",      "description": "Airport and hotel money changers have poor rates. Use independent exchange kiosks in Tbilisi city centre or withdraw GEL from ATMs (TBC Bank and Bank of Georgia have fair rates)." },
+    { "name": "Overcharging at tourist restaurants", "description": "Restaurants around Rustaveli Ave sometimes add service charges without mentioning it. Check the bill carefully." }
+  ],
+
+  "phrases": [
+    { "phrase": "Gamarjoba",      "pronunciation": "gah-mar-JOH-bah",      "meaning": "Hello"                                 },
+    { "phrase": "Madloba",        "pronunciation": "mad-LOH-bah",           "meaning": "Thank you"                             },
+    { "phrase": "Ara, gmadlobt",  "pronunciation": "ah-ra, gmad-LOBT",     "meaning": "No, thank you (to decline offers)"    },
+    { "phrase": "Ra ghirs?",      "pronunciation": "ra gh-IRS",             "meaning": "How much does it cost?"               },
+    { "phrase": "Sadaa tualeti?", "pronunciation": "sa-DAA too-ah-LEH-tee","meaning": "Where is the toilet?"                 },
+    { "phrase": "Gaumarjos!",     "pronunciation": "gau-MAR-jos",           "meaning": "Cheers! (the classic Georgian toast)" },
+    { "phrase": "Gemrielia!",     "pronunciation": "gem-ree-EH-lee-ah",    "meaning": "Delicious!"                            },
+    { "phrase": "Dagvijdebit",    "pronunciation": "dag-vij-DEH-bit",       "meaning": "Please (when asking for help)"        }
+  ],
+
+  "emergency": {
+    "police": "112",
+    "ambulance": "112",
+    "fire": "112",
+    "unified_emergency": "112",
+    "embassy_label": "United States Embassy / Consular assistance",
+    "embassy": {
+      "phone": "Verify official embassy contact before travel",
+      "address": "Verify official embassy contact before travel",
+      "verify_required": true
+    },
+    "notes": "Georgia uses a unified 112 emergency number covering all services. English-speaking operators are available. Tourism Police patrol the Old Town (Abanotubani) area in Tbilisi."
+  },
+
+  "checklist": [
+    { "item": "Passport valid for the duration of your intended stay",                                             "priority": "critical" },
+    { "item": "Confirm current visa-free policy at geoconsul.gov.ge",                                             "priority": "critical" },
+    { "item": "Purchase travel insurance covering mountain trekking if applicable",                                "priority": "critical" },
+    { "item": "Download Maps.me offline maps — especially for Svaneti and Kakheti",                              "priority": "high"     },
+    { "item": "Install Bolt and Yandex Go before arrival",                                                        "priority": "high"     },
+    { "item": "Notify bank of travel dates",                                                                      "priority": "high"     },
+    { "item": "Book guesthouses in Mestia and Ushguli well in advance for Jun–Sep",                        "priority": "high"     },
+    { "item": "Buy Airalo eSIM or local SIM (Magti/Geocell) on arrival",                                         "priority": "high"     },
+    { "item": "Arrange car hire if exploring wine country or mountain roads",                                      "priority": "medium"   },
+    { "item": "Book Tbilisi–Mestia flight in advance — only a few seats daily",                             "priority": "medium"   },
+    { "item": "Check trail conditions for Svaneti trekking at trekking.ge or locally",                           "priority": "medium"   }
+  ]
+}

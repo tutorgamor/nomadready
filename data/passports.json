@@ -1,16 +1,12 @@
 [
-  {
-    "id": "fr",
-    "label": "France",
-    "emoji": "🇫🇷",
-    "region": "European Union",
-    "currency": "EUR"
-  },
-  {
-    "id": "uk",
-    "label": "United Kingdom",
-    "emoji": "🇬🇧",
-    "region": "United Kingdom",
-    "currency": "GBP"
-  }
+  { "id": "fr", "label": "France",          "emoji": "🇫🇷", "region": "European Union", "currency": "EUR" },
+  { "id": "uk", "label": "United Kingdom",  "emoji": "🇬🇧", "region": "United Kingdom", "currency": "GBP" },
+  { "id": "de", "label": "Germany",         "emoji": "🇩🇪", "region": "European Union", "currency": "EUR" },
+  { "id": "nl", "label": "Netherlands",     "emoji": "🇳🇱", "region": "European Union", "currency": "EUR" },
+  { "id": "es", "label": "Spain",           "emoji": "🇪🇸", "region": "European Union", "currency": "EUR" },
+  { "id": "it", "label": "Italy",           "emoji": "🇮🇹", "region": "European Union", "currency": "EUR" },
+  { "id": "be", "label": "Belgium",         "emoji": "🇧🇪", "region": "European Union", "currency": "EUR" },
+  { "id": "us", "label": "United States",   "emoji": "🇺🇸", "region": "North America",  "currency": "USD" },
+  { "id": "ca", "label": "Canada",          "emoji": "🇨🇦", "region": "North America",  "currency": "CAD" },
+  { "id": "au", "label": "Australia",       "emoji": "🇦🇺", "region": "Oceania",        "currency": "AUD" }
 ]

@@ -1,0 +1,119 @@
+{
+  "passport": "be",
+  "destination": "malaysia",
+  "last_reviewed": "2026-05-08",
+  "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
+
+  "visa": {
+    "type": "Visa-free entry",
+    "duration_days": 90,
+    "extendable": false,
+    "cost_eur": 0,
+    "multiple_entry": true,
+    "notes": "Belgian passport holders enter Malaysia visa-free for up to 90 days per visit. No extension available — exit and re-enter. Passport must be valid for at least 6 months. Immigration officers may ask for proof of onward travel. Complete the Malaysia Digital Arrival Card (MDAC) before arrival.",
+    "verify_required": true,
+    "verify_note": "Confirm current policy at imi.gov.my or the Malaysian embassy before travel."
+  },
+
+  "insurance": {
+    "required": false,
+    "recommended": true,
+    "notes": "Not required but strongly recommended. Malaysian private hospitals are excellent but expensive for foreigners. Public hospitals are cheaper but slower. Ensure cover for adventure activities if visiting Borneo or doing jungle trekking.",
+    "verify_required": false
+  },
+
+  "best_season": {
+    "overall_best_months": ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    "regions": [
+      { "area": "Kuala Lumpur & Peninsular West Coast", "best": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"], "avoid": ["Sep", "Oct"], "notes": "West coast sheltered from northeast monsoon. Can rain year-round but showers are short." },
+      { "area": "Peninsular East Coast (Perhentian, Tioman)", "best": ["Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"], "avoid": ["Nov", "Dec", "Jan", "Feb"], "notes": "Many resorts close Nov–Feb due to northeast monsoon. Best diving Mar–Sep." },
+      { "area": "Borneo (Sabah & Sarawak)", "best": ["Mar", "Apr", "May", "Jun", "Jul", "Aug"], "avoid": ["Oct", "Nov", "Dec", "Jan"], "notes": "Rain year-round but heaviest Oct–Feb. Climbing Mt Kinabalu requires permits booked months ahead." }
+    ]
+  },
+
+  "budget": {
+    "currency": "MYR",
+    "currency_symbol": "RM",
+    "exchange_rates": { "EUR": 5.0, "GBP": 5.9, "USD": 4.7, "CAD": 3.4, "AUD": 3.1 },
+    "verify_required": true,
+    "verify_note": "Rates are approximate. Check xe.com before travel.",
+    "tiers": {
+      "budget": { "label": "Backpacker", "daily_myr": 80,  "includes": "Dorm bed, hawker stalls 3x, bus/LRT, 1 beer or teh tarik" },
+      "mid":    { "label": "Comfort",    "daily_myr": 180, "includes": "Budget private room, mix of restaurants, Grab rides, activities" },
+      "high":   { "label": "Boutique",   "daily_myr": 450, "includes": "Nice hotel, restaurants, tours" }
+    },
+    "cost_anchors": [
+      { "item": "Nasi lemak at hawker stall",   "myr": 6  },
+      { "item": "Restaurant meal",               "myr": 25 },
+      { "item": "Grab taxi (5km, KL)",           "myr": 12 },
+      { "item": "Dorm bed (KL)",                 "myr": 35 },
+      { "item": "Tiger Beer (convenience store)","myr": 12 },
+      { "item": "Teh tarik (pulled tea)",        "myr": 3  },
+      { "item": "KL–Penang bus",                 "myr": 35 }
+    ]
+  },
+
+  "useful_apps": [
+    { "name": "Grab",                     "use": "Dominant ride-hailing and food delivery app",      "platform": "iOS/Android"     },
+    { "name": "Google Maps",              "use": "Navigation and transit directions in cities",       "platform": "iOS/Android"     },
+    { "name": "Airalo",                   "use": "eSIM data — buy before landing",                    "platform": "iOS/Android"     },
+    { "name": "MyRapid / Touch 'n Go eWallet", "use": "KL transit and cashless payments",           "platform": "iOS/Android"     },
+    { "name": "Agoda",                    "use": "Accommodation — strong Malaysia inventory",         "platform": "iOS/Android"     },
+    { "name": "12Go Asia",                "use": "Bus and ferry bookings across Malaysia",            "platform": "Web/iOS/Android" }
+  ],
+
+  "transport": [
+    "Kuala Lumpur has a solid rail network: LRT, MRT, KTM Komuter and the KLIA Ekspres airport train. Grab the Touch 'n Go eWallet app for seamless payments.",
+    "Grab is the go-to app for taxis — always use it over hailing cabs to avoid meter disputes.",
+    "Intercity buses are cheap and comfortable — book via Easybook or 12Go Asia.",
+    "Penang is walkable in Georgetown; rent a bicycle for island exploration.",
+    "For Borneo, internal flights are necessary — AirAsia and MASwings connect Kota Kinabalu, Kuching and interior towns.",
+    "Ferry services connect Langkawi, Penang and the Perhentian Islands — check seasonal schedules as routes may pause during monsoon."
+  ],
+
+  "scams": [
+    { "name": "Taxi meter refusal",                     "description": "Some KL taxis quote fixed (inflated) prices instead of using the meter. Use Grab instead — problem largely solved." },
+    { "name": "Money changer short-change",             "description": "Unlicensed changers in tourist areas may count notes quickly or palm some. Use licensed changers in shopping malls and count carefully." },
+    { "name": "Fake police",                            "description": "Plain-clothes individuals claim to be police and demand to see your passport or wallet. Politely refuse and walk to a public area or hotel. Real officers will have ID." },
+    { "name": "Overpriced tourist 'fixed price' restaurants", "description": "Menus near Petronas Towers sometimes charge tourist prices with no indication. Check the menu before sitting." }
+  ],
+
+  "phrases": [
+    { "phrase": "Terima kasih",    "pronunciation": "teh-ree-ma kah-sih", "meaning": "Thank you"                                  },
+    { "phrase": "Sama-sama",       "pronunciation": "sah-ma sah-ma",      "meaning": "You're welcome"                            },
+    { "phrase": "Berapa harga?",   "pronunciation": "beh-ra-pa har-ga",   "meaning": "How much?"                                 },
+    { "phrase": "Mahal sangat",    "pronunciation": "ma-hal sa-ngat",     "meaning": "Too expensive"                             },
+    { "phrase": "Di mana tandas?", "pronunciation": "dee mana tan-das",   "meaning": "Where is the toilet?"                     },
+    { "phrase": "Tolong",          "pronunciation": "toh-long",            "meaning": "Please / help"                             },
+    { "phrase": "Sedap!",          "pronunciation": "seh-dap",             "meaning": "Delicious!"                                },
+    { "phrase": "Satu lagi",       "pronunciation": "sa-too la-gi",       "meaning": "One more (great for ordering)" }
+  ],
+
+  "emergency": {
+    "police": "999",
+    "ambulance": "999",
+    "fire": "994",
+    "tourist_hotline": "1300-88-5050",
+    "embassy_label": "Belgium Embassy / Consular assistance",
+    "embassy": {
+      "phone": "Verify official embassy contact before travel",
+      "address": "Verify official embassy contact before travel",
+      "verify_required": true
+    },
+    "notes": "999 covers police, ambulance and fire. The Tourist Hotline (1300-88-5050) assists with complaints and emergencies during office hours."
+  },
+
+  "checklist": [
+    { "item": "Passport valid 6+ months beyond departure date",                                                          "priority": "critical" },
+    { "item": "Confirm visa-free terms and MDAC requirement at imi.gov.my",                                              "priority": "critical" },
+    { "item": "Purchase travel insurance covering medical and evacuation",                                                "priority": "critical" },
+    { "item": "Save or print proof of onward travel — may be asked at immigration",                                "priority": "high"     },
+    { "item": "Download Grab app before arrival",                                                                         "priority": "high"     },
+    { "item": "Notify bank of travel dates",                                                                              "priority": "high"     },
+    { "item": "Book Perhentian / Tioman accommodation early (Apr–Aug fills fast)",                                  "priority": "high"     },
+    { "item": "Buy Airalo eSIM or get a local SIM (Maxis/Celcom at airport)",                                            "priority": "high"     },
+    { "item": "Note that alcohol is expensive and unavailable in some areas (Kelantan)",                                  "priority": "medium"   },
+    { "item": "Respect dress codes at mosques and temples — bring a sarong",                                              "priority": "medium"   },
+    { "item": "Book Mt Kinabalu permits months in advance if trekking in Sabah",                                         "priority": "medium"   }
+  ]
+}

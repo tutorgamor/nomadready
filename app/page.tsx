@@ -45,60 +45,80 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     >
       {/* ── Hero / header section ─────────────────────────────── */}
       <header
+        className="home-header"
         style={{
-          background: "linear-gradient(180deg, #f0e9df 0%, var(--bg-base) 100%)",
+          background: "linear-gradient(180deg, #ede4d7 0%, #f2ebe1 55%, var(--bg-base) 100%)",
           borderBottom: "1px solid var(--border)",
-          paddingTop: "3rem",
-          paddingBottom: "2rem",
         }}
       >
-        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        <div className="page-container">
+          <div className="home-hero-layout">
 
-          {/* Brand wordmark */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ fontSize: "1.5rem" }} aria-hidden="true">🌍</span>
-            <span
-              style={{
-                fontSize: "1.05rem",
-                fontWeight: 700,
-                letterSpacing: "-0.03em",
-                color: "var(--text-primary)",
-              }}
-            >
-              NomadReady
-            </span>
+            {/* ── Left: text + selector ── */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+
+              {/* Brand wordmark */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                <span style={{ fontSize: "0.9rem", color: "var(--accent)", lineHeight: 1, marginTop: "1px" }} aria-hidden="true">✦</span>
+                <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--text-primary)" }}>Nomad</span>
+                <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--accent)" }}>Ready</span>
+              </div>
+
+              {/* Headline */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
+                <p style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent)", margin: 0, opacity: 0.85 }}>
+                  Travel field guide
+                </p>
+                <h1 style={{ fontSize: "clamp(2rem, 7vw, 2.75rem)", fontWeight: 800, letterSpacing: "-0.045em", color: "var(--text-primary)", lineHeight: 1.1, margin: 0 }}>
+                  Where are you<br />heading next?
+                </h1>
+                <p style={{ fontSize: "0.9375rem", color: "var(--text-secondary)", margin: 0, maxWidth: "32ch", lineHeight: 1.55 }}>
+                  Get your full travel brief in one scroll — visa, budget, scams and more.
+                </p>
+              </div>
+
+              {/* Passport selector */}
+              <PassportSelector passports={passports} activeId={activePassportId} />
+
+            </div>
+
+            {/* ── Right: destination mosaic (desktop only) ── */}
+            <div className="home-hero-aside" aria-hidden="true">
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: "0.5rem",
+                }}
+              >
+                {availableDestinations.slice(0, 9).map((dest) => (
+                  <div
+                    key={dest.id}
+                    style={{
+                      width: "64px",
+                      height: "52px",
+                      borderRadius: "0.75rem",
+                      backgroundColor: dest.cover_color,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "1.4rem",
+                      position: "relative",
+                      overflow: "hidden",
+                      boxShadow: "0 2px 8px rgba(28,25,23,0.12)",
+                    }}
+                  >
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(255,255,255,0.14) 0%, rgba(0,0,0,0.1) 100%)" }} />
+                    <span style={{ position: "relative", filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.18))" }}>{dest.emoji}</span>
+                  </div>
+                ))}
+              </div>
+              <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-muted)", margin: 0 }}>
+                {availableDestinations.length} destinations
+              </p>
+            </div>
+
           </div>
-
-          {/* Headline */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <h1
-              style={{
-                fontSize: "clamp(1.75rem, 6vw, 2.25rem)",
-                fontWeight: 700,
-                letterSpacing: "-0.035em",
-                color: "var(--text-primary)",
-                lineHeight: 1.15,
-                margin: 0,
-              }}
-            >
-              Where are you<br />heading next?
-            </h1>
-            <p
-              style={{
-                fontSize: "0.9375rem",
-                color: "var(--text-secondary)",
-                margin: 0,
-                maxWidth: "30ch",
-                lineHeight: 1.5,
-              }}
-            >
-              Get your full travel brief in one scroll — visa, budget, scams and more.
-            </p>
-          </div>
-
-          {/* Passport selector */}
-          <PassportSelector passports={passports} activeId={activePassportId} />
-
         </div>
       </header>
 
@@ -123,14 +143,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             {availableDestinations.length} destination{availableDestinations.length !== 1 ? "s" : ""} available
           </h2>
 
-          {/* Cards — single column on mobile, 2-col on wider screens */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))",
-              gap: "0.875rem",
-            }}
-          >
+          {/* Cards — responsive grid: 1-col mobile, 2-col tablet, 3-col desktop */}
+          <div className="dest-grid">
             {availableDestinations.map((dest) => (
               <DestinationCard key={dest.id} destination={dest} passportId={activePassportId} />
             ))}

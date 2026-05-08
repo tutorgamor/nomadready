@@ -43,6 +43,7 @@ export interface VisaInfo extends Verifiable {
   extension_fee_thb?: number;
   cost_eur?: number;
   cost_usd?: number;
+  cost_idr?: number;
   cost_eur_approx?: number;
   multiple_entry: boolean;
   apply_url?: string;

@@ -83,26 +83,34 @@ export default async function ReadyPage({ params }: Props) {
           overflow: "hidden",
         }}
       >
-        {/* Depth overlay */}
+        {/* Diagonal depth overlay */}
         <div
           aria-hidden="true"
           style={{
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(160deg, rgba(255,255,255,0.12) 0%, rgba(0,0,0,0.32) 100%)",
+              "linear-gradient(155deg, rgba(255,255,255,0.14) 0%, rgba(0,0,0,0.28) 100%)",
+          }}
+        />
+        {/* Bottom-to-top dark vignette for text contrast */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(0deg, rgba(0,0,0,0.38) 0%, transparent 55%)",
           }}
         />
 
         <div
-          className="page-container"
+          className="page-container ready-hero-content"
           style={{
             position: "relative",
-            paddingTop: "1.25rem",
-            paddingBottom: "2rem",
             display: "flex",
             flexDirection: "column",
-            gap: "1.25rem",
+            gap: "1.5rem",
           }}
         >
           {/* Back link — preserves active passport in URL */}
@@ -112,22 +120,25 @@ export default async function ReadyPage({ params }: Props) {
               alignSelf: "flex-start",
               display: "inline-flex",
               alignItems: "center",
-              gap: "0.25rem",
+              gap: "0.3rem",
               fontSize: "0.8125rem",
               fontWeight: 500,
               color: "#ffffff",
-              background: "rgba(0, 0, 0, 0.22)",
-              padding: "0.3rem 0.75rem 0.3rem 0.5rem",
+              background: "rgba(0, 0, 0, 0.28)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              padding: "0.35rem 0.85rem 0.35rem 0.6rem",
               borderRadius: "9999px",
               textDecoration: "none",
+              border: "1px solid rgba(255,255,255,0.15)",
             }}
           >
             ← All destinations
           </Link>
 
           {/* Emoji + routing line + title */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <span style={{ fontSize: "3.25rem", lineHeight: 1 }} aria-hidden="true">
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
+            <span style={{ fontSize: "4.5rem", lineHeight: 1, filter: "drop-shadow(0 3px 8px rgba(0,0,0,0.25))" }} aria-hidden="true">
               {dest.emoji}
             </span>
 
@@ -135,12 +146,12 @@ export default async function ReadyPage({ params }: Props) {
               {/* Route label */}
               <p
                 style={{
-                  fontSize: "0.75rem",
+                  fontSize: "0.72rem",
                   fontWeight: 600,
-                  letterSpacing: "0.07em",
+                  letterSpacing: "0.09em",
                   textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.65)",
-                  margin: "0 0 0.3rem",
+                  color: "rgba(255,255,255,0.7)",
+                  margin: "0 0 0.35rem",
                 }}
               >
                 {pass.emoji} {pass.label} →
@@ -149,13 +160,13 @@ export default async function ReadyPage({ params }: Props) {
               {/* Destination name */}
               <h1
                 style={{
-                  fontSize: "clamp(2rem, 9vw, 2.5rem)",
+                  fontSize: "clamp(2.25rem, 10vw, 2.75rem)",
                   fontWeight: 800,
-                  letterSpacing: "-0.04em",
+                  letterSpacing: "-0.045em",
                   color: "#ffffff",
                   margin: 0,
-                  lineHeight: 1.05,
-                  textShadow: "0 1px 4px rgba(0,0,0,0.18)",
+                  lineHeight: 1.0,
+                  textShadow: "0 2px 8px rgba(0,0,0,0.22)",
                 }}
               >
                 {dest.label}
@@ -165,9 +176,10 @@ export default async function ReadyPage({ params }: Props) {
               <p
                 style={{
                   fontSize: "0.9375rem",
-                  color: "rgba(255,255,255,0.82)",
-                  margin: "0.4rem 0 0",
-                  lineHeight: 1.4,
+                  color: "rgba(255,255,255,0.85)",
+                  margin: "0.5rem 0 0",
+                  lineHeight: 1.45,
+                  maxWidth: "36ch",
                 }}
               >
                 {dest.hero_tag}
@@ -179,13 +191,14 @@ export default async function ReadyPage({ params }: Props) {
           <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", flexWrap: "wrap" }}>
             <span
               style={{
-                fontSize: "0.72rem",
+                fontSize: "0.68rem",
                 fontWeight: 600,
-                letterSpacing: "0.05em",
+                letterSpacing: "0.07em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.9)",
-                background: "rgba(0,0,0,0.2)",
-                padding: "0.2rem 0.6rem",
+                color: "rgba(255,255,255,0.92)",
+                background: "rgba(0,0,0,0.25)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                padding: "0.25rem 0.7rem",
                 borderRadius: "9999px",
               }}
             >
@@ -194,7 +207,7 @@ export default async function ReadyPage({ params }: Props) {
             <span
               style={{
                 fontSize: "0.75rem",
-                color: "rgba(255,255,255,0.6)",
+                color: "rgba(255,255,255,0.62)",
               }}
             >
               Reviewed {reviewedDate}
@@ -208,7 +221,7 @@ export default async function ReadyPage({ params }: Props) {
 
       {/* ── All 10 sections ───────────────────────────────────── */}
       <div
-        className="page-container"
+        className="page-container page-container--reading"
         style={{
           flex: 1,
           display: "flex",

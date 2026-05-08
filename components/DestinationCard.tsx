@@ -25,7 +25,7 @@ export function DestinationCard({ destination, passportId }: DestinationCardProp
       <div
         style={{
           backgroundColor: cover_color,
-          height: "80px",
+          height: "112px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -33,20 +33,27 @@ export function DestinationCard({ destination, passportId }: DestinationCardProp
         }}
         aria-hidden="true"
       >
-        {/* Subtle tinted overlay for depth */}
+        {/* Depth overlays */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(160deg, rgba(255,255,255,0.12) 0%, rgba(0,0,0,0.08) 100%)",
+            background: "linear-gradient(160deg, rgba(255,255,255,0.14) 0%, rgba(0,0,0,0.12) 100%)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(0deg, rgba(0,0,0,0.1) 0%, transparent 50%)",
           }}
         />
         <span
           style={{
-            fontSize: "2.5rem",
+            fontSize: "3rem",
             lineHeight: 1,
             position: "relative",
-            filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))",
+            filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
           }}
         >
           {emoji}
@@ -56,10 +63,10 @@ export function DestinationCard({ destination, passportId }: DestinationCardProp
       {/* ── Card body ── */}
       <div
         style={{
-          padding: "1rem 1.1rem 1rem",
+          padding: "1.1rem 1.25rem 1.1rem",
           display: "flex",
           flexDirection: "column",
-          gap: "0.35rem",
+          gap: "0.4rem",
         }}
       >
         {/* Top row: label + arrow */}
@@ -73,22 +80,23 @@ export function DestinationCard({ destination, passportId }: DestinationCardProp
         >
           <h2
             style={{
-              fontSize: "1.1rem",
-              fontWeight: 650,
-              letterSpacing: "-0.025em",
+              fontSize: "1.125rem",
+              fontWeight: 700,
+              letterSpacing: "-0.03em",
               color: "var(--text-primary)",
               margin: 0,
-              lineHeight: 1.2,
+              lineHeight: 1.15,
             }}
           >
             {label}
           </h2>
           <span
             style={{
-              color: "var(--text-muted)",
-              fontSize: "1rem",
+              color: "var(--accent)",
+              fontSize: "0.875rem",
               flexShrink: 0,
               marginTop: "1px",
+              opacity: 0.7,
             }}
             aria-hidden="true"
           >
@@ -102,26 +110,26 @@ export function DestinationCard({ destination, passportId }: DestinationCardProp
             fontSize: "0.8125rem",
             color: "var(--text-secondary)",
             margin: 0,
-            lineHeight: 1.4,
+            lineHeight: 1.5,
           }}
         >
           {hero_tag}
         </p>
 
         {/* Region badge */}
-        <div style={{ marginTop: "0.4rem" }}>
+        <div style={{ marginTop: "0.5rem" }}>
           <span
             style={{
               display: "inline-block",
-              fontSize: "0.7rem",
-              fontWeight: 500,
-              letterSpacing: "0.04em",
+              fontSize: "0.68rem",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
               textTransform: "uppercase",
               color: "var(--text-muted)",
               backgroundColor: "var(--bg-base)",
               border: "1px solid var(--border)",
               borderRadius: "9999px",
-              padding: "0.15rem 0.55rem",
+              padding: "0.2rem 0.6rem",
             }}
           >
             {region}

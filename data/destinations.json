@@ -1,0 +1,47 @@
+[
+  {
+    "id": "thailand",
+    "label": "Thailand",
+    "emoji": "🇹🇭",
+    "hero_tag": "Temples, beaches & street food",
+    "cover_color": "#F59E0B",
+    "region": "Southeast Asia",
+    "ready_file": "fr-thailand"
+  },
+  {
+    "id": "malaysia",
+    "label": "Malaysia",
+    "emoji": "🇲🇾",
+    "hero_tag": "Rainforests, cities & roti canai",
+    "cover_color": "#10B981",
+    "region": "Southeast Asia",
+    "ready_file": "fr-malaysia"
+  },
+  {
+    "id": "indonesia",
+    "label": "Indonesia",
+    "emoji": "🇮🇩",
+    "hero_tag": "Volcanoes, rice fields & surf",
+    "cover_color": "#EF4444",
+    "region": "Southeast Asia",
+    "ready_file": "fr-indonesia"
+  },
+  {
+    "id": "georgia",
+    "label": "Georgia",
+    "emoji": "🇬🇪",
+    "hero_tag": "Wine, mountains & ancient churches",
+    "cover_color": "#8B5CF6",
+    "region": "Caucasus",
+    "ready_file": "fr-georgia"
+  },
+  {
+    "id": "turkey",
+    "label": "Turkey",
+    "emoji": "🇹🇷",
+    "hero_tag": "History, hammams & bazaars",
+    "cover_color": "#EC4899",
+    "region": "Eurasia",
+    "ready_file": "fr-turkey"
+  }
+]

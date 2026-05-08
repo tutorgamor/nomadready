@@ -1,0 +1,178 @@
+{
+  "passport": "fr",
+  "destination": "turkey",
+  "last_reviewed": "2026-05-08",
+  "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
+
+  "visa": {
+    "type": "e-Visa",
+    "duration_days": 90,
+    "within_days": 180,
+    "extendable": false,
+    "cost_usd": 60,
+    "cost_eur_approx": 55,
+    "multiple_entry": true,
+    "apply_url": "https://www.evisa.gov.tr",
+    "notes": "French citizens must obtain an e-Visa before travel — visa on arrival is no longer available. Apply online at evisa.gov.tr (takes 5–10 minutes). Multiple entry, valid for 90 days within a 180-day period. Cost is approx. USD 60.",
+    "verify_required": true,
+    "verify_note": "Turkey e-Visa fees change periodically. Confirm current price and process at evisa.gov.tr before booking. Only use the official government site — many fake third-party sites charge €50+ service fees."
+  },
+
+  "insurance": {
+    "required": false,
+    "recommended": true,
+    "notes": "Not required but strongly recommended. Turkish private hospitals are excellent and widely available, but costly without insurance. Recommended if hiking Cappadocia, hot air ballooning, or visiting remote areas.",
+    "verify_required": false
+  },
+
+  "best_season": {
+    "overall_best_months": ["Apr", "May", "Sep", "Oct"],
+    "regions": [
+      {
+        "area": "Istanbul",
+        "best": ["Apr", "May", "Sep", "Oct"],
+        "avoid": ["Jul", "Aug"],
+        "notes": "Extremely crowded and hot in Jul–Aug. Spring and autumn are perfect for sightseeing."
+      },
+      {
+        "area": "Cappadocia",
+        "best": ["Apr", "May", "Jun", "Sep", "Oct"],
+        "avoid": ["Jan", "Feb"],
+        "notes": "Hot air balloon flights best Apr–Oct. Snow in winter can close roads."
+      },
+      {
+        "area": "Aegean & Mediterranean Coast (Bodrum, Antalya, Fethiye)",
+        "best": ["May", "Jun", "Sep", "Oct"],
+        "avoid": ["Jul", "Aug"],
+        "notes": "Peak beach season Jul–Aug is extremely hot (40°C) and crowded. Shoulder months are ideal."
+      },
+      {
+        "area": "Eastern Turkey (Mt Ararat, Göbekli Tepe)",
+        "best": ["May", "Jun", "Sep"],
+        "avoid": ["Jan", "Feb", "Mar"],
+        "notes": "High altitude regions are snowbound Nov–Apr. Best visited in spring or early autumn."
+      }
+    ]
+  },
+
+  "budget": {
+    "currency": "TRY",
+    "currency_symbol": "₺",
+    "approx_eur_rate": 37,
+    "verify_required": true,
+    "verify_note": "Turkish Lira has experienced significant inflation. Exchange rate may differ substantially — check xe.com immediately before travel.",
+    "tiers": {
+      "budget": {
+        "label": "Backpacker",
+        "daily_try": 700,
+        "daily_eur_approx": 19,
+        "includes": "Dorm bed, local eateries 3x, bus/tram, 1 tea"
+      },
+      "mid": {
+        "label": "Comfort",
+        "daily_try": 1800,
+        "daily_eur_approx": 49,
+        "includes": "Budget hotel or cave hotel, restaurants, local transport"
+      },
+      "high": {
+        "label": "Boutique",
+        "daily_try": 4500,
+        "daily_eur_approx": 122,
+        "includes": "Cave hotel in Cappadocia, restaurants, hot air balloon, private tours"
+      }
+    },
+    "cost_anchors": [
+      { "item": "Simit (sesame bagel, street)", "try": 10 },
+      { "item": "Kebab meal at lokanta", "try": 120 },
+      { "item": "Turkish tea (çay)", "try": 15 },
+      { "item": "Istanbul tram/metro ride", "try": 35 },
+      { "item": "Dorm bed (Istanbul)", "try": 300 },
+      { "item": "Hammam (traditional Turkish bath)", "try": 400 },
+      { "item": "Istanbul–Cappadocia overnight bus", "try": 500 }
+    ]
+  },
+
+  "useful_apps": [
+    { "name": "BiTaksi", "use": "Main taxi app in Turkey — metered, safer than street hails", "platform": "iOS/Android" },
+    { "name": "Uber", "use": "Available in Istanbul — uses licensed taxis", "platform": "iOS/Android" },
+    { "name": "Google Maps", "use": "Navigation and transit — Istanbul's public transport is well mapped", "platform": "iOS/Android" },
+    { "name": "Airalo", "use": "eSIM data — buy before landing", "platform": "iOS/Android" },
+    { "name": "Istanbul Kart app", "use": "Manage your Istanbulkart (transit card) digitally", "platform": "iOS/Android" },
+    { "name": "XE Currency", "use": "Lira rates fluctuate — keep this open during your trip", "platform": "iOS/Android" }
+  ],
+
+  "transport": [
+    "Istanbul has excellent public transport: metro, tram, ferry and bus. Get an Istanbulkart (refillable transit card) at any metro station — cheaper than single tickets.",
+    "The Marmaray tunnel connects European and Asian sides under the Bosphorus by rail.",
+    "Ferries across the Bosphorus are scenic and cheap — a staple of daily Istanbul life.",
+    "BiTaksi or Uber for taxis — avoids meter disputes common with street taxis in tourist areas.",
+    "Intercity overnight buses (Flixbus, Metro Turizm) are comfortable and affordable — book at obilet.com.",
+    "Domestic flights: Turkish Airlines and Pegasus cover the country cheaply if booked early. Cappadocia (Nevsehir or Kayseri airports) is the most common route from Istanbul."
+  ],
+
+  "scams": [
+    {
+      "name": "Shoe shine drop scam",
+      "description": "A man drops his shoe shine brush near you. When you pick it up he offers to shine your shoes for free, then demands a high fee. Classic Istanbul scam — just walk on."
+    },
+    {
+      "name": "Restaurant menu swap",
+      "description": "Tourist-area restaurants in Istanbul (around Sultanahmet and Taksim) show a cheap menu outside then present a different one inside. Check prices before sitting."
+    },
+    {
+      "name": "Bar / club bill shock",
+      "description": "In Beyoğlu and beach resorts, complimentary drinks arrive then appear on the bill. Or bills are inflated. Only go to well-reviewed establishments and always ask for an itemised bill."
+    },
+    {
+      "name": "Fake e-Visa websites",
+      "description": "Third-party sites mimic evisa.gov.tr and charge €50–100 in 'processing fees' for a visa that costs ~$60 on the real site. Only use evisa.gov.tr."
+    },
+    {
+      "name": "Grand Bazaar 'friendly tea' upsell",
+      "description": "Extremely friendly shopkeepers offer tea and conversation — a classic soft sales technique. Enjoy the hospitality but never feel obligated to buy."
+    }
+  ],
+
+  "phrases": [
+    { "phrase": "Merhaba", "pronunciation": "mer-HA-ba", "meaning": "Hello" },
+    { "phrase": "Teşekkür ederim", "pronunciation": "teh-shek-KUR eh-deh-rim", "meaning": "Thank you" },
+    { "phrase": "Kaç para?", "pronunciation": "kach PAH-ra", "meaning": "How much?" },
+    { "phrase": "Çok pahalı", "pronunciation": "chok pa-HA-luh", "meaning": "Too expensive" },
+    { "phrase": "Hayır, teşekkürler", "pronunciation": "hah-YUR, teh-shek-kur-LER", "meaning": "No, thank you" },
+    { "phrase": "Tuvalet nerede?", "pronunciation": "too-va-LET neh-REH-deh", "meaning": "Where is the toilet?" },
+    { "phrase": "Çok güzel!", "pronunciation": "chok goo-ZEL", "meaning": "Very beautiful / great!" },
+    { "phrase": "Şerefe!", "pronunciation": "sheh-REH-feh", "meaning": "Cheers!" }
+  ],
+
+  "emergency": {
+    "police": "155",
+    "ambulance": "112",
+    "fire": "110",
+    "tourist_police_istanbul": "212 527 4503",
+    "french_embassy_ankara": {
+      "phone": "+90 312 455 45 45",
+      "address": "Paris Caddesi No:70, 06540 Çankaya, Ankara",
+      "verify_required": true
+    },
+    "french_consulate_istanbul": {
+      "phone": "+90 212 334 87 30",
+      "address": "İstiklal Caddesi 8, Beyoğlu, Istanbul",
+      "verify_required": true
+    },
+    "notes": "112 is the universal EU-style emergency number in Turkey and works on all mobile networks. Tourist Police in Istanbul are based near the Blue Mosque in Sultanahmet."
+  },
+
+  "checklist": [
+    { "item": "Passport valid 6+ months beyond return date", "priority": "critical" },
+    { "item": "Apply for e-Visa at evisa.gov.tr BEFORE booking flights — do not use third-party sites", "priority": "critical" },
+    { "item": "Save/print your e-Visa approval document", "priority": "critical" },
+    { "item": "Purchase travel insurance", "priority": "critical" },
+    { "item": "Book hot air balloon ride in Cappadocia well in advance (fills up 2–3 months ahead)", "priority": "high" },
+    { "item": "Download Google Maps offline for Istanbul, Cappadocia and Antalya", "priority": "high" },
+    { "item": "Notify bank of travel — inform them of TRY transactions", "priority": "high" },
+    { "item": "Buy Airalo eSIM or get a Turkcell/Vodafone Turkey SIM at the airport", "priority": "high" },
+    { "item": "Pick up an Istanbulkart at the airport or metro (if spending time in Istanbul)", "priority": "medium" },
+    { "item": "Book overnight bus or domestic flight for Cappadocia early in peak season", "priority": "medium" },
+    { "item": "Be aware of dress code when visiting mosques — cover head, shoulders, knees", "priority": "medium" }
+  ]
+}

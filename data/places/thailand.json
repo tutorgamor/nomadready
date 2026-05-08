@@ -1,0 +1,67 @@
+[
+  {
+    "id": "ristr8to-chiangmai",
+    "name": "Ristr8to Lab",
+    "country": "thailand",
+    "city_or_area": "Chiang Mai",
+    "category": "cafe",
+    "tags": ["specialty coffee", "wifi", "quiet", "nomad-friendly"],
+    "personal_note": "Best espresso in Northern Thailand. Grab a stool by the window and stay for hours.",
+    "google_maps_url": "https://maps.app.goo.gl/placeholder-ristr8to",
+    "recommended_by": "NomadReady",
+    "price_level": 2,
+    "best_for": "Solo work or a slow morning"
+  },
+  {
+    "id": "doi-suthep-chiangmai",
+    "name": "Doi Suthep Temple",
+    "country": "thailand",
+    "city_or_area": "Chiang Mai",
+    "category": "temple",
+    "tags": ["iconic", "mountain views", "golden stupa", "must-see"],
+    "personal_note": "Go early before the tour groups. The panorama of Chiang Mai from the top is worth every step.",
+    "google_maps_url": "https://maps.app.goo.gl/placeholder-doisuthep",
+    "recommended_by": "NomadReady",
+    "price_level": 1,
+    "best_for": "Early morning visit"
+  },
+  {
+    "id": "somboon-seafood-bangkok",
+    "name": "Somboon Seafood",
+    "country": "thailand",
+    "city_or_area": "Bangkok",
+    "category": "restaurant",
+    "tags": ["seafood", "local favourite", "curry crab", "busy"],
+    "personal_note": "Order the yellow curry crab — it's what they're famous for. Loud, chaotic, and completely worth it.",
+    "google_maps_url": "https://maps.app.goo.gl/placeholder-somboon",
+    "recommended_by": "NomadReady",
+    "price_level": 2,
+    "best_for": "Group dinner"
+  },
+  {
+    "id": "railay-beach-krabi",
+    "name": "Railay Beach",
+    "country": "thailand",
+    "city_or_area": "Krabi",
+    "category": "beach",
+    "tags": ["limestone cliffs", "boat access only", "swimming", "scenic"],
+    "personal_note": "Only reachable by longtail from Ao Nang. No cars, no roads — just beach and rock faces.",
+    "google_maps_url": "https://maps.app.goo.gl/placeholder-railay",
+    "recommended_by": "NomadReady",
+    "price_level": 1,
+    "best_for": "Day trip or overnight stay"
+  },
+  {
+    "id": "mr-mechanic-chiangmai",
+    "name": "Mr. Mechanic Scooter Rental",
+    "country": "thailand",
+    "city_or_area": "Chiang Mai",
+    "category": "scooter_rental",
+    "tags": ["reliable", "day rental", "automatic", "fair price"],
+    "personal_note": "Reliable bikes, fair prices, and staff who actually walk you through the controls. Return it full.",
+    "google_maps_url": "https://maps.app.goo.gl/placeholder-mrmechanic",
+    "recommended_by": "NomadReady",
+    "price_level": 1,
+    "best_for": "Exploring Chiang Mai's outskirts"
+  }
+]

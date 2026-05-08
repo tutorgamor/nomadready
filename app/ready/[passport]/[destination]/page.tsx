@@ -18,6 +18,8 @@ import { PhrasesSection }    from "@/components/ready/PhrasesSection";
 import { EmergencySection }  from "@/components/ready/EmergencySection";
 import { ChecklistSection }  from "@/components/ready/ChecklistSection";
 import { TravelScoreSection } from "@/components/ready/TravelScoreSection";
+import { LocalGemsSection }   from "@/components/ready/LocalGemsSection";
+import type { Place } from "@/lib/types";
 
 const destinations = destinationsData as Destination[];
 const passports = passportsData as Passport[];
@@ -66,6 +68,11 @@ export default async function ReadyPage({ params }: Props) {
   if (!dest || !pass || !fs.existsSync(filePath)) notFound();
 
   const data = JSON.parse(fs.readFileSync(filePath, "utf-8")) as ReadyData;
+
+  const placesPath = path.join(process.cwd(), "data", "places", `${destination}.json`);
+  const places: Place[] | null = fs.existsSync(placesPath)
+    ? (JSON.parse(fs.readFileSync(placesPath, "utf-8")) as Place[])
+    : null;
 
   const reviewedDate = new Date(data.last_reviewed).toLocaleDateString("en-GB", {
     day: "numeric",
@@ -218,7 +225,7 @@ export default async function ReadyPage({ params }: Props) {
       </header>
 
       {/* ── Sticky section nav ────────────────────────────────── */}
-      <SectionNav />
+      <SectionNav hasGems={places !== null} />
 
       {/* ── All 10 sections ───────────────────────────────────── */}
       <div
@@ -243,6 +250,11 @@ export default async function ReadyPage({ params }: Props) {
         <div id="phrases"    style={SECTION_OFFSET}><PhrasesSection    phrases={data.phrases} /></div>
         <div id="emergency"  style={SECTION_OFFSET}><EmergencySection  emergency={data.emergency} /></div>
         <div id="checklist"  style={SECTION_OFFSET}><ChecklistSection  checklist={data.checklist} /></div>
+        {places && (
+          <div id="gems" style={SECTION_OFFSET}>
+            <LocalGemsSection places={places} />
+          </div>
+        )}
       </div>
 
       {/* ── Disclaimer footer ─────────────────────────────────── */}

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const SECTIONS = [
+const BASE_SECTIONS = [
   { id: "visa",       label: "🛂 Visa" },
   { id: "insurance",  label: "🏥 Insurance" },
   { id: "season",     label: "🌤️ Season" },
@@ -15,17 +15,20 @@ const SECTIONS = [
   { id: "checklist",  label: "✅ Checklist" },
 ] as const;
 
-type SectionId = (typeof SECTIONS)[number]["id"];
+const GEMS_SECTION = { id: "gems", label: "💎 Gems" } as const;
 
-export function SectionNav() {
-  const [active, setActive] = useState<SectionId>(SECTIONS[0].id);
+type SectionId = (typeof BASE_SECTIONS)[number]["id"] | "gems";
+
+export function SectionNav({ hasGems = false }: { hasGems?: boolean }) {
+  const sections = hasGems ? [...BASE_SECTIONS, GEMS_SECTION] : BASE_SECTIONS;
+  const [active, setActive] = useState<SectionId>(BASE_SECTIONS[0].id);
   const navRef = useRef<HTMLElement>(null);
 
   // Track which section is in the top portion of the viewport
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
-    for (const { id } of SECTIONS) {
+    for (const { id } of sections) {
       const el = document.getElementById(id);
       if (!el) continue;
 
@@ -41,7 +44,7 @@ export function SectionNav() {
     }
 
     return () => observers.forEach((o) => o.disconnect());
-  }, []);
+  }, [sections]);
 
   // Keep the active pill horizontally centered inside the nav strip
   useEffect(() => {
@@ -80,7 +83,7 @@ export function SectionNav() {
         borderBottom: "1px solid var(--border)",
       }}
     >
-      {SECTIONS.map(({ id, label }) => {
+      {sections.map(({ id, label }) => {
         const isActive = active === id;
         return (
           <a

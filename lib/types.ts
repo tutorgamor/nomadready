@@ -177,6 +177,27 @@ export interface EmergencyInfo {
   notes: string;
 }
 
+// ─── Local Gems ───────────────────────────────────────────────
+
+export type PlaceCategory =
+  | "restaurant" | "bakery" | "cafe" | "scooter_rental"
+  | "beach" | "snorkeling" | "viewpoint" | "temple"
+  | "monument" | "museum" | "transport" | "practical";
+
+export interface Place {
+  id: string;
+  name: string;
+  country: string;
+  city_or_area: string;
+  category: PlaceCategory;
+  tags: string[];
+  personal_note: string;
+  google_maps_url: string;
+  recommended_by: string;
+  price_level: 1 | 2 | 3 | 4;
+  best_for: string;
+}
+
 // ─── Checklist ────────────────────────────────────────────────
 
 export type ChecklistPriority = "critical" | "high" | "medium" | "low";

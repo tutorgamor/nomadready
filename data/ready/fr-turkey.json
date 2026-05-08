@@ -5,17 +5,15 @@
   "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
 
   "visa": {
-    "type": "e-Visa",
+    "type": "Visa Exemption",
     "duration_days": 90,
     "within_days": 180,
     "extendable": false,
-    "cost_usd": 60,
-    "cost_eur_approx": 55,
+    "cost_eur": 0,
     "multiple_entry": true,
-    "apply_url": "https://www.evisa.gov.tr",
-    "notes": "French citizens must obtain an e-Visa before travel — visa on arrival is no longer available. Apply online at evisa.gov.tr (takes 5–10 minutes). Multiple entry, valid for 90 days within a 180-day period. Cost is approx. USD 60.",
+    "notes": "French passport holders are exempt from visa for tourist stays of up to 90 days within any 180-day period. No e-Visa or prior application is required — entry is granted at the border. Passport must be valid for at least 6 months beyond the planned departure date.",
     "verify_required": true,
-    "verify_note": "Turkey e-Visa fees change periodically. Confirm current price and process at evisa.gov.tr before booking. Only use the official government site — many fake third-party sites charge €50+ service fees."
+    "verify_note": "Confirmed by two official sources: Turkish MFA states that French ordinary and official passport holders are exempt from visa for travels up to 90 days. France Diplomatie confirms French nationals are exempt from visa for touristic stays up to 90 days in a 180-day period. Always reconfirm before travel as entry rules can change."
   },
 
   "insurance": {
@@ -124,10 +122,6 @@
       "description": "In Beyoğlu and beach resorts, complimentary drinks arrive then appear on the bill. Or bills are inflated. Only go to well-reviewed establishments and always ask for an itemised bill."
     },
     {
-      "name": "Fake e-Visa websites",
-      "description": "Third-party sites mimic evisa.gov.tr and charge €50–100 in 'processing fees' for a visa that costs ~$60 on the real site. Only use evisa.gov.tr."
-    },
-    {
       "name": "Grand Bazaar 'friendly tea' upsell",
       "description": "Extremely friendly shopkeepers offer tea and conversation — a classic soft sales technique. Enjoy the hospitality but never feel obligated to buy."
     }
@@ -164,8 +158,7 @@
 
   "checklist": [
     { "item": "Passport valid 6+ months beyond return date", "priority": "critical" },
-    { "item": "Apply for e-Visa at evisa.gov.tr BEFORE booking flights — do not use third-party sites", "priority": "critical" },
-    { "item": "Save/print your e-Visa approval document", "priority": "critical" },
+    { "item": "No e-Visa needed — French passport holders enter Turkey visa-free for up to 90 days (reconfirm at France Diplomatie before travel)", "priority": "critical" },
     { "item": "Purchase travel insurance", "priority": "critical" },
     { "item": "Book hot air balloon ride in Cappadocia well in advance (fills up 2–3 months ahead)", "priority": "high" },
     { "item": "Download Google Maps offline for Istanbul, Cappadocia and Antalya", "priority": "high" },

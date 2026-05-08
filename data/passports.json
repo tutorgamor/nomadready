@@ -3,6 +3,14 @@
     "id": "fr",
     "label": "France",
     "emoji": "🇫🇷",
-    "region": "European Union"
+    "region": "European Union",
+    "currency": "EUR"
+  },
+  {
+    "id": "uk",
+    "label": "United Kingdom",
+    "emoji": "🇬🇧",
+    "region": "United Kingdom",
+    "currency": "GBP"
   }
 ]

@@ -1,8 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // App Router is enabled by default in Next.js 15
-  // No experimental flags needed for this MVP
+  async redirects() {
+    return [
+      {
+        source: "/ready/:destination",
+        destination: "/ready/fr/:destination",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

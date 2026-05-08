@@ -49,26 +49,23 @@
   "budget": {
     "currency": "MYR",
     "currency_symbol": "RM",
-    "approx_eur_rate": 5,
+    "exchange_rates": { "EUR": 5, "GBP": 6 },
     "verify_required": true,
-    "verify_note": "Exchange rate is approximate. Check xe.com before travel.",
+    "verify_note": "Rates are approximate. Check xe.com before travel.",
     "tiers": {
       "budget": {
         "label": "Backpacker",
         "daily_myr": 80,
-        "daily_eur_approx": 16,
         "includes": "Dorm bed, hawker stalls 3x, bus/LRT, 1 beer or teh tarik"
       },
       "mid": {
         "label": "Comfort",
         "daily_myr": 180,
-        "daily_eur_approx": 36,
         "includes": "Budget private room, mix of restaurants, Grab rides, activities"
       },
       "high": {
         "label": "Boutique",
         "daily_myr": 450,
-        "daily_eur_approx": 90,
         "includes": "Nice hotel, restaurants, tours"
       }
     },

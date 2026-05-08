@@ -1,23 +1,39 @@
 import type { Metadata } from "next";
+import fs from "fs";
+import path from "path";
 import passportsData from "@/data/passports.json";
 import destinationsData from "@/data/destinations.json";
 import type { Passport, Destination } from "@/lib/types";
-import { PassportChip } from "@/components/PassportChip";
+import { PassportSelector } from "@/components/PassportSelector";
 import { DestinationCard } from "@/components/DestinationCard";
 
 export const metadata: Metadata = {
-  // Use absolute to bypass the layout template (avoids "Brand | Brand" duplication)
   title: { absolute: "NomadReady — Travel Readiness for Backpackers" },
   description:
-    "One scroll, one page: visa rules, budget tiers, common scams, local phrases and more — built for French passport holders.",
+    "One scroll, one page: visa rules, budget tiers, common scams, local phrases and more — tailored to your passport.",
 };
 
 const passports = passportsData as Passport[];
 const destinations = destinationsData as Destination[];
 
-export default function HomePage() {
-  // In v1 we always use the first (and only) passport: France
-  const activePassport = passports[0];
+interface HomePageProps {
+  searchParams: Promise<{ passport?: string }>;
+}
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const params = await searchParams;
+  const activePassportId = passports.some((p) => p.id === params.passport)
+    ? params.passport!
+    : "fr";
+
+  const dir = path.join(process.cwd(), "data", "ready");
+  const availableIds = new Set(
+    fs
+      .readdirSync(dir)
+      .filter((f) => f.startsWith(`${activePassportId}-`) && f.endsWith(".json"))
+      .map((f) => f.slice(activePassportId.length + 1, -5))
+  );
+  const availableDestinations = destinations.filter((d) => availableIds.has(d.id));
 
   return (
     <main
@@ -80,24 +96,8 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Passport selector row */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-            <span
-              style={{
-                fontSize: "0.72rem",
-                fontWeight: 600,
-                letterSpacing: "0.07em",
-                textTransform: "uppercase",
-                color: "var(--text-muted)",
-              }}
-            >
-              Your passport
-            </span>
-            <PassportChip passport={activePassport} />
-            <span style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>
-              More passports coming soon
-            </span>
-          </div>
+          {/* Passport selector */}
+          <PassportSelector passports={passports} activeId={activePassportId} />
 
         </div>
       </header>
@@ -120,7 +120,7 @@ export default function HomePage() {
               margin: 0,
             }}
           >
-            {destinations.length} destinations available
+            {availableDestinations.length} destination{availableDestinations.length !== 1 ? "s" : ""} available
           </h2>
 
           {/* Cards — single column on mobile, 2-col on wider screens */}
@@ -131,8 +131,8 @@ export default function HomePage() {
               gap: "0.875rem",
             }}
           >
-            {destinations.map((dest) => (
-              <DestinationCard key={dest.id} destination={dest} />
+            {availableDestinations.map((dest) => (
+              <DestinationCard key={dest.id} destination={dest} passportId={activePassportId} />
             ))}
           </div>
 

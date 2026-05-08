@@ -12,6 +12,7 @@ export interface Passport {
   label: string;    // e.g. "France"
   emoji: string;    // e.g. "🇫🇷"
   region: string;   // e.g. "European Union"
+  currency: string; // e.g. "EUR", "GBP" — reference currency for budget display
 }
 
 export interface Destination {
@@ -21,7 +22,6 @@ export interface Destination {
   hero_tag: string;     // e.g. "Temples, beaches & street food"
   cover_color: string;  // hex, used for card accent
   region: string;       // e.g. "Southeast Asia"
-  ready_file: string;   // e.g. "fr-thailand"
 }
 
 // ─── Shared ───────────────────────────────────────────────────
@@ -78,9 +78,8 @@ export interface BestSeason {
 
 export interface BudgetTier {
   label: string;
-  daily_eur_approx: number;
   includes: string;
-  // Currency-specific fields (only one will be present per destination)
+  // Local currency daily amount (only one will be present per destination)
   daily_thb?: number;
   daily_myr?: number;
   daily_idr?: number;
@@ -101,7 +100,9 @@ export interface CostAnchor {
 export interface BudgetInfo extends Verifiable {
   currency: string;
   currency_symbol: string;
-  approx_eur_rate: number;
+  // Maps reference currency codes to their rate: 1 unit = X units of local currency
+  // e.g. { "EUR": 38, "GBP": 45 } means 1 EUR = 38 THB, 1 GBP = 45 THB
+  exchange_rates: Record<string, number>;
   tiers: {
     budget: BudgetTier;
     mid: BudgetTier;
@@ -150,6 +151,10 @@ export interface EmergencyInfo {
   tourist_hotline?: string;
   search_and_rescue?: string;
   tourist_police_istanbul?: string;
+  // Generic embassy field for non-French passports
+  embassy_label?: string;
+  embassy?: EmbassyInfo;
+  // French-passport-specific embassy fields (legacy)
   french_embassy_bangkok?: EmbassyInfo;
   french_embassy_kuala_lumpur?: EmbassyInfo;
   french_embassy_jakarta?: EmbassyInfo;

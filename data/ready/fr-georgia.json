@@ -55,26 +55,23 @@
   "budget": {
     "currency": "GEL",
     "currency_symbol": "₾",
-    "approx_eur_rate": 3,
+    "exchange_rates": { "EUR": 3, "GBP": 3.5 },
     "verify_required": true,
-    "verify_note": "GEL rate can shift. Check xe.com before travel.",
+    "verify_note": "Rates are approximate. Check xe.com before travel.",
     "tiers": {
       "budget": {
         "label": "Backpacker",
         "daily_gel": 50,
-        "daily_eur_approx": 17,
         "includes": "Guesthouse (family B&B), local restaurant 3x, marshrutka transport, 1 beer"
       },
       "mid": {
         "label": "Comfort",
         "daily_gel": 120,
-        "daily_eur_approx": 40,
         "includes": "Boutique guesthouse, restaurants + wine, taxi or car hire"
       },
       "high": {
         "label": "Boutique",
         "daily_gel": 280,
-        "daily_eur_approx": 93,
         "includes": "Boutique hotel, wine tastings, private driver, fine dining"
       }
     },

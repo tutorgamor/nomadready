@@ -3,6 +3,7 @@ import type { Destination } from "@/lib/types";
 
 interface DestinationCardProps {
   destination: Destination;
+  passportId: string;
 }
 
 /**
@@ -15,11 +16,11 @@ interface DestinationCardProps {
  *   - Region badge
  *   - A subtle arrow cue
  */
-export function DestinationCard({ destination }: DestinationCardProps) {
+export function DestinationCard({ destination, passportId }: DestinationCardProps) {
   const { id, label, emoji, hero_tag, cover_color, region } = destination;
 
   return (
-    <Link href={`/ready/${id}`} className="dest-card" aria-label={`Travel guide for ${label}`}>
+    <Link href={`/ready/${passportId}/${id}`} className="dest-card" aria-label={`Travel guide for ${label}`}>
       {/* ── Colour accent bar ── */}
       <div
         style={{

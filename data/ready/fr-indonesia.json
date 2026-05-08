@@ -57,26 +57,23 @@
   "budget": {
     "currency": "IDR",
     "currency_symbol": "Rp",
-    "approx_eur_rate": 17500,
+    "exchange_rates": { "EUR": 17500, "GBP": 20500 },
     "verify_required": true,
-    "verify_note": "IDR exchange rate can fluctuate. Check xe.com before travel. Always use official money changers in Bali — counterfeit deals exist.",
+    "verify_note": "IDR rate can fluctuate. Check xe.com before travel. Always use official money changers in Bali — counterfeit deals exist.",
     "tiers": {
       "budget": {
         "label": "Backpacker",
         "daily_idr": 250000,
-        "daily_eur_approx": 14,
         "includes": "Dorm bed or cheap guesthouse, warungs 3x, local transport, 1 Bintang"
       },
       "mid": {
         "label": "Comfort",
         "daily_idr": 600000,
-        "daily_eur_approx": 34,
         "includes": "Private guesthouse or mid hotel, restaurants, scooter rental, activities"
       },
       "high": {
         "label": "Boutique",
         "daily_idr": 1500000,
-        "daily_eur_approx": 86,
         "includes": "Boutique villa (Bali), meals out, tours"
       }
     },

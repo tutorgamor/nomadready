@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
 import destinationsData from "@/data/destinations.json";
-import type { ReadyData, Destination } from "@/lib/types";
-import { SectionNav }      from "@/components/ready/SectionNav";
-import { VisaSection }     from "@/components/ready/VisaSection";
+import passportsData from "@/data/passports.json";
+import type { ReadyData, Destination, Passport } from "@/lib/types";
+import { SectionNav }        from "@/components/ready/SectionNav";
+import { VisaSection }       from "@/components/ready/VisaSection";
 import { InsuranceSection }  from "@/components/ready/InsuranceSection";
 import { BestSeasonSection } from "@/components/ready/BestSeasonSection";
 import { BudgetSection }     from "@/components/ready/BudgetSection";
@@ -18,42 +19,50 @@ import { EmergencySection }  from "@/components/ready/EmergencySection";
 import { ChecklistSection }  from "@/components/ready/ChecklistSection";
 
 const destinations = destinationsData as Destination[];
+const passports = passportsData as Passport[];
 
-// Unknown slugs return 404 immediately — no runtime fs calls on Vercel
 export const dynamicParams = false;
 
 interface Props {
-  params: Promise<{ destination: string }>;
+  params: Promise<{ passport: string; destination: string }>;
 }
 
 export async function generateStaticParams() {
   const dir = path.join(process.cwd(), "data", "ready");
   return fs
     .readdirSync(dir)
-    .filter((f) => f.startsWith("fr-") && f.endsWith(".json"))
-    .map((f) => ({ destination: f.replace("fr-", "").replace(".json", "") }));
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => {
+      const stem = f.slice(0, -5);
+      const dashIndex = stem.indexOf("-");
+      return {
+        passport: stem.slice(0, dashIndex),
+        destination: stem.slice(dashIndex + 1),
+      };
+    });
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { destination } = await params;
+  const { passport, destination } = await params;
   const dest = destinations.find((d) => d.id === destination);
+  const pass = passports.find((p) => p.id === passport);
   if (!dest) return { title: "Not Found" };
   return {
     title: `${dest.label} Travel Guide`,
-    description: `Everything a French passport holder needs to know before travelling to ${dest.label}.`,
+    description: `Everything a ${pass?.label ?? "passport"} holder needs to know before travelling to ${dest.label}.`,
   };
 }
 
-// scrollMarginTop offset = sticky nav height (~42px) + breathing room
 const SECTION_OFFSET: React.CSSProperties = { scrollMarginTop: "56px" };
 
 export default async function ReadyPage({ params }: Props) {
-  const { destination } = await params;
+  const { passport: passportId, destination } = await params;
 
   const dest = destinations.find((d) => d.id === destination);
-  const filePath = path.join(process.cwd(), "data", "ready", `fr-${destination}.json`);
+  const pass = passports.find((p) => p.id === passportId);
+  const filePath = path.join(process.cwd(), "data", "ready", `${passportId}-${destination}.json`);
 
-  if (!dest || !fs.existsSync(filePath)) notFound();
+  if (!dest || !pass || !fs.existsSync(filePath)) notFound();
 
   const data = JSON.parse(fs.readFileSync(filePath, "utf-8")) as ReadyData;
 
@@ -96,9 +105,9 @@ export default async function ReadyPage({ params }: Props) {
             gap: "1.25rem",
           }}
         >
-          {/* Back link — pill background ensures legibility on any cover color */}
+          {/* Back link — preserves active passport in URL */}
           <Link
-            href="/"
+            href={`/?passport=${passportId}`}
             style={{
               alignSelf: "flex-start",
               display: "inline-flex",
@@ -134,7 +143,7 @@ export default async function ReadyPage({ params }: Props) {
                   margin: "0 0 0.3rem",
                 }}
               >
-                🇫🇷 France →
+                {pass.emoji} {pass.label} →
               </p>
 
               {/* Destination name */}
@@ -212,7 +221,7 @@ export default async function ReadyPage({ params }: Props) {
         <div id="visa"       style={SECTION_OFFSET}><VisaSection       visa={data.visa} /></div>
         <div id="insurance"  style={SECTION_OFFSET}><InsuranceSection  insurance={data.insurance} /></div>
         <div id="season"     style={SECTION_OFFSET}><BestSeasonSection bestSeason={data.best_season} /></div>
-        <div id="budget"     style={SECTION_OFFSET}><BudgetSection     budget={data.budget} /></div>
+        <div id="budget"     style={SECTION_OFFSET}><BudgetSection     budget={data.budget} passportCurrency={pass.currency} /></div>
         <div id="apps"       style={SECTION_OFFSET}><AppsSection       apps={data.useful_apps} /></div>
         <div id="transport"  style={SECTION_OFFSET}><TransportSection  transport={data.transport} /></div>
         <div id="scams"      style={SECTION_OFFSET}><ScamsSection      scams={data.scams} /></div>

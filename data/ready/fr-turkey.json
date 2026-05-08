@@ -56,26 +56,23 @@
   "budget": {
     "currency": "TRY",
     "currency_symbol": "₺",
-    "approx_eur_rate": 37,
+    "exchange_rates": { "EUR": 37, "GBP": 44 },
     "verify_required": true,
-    "verify_note": "Turkish Lira has experienced significant inflation. Exchange rate may differ substantially — check xe.com immediately before travel.",
+    "verify_note": "Turkish Lira has experienced significant inflation. Rates may differ substantially — check xe.com immediately before travel.",
     "tiers": {
       "budget": {
         "label": "Backpacker",
         "daily_try": 700,
-        "daily_eur_approx": 19,
         "includes": "Dorm bed, local eateries 3x, bus/tram, 1 tea"
       },
       "mid": {
         "label": "Comfort",
         "daily_try": 1800,
-        "daily_eur_approx": 49,
         "includes": "Budget hotel or cave hotel, restaurants, local transport"
       },
       "high": {
         "label": "Boutique",
         "daily_try": 4500,
-        "daily_eur_approx": 122,
         "includes": "Cave hotel in Cappadocia, restaurants, hot air balloon, private tours"
       }
     },

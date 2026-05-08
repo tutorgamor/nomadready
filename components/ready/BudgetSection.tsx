@@ -1,5 +1,13 @@
 import type { BudgetInfo, BudgetTier, CostAnchor } from "@/lib/types";
 
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  EUR: "€",
+  GBP: "£",
+  USD: "$",
+  CAD: "C$",
+  AUD: "A$",
+};
+
 function getTierLocalAmount(tier: BudgetTier, currency: string): number | undefined {
   const key = `daily_${currency.toLowerCase()}` as keyof BudgetTier;
   const value = tier[key];
@@ -12,14 +20,18 @@ function getAnchorAmount(anchor: CostAnchor, currency: string): number | undefin
   return typeof value === "number" ? value : undefined;
 }
 
-export function BudgetSection({ budget }: { budget: BudgetInfo }) {
-  const { currency, currency_symbol, approx_eur_rate, tiers, cost_anchors } = budget;
+interface BudgetSectionProps {
+  budget: BudgetInfo;
+  passportCurrency: string;
+}
 
-  const tierList = [
-    { tier: tiers.budget },
-    { tier: tiers.mid },
-    { tier: tiers.high },
-  ];
+export function BudgetSection({ budget, passportCurrency }: BudgetSectionProps) {
+  const { currency, currency_symbol, exchange_rates, tiers, cost_anchors } = budget;
+
+  const rate = exchange_rates[passportCurrency];
+  const refSymbol = CURRENCY_SYMBOLS[passportCurrency] ?? passportCurrency;
+
+  const tierList = [tiers.budget, tiers.mid, tiers.high];
 
   return (
     <div className="card">
@@ -29,11 +41,15 @@ export function BudgetSection({ budget }: { budget: BudgetInfo }) {
         Currency:{" "}
         <strong style={{ color: "var(--text-primary)" }}>
           {currency} ({currency_symbol})
-        </strong>{" "}
-        — approx. 1 EUR ={" "}
-        <strong style={{ color: "var(--text-primary)" }}>
-          {currency_symbol}{approx_eur_rate}
         </strong>
+        {rate != null && (
+          <>
+            {" "}— approx. 1 {passportCurrency} ={" "}
+            <strong style={{ color: "var(--text-primary)" }}>
+              {currency_symbol}{rate}
+            </strong>
+          </>
+        )}
       </p>
 
       {/* Tier cards */}
@@ -45,8 +61,12 @@ export function BudgetSection({ budget }: { budget: BudgetInfo }) {
           marginBottom: "1.25rem",
         }}
       >
-        {tierList.map(({ tier }) => {
+        {tierList.map((tier) => {
           const localAmt = getTierLocalAmount(tier, currency);
+          const refAmt = rate != null && localAmt != null
+            ? Math.round(localAmt / rate)
+            : undefined;
+
           return (
             <div
               key={tier.label}
@@ -79,17 +99,21 @@ export function BudgetSection({ budget }: { budget: BudgetInfo }) {
                   lineHeight: 1.1,
                 }}
               >
-                ~€{tier.daily_eur_approx}
-                <span
-                  style={{
-                    fontSize: "0.7rem",
-                    fontWeight: 400,
-                    color: "var(--text-muted)",
-                    letterSpacing: 0,
-                  }}
-                >
-                  /day
-                </span>
+                {refAmt != null ? (
+                  <>
+                    ~{refSymbol}{refAmt}
+                    <span
+                      style={{
+                        fontSize: "0.7rem",
+                        fontWeight: 400,
+                        color: "var(--text-muted)",
+                        letterSpacing: 0,
+                      }}
+                    >
+                      /day
+                    </span>
+                  </>
+                ) : "—"}
               </p>
               {localAmt != null && (
                 <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", margin: "0.1rem 0 0.4rem" }}>

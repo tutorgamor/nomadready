@@ -31,8 +31,11 @@ export function EmergencySection({ emergency }: { emergency: EmergencyInfo }) {
     ...(emergency.tourist_police_istanbul ? [{ label: "Tourist Police Istanbul", value: emergency.tourist_police_istanbul }] : []),
   ];
 
-  const activeEmbassy = EMBASSY_ENTRIES.find((e) => emergency[e.key] != null);
-  const embassy = activeEmbassy ? (emergency[activeEmbassy.key] as EmbassyInfo) : null;
+  const frEmbassyEntry = EMBASSY_ENTRIES.find((e) => emergency[e.key] != null);
+  const embassyLabel = frEmbassyEntry ? frEmbassyEntry.label : (emergency.embassy_label ?? null);
+  const embassy = frEmbassyEntry
+    ? (emergency[frEmbassyEntry.key] as EmbassyInfo)
+    : (emergency.embassy ?? null);
 
   return (
     <div className="card">
@@ -86,7 +89,7 @@ export function EmergencySection({ emergency }: { emergency: EmergencyInfo }) {
       </div>
 
       {/* Embassy */}
-      {embassy && activeEmbassy && (
+      {embassy && embassyLabel && (
         <div style={{ borderTop: "1px solid var(--border)", paddingTop: "1rem", marginBottom: "1rem" }}>
           <p
             style={{
@@ -98,7 +101,7 @@ export function EmergencySection({ emergency }: { emergency: EmergencyInfo }) {
               margin: "0 0 0.5rem",
             }}
           >
-            {activeEmbassy.label}
+            {embassyLabel}
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
             <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--text-primary)", margin: 0 }}>

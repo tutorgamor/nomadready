@@ -1,4 +1,5 @@
 import type { BudgetInfo, BudgetTier, CostAnchor } from "@/lib/types";
+import { BudgetCalculator } from "./BudgetCalculator";
 
 const CURRENCY_SYMBOLS: Record<string, string> = {
   EUR: "€",
@@ -180,6 +181,8 @@ export function BudgetSection({ budget, passportCurrency }: BudgetSectionProps) 
           })}
         </div>
       </div>
+
+      <BudgetCalculator budget={budget} passportCurrency={passportCurrency} />
 
       {budget.verify_required && (
         <div

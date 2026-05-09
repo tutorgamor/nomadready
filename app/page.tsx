@@ -7,6 +7,7 @@ import type { Passport, Destination, ReadyData } from "@/lib/types";
 import { PassportSelector } from "@/components/PassportSelector";
 import { DestinationCard } from "@/components/DestinationCard";
 import type { DestinationSummary } from "@/components/DestinationCard";
+import { ComparisonStrip } from "@/components/ComparisonStrip";
 
 export const metadata: Metadata = {
   title: { absolute: "NomadReady — Travel Readiness for Backpackers" },
@@ -163,7 +164,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
       {/* ── Destination grid ──────────────────────────────────── */}
       <section
-        style={{ flex: 1, paddingTop: "1.75rem", paddingBottom: "3rem" }}
+        style={{ flex: 1, paddingTop: "1.75rem", paddingBottom: "1.75rem" }}
         aria-labelledby="destinations-heading"
       >
         <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -189,6 +190,25 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             ))}
           </div>
 
+        </div>
+      </section>
+
+      {/* ── Comparison strip ─────────────────────────────────── */}
+      <section style={{ paddingBottom: "3rem" }}>
+        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+          <h2
+            style={{
+              fontSize: "0.72rem",
+              fontWeight: 600,
+              letterSpacing: "0.07em",
+              textTransform: "uppercase",
+              color: "var(--text-muted)",
+              margin: 0,
+            }}
+          >
+            Quick comparison
+          </h2>
+          <ComparisonStrip destinations={availableDestinations} summaries={summaries} />
         </div>
       </section>
 

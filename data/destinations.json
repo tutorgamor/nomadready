@@ -124,5 +124,23 @@
       "transport": 65,
       "nomad_friendly": 80
     }
+  },
+  {
+    "id": "japan",
+    "label": "Japan",
+    "emoji": "🇯🇵",
+    "hero_tag": "Trains, neon cities & quiet temples",
+    "cover_color": "#DC2626",
+    "region": "East Asia",
+    "ready_file": "fr-japan",
+    "travel_score": {
+      "overall": 91,
+      "visa_ease": 92,
+      "budget": 62,
+      "safety": 96,
+      "internet": 95,
+      "transport": 98,
+      "nomad_friendly": 86
+    }
   }
 ]

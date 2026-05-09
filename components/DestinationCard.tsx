@@ -1,23 +1,38 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import type { Destination } from "@/lib/types";
+
+export interface DestinationSummary {
+  visaLabel: string;
+  budgetFrom: string;
+  bestMonths: string;
+}
 
 interface DestinationCardProps {
   destination: Destination;
   passportId: string;
+  summary?: DestinationSummary;
 }
 
-/**
- * DestinationCard
- *
- * Each card shows:
- *   - A full-width colour bar accent (cover_color from JSON)
- *   - Country emoji (large, centred in the bar)
- *   - Destination label + hero tag
- *   - Region badge
- *   - A subtle arrow cue
- */
-export function DestinationCard({ destination, passportId }: DestinationCardProps) {
-  const { id, label, emoji, hero_tag, cover_color, region } = destination;
+const STAT_LABEL: CSSProperties = {
+  fontSize: "0.625rem",
+  fontWeight: 700,
+  letterSpacing: "0.07em",
+  textTransform: "uppercase",
+  color: "var(--text-muted)",
+  margin: "0 0 0.175rem",
+};
+
+const STAT_VALUE: CSSProperties = {
+  fontSize: "0.8125rem",
+  fontWeight: 600,
+  color: "var(--text-secondary)",
+  margin: 0,
+  lineHeight: 1.25,
+};
+
+export function DestinationCard({ destination, passportId, summary }: DestinationCardProps) {
+  const { id, label, emoji, hero_tag, cover_color, region, travel_score } = destination;
 
   return (
     <Link href={`/ready/${passportId}/${id}`} className="dest-card" aria-label={`Travel guide for ${label}`}>
@@ -33,7 +48,6 @@ export function DestinationCard({ destination, passportId }: DestinationCardProp
         }}
         aria-hidden="true"
       >
-        {/* Depth overlays */}
         <div
           style={{
             position: "absolute",
@@ -104,7 +118,7 @@ export function DestinationCard({ destination, passportId }: DestinationCardProp
           </span>
         </div>
 
-        {/* Hero tag / description */}
+        {/* Hero tag */}
         <p
           style={{
             fontSize: "0.8125rem",
@@ -135,6 +149,41 @@ export function DestinationCard({ destination, passportId }: DestinationCardProp
             {region}
           </span>
         </div>
+
+        {/* ── Highlights grid ── */}
+        {summary && (
+          <div
+            style={{
+              borderTop: "1px solid var(--border)",
+              paddingTop: "0.75rem",
+              marginTop: "0.25rem",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              rowGap: "0.625rem",
+              columnGap: "0.5rem",
+            }}
+          >
+            <div>
+              <p style={STAT_LABEL}>Score</p>
+              <p style={{ ...STAT_VALUE, color: "var(--text-primary)", fontWeight: 700 }}>
+                {travel_score?.overall ?? "—"}
+                <span style={{ fontSize: "0.6875rem", fontWeight: 400, color: "var(--text-muted)" }}>/100</span>
+              </p>
+            </div>
+            <div>
+              <p style={STAT_LABEL}>Visa</p>
+              <p style={STAT_VALUE}>{summary.visaLabel}</p>
+            </div>
+            <div>
+              <p style={STAT_LABEL}>Budget from</p>
+              <p style={STAT_VALUE}>{summary.budgetFrom}</p>
+            </div>
+            <div>
+              <p style={STAT_LABEL}>Best time</p>
+              <p style={STAT_VALUE}>{summary.bestMonths}</p>
+            </div>
+          </div>
+        )}
       </div>
     </Link>
   );

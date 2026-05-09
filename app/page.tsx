@@ -3,9 +3,10 @@ import fs from "fs";
 import path from "path";
 import passportsData from "@/data/passports.json";
 import destinationsData from "@/data/destinations.json";
-import type { Passport, Destination } from "@/lib/types";
+import type { Passport, Destination, ReadyData } from "@/lib/types";
 import { PassportSelector } from "@/components/PassportSelector";
 import { DestinationCard } from "@/components/DestinationCard";
+import type { DestinationSummary } from "@/components/DestinationCard";
 
 export const metadata: Metadata = {
   title: { absolute: "NomadReady — Travel Readiness for Backpackers" },
@@ -15,6 +16,28 @@ export const metadata: Metadata = {
 
 const passports = passportsData as Passport[];
 const destinations = destinationsData as Destination[];
+
+function formatVisa(visa: ReadyData["visa"]): string {
+  const d = `· ${visa.duration_days}d`;
+  switch (visa.type) {
+    case "Visa Exemption":  return `Free ${d}`;
+    case "e-Visa":          return `e-Visa ${d}`;
+    case "Visa on Arrival": return `On arrival ${d}`;
+    default:                return visa.type;
+  }
+}
+
+function formatBudget(budget: ReadyData["budget"]): string {
+  const tier = budget.tiers.budget;
+  const amount = tier.daily_thb ?? tier.daily_myr ?? tier.daily_idr ?? tier.daily_gel ?? tier.daily_try ?? null;
+  return amount != null ? `${budget.currency_symbol}${amount}/d` : "—";
+}
+
+function formatMonths(months: ReadyData["best_season"]["overall_best_months"]): string {
+  if (!months || months.length === 0) return "—";
+  if (months.length === 1) return months[0];
+  return `${months[0]}–${months[months.length - 1]}`;
+}
 
 interface HomePageProps {
   searchParams: Promise<{ passport?: string }>;
@@ -34,6 +57,22 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       .map((f) => f.slice(activePassportId.length + 1, -5))
   );
   const availableDestinations = destinations.filter((d) => availableIds.has(d.id));
+
+  const summaries = new Map<string, DestinationSummary>();
+  for (const dest of availableDestinations) {
+    try {
+      const data = JSON.parse(
+        fs.readFileSync(path.join(dir, `${activePassportId}-${dest.id}.json`), "utf-8")
+      ) as ReadyData;
+      summaries.set(dest.id, {
+        visaLabel:  formatVisa(data.visa),
+        budgetFrom: formatBudget(data.budget),
+        bestMonths: formatMonths(data.best_season.overall_best_months),
+      });
+    } catch {
+      // missing or unreadable file — card renders without highlights
+    }
+  }
 
   return (
     <main
@@ -146,7 +185,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           {/* Cards — responsive grid: 1-col mobile, 2-col tablet, 3-col desktop */}
           <div className="dest-grid">
             {availableDestinations.map((dest) => (
-              <DestinationCard key={dest.id} destination={dest} passportId={activePassportId} />
+              <DestinationCard key={dest.id} destination={dest} passportId={activePassportId} summary={summaries.get(dest.id)} />
             ))}
           </div>
 

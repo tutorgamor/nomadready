@@ -15,12 +15,17 @@ const BASE_SECTIONS = [
   { id: "checklist",  label: "✅ Checklist" },
 ] as const;
 
-const GEMS_SECTION = { id: "gems", label: "💎 Gems" } as const;
+const NOTES_SECTION = { id: "notes", label: "📌 Notes" } as const;
+const GEMS_SECTION  = { id: "gems",  label: "💎 Gems"  } as const;
 
-type SectionId = (typeof BASE_SECTIONS)[number]["id"] | "gems";
+type SectionId = (typeof BASE_SECTIONS)[number]["id"] | "notes" | "gems";
 
-export function SectionNav({ hasGems = false }: { hasGems?: boolean }) {
-  const sections = hasGems ? [...BASE_SECTIONS, GEMS_SECTION] : BASE_SECTIONS;
+export function SectionNav({ hasGems = false, hasNotes = false }: { hasGems?: boolean; hasNotes?: boolean }) {
+  const sections = [
+    ...BASE_SECTIONS,
+    ...(hasNotes ? [NOTES_SECTION] : []),
+    ...(hasGems  ? [GEMS_SECTION]  : []),
+  ];
   const [active, setActive] = useState<SectionId>(BASE_SECTIONS[0].id);
   const navRef = useRef<HTMLElement>(null);
 

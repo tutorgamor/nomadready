@@ -1,0 +1,27 @@
+[
+  {
+    "type": "transport",
+    "title": "Inter-island transfers can eat your entire day",
+    "note": "A 'short hop' between islands often means: jeepney to port (1–2h), wait for ferry (1–3h), crossing (2–5h), then tricycle from the port. Plan a full buffer day on both ends — not just one."
+  },
+  {
+    "type": "wifi",
+    "title": "Island internet flips between fast and near-zero, often within an hour",
+    "note": "Mobile data on PLDT or Smart can drop from solid LTE to nothing on smaller islands without warning. Download maps, work files, and anything you need before leaving the city."
+  },
+  {
+    "type": "ferry",
+    "title": "Ferry schedules are optimistic — weather cancels with little notice",
+    "note": "Fast ferries get pulled in rough seas sometimes only hours before departure. Roro ferries are slower but more resilient to cancellation. Never book a flight out the same day as a sea crossing."
+  },
+  {
+    "type": "money",
+    "title": "ATMs run out on popular islands over weekends",
+    "note": "Even in tourist areas like El Nido or Coron, ATMs run dry on Fridays and public holidays. Carry enough pesos for 2–3 extra days before heading to a smaller island."
+  },
+  {
+    "type": "cost",
+    "title": "Resort island prices have risen sharply since 2019",
+    "note": "El Nido and Coron have roughly doubled in price. Budget travel is still possible but requires booking ahead and eating where locals eat — tourist menus are now closer to European pricing."
+  }
+]

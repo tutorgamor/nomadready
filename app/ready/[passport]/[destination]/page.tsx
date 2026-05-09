@@ -18,9 +18,10 @@ import { PhrasesSection }    from "@/components/ready/PhrasesSection";
 import { EmergencySection }  from "@/components/ready/EmergencySection";
 import { ChecklistSection }  from "@/components/ready/ChecklistSection";
 import { TravelScoreSection }   from "@/components/ready/TravelScoreSection";
-import { LocalGemsSection }     from "@/components/ready/LocalGemsSection";
-import { ProfileSummaryCard }   from "@/components/ready/ProfileSummaryCard";
-import type { Place, BudgetTier } from "@/lib/types";
+import { LocalGemsSection }          from "@/components/ready/LocalGemsSection";
+import { RealTravelNotesSection }    from "@/components/ready/RealTravelNotesSection";
+import { ProfileSummaryCard }        from "@/components/ready/ProfileSummaryCard";
+import type { Place, BudgetTier, RealTravelNote } from "@/lib/types";
 
 const destinations = destinationsData as Destination[];
 const passports = passportsData as Passport[];
@@ -87,6 +88,11 @@ export default async function ReadyPage({ params }: Props) {
   const placesPath = path.join(process.cwd(), "data", "places", `${destination}.json`);
   const places: Place[] | null = fs.existsSync(placesPath)
     ? (JSON.parse(fs.readFileSync(placesPath, "utf-8")) as Place[])
+    : null;
+
+  const notesPath = path.join(process.cwd(), "data", "notes", `${destination}.json`);
+  const notes: RealTravelNote[] | null = fs.existsSync(notesPath)
+    ? (JSON.parse(fs.readFileSync(notesPath, "utf-8")) as RealTravelNote[])
     : null;
 
   const reviewedDate = new Date(data.last_reviewed).toLocaleDateString("en-GB", {
@@ -240,7 +246,7 @@ export default async function ReadyPage({ params }: Props) {
       </header>
 
       {/* ── Sticky section nav ────────────────────────────────── */}
-      <SectionNav hasGems={places !== null} />
+      <SectionNav hasGems={places !== null} hasNotes={notes !== null && notes.length > 0} />
 
       {/* ── All 10 sections ───────────────────────────────────── */}
       <div
@@ -272,6 +278,11 @@ export default async function ReadyPage({ params }: Props) {
         <div id="phrases"    style={SECTION_OFFSET}><PhrasesSection    phrases={data.phrases} /></div>
         <div id="emergency"  style={SECTION_OFFSET}><EmergencySection  emergency={data.emergency} /></div>
         <div id="checklist"  style={SECTION_OFFSET}><ChecklistSection  checklist={data.checklist} /></div>
+        {notes && notes.length > 0 && (
+          <div id="notes" style={SECTION_OFFSET}>
+            <RealTravelNotesSection notes={notes} />
+          </div>
+        )}
         {places && (
           <div id="gems" style={SECTION_OFFSET}>
             <LocalGemsSection places={places} />

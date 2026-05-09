@@ -217,6 +217,14 @@ export interface ChecklistItem {
   priority: ChecklistPriority;
 }
 
+// ─── Real Travel Notes ────────────────────────────────────────
+
+export interface RealTravelNote {
+  type: string;   // e.g. "wifi", "transport", "money" — drives display icon
+  title: string;
+  note: string;
+}
+
 // ─── Root ReadyData ───────────────────────────────────────────
 
 export interface ReadyData {

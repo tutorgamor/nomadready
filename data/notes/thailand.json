@@ -1,0 +1,27 @@
+[
+  {
+    "type": "wifi",
+    "title": "Hotel WiFi looks fast — it won't hold a video call",
+    "note": "Most hotels score 20–50 Mbps on SpeedTest. That reads fine, but shared mesh networks collapse under load. Test at your room desk before booking a Zoom call, not the lobby."
+  },
+  {
+    "type": "cost",
+    "title": "The islands are a different budget entirely",
+    "note": "Koh Samui, Phi Phi, and Koh Tao run 40–60% more expensive than the mainland. Budget bungalows have mostly disappeared. Factor this in before planning a slow-travel month in the south."
+  },
+  {
+    "type": "transport",
+    "title": "Rainy season means cancelled transfers, not just wet days",
+    "note": "June to October in the south brings real disruptions: ferries get cancelled for days at a time and roads to some areas flood. Build buffer days on both sides of any island stay."
+  },
+  {
+    "type": "money",
+    "title": "ATM fees stack — withdraw the maximum each time",
+    "note": "Most Thai ATMs charge a flat 220–250 THB fee per withdrawal regardless of amount. Take out the daily maximum rather than making small withdrawals throughout the week."
+  },
+  {
+    "type": "accommodation",
+    "title": "Air-con is often priced separately in guesthouses",
+    "note": "Budget listings frequently show the fan-room price. Air-con adds 100–200 THB per night — ask before you commit, especially if you're travelling in March–May in the north."
+  }
+]

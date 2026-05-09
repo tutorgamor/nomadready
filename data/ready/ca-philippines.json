@@ -1,0 +1,155 @@
+{
+  "passport": "ca",
+  "destination": "philippines",
+  "last_reviewed": "2026-05-09",
+  "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
+
+  "visa": {
+    "type": "Visa Exemption",
+    "duration_days": 30,
+    "extendable": false,
+    "multiple_entry": false,
+    "cost_eur": 0,
+    "notes": "Canadian passport holders are entitled to a 30-day visa-free tourist stay in the Philippines. No visa is required on arrival. A return or onward ticket is generally required and may be checked at check-in or immigration. Passport must be valid for at least 6 months beyond your intended departure date.",
+    "verify_required": true,
+    "verify_note": "Philippines immigration rules can change. Verify current visa exemption terms at the Bureau of Immigration Philippines or via the Canadian Embassy in Manila before booking."
+  },
+
+  "insurance": {
+    "required": false,
+    "recommended": true,
+    "notes": "Not legally required but strongly recommended. Ensure your policy covers: scuba diving and water activities (often excluded by default), medical evacuation from remote islands, and adventure activities. Hospital costs for serious incidents can reach C$16,000 or more outside of Manila and Cebu.",
+    "verify_required": false
+  },
+
+  "best_season": {
+    "overall_best_months": ["Dec", "Jan", "Feb", "Mar", "Apr"],
+    "regions": [
+      {
+        "area": "Luzon (Manila, Palawan, Batangas)",
+        "best": ["Dec", "Jan", "Feb", "Mar", "Apr"],
+        "avoid": ["Jun", "Jul", "Aug", "Sep", "Oct"],
+        "notes": "Peak dry season Dec–Apr: sunny and ideal for beaches and Palawan. Heavy typhoon risk Jun–Oct, especially in and around Manila and northern Luzon."
+      },
+      {
+        "area": "Visayas (Cebu, Bohol, Boracay)",
+        "best": ["Dec", "Jan", "Feb", "Mar", "Apr", "May"],
+        "avoid": ["Jul", "Aug", "Sep"],
+        "notes": "Drier and less typhoon-prone than Luzon. Dec–May is excellent for diving, beaches, and Boracay. Seas get rough Jul–Sep."
+      },
+      {
+        "area": "Mindanao (Davao, Siargao, General Santos)",
+        "best": ["Mar", "Apr", "May", "Jun", "Jul"],
+        "avoid": ["Nov", "Dec", "Jan"],
+        "notes": "Less affected by typhoons than northern Philippines. Siargao surf season peaks Aug–Nov. Davao is dry Mar–May. Check local conditions by sub-region before travel."
+      }
+    ]
+  },
+
+  "budget": {
+    "currency": "PHP",
+    "currency_symbol": "₱",
+    "exchange_rates": { "EUR": 63, "GBP": 74, "USD": 57, "CAD": 42, "AUD": 37 },
+    "verify_required": true,
+    "verify_note": "Rates are approximate. Check xe.com before travel.",
+    "tiers": {
+      "budget": {
+        "label": "Backpacker",
+        "daily_php": 1400,
+        "includes": "Dorm bed, turo-turo meals, local transport, street snacks"
+      },
+      "mid": {
+        "label": "Comfort",
+        "daily_php": 3200,
+        "includes": "Private guesthouse, local restaurants, Grab rides, activities"
+      },
+      "high": {
+        "label": "Boutique",
+        "daily_php": 7000,
+        "includes": "Boutique hotel, dining out, island tours, scuba diving"
+      }
+    },
+    "cost_anchors": [
+      { "item": "Adobo rice meal (local restaurant)", "php": 120 },
+      { "item": "Halo-halo (dessert)", "php": 80 },
+      { "item": "San Miguel beer", "php": 55 },
+      { "item": "Grab ride (5km, Manila)", "php": 120 },
+      { "item": "Budget hostel dorm (Manila)", "php": 600 },
+      { "item": "Fresh buko (coconut)", "php": 40 },
+      { "item": "Jeepney ride", "php": 15 }
+    ]
+  },
+
+  "useful_apps": [
+    { "name": "Grab", "use": "Taxi & food delivery in cities", "platform": "iOS/Android" },
+    { "name": "Google Maps", "use": "Navigation — download offline maps before arriving", "platform": "iOS/Android" },
+    { "name": "Klook", "use": "Book island tours, activities, and transport", "platform": "iOS/Android" },
+    { "name": "Agoda", "use": "Accommodation — competitive rates across the Philippines", "platform": "iOS/Android" },
+    { "name": "Airalo", "use": "eSIM data — buy before you land", "platform": "iOS/Android" },
+    { "name": "XE", "use": "Live exchange rates", "platform": "iOS/Android" },
+    { "name": "12Go", "use": "Ferry and transport booking between islands", "platform": "Web/iOS/Android" }
+  ],
+
+  "transport": [
+    "Domestic flights are the fastest way to travel between major islands — book early on Cebu Pacific or Philippine Airlines for the best fares.",
+    "Ferries connect most islands but vary heavily in comfort and reliability — research operators carefully, especially for overnight routes.",
+    "Grab works well in Manila, Cebu City, and Davao — always use it instead of flagging unmarked taxis.",
+    "Tricycles (motorbike sidecars) are the main local transport in smaller towns — always agree on the price before boarding.",
+    "Jeepneys are cheap and iconic but routes can be confusing for first-time visitors — ask locals or use Google Maps for guidance.",
+    "Travel times between islands can be unpredictable due to weather, sea conditions, or schedule changes — always build in buffer days."
+  ],
+
+  "scams": [
+    {
+      "name": "Overpriced island tours",
+      "description": "Tour packages near popular beaches and ferry ports are often heavily inflated for tourists. Compare prices at multiple shops and ask your accommodation for recommendations."
+    },
+    {
+      "name": "Tricycle overcharging",
+      "description": "Tricycle drivers near tourist areas frequently quote prices many times above the local rate. Always agree on a price before boarding and carry small bills."
+    },
+    {
+      "name": "Tourist pricing in highly visited islands",
+      "description": "Restaurants, shops, and activities in places like Boracay, Coron, and El Nido often apply tourist pricing. Check online reviews for typical price ranges before buying."
+    },
+    {
+      "name": "Fake ferry or tour operators",
+      "description": "Informal sellers near ports may pose as legitimate ferry or tour companies. Book through verified platforms like 12Go or Klook, or through your accommodation."
+    }
+  ],
+
+  "phrases": [
+    { "phrase": "Salamat", "pronunciation": "sa-LA-mat", "meaning": "Thank you" },
+    { "phrase": "Magkano?", "pronunciation": "mag-KA-no", "meaning": "How much?" },
+    { "phrase": "Kumusta", "pronunciation": "ku-MUS-ta", "meaning": "Hello / How are you?" },
+    { "phrase": "Tubig", "pronunciation": "TOO-big", "meaning": "Water" },
+    { "phrase": "Hindi", "pronunciation": "HIN-di", "meaning": "No" }
+  ],
+
+  "emergency": {
+    "police": "911",
+    "ambulance": "911",
+    "fire": "911",
+    "embassy_label": "Canadian Embassy in Manila / Consular assistance",
+    "embassy": {
+      "phone": "Verify official embassy contact before travel",
+      "address": "Verify official embassy contact before travel",
+      "verify_required": true
+    },
+    "notes": "Dial 911 for all emergencies in the Philippines. For emergencies involving Canadian nationals, contact the Canadian Embassy in Manila — verify contact details before travel."
+  },
+
+  "checklist": [
+    { "item": "Passport valid 6+ months beyond your intended departure date", "priority": "critical" },
+    { "item": "Verify current 30-day visa exemption rules with the Bureau of Immigration Philippines or via the Canadian Embassy in Manila", "priority": "critical" },
+    { "item": "Purchase travel insurance (check diving, water activities, and medical evacuation coverage)", "priority": "critical" },
+    { "item": "Book a return or onward ticket — required at immigration and may be checked at check-in", "priority": "high" },
+    { "item": "Notify your bank of travel dates to avoid card blocks", "priority": "high" },
+    { "item": "Download Google Maps offline and install Grab before arriving", "priority": "high" },
+    { "item": "Buy Airalo eSIM or arrange a local SIM on arrival at the airport", "priority": "high" },
+    { "item": "Bring USD or CAD to exchange on arrival — USD is more widely accepted than CAD in tourist areas", "priority": "medium" },
+    { "item": "Save Philippines emergency number (911) in your phone", "priority": "medium" },
+    { "item": "Check typhoon season if traveling Jun–Oct — monitor PAGASA (Philippine weather agency)", "priority": "medium" },
+    { "item": "Pack insect repellent — dengue is present throughout the Philippines", "priority": "low" }
+  ]
+}

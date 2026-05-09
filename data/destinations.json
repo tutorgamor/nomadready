@@ -106,5 +106,23 @@
       "transport": 78,
       "nomad_friendly": 84
     }
+  },
+  {
+    "id": "philippines",
+    "label": "Philippines",
+    "emoji": "🇵🇭",
+    "hero_tag": "Islands, snorkeling & tropical sunsets",
+    "cover_color": "#2563EB",
+    "region": "Southeast Asia",
+    "ready_file": "fr-philippines",
+    "travel_score": {
+      "overall": 86,
+      "visa_ease": 88,
+      "budget": 90,
+      "safety": 72,
+      "internet": 68,
+      "transport": 65,
+      "nomad_friendly": 80
+    }
   }
 ]

@@ -98,6 +98,7 @@ export interface BudgetTier {
   daily_gel?: number;
   daily_try?: number;
   daily_vnd?: number;
+  daily_php?: number;
 }
 
 export interface CostAnchor {
@@ -109,6 +110,7 @@ export interface CostAnchor {
   gel?: number;
   try?: number;
   vnd?: number;
+  php?: number;
 }
 
 export interface BudgetInfo extends Verifiable {

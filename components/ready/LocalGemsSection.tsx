@@ -274,9 +274,20 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
                           flexShrink: 0,
                         }}
                       >
-                        Maps ↗
+                        Open in Maps ↗
                       </a>
-                    ) : null}
+                    ) : (
+                      <span
+                        style={{
+                          fontSize: "0.72rem",
+                          color: "var(--text-muted)",
+                          fontStyle: "italic",
+                          flexShrink: 0,
+                        }}
+                      >
+                        Map link coming soon
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}

@@ -142,5 +142,23 @@
       "transport": 98,
       "nomad_friendly": 86
     }
+  },
+  {
+    "id": "south-korea",
+    "label": "South Korea",
+    "emoji": "🇰🇷",
+    "hero_tag": "Cafes, mountains & neon cities",
+    "cover_color": "#2563EB",
+    "region": "East Asia",
+    "ready_file": "fr-south-korea",
+    "travel_score": {
+      "overall": 89,
+      "visa_ease": 88,
+      "budget": 70,
+      "safety": 94,
+      "internet": 96,
+      "transport": 95,
+      "nomad_friendly": 88
+    }
   }
 ]

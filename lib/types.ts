@@ -100,6 +100,7 @@ export interface BudgetTier {
   daily_vnd?: number;
   daily_php?: number;
   daily_jpy?: number;
+  daily_krw?: number;
 }
 
 export interface CostAnchor {
@@ -113,6 +114,7 @@ export interface CostAnchor {
   vnd?: number;
   php?: number;
   jpy?: number;
+  krw?: number;
 }
 
 export interface BudgetInfo extends Verifiable {

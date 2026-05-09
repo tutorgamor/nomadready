@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Destination, BudgetInfo } from "@/lib/types";
 import { getDailyLocal, CURRENCY_SYMBOLS } from "@/lib/budget";
+import { useProfileContext } from "@/lib/profile";
 
 type Style = "Backpacker" | "Comfort" | "Boutique";
 const STYLES: Style[] = ["Backpacker", "Comfort", "Boutique"];
@@ -37,11 +38,26 @@ interface TripPlannerProps {
 export function TripPlanner({ destinations, budgets, passportCurrency }: TripPlannerProps) {
   const [days, setDays] = useState(7);
   const [style, setStyle] = useState<Style>("Comfort");
+  const { profile } = useProfileContext();
 
   const refSymbol = CURRENCY_SYMBOLS[passportCurrency] ?? passportCurrency;
 
   return (
     <div className="card">
+      {/* Profile blurb */}
+      <p
+        style={{
+          fontSize: "0.8rem",
+          color: "var(--accent-dark, #7c4b2a)",
+          margin: "0 0 0.875rem",
+          fontStyle: "italic",
+          opacity: 0.8,
+          lineHeight: 1.5,
+        }}
+      >
+        {profile.plannerBlurb}
+      </p>
+
       {/* Controls */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.125rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>

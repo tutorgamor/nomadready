@@ -5,6 +5,8 @@ import passportsData from "@/data/passports.json";
 import destinationsData from "@/data/destinations.json";
 import type { Passport, Destination, ReadyData } from "@/lib/types";
 import { PassportSelector } from "@/components/PassportSelector";
+import { ProfileSelector } from "@/components/ProfileSelector";
+import { ProfileNote } from "@/components/ProfileNote";
 import { DestinationCard } from "@/components/DestinationCard";
 import type { DestinationSummary } from "@/components/DestinationCard";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
@@ -124,6 +126,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               {/* Passport selector */}
               <PassportSelector passports={passports} activeId={activePassportId} />
 
+              {/* Profile selector */}
+              <ProfileSelector />
+
             </div>
 
             {/* ── Right: destination mosaic (desktop only) ── */}
@@ -200,18 +205,21 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       {/* ── Comparison strip ─────────────────────────────────── */}
       <section style={{ paddingBottom: "3rem" }}>
         <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-          <h2
-            style={{
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              letterSpacing: "0.07em",
-              textTransform: "uppercase",
-              color: "var(--text-muted)",
-              margin: 0,
-            }}
-          >
-            Quick comparison
-          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+            <h2
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                letterSpacing: "0.07em",
+                textTransform: "uppercase",
+                color: "var(--text-muted)",
+                margin: 0,
+              }}
+            >
+              Quick comparison
+            </h2>
+            <ProfileNote field="comparisonNote" />
+          </div>
           <ComparisonStrip destinations={availableDestinations} summaries={summaries} />
         </div>
       </section>

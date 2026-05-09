@@ -1,4 +1,7 @@
+"use client";
+
 import type { TravelScore } from "@/lib/types";
+import { useProfileContext } from "@/lib/profile";
 
 function scoreStyle(score: number): { color: string; track: string } {
   if (score >= 85) return { color: "#15803d", track: "#bbf7d0" };
@@ -22,6 +25,7 @@ const CATEGORIES = [
 ];
 
 export function TravelScoreSection({ score }: { score: TravelScore }) {
+  const { profile } = useProfileContext();
   const badge = overallBadgeStyle(score.overall);
 
   return (
@@ -33,7 +37,7 @@ export function TravelScoreSection({ score }: { score: TravelScore }) {
           alignItems: "flex-start",
           justifyContent: "space-between",
           gap: "1rem",
-          marginBottom: "1.125rem",
+          marginBottom: "0.5rem",
         }}
       >
         <div>
@@ -84,11 +88,26 @@ export function TravelScoreSection({ score }: { score: TravelScore }) {
         </div>
       </div>
 
+      {/* Profile blurb */}
+      <p
+        style={{
+          fontSize: "0.8rem",
+          color: "var(--accent-dark, #7c4b2a)",
+          margin: "0 0 1rem",
+          fontStyle: "italic",
+          opacity: 0.8,
+          lineHeight: 1.5,
+        }}
+      >
+        {profile.scoreBlurb}
+      </p>
+
       {/* Category rows */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         {CATEGORIES.map(({ key, label, icon }) => {
           const val = score[key];
           const s = scoreStyle(val);
+          const isHighlighted = profile.scoreHighlight.includes(key);
           return (
             <div
               key={key}
@@ -103,13 +122,28 @@ export function TravelScoreSection({ score }: { score: TravelScore }) {
               <span
                 style={{
                   fontSize: "0.8rem",
-                  fontWeight: 500,
-                  color: "var(--text-secondary)",
+                  fontWeight: isHighlighted ? 700 : 500,
+                  color: isHighlighted ? "var(--text-primary)" : "var(--text-secondary)",
                   flexShrink: 0,
                   width: "5.25rem",
                 }}
               >
                 {label}
+                {isHighlighted && (
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "0.3rem",
+                      width: "0.35rem",
+                      height: "0.35rem",
+                      borderRadius: "50%",
+                      background: "var(--accent, #c17b3a)",
+                      verticalAlign: "middle",
+                      marginBottom: "0.1rem",
+                    }}
+                  />
+                )}
               </span>
               {/* Bar track */}
               <div

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { ProfileProvider } from "@/components/ProfileProvider";
 import "./globals.css";
 
 /* ─── Metadata ───────────────────────────────────────────── */
@@ -54,7 +55,7 @@ export default function RootLayout({
       <body>
         {/* Global layout wrapper — mobile-first, centered */}
         <div className="min-h-dvh flex flex-col">
-          {children}
+          <ProfileProvider>{children}</ProfileProvider>
         </div>
       </body>
     </html>

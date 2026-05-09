@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Place, PlaceCategory, PriceLevel } from "@/lib/types";
+import { useProfileContext } from "@/lib/profile";
 
 const CATEGORY_ICON: Record<PlaceCategory, string> = {
   restaurant:    "🍽️",
@@ -59,7 +60,12 @@ const CATEGORY_ORDER: PlaceCategory[] = [
 ];
 
 export function LocalGemsSection({ places }: { places: Place[] }) {
-  const [activeFilter, setActiveFilter] = useState("All");
+  const { profile } = useProfileContext();
+  const [activeFilter, setActiveFilter] = useState(profile.gemsFilter);
+
+  useEffect(() => {
+    setActiveFilter(profile.gemsFilter);
+  }, [profile.gemsFilter]);
 
   const allowedCategories: Set<PlaceCategory> =
     activeFilter === "All"
@@ -74,8 +80,20 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
   return (
     <div className="card">
       <p className="section-heading">💎 Local Gems</p>
-      <p style={{ fontSize: "0.8125rem", color: "var(--text-muted)", margin: "0 0 1rem", lineHeight: 1.5 }}>
+      <p style={{ fontSize: "0.8125rem", color: "var(--text-muted)", margin: "0 0 0.375rem", lineHeight: 1.5 }}>
         Curated picks from people who&apos;ve been there.
+      </p>
+      <p
+        style={{
+          fontSize: "0.8rem",
+          color: "var(--accent-dark, #7c4b2a)",
+          margin: "0 0 1rem",
+          fontStyle: "italic",
+          opacity: 0.8,
+          lineHeight: 1.5,
+        }}
+      >
+        {profile.gemsBlurb}
       </p>
 
       {/* Filter pills */}

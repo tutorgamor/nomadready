@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import type { Destination } from "@/lib/types";
+import { ProfileCardBadge } from "@/components/ProfileCardBadge";
 
 export interface DestinationSummary {
   visaLabel: string;
@@ -148,6 +149,11 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
           >
             {region}
           </span>
+        </div>
+
+        {/* Profile-specific highlight badge */}
+        <div>
+          <ProfileCardBadge travelScore={travel_score} />
         </div>
 
         {/* ── Highlights grid ── */}

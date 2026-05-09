@@ -129,6 +129,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               {/* Profile selector */}
               <ProfileSelector />
 
+              {/* Personalized insight line */}
+              <ProfileNote field="insightLine" />
+
             </div>
 
             {/* ── Right: destination mosaic (desktop only) ── */}

@@ -14,6 +14,7 @@ export interface TravelerProfile {
   label: string;
   emoji: string;
   tagline: string;
+  insightLine: string;
   comparisonNote: string;
   plannerBlurb: string;
   scoreHighlight: string[];
@@ -30,6 +31,7 @@ export const PROFILES: TravelerProfile[] = [
     label: "Backpacker",
     emoji: "🎒",
     tagline: "Max flexibility, minimal spend",
+    insightLine: "Prioritizing low daily costs, easy transport, and flexible stays.",
     comparisonNote: "Sorted for budget & flexibility.",
     plannerBlurb: "Hostels, street food & local buses — your budget here.",
     scoreHighlight: ["budget"],
@@ -42,6 +44,7 @@ export const PROFILES: TravelerProfile[] = [
     label: "Digital Nomad",
     emoji: "💻",
     tagline: "Work-friendly stays & fast wifi",
+    insightLine: "Prioritizing internet reliability, comfort for calls, and long-stay practicality.",
     comparisonNote: "Highlighting nomad scene & internet scores.",
     plannerBlurb: "Mid-stay estimates including cowork day passes & reliable internet.",
     scoreHighlight: ["internet", "nomad_friendly"],
@@ -54,6 +57,7 @@ export const PROFILES: TravelerProfile[] = [
     label: "Food Explorer",
     emoji: "🍜",
     tagline: "Eat local, eat well",
+    insightLine: "Prioritizing local food, cafés, bakeries, and markets.",
     comparisonNote: "Emphasizing food scenes & local markets.",
     plannerBlurb: "Budget includes dining out, market grazing & street food.",
     scoreHighlight: ["budget"],
@@ -66,6 +70,7 @@ export const PROFILES: TravelerProfile[] = [
     label: "Comfort",
     emoji: "🛋️",
     tagline: "Convenience & quality first",
+    insightLine: "Prioritizing convenience, smoother transport, and higher comfort.",
     comparisonNote: "Highlighting safety & transport scores.",
     plannerBlurb: "Hotel stays & reliable transport — comfort budget here.",
     scoreHighlight: ["safety", "transport"],
@@ -78,6 +83,7 @@ export const PROFILES: TravelerProfile[] = [
     label: "Adventure",
     emoji: "🏄",
     tagline: "Islands, trails & open roads",
+    insightLine: "Prioritizing nature, islands, hiking, snorkeling, and flexible routes.",
     comparisonNote: "Highlighting transport flexibility & nature access.",
     plannerBlurb: "Includes activity costs — snorkeling, hikes & gear rentals.",
     scoreHighlight: ["transport"],

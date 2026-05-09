@@ -17,9 +17,10 @@ import { ScamsSection }      from "@/components/ready/ScamsSection";
 import { PhrasesSection }    from "@/components/ready/PhrasesSection";
 import { EmergencySection }  from "@/components/ready/EmergencySection";
 import { ChecklistSection }  from "@/components/ready/ChecklistSection";
-import { TravelScoreSection } from "@/components/ready/TravelScoreSection";
-import { LocalGemsSection }   from "@/components/ready/LocalGemsSection";
-import type { Place } from "@/lib/types";
+import { TravelScoreSection }   from "@/components/ready/TravelScoreSection";
+import { LocalGemsSection }     from "@/components/ready/LocalGemsSection";
+import { ProfileSummaryCard }   from "@/components/ready/ProfileSummaryCard";
+import type { Place, BudgetTier } from "@/lib/types";
 
 const destinations = destinationsData as Destination[];
 const passports = passportsData as Passport[];
@@ -57,6 +58,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const SECTION_OFFSET: React.CSSProperties = { scrollMarginTop: "56px" };
+
+function formatTierAmount(tier: BudgetTier, symbol: string): string {
+  const amount =
+    tier.daily_thb ?? tier.daily_myr ?? tier.daily_idr ?? tier.daily_gel ??
+    tier.daily_try ?? tier.daily_vnd ?? tier.daily_php ?? tier.daily_jpy ??
+    tier.daily_krw ?? null;
+  return amount != null ? `${symbol}${amount}/d` : "—";
+}
+
+function formatMonthRange(months: string[]): string {
+  if (!months || months.length === 0) return "—";
+  if (months.length === 1) return months[0];
+  return `${months[0]}–${months[months.length - 1]}`;
+}
 
 export default async function ReadyPage({ params }: Props) {
   const { passport: passportId, destination } = await params;
@@ -240,6 +255,13 @@ export default async function ReadyPage({ params }: Props) {
         }}
       >
         {dest.travel_score && <TravelScoreSection score={dest.travel_score} />}
+        <ProfileSummaryCard
+          travelScore={dest.travel_score ?? null}
+          budgetLow={formatTierAmount(data.budget.tiers.budget, data.budget.currency_symbol)}
+          budgetMid={formatTierAmount(data.budget.tiers.mid, data.budget.currency_symbol)}
+          bestMonths={formatMonthRange(data.best_season.overall_best_months)}
+          hasLocalGems={places !== null}
+        />
         <div id="visa"       style={SECTION_OFFSET}><VisaSection       visa={data.visa} /></div>
         <div id="insurance"  style={SECTION_OFFSET}><InsuranceSection  insurance={data.insurance} /></div>
         <div id="season"     style={SECTION_OFFSET}><BestSeasonSection bestSeason={data.best_season} /></div>

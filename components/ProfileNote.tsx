@@ -5,7 +5,7 @@ import { useProfileContext, type TravelerProfile } from "@/lib/profile";
 interface ProfileNoteProps {
   field: keyof Pick<
     TravelerProfile,
-    "comparisonNote" | "plannerBlurb" | "scoreBlurb" | "gemsBlurb"
+    "insightLine" | "comparisonNote" | "plannerBlurb" | "scoreBlurb" | "gemsBlurb"
   >;
 }
 

@@ -51,13 +51,25 @@ const FILTER_CATEGORIES: Record<string, PlaceCategory[]> = {
 
 const FILTERS = ["All", "Food", "Transport", "Nature", "Culture", "Practical"];
 
-const CATEGORY_ORDER: PlaceCategory[] = [
+const DEFAULT_CATEGORY_ORDER: PlaceCategory[] = [
   "restaurant", "bakery", "cafe",
   "scooter_rental", "transport",
   "beach", "snorkeling", "viewpoint",
   "temple", "monument", "museum",
   "practical",
 ];
+
+const PROFILE_CATEGORY_FIRST: Partial<Record<string, PlaceCategory[]>> = {
+  food_explorer: ["restaurant", "bakery", "cafe"],
+  adventure:     ["beach", "snorkeling", "viewpoint", "scooter_rental"],
+  digital_nomad: ["cafe", "practical"],
+};
+
+function getProfileCategoryOrder(profileId: string): PlaceCategory[] {
+  const first = PROFILE_CATEGORY_FIRST[profileId];
+  if (!first) return DEFAULT_CATEGORY_ORDER;
+  return [...first, ...DEFAULT_CATEGORY_ORDER.filter((c) => !first.includes(c))];
+}
 
 export function LocalGemsSection({ places }: { places: Place[] }) {
   const { profile } = useProfileContext();
@@ -67,12 +79,14 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
     setActiveFilter(profile.gemsFilter);
   }, [profile.gemsFilter]);
 
+  const categoryOrder = getProfileCategoryOrder(profile.id);
+
   const allowedCategories: Set<PlaceCategory> =
     activeFilter === "All"
-      ? new Set(CATEGORY_ORDER)
+      ? new Set(categoryOrder)
       : new Set(FILTER_CATEGORIES[activeFilter] ?? []);
 
-  const groups = CATEGORY_ORDER
+  const groups = categoryOrder
     .filter((cat) => allowedCategories.has(cat))
     .map((cat) => ({ category: cat, places: places.filter((p) => p.category === cat) }))
     .filter((g) => g.places.length > 0);

@@ -93,10 +93,53 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       <header
         className="home-header"
         style={{
-          background: "linear-gradient(180deg, #ede4d7 0%, #f2ebe1 55%, var(--bg-base) 100%)",
+          background: "linear-gradient(175deg, #e8ddd0 0%, #ede4d7 28%, #f2ebe1 62%, var(--bg-base) 100%)",
           borderBottom: "1px solid var(--border)",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
+        {/* Amber radial glow — warm atmospheric light */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: "55%",
+            height: "100%",
+            background: "radial-gradient(ellipse 75% 65% at 85% 25%, rgba(217,119,6,0.07) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }}
+        />
+        {/* Route constellation — decorative travel map accent (desktop only) */}
+        <svg
+          aria-hidden="true"
+          className="home-hero-deco"
+          style={{
+            position: "absolute",
+            top: "1.75rem",
+            right: "var(--page-gutter)",
+            opacity: 0.22,
+            pointerEvents: "none",
+          }}
+          width="130"
+          height="90"
+          viewBox="0 0 130 90"
+          fill="none"
+        >
+          <circle cx="14" cy="14" r="3" fill="var(--accent)" />
+          <circle cx="62" cy="7" r="2" fill="var(--accent)" />
+          <circle cx="104" cy="20" r="2.5" fill="var(--accent)" />
+          <circle cx="118" cy="58" r="2" fill="var(--accent)" />
+          <circle cx="36" cy="68" r="2.5" fill="var(--accent)" />
+          <circle cx="80" cy="48" r="3.5" fill="var(--accent)" />
+          <line x1="14" y1="14" x2="80" y2="48" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
+          <line x1="80" y1="48" x2="104" y2="20" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
+          <line x1="80" y1="48" x2="118" y2="58" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
+          <line x1="80" y1="48" x2="36" y2="68" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
+          <line x1="14" y1="14" x2="62" y2="7" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
+        </svg>
         <div className="page-container">
           <div className="home-hero-layout">
 
@@ -143,28 +186,41 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                   gap: "0.5rem",
                 }}
               >
-                {availableDestinations.slice(0, 9).map((dest) => (
+                {availableDestinations.slice(0, 9).map((dest, i) => (
                   <div
                     key={dest.id}
                     style={{
-                      width: "64px",
-                      height: "52px",
-                      borderRadius: "0.75rem",
+                      width: "66px",
+                      height: i % 3 === 1 ? "56px" : "50px",
+                      borderRadius: "0.875rem",
                       backgroundColor: dest.cover_color,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "1.4rem",
+                      fontSize: "1.35rem",
                       position: "relative",
                       overflow: "hidden",
-                      boxShadow: "0 2px 8px rgba(28,25,23,0.12)",
+                      boxShadow: "0 2px 10px rgba(28,25,23,0.14), 0 0 0 1px rgba(255,255,255,0.1)",
+                      alignSelf: i % 3 === 1 ? "flex-end" : "flex-start",
                     }}
                   >
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(255,255,255,0.14) 0%, rgba(0,0,0,0.1) 100%)" }} />
-                    <span style={{ position: "relative", filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.18))" }}>{dest.emoji}</span>
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, rgba(255,255,255,0.16) 0%, rgba(0,0,0,0.12) 100%)" }} />
+                    {/* Tiny terrain */}
+                    <svg viewBox="0 0 66 56" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+                      <path d="M-2 38 Q18 22 33 30 Q48 38 68 24 L68 60 L-2 60 Z" fill="rgba(255,255,255,0.12)" />
+                      <path d="M-2 46 Q20 36 40 42 Q54 47 68 36 L68 60 L-2 60 Z" fill="rgba(255,255,255,0.08)" />
+                    </svg>
+                    <span style={{ position: "relative", filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.2))" }}>{dest.emoji}</span>
                   </div>
                 ))}
               </div>
+              {/* Route line below mosaic */}
+              <svg width="218" height="14" viewBox="0 0 218 14" fill="none" style={{ marginTop: "0.125rem" }}>
+                <line x1="10" y1="7" x2="208" y2="7" stroke="var(--border-strong)" strokeWidth="1" strokeDasharray="4 6" />
+                <circle cx="10" cy="7" r="3.5" fill="var(--accent)" opacity="0.5" />
+                <circle cx="109" cy="7" r="2.5" fill="var(--accent)" opacity="0.35" />
+                <circle cx="208" cy="7" r="3.5" fill="var(--accent)" opacity="0.5" />
+              </svg>
               <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-muted)", margin: 0 }}>
                 {availableDestinations.length} destinations
               </p>
@@ -184,14 +240,18 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <h2
             id="destinations-heading"
             style={{
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              letterSpacing: "0.07em",
+              fontSize: "0.7rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: "var(--text-muted)",
               margin: 0,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
             }}
           >
+            <span style={{ color: "var(--accent)", opacity: 0.6 }}>✦</span>
             {availableDestinations.length} destination{availableDestinations.length !== 1 ? "s" : ""} available
           </h2>
 

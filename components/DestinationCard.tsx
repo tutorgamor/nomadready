@@ -41,38 +41,85 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
       <div
         style={{
           backgroundColor: cover_color,
-          height: "112px",
+          height: "116px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
+          overflow: "hidden",
         }}
         aria-hidden="true"
       >
+        {/* Diagonal depth overlay */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(160deg, rgba(255,255,255,0.14) 0%, rgba(0,0,0,0.12) 100%)",
+            background: "linear-gradient(155deg, rgba(255,255,255,0.16) 0%, rgba(0,0,0,0.14) 100%)",
           }}
         />
+        {/* Bottom vignette */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(0deg, rgba(0,0,0,0.1) 0%, transparent 50%)",
+            background: "linear-gradient(0deg, rgba(0,0,0,0.12) 0%, transparent 55%)",
           }}
         />
-        <span
+        {/* Sun glow — atmospheric light source */}
+        <div
           style={{
-            fontSize: "3rem",
-            lineHeight: 1,
+            position: "absolute",
+            top: "-25%",
+            right: "15%",
+            width: "55%",
+            paddingBottom: "55%",
+            background: "radial-gradient(ellipse, rgba(255,255,255,0.24) 0%, transparent 65%)",
+            borderRadius: "50%",
+          }}
+        />
+        {/* SVG terrain — illustrated horizon layers */}
+        <svg
+          viewBox="0 0 280 116"
+          preserveAspectRatio="xMidYMid slice"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        >
+          <path
+            d="M-10 78 Q55 44 135 64 Q195 80 290 46 L290 124 L-10 124 Z"
+            fill="rgba(255,255,255,0.13)"
+          />
+          <path
+            d="M-10 92 Q72 70 162 86 Q222 98 290 74 L290 124 L-10 124 Z"
+            fill="rgba(255,255,255,0.09)"
+          />
+        </svg>
+        {/* Frosted glass emoji ring */}
+        <div
+          style={{
             position: "relative",
-            filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.2))",
+            width: "62px",
+            height: "62px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(255,255,255,0.14)",
+            borderRadius: "50%",
+            backdropFilter: "blur(6px)",
+            WebkitBackdropFilter: "blur(6px)",
+            border: "1px solid rgba(255,255,255,0.22)",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.12)",
           }}
         >
-          {emoji}
-        </span>
+          <span
+            style={{
+              fontSize: "2.625rem",
+              lineHeight: 1,
+              filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.18))",
+            }}
+          >
+            {emoji}
+          </span>
+        </div>
       </div>
 
       {/* ── Card body ── */}
@@ -161,12 +208,14 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
           <div
             style={{
               borderTop: "1px solid var(--border)",
-              paddingTop: "0.75rem",
-              marginTop: "0.25rem",
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               rowGap: "0.625rem",
               columnGap: "0.5rem",
+              background: "linear-gradient(160deg, rgba(254,243,199,0.22) 0%, transparent 100%)",
+              borderRadius: "0.5rem",
+              margin: "0.25rem -0.5rem -0.5rem",
+              padding: "0.75rem 0.5rem 0.5rem",
             }}
           >
             <div>

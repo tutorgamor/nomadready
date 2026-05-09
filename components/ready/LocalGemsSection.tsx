@@ -92,7 +92,7 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
     .filter((g) => g.places.length > 0);
 
   return (
-    <div className="card">
+    <div className="card card--map-grid">
       <p className="section-heading">💎 Local Gems</p>
       <p style={{ fontSize: "0.8125rem", color: "var(--text-muted)", margin: "0 0 0.375rem", lineHeight: 1.5 }}>
         Curated picks from people who&apos;ve been there.
@@ -131,14 +131,16 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
                 flexShrink: 0,
                 padding: "0.3rem 0.75rem",
                 borderRadius: "9999px",
-                border: isActive ? "1px solid var(--text-primary)" : "1px solid var(--border)",
-                background: isActive ? "var(--text-primary)" : "transparent",
-                color: isActive ? "#fff" : "var(--text-muted)",
+                border: isActive ? "1px solid var(--accent-dark)" : "1px solid var(--border)",
+                background: isActive ? "var(--accent)" : "transparent",
+                color: isActive ? "#ffffff" : "var(--text-muted)",
                 fontSize: "0.75rem",
                 fontWeight: isActive ? 700 : 500,
                 cursor: "pointer",
                 whiteSpace: "nowrap",
                 letterSpacing: "0.03em",
+                boxShadow: isActive ? "0 2px 6px rgba(217,119,6,0.22)" : "none",
+                transition: "background 0.14s, color 0.14s, border-color 0.14s",
               }}
             >
               {f}

@@ -132,6 +132,49 @@ export default async function ReadyPage({ params }: Props) {
               "linear-gradient(0deg, rgba(0,0,0,0.38) 0%, transparent 55%)",
           }}
         />
+        {/* Sun glow — atmospheric light source */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: "-20%",
+            right: "10%",
+            width: "45%",
+            paddingBottom: "45%",
+            background: "radial-gradient(ellipse, rgba(255,255,255,0.22) 0%, transparent 65%)",
+            borderRadius: "50%",
+            pointerEvents: "none",
+          }}
+        />
+        {/* Terrain wave — organic landscape horizon at hero bottom */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "56px",
+            zIndex: 2,
+            pointerEvents: "none",
+          }}
+        >
+          <svg
+            viewBox="0 0 1440 56"
+            preserveAspectRatio="none"
+            style={{ width: "100%", height: "100%", display: "block" }}
+          >
+            <path
+              d="M0 38 Q180 16 360 28 Q540 42 720 22 Q900 6 1080 24 Q1260 40 1440 18 L1440 56 L0 56 Z"
+              fill="var(--bg-base)"
+            />
+            <path
+              d="M0 46 Q240 34 480 42 Q720 50 960 38 Q1200 28 1440 36 L1440 56 L0 56 Z"
+              fill="var(--bg-base)"
+              opacity="0.55"
+            />
+          </svg>
+        </div>
 
         <div
           className="page-container ready-hero-content"

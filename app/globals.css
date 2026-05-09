@@ -30,6 +30,9 @@
   /* Spacing rhythm */
   --page-gutter:    1rem;
   --section-gap:    2rem;
+
+  /* Depth */
+  --card-shadow:    0 1px 3px rgba(28,25,23,0.07), 0 4px 16px -4px rgba(28,25,23,0.07);
 }
 
 /* ─── Base Resets ────────────────────────────────────────── */
@@ -93,11 +96,24 @@ a:hover {
 
 /* Card base */
 .card {
-  background-color: var(--bg-card);
+  background: linear-gradient(160deg, #ffffff 0%, #fdfaf6 100%);
   border: 1px solid var(--border);
   border-radius: 1rem;
   padding: 1.375rem;
-  box-shadow: 0 1px 4px rgba(28, 25, 23, 0.06), 0 0 0 0 transparent;
+  box-shadow: var(--card-shadow);
+}
+
+/* Warm card variant — paper texture feel */
+.card--warm {
+  background: linear-gradient(150deg, #fffdf9 0%, #fdfaf6 60%, #f9f5f0 100%);
+}
+
+/* Map-grid card variant — travel journal aesthetic */
+.card--map-grid {
+  background-image:
+    radial-gradient(circle, rgba(180,100,20,0.045) 1px, transparent 1px),
+    linear-gradient(160deg, #ffffff 0%, #fdfaf6 100%);
+  background-size: 22px 22px, 100%;
 }
 
 /* Destination card — interactive */
@@ -114,9 +130,9 @@ a:hover {
 
 .dest-card:hover,
 .dest-card:focus-visible {
-  box-shadow: 0 14px 44px -6px rgba(28, 25, 23, 0.18);
-  transform: translateY(-3px);
-  border-color: var(--border-strong);
+  box-shadow: 0 18px 52px -8px rgba(28, 25, 23, 0.2), 0 0 0 1px rgba(217,119,6,0.12);
+  transform: translateY(-4px);
+  border-color: rgba(217,119,6,0.3);
   text-decoration: none;
 }
 
@@ -163,9 +179,22 @@ a:hover {
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.875rem;
-  padding-left: 0.625rem;
-  border-left: 2.5px solid var(--accent);
+  padding: 0.275rem 0.875rem 0.275rem 0.625rem;
+  border-left: 3px solid var(--accent);
   letter-spacing: -0.02em;
+  background: linear-gradient(90deg, rgba(254,243,199,0.7) 0%, transparent 75%);
+  border-radius: 0 0.3rem 0.3rem 0;
+}
+
+/* Desktop-only decorative element (home hero) */
+.home-hero-deco {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .home-hero-deco {
+    display: block;
+  }
 }
 
 /* ─── Desktop Responsive ─────────────────────────────────── */
@@ -247,16 +276,16 @@ a:hover {
   }
 }
 
-/* Travel Ready hero — more padding on desktop */
+/* Travel Ready hero — more padding on desktop (extra bottom for terrain wave) */
 .ready-hero-content {
   padding-top: 2rem;
-  padding-bottom: 2.75rem;
+  padding-bottom: 3.5rem;
 }
 
 @media (min-width: 768px) {
   .ready-hero-content {
     padding-top: 3.75rem;
-    padding-bottom: 4.5rem;
+    padding-bottom: 5rem;
   }
 }
 

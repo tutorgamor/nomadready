@@ -23,7 +23,7 @@ export function RealTravelNotesSection({ notes }: { notes: RealTravelNote[] }) {
   if (notes.length === 0) return null;
 
   return (
-    <div className="card">
+    <div className="card card--warm">
       <p className="section-heading">📌 Things Nobody Tells You</p>
       <p
         style={{
@@ -36,13 +36,15 @@ export function RealTravelNotesSection({ notes }: { notes: RealTravelNote[] }) {
         Practical realities from people who&apos;ve spent real time there.
       </p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
         {notes.map((n, i) => (
           <div
             key={i}
             style={{
               borderLeft: "3px solid var(--accent)",
-              paddingLeft: "0.875rem",
+              padding: "0.75rem 0.75rem 0.75rem 0.875rem",
+              background: "var(--bg-base)",
+              borderRadius: "0 0.5rem 0.5rem 0",
             }}
           >
             <div

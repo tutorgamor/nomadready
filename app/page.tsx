@@ -8,6 +8,7 @@ import { PassportSelector } from "@/components/PassportSelector";
 import { DestinationCard } from "@/components/DestinationCard";
 import type { DestinationSummary } from "@/components/DestinationCard";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
+import { TripPlanner } from "@/components/TripPlanner";
 
 export const metadata: Metadata = {
   title: { absolute: "NomadReady — Travel Readiness for Backpackers" },
@@ -49,6 +50,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const activePassportId = passports.some((p) => p.id === params.passport)
     ? params.passport!
     : "fr";
+  const passportCurrency = passports.find((p) => p.id === activePassportId)?.currency ?? "EUR";
 
   const dir = path.join(process.cwd(), "data", "ready");
   const availableIds = new Set(
@@ -60,6 +62,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const availableDestinations = destinations.filter((d) => availableIds.has(d.id));
 
   const summaries = new Map<string, DestinationSummary>();
+  const budgetRecord: Record<string, ReadyData["budget"]> = {};
   for (const dest of availableDestinations) {
     try {
       const data = JSON.parse(
@@ -70,6 +73,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         budgetFrom: formatBudget(data.budget),
         bestMonths: formatMonths(data.best_season.overall_best_months),
       });
+      budgetRecord[dest.id] = data.budget;
     } catch {
       // missing or unreadable file — card renders without highlights
     }
@@ -209,6 +213,29 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             Quick comparison
           </h2>
           <ComparisonStrip destinations={availableDestinations} summaries={summaries} />
+        </div>
+      </section>
+
+      {/* ── Trip planner ─────────────────────────────────────── */}
+      <section style={{ paddingBottom: "3rem" }}>
+        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+          <h2
+            style={{
+              fontSize: "0.72rem",
+              fontWeight: 600,
+              letterSpacing: "0.07em",
+              textTransform: "uppercase",
+              color: "var(--text-muted)",
+              margin: 0,
+            }}
+          >
+            Plan by trip length
+          </h2>
+          <TripPlanner
+            destinations={availableDestinations}
+            budgets={budgetRecord}
+            passportCurrency={passportCurrency}
+          />
         </div>
       </section>
 

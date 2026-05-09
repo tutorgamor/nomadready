@@ -2,23 +2,10 @@
 
 import { useState } from "react";
 import type { BudgetInfo, BudgetTier } from "@/lib/types";
-
-const CURRENCY_SYMBOLS: Record<string, string> = {
-  EUR: "€",
-  GBP: "£",
-  USD: "$",
-  CAD: "C$",
-  AUD: "A$",
-};
+import { CURRENCY_SYMBOLS, getDailyLocal } from "@/lib/budget";
 
 type Style = "Backpacker" | "Comfort" | "Boutique";
 const STYLES: Style[] = ["Backpacker", "Comfort", "Boutique"];
-
-function getDailyLocal(tier: BudgetTier, currency: string): number | undefined {
-  const key = `daily_${currency.toLowerCase()}` as keyof BudgetTier;
-  const value = tier[key];
-  return typeof value === "number" ? value : undefined;
-}
 
 interface Props {
   budget: BudgetInfo;

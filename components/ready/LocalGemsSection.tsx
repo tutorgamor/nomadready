@@ -1,4 +1,4 @@
-import type { Place, PlaceCategory } from "@/lib/types";
+import type { Place, PlaceCategory, PriceLevel } from "@/lib/types";
 
 const CATEGORY_ICON: Record<PlaceCategory, string> = {
   restaurant:    "🍽️",
@@ -30,7 +30,12 @@ const CATEGORY_LABEL: Record<PlaceCategory, string> = {
   practical:     "Practical",
 };
 
-const PRICE_DISPLAY = ["", "€", "€€", "€€€", "€€€€"] as const;
+const PRICE_LABEL: Record<PriceLevel, string> = {
+  free:    "Free",
+  budget:  "€",
+  mid:     "€€",
+  splurge: "€€€€",
+};
 
 export function LocalGemsSection({ places }: { places: Place[] }) {
   return (
@@ -94,7 +99,7 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
                 }}
               >
                 <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--text-secondary)" }}>
-                  {PRICE_DISPLAY[place.price_level]}
+                  {PRICE_LABEL[place.price_level]}
                 </span>
                 <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
                   {place.city_or_area}
@@ -134,7 +139,7 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
               &ldquo;{place.personal_note}&rdquo;
             </p>
 
-            {/* Footer row: best_for + maps link */}
+            {/* Footer row: best_for chips + maps link */}
             <div
               style={{
                 display: "flex",
@@ -144,29 +149,48 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
                 flexWrap: "wrap",
               }}
             >
-              <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
-                Best for: <span style={{ fontWeight: 500, color: "var(--text-secondary)" }}>{place.best_for}</span>
-              </span>
-              <a
-                href={place.google_maps_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.3rem",
-                  fontSize: "0.75rem",
-                  fontWeight: 600,
-                  color: "var(--accent-dark)",
-                  textDecoration: "none",
-                  padding: "0.25rem 0.65rem",
-                  borderRadius: "9999px",
-                  border: "1px solid var(--accent)",
-                  background: "var(--accent-light)",
-                }}
-              >
-                Maps ↗
-              </a>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", flexWrap: "wrap" }}>
+                <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", flexShrink: 0 }}>Best for:</span>
+                {place.best_for.map((use) => (
+                  <span
+                    key={use}
+                    style={{
+                      fontSize: "0.6875rem",
+                      fontWeight: 500,
+                      color: "var(--text-secondary)",
+                      background: "var(--bg-surface, #f5f3ef)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "9999px",
+                      padding: "0.15rem 0.5rem",
+                    }}
+                  >
+                    {use}
+                  </span>
+                ))}
+              </div>
+              {place.google_maps_url ? (
+                <a
+                  href={place.google_maps_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.3rem",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--accent-dark)",
+                    textDecoration: "none",
+                    padding: "0.25rem 0.65rem",
+                    borderRadius: "9999px",
+                    border: "1px solid var(--accent)",
+                    background: "var(--accent-light)",
+                    flexShrink: 0,
+                  }}
+                >
+                  Maps ↗
+                </a>
+              ) : null}
             </div>
           </div>
         ))}

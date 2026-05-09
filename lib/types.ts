@@ -184,6 +184,8 @@ export type PlaceCategory =
   | "beach" | "snorkeling" | "viewpoint" | "temple"
   | "monument" | "museum" | "transport" | "practical";
 
+export type PriceLevel = "free" | "budget" | "mid" | "splurge";
+
 export interface Place {
   id: string;
   name: string;
@@ -192,10 +194,10 @@ export interface Place {
   category: PlaceCategory;
   tags: string[];
   personal_note: string;
-  google_maps_url: string;
+  google_maps_url: string;  // empty string when URL not yet added
   recommended_by: string;
-  price_level: 1 | 2 | 3 | 4;
-  best_for: string;
+  price_level: PriceLevel;
+  best_for: string[];
 }
 
 // ─── Checklist ────────────────────────────────────────────────

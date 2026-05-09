@@ -31,7 +31,7 @@ function formatVisa(visa: ReadyData["visa"]): string {
 
 function formatBudget(budget: ReadyData["budget"]): string {
   const tier = budget.tiers.budget;
-  const amount = tier.daily_thb ?? tier.daily_myr ?? tier.daily_idr ?? tier.daily_gel ?? tier.daily_try ?? null;
+  const amount = tier.daily_thb ?? tier.daily_myr ?? tier.daily_idr ?? tier.daily_gel ?? tier.daily_try ?? tier.daily_vnd ?? null;
   return amount != null ? `${budget.currency_symbol}${amount}/d` : "—";
 }
 

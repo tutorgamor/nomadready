@@ -1,0 +1,156 @@
+{
+  "passport": "es",
+  "destination": "vietnam",
+  "last_reviewed": "2026-05-09",
+  "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
+
+  "visa": {
+    "type": "Visa Exemption",
+    "duration_days": 45,
+    "extendable": false,
+    "multiple_entry": false,
+    "cost_eur": 0,
+    "notes": "Spanish passport holders currently receive a 45-day visa exemption for tourism. No visa required on arrival. Passport must be valid for at least 6 months beyond your intended departure date. A return or onward ticket may be requested at immigration.",
+    "verify_required": true,
+    "verify_note": "Vietnam periodically adjusts visa exemption terms and eligible nationalities. Verify current conditions at the official Vietnam Immigration Department or the Spanish Embassy in Hanoi before booking."
+  },
+
+  "insurance": {
+    "required": false,
+    "recommended": true,
+    "notes": "Not legally required but strongly recommended. Ensure your policy covers: motorbike riding (often excluded by default), medical evacuation, and adventure activities. Public hospitals outside major cities have limited English-speaking staff.",
+    "verify_required": false
+  },
+
+  "best_season": {
+    "overall_best_months": ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
+    "regions": [
+      {
+        "area": "North Vietnam (Hanoi, Ha Long Bay, Sapa)",
+        "best": ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
+        "avoid": ["Jun", "Jul", "Aug", "Sep"],
+        "notes": "Cool and dry Oct–Apr. Hot and rainy Jun–Sep. Sapa can be very cold in Dec–Jan — pack layers."
+      },
+      {
+        "area": "Central Vietnam (Hoi An, Da Nang, Hue)",
+        "best": ["Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        "avoid": ["Oct", "Nov"],
+        "notes": "Dry season Feb–Jul. Heavy rain and flooding risk Oct–Nov. Typhoon risk Sep–Nov."
+      },
+      {
+        "area": "South Vietnam (Ho Chi Minh City, Mekong Delta, Phu Quoc)",
+        "best": ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
+        "avoid": ["May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+        "notes": "Dry season Nov–Apr. Heavy afternoon downpours throughout May–Oct monsoon season."
+      }
+    ]
+  },
+
+  "budget": {
+    "currency": "VND",
+    "currency_symbol": "₫",
+    "exchange_rates": { "EUR": 28000, "GBP": 33000 },
+    "verify_required": true,
+    "verify_note": "Rates are approximate. Check xe.com before travel.",
+    "tiers": {
+      "budget": {
+        "label": "Backpacker",
+        "daily_vnd": 600000,
+        "includes": "Dorm bed, street food 3x, local transport, 1 Bia Hoi"
+      },
+      "mid": {
+        "label": "Comfort",
+        "daily_vnd": 1300000,
+        "includes": "Private guesthouse, mix of restaurants, Grab rides, activities"
+      },
+      "high": {
+        "label": "Boutique",
+        "daily_vnd": 2800000,
+        "includes": "Boutique hotel, restaurants, tours, cooking classes"
+      }
+    },
+    "cost_anchors": [
+      { "item": "Bánh mì", "vnd": 30000 },
+      { "item": "Phở bowl", "vnd": 50000 },
+      { "item": "Bia Hoi (street beer)", "vnd": 10000 },
+      { "item": "Grab ride (5km, Hanoi)", "vnd": 40000 },
+      { "item": "Dorm bed (Hanoi)", "vnd": 120000 },
+      { "item": "Cà phê sữa đá (iced coffee)", "vnd": 25000 },
+      { "item": "Sleeper bus (Hanoi–Hue)", "vnd": 250000 }
+    ]
+  },
+
+  "useful_apps": [
+    { "name": "Grab", "use": "Taxi & food delivery in major cities", "platform": "iOS/Android" },
+    { "name": "Google Maps", "use": "Navigation — download offline maps before arriving", "platform": "iOS/Android" },
+    { "name": "12Go", "use": "Bus, train & ferry booking across Vietnam", "platform": "Web/iOS/Android" },
+    { "name": "Airalo", "use": "eSIM data — buy before you land", "platform": "iOS/Android" },
+    { "name": "XE", "use": "Live exchange rates", "platform": "iOS/Android" },
+    { "name": "Agoda", "use": "Accommodation — competitive rates across Vietnam", "platform": "iOS/Android" },
+    { "name": "Baolau", "use": "Sleeper bus, train & ferry tickets in Vietnam", "platform": "Web/iOS/Android" }
+  ],
+
+  "transport": [
+    "Grab works well in Hanoi, Ho Chi Minh City, and Da Nang — always safer and cheaper than unlicensed taxis.",
+    "Sleeper buses (giường nằm) connect major cities overnight — quality varies greatly, read reviews before booking on 12Go or Baolau.",
+    "Domestic flights save significant time between north and south — book early on VietJet or Bamboo for the lowest fares.",
+    "The Reunification Express train is scenic but slow — best for the Hanoi–Da Nang–Ho Chi Minh route when you have time to spare.",
+    "Motorbike rental is widespread — carry your international driving permit and photograph all pre-existing damage before riding.",
+    "Use 12Go or Baolau to compare and pre-book intercity transport, especially during Tết and peak season."
+  ],
+
+  "scams": [
+    {
+      "name": "Taxi meter manipulation",
+      "description": "Some taxis in tourist areas run rigged meters or take deliberately long routes. Use Grab for all city rides to get a fixed price upfront."
+    },
+    {
+      "name": "Fake tour agencies",
+      "description": "Storefronts near tourist attractions may pose as reputable operators selling Ha Long Bay cruises or Sapa trekking packages. Book through verified operators or well-reviewed hostels."
+    },
+    {
+      "name": "Motorbike damage dispute",
+      "description": "Rental shops may charge for pre-existing damage on return. Photograph every scratch and dent thoroughly before riding — share photos via message with the owner as a timestamp."
+    },
+    {
+      "name": "Overpriced tourist transport",
+      "description": "Fixed-price 'tourist' buses sold at storefronts are often 3–5x the going rate. Compare on 12Go or Baolau before paying."
+    }
+  ],
+
+  "phrases": [
+    { "phrase": "Xin chào", "pronunciation": "sin chow", "meaning": "Hello" },
+    { "phrase": "Cảm ơn", "pronunciation": "cam uhn", "meaning": "Thank you" },
+    { "phrase": "Bao nhiêu tiền?", "pronunciation": "bow nyew tyen", "meaning": "How much?" },
+    { "phrase": "Không", "pronunciation": "khome", "meaning": "No" },
+    { "phrase": "Tôi ăn chay", "pronunciation": "toy an chay", "meaning": "I am vegetarian" }
+  ],
+
+  "emergency": {
+    "police": "113",
+    "ambulance": "115",
+    "fire": "114",
+    "tourist_hotline": "1800 599 961",
+    "embassy_label": "Spanish Embassy in Hanoi / Consular assistance",
+    "embassy": {
+      "phone": "Verify official embassy contact before travel",
+      "address": "Verify official embassy contact before travel",
+      "verify_required": true
+    },
+    "notes": "Tourist hotline (1800 599 961) provides English support — verify availability before travel. For emergencies involving Spanish nationals, contact the Spanish Embassy in Hanoi."
+  },
+
+  "checklist": [
+    { "item": "Passport valid 6+ months beyond your intended departure date", "priority": "critical" },
+    { "item": "Verify current 45-day visa exemption at the Vietnam Immigration Department or Spanish Embassy in Hanoi", "priority": "critical" },
+    { "item": "Purchase travel insurance (check motorbike and medical evacuation coverage)", "priority": "critical" },
+    { "item": "Print or save a return/onward ticket — may be checked at immigration", "priority": "high" },
+    { "item": "Notify your bank of travel dates to avoid card blocks", "priority": "high" },
+    { "item": "Download Google Maps offline and install Grab before arriving", "priority": "high" },
+    { "item": "Buy Airalo eSIM or arrange a local SIM on arrival at the airport", "priority": "high" },
+    { "item": "Bring EUR to exchange on arrival — airport exchange desks are generally fair", "priority": "medium" },
+    { "item": "Save Vietnam emergency numbers and tourist hotline in your phone", "priority": "medium" },
+    { "item": "Photograph all motorbike damage before renting — share photos with the owner", "priority": "medium" },
+    { "item": "Pack layers for Sapa if visiting Dec–Feb — temperatures can drop near freezing", "priority": "low" }
+  ]
+}

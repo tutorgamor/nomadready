@@ -88,5 +88,23 @@
       "transport": 86,
       "nomad_friendly": 76
     }
+  },
+  {
+    "id": "vietnam",
+    "label": "Vietnam",
+    "emoji": "🇻🇳",
+    "hero_tag": "Street food, mountains & sleeper trains",
+    "cover_color": "#C2410C",
+    "region": "Southeast Asia",
+    "ready_file": "fr-vietnam",
+    "travel_score": {
+      "overall": 84,
+      "visa_ease": 90,
+      "budget": 92,
+      "safety": 76,
+      "internet": 82,
+      "transport": 78,
+      "nomad_friendly": 84
+    }
   }
 ]

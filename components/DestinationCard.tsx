@@ -84,10 +84,20 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
           preserveAspectRatio="xMidYMid slice"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
         >
+          {/* Cloud puffs — atmospheric sky detail */}
+          <ellipse cx="42" cy="22" rx="26" ry="7" fill="rgba(255,255,255,0.10)" />
+          <ellipse cx="220" cy="16" rx="18" ry="5" fill="rgba(255,255,255,0.08)" />
+          {/* Background mountain ridge */}
+          <path
+            d="M-10 58 Q40 26 90 46 Q138 62 178 34 Q218 10 260 34 Q274 42 290 28 L290 124 L-10 124 Z"
+            fill="rgba(255,255,255,0.07)"
+          />
+          {/* Midground hills */}
           <path
             d="M-10 78 Q55 44 135 64 Q195 80 290 46 L290 124 L-10 124 Z"
             fill="rgba(255,255,255,0.13)"
           />
+          {/* Foreground slope */}
           <path
             d="M-10 92 Q72 70 162 86 Q222 98 290 74 L290 124 L-10 124 Z"
             fill="rgba(255,255,255,0.09)"
@@ -187,9 +197,9 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
               fontWeight: 600,
               letterSpacing: "0.06em",
               textTransform: "uppercase",
-              color: "var(--text-muted)",
-              backgroundColor: "var(--bg-base)",
-              border: "1px solid var(--border)",
+              color: "var(--accent-dark)",
+              backgroundColor: "rgba(254,243,199,0.55)",
+              border: "1px solid rgba(217,119,6,0.18)",
               borderRadius: "9999px",
               padding: "0.2rem 0.6rem",
             }}

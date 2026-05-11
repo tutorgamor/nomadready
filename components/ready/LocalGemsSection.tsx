@@ -92,7 +92,34 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
     .filter((g) => g.places.length > 0);
 
   return (
-    <div className="card card--map-grid">
+    <div className="card card--map-grid" style={{ overflow: "hidden", padding: 0 }}>
+      {/* Illustrated atmosphere strip — sky-to-nature gradient with landscape layers */}
+      <div
+        aria-hidden="true"
+        style={{
+          height: "60px",
+          background: "linear-gradient(175deg, rgba(167,213,247,0.38) 0%, rgba(155,201,165,0.28) 55%, rgba(255,180,107,0.16) 100%)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <svg
+          viewBox="0 0 400 60"
+          preserveAspectRatio="xMidYMid slice"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        >
+          {/* Cloud puffs */}
+          <ellipse cx="68" cy="18" rx="32" ry="9" fill="rgba(255,255,255,0.32)" />
+          <ellipse cx="180" cy="12" rx="22" ry="7" fill="rgba(255,255,255,0.22)" />
+          <ellipse cx="318" cy="16" rx="28" ry="8" fill="rgba(255,255,255,0.28)" />
+          {/* Background mountain ridge */}
+          <path d="M-10 38 Q80 16 150 30 Q230 46 300 24 Q362 10 410 26 L410 65 L-10 65 Z" fill="rgba(155,201,165,0.32)" />
+          {/* Foreground slope */}
+          <path d="M-10 50 Q120 38 240 46 Q340 52 410 42 L410 65 L-10 65 Z" fill="rgba(155,201,165,0.2)" />
+        </svg>
+      </div>
+      {/* Card content */}
+      <div style={{ padding: "1.375rem" }}>
       <p className="section-heading">💎 Local Gems</p>
       <p style={{ fontSize: "0.8125rem", color: "var(--text-muted)", margin: "0 0 0.375rem", lineHeight: 1.5 }}>
         Curated picks from people who&apos;ve been there.
@@ -333,6 +360,7 @@ export function LocalGemsSection({ places }: { places: Place[] }) {
       <p style={{ fontSize: "0.6875rem", color: "var(--text-muted)", margin: "1rem 0 0", fontStyle: "italic", lineHeight: 1.5 }}>
         Sample places — verify before visiting.
       </p>
+      </div>
     </div>
   );
 }

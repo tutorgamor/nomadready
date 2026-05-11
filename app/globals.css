@@ -27,6 +27,13 @@
   --warn:           #d97706;
   --danger:         #dc2626;
 
+  /* Extended palette — warm nature & travel tones */
+  --sage-green:    #9BC9A5;
+  --sky-blue:      #A7D5F7;
+  --sunset-orange: #FFB46B;
+  --deep-forest:   #2E6B4E;
+  --ocean-blue:    #3A7CA5;
+
   /* Spacing rhythm */
   --page-gutter:    1rem;
   --section-gap:    2rem;
@@ -186,6 +193,25 @@ a:hover {
   border-radius: 0 0.3rem 0.3rem 0;
 }
 
+/* Editorial section label — travel-guide chapter feel */
+.section-label-editorial {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+}
+.section-label-editorial::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+}
+
 /* Desktop-only decorative element (home hero) */
 .home-hero-deco {
   display: none;
@@ -236,13 +262,13 @@ a:hover {
 /* Homepage header — more generous padding on desktop */
 .home-header {
   padding-top: 4.5rem;
-  padding-bottom: 2.25rem;
+  padding-bottom: 3.25rem; /* extra bottom room for terrain wave */
 }
 
 @media (min-width: 768px) {
   .home-header {
     padding-top: 6rem;
-    padding-bottom: 3.5rem;
+    padding-bottom: 4.75rem;
   }
 }
 

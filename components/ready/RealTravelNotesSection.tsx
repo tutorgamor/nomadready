@@ -36,15 +36,16 @@ export function RealTravelNotesSection({ notes }: { notes: RealTravelNote[] }) {
         Practical realities from people who&apos;ve spent real time there.
       </p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
         {notes.map((n, i) => (
           <div
             key={i}
             style={{
               borderLeft: "3px solid var(--accent)",
-              padding: "0.75rem 0.75rem 0.75rem 0.875rem",
-              background: "var(--bg-base)",
-              borderRadius: "0 0.5rem 0.5rem 0",
+              padding: "0.875rem 0.875rem 0.875rem 1rem",
+              background: "linear-gradient(160deg, #fffdf8 0%, #fdfaf4 100%)",
+              borderRadius: "0 0.625rem 0.625rem 0",
+              boxShadow: "0 1px 4px rgba(28,25,23,0.05)",
             }}
           >
             <div
@@ -52,10 +53,10 @@ export function RealTravelNotesSection({ notes }: { notes: RealTravelNote[] }) {
                 display: "flex",
                 alignItems: "baseline",
                 gap: "0.4rem",
-                marginBottom: "0.3rem",
+                marginBottom: "0.35rem",
               }}
             >
-              <span aria-hidden="true" style={{ fontSize: "0.875rem", flexShrink: 0 }}>
+              <span aria-hidden="true" style={{ fontSize: "0.9rem", flexShrink: 0 }}>
                 {icon(n.type)}
               </span>
               <span
@@ -64,6 +65,7 @@ export function RealTravelNotesSection({ notes }: { notes: RealTravelNote[] }) {
                   fontWeight: 700,
                   color: "var(--text-primary)",
                   lineHeight: 1.4,
+                  letterSpacing: "-0.015em",
                 }}
               >
                 {n.title}
@@ -74,7 +76,7 @@ export function RealTravelNotesSection({ notes }: { notes: RealTravelNote[] }) {
                 fontSize: "0.8125rem",
                 color: "var(--text-secondary)",
                 margin: 0,
-                lineHeight: 1.6,
+                lineHeight: 1.65,
               }}
             >
               {n.note}

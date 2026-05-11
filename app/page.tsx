@@ -112,6 +112,35 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             pointerEvents: "none",
           }}
         />
+        {/* Terrain wave — landscape horizon transition to content */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "44px",
+            zIndex: 2,
+            pointerEvents: "none",
+          }}
+        >
+          <svg
+            viewBox="0 0 1440 44"
+            preserveAspectRatio="none"
+            style={{ width: "100%", height: "100%", display: "block" }}
+          >
+            <path
+              d="M0 28 Q240 8 480 22 Q720 36 960 14 Q1200 0 1440 18 L1440 44 L0 44 Z"
+              fill="var(--bg-base)"
+            />
+            <path
+              d="M0 36 Q360 28 720 34 Q1080 40 1440 30 L1440 44 L0 44 Z"
+              fill="var(--bg-base)"
+              opacity="0.6"
+            />
+          </svg>
+        </div>
         {/* Route constellation — decorative travel map accent (desktop only) */}
         <svg
           aria-hidden="true"
@@ -237,21 +266,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       >
         <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
-          <h2
-            id="destinations-heading"
-            style={{
-              fontSize: "0.7rem",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "var(--text-muted)",
-              margin: 0,
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-            }}
-          >
-            <span style={{ color: "var(--accent)", opacity: 0.6 }}>✦</span>
+          <h2 id="destinations-heading" className="section-label-editorial">
+            <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
             {availableDestinations.length} destination{availableDestinations.length !== 1 ? "s" : ""} available
           </h2>
 
@@ -269,16 +285,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       <section style={{ paddingBottom: "3rem" }}>
         <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-            <h2
-              style={{
-                fontSize: "0.72rem",
-                fontWeight: 600,
-                letterSpacing: "0.07em",
-                textTransform: "uppercase",
-                color: "var(--text-muted)",
-                margin: 0,
-              }}
-            >
+            <h2 className="section-label-editorial">
+              <span aria-hidden="true" style={{ color: "var(--accent)", opacity: 0.5 }}>⊞</span>
               Quick comparison
             </h2>
             <ProfileNote field="comparisonNote" />
@@ -290,16 +298,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       {/* ── Trip planner ─────────────────────────────────────── */}
       <section style={{ paddingBottom: "3rem" }}>
         <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-          <h2
-            style={{
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              letterSpacing: "0.07em",
-              textTransform: "uppercase",
-              color: "var(--text-muted)",
-              margin: 0,
-            }}
-          >
+          <h2 className="section-label-editorial">
+            <span aria-hidden="true" style={{ color: "var(--accent)", opacity: 0.5 }}>◷</span>
             Plan by trip length
           </h2>
           <TripPlanner

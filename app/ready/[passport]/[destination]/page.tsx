@@ -146,6 +146,30 @@ export default async function ReadyPage({ params }: Props) {
             pointerEvents: "none",
           }}
         />
+        {/* Distant mountain silhouette — adds depth layer before main terrain wave */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            bottom: "56px",
+            left: 0,
+            right: 0,
+            height: "38px",
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
+        >
+          <svg
+            viewBox="0 0 1440 38"
+            preserveAspectRatio="none"
+            style={{ width: "100%", height: "100%", display: "block" }}
+          >
+            <path
+              d="M0 26 Q120 6 280 18 Q400 26 520 10 Q620 0 740 8 Q860 18 980 6 Q1100 -2 1220 10 Q1340 20 1440 8 L1440 38 L0 38 Z"
+              fill="rgba(255,255,255,0.08)"
+            />
+          </svg>
+        </div>
         {/* Terrain wave — organic landscape horizon at hero bottom */}
         <div
           aria-hidden="true"

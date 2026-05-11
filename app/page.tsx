@@ -185,7 +185,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               {/* Brand wordmark */}
               <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                 <span style={{ fontSize: "0.9rem", color: "var(--accent)", lineHeight: 1, marginTop: "1px" }} aria-hidden="true">✦</span>
-                <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--text-primary)" }}>Nomad</span>
+                <span className="hero-text-light" style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Nomad</span>
                 <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--accent)" }}>Ready</span>
               </div>
 
@@ -194,22 +194,20 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 <p style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent)", margin: 0, opacity: 0.85 }}>
                   Travel field guide
                 </p>
-                <h1 style={{ fontSize: "clamp(2rem, 7vw, 2.75rem)", fontWeight: 800, letterSpacing: "-0.045em", color: "var(--text-primary)", lineHeight: 1.1, margin: 0 }}>
+                <h1 className="hero-heading-light" style={{ fontSize: "clamp(2rem, 7vw, 2.75rem)", fontWeight: 800, letterSpacing: "-0.045em", lineHeight: 1.1, margin: 0 }}>
                   Where are you<br />heading next?
                 </h1>
-                <p style={{ fontSize: "0.9375rem", color: "var(--text-secondary)", margin: 0, maxWidth: "32ch", lineHeight: 1.55 }}>
+                <p className="hero-text-light-sub" style={{ fontSize: "0.9375rem", margin: 0, maxWidth: "32ch", lineHeight: 1.55 }}>
                   Get your full travel brief in one scroll — visa, budget, scams and more.
                 </p>
               </div>
 
-              {/* Passport selector */}
-              <PassportSelector passports={passports} activeId={activePassportId} />
-
-              {/* Profile selector */}
-              <ProfileSelector />
-
-              {/* Personalized insight line */}
-              <ProfileNote field="insightLine" />
+              {/* Passport selector + profile selector — frosted glass card on desktop */}
+              <div className="hero-controls-glass">
+                <PassportSelector passports={passports} activeId={activePassportId} />
+                <ProfileSelector />
+                <ProfileNote field="insightLine" />
+              </div>
 
             </div>
 
@@ -236,21 +234,23 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                   <circle cx="168" cy="252" r="1.5" fill="rgba(217,119,6,0.78)" />
                 </svg>
 
-                {/* Polaroid snap — Tropical Explorer (top-left, primary scatter card) */}
+                {/* Polaroid snap — Thailand (top-left, primary scatter card) */}
                 <div
                   style={{
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    transform: "rotate(-6deg)",
+                    transform: "rotate(-5deg)",
                     background: "#ffffff",
                     padding: "8px 8px 28px",
                     borderRadius: "3px",
                     width: "158px",
-                    boxShadow: "0 14px 40px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.1)",
+                    boxShadow: "0 20px 52px rgba(0,0,0,0.40), 0 4px 14px rgba(0,0,0,0.22)",
                     zIndex: 10,
                   }}
                 >
+                  {/* Tape strip — travel journal adhesive detail */}
+                  <div style={{ position: "absolute", top: "-5px", left: "50%", transform: "translateX(-50%) rotate(1deg)", width: "38px", height: "11px", background: "rgba(217,119,6,0.26)", borderRadius: "1px", zIndex: 11 }} />
                   <img
                     src={HERO_IMGS.tropic}
                     alt=""
@@ -282,7 +282,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     padding: "7px 7px 24px",
                     borderRadius: "3px",
                     width: "136px",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.08)",
+                    boxShadow: "0 16px 44px rgba(0,0,0,0.36), 0 4px 12px rgba(0,0,0,0.18)",
                     zIndex: 9,
                   }}
                 >
@@ -293,12 +293,14 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     loading="lazy"
                     decoding="async"
                   />
+                  {/* Page-corner fold — paper memory detail */}
+                  <div style={{ position: "absolute", bottom: 0, right: 0, width: "14px", height: "14px", background: "linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.07) 50%)", borderRadius: "0 0 3px 0" }} />
                   <p style={{ margin: "5px 0 0", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", textAlign: "center" }}>
                     ✦ Golden hour
                   </p>
                 </div>
 
-                {/* Stamp card — Digital Nomad workspace (pinned over main photo top) */}
+                {/* Stamp card — Community / nomad workspace (pinned upper-right) */}
                 <div
                   style={{
                     position: "absolute",
@@ -309,7 +311,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     height: "70px",
                     borderRadius: "0.5rem",
                     overflow: "hidden",
-                    boxShadow: "0 6px 18px rgba(0,0,0,0.26), 0 0 0 2.5px rgba(255,255,255,0.72)",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.38), 0 0 0 3px rgba(255,255,255,0.88)",
                     zIndex: 12,
                   }}
                 >
@@ -348,12 +350,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
               {/* Route decoration + destination count */}
               <svg width="218" height="14" viewBox="0 0 218 14" fill="none">
-                <line x1="10" y1="7" x2="208" y2="7" stroke="var(--border-strong)" strokeWidth="1" strokeDasharray="4 6" />
-                <circle cx="10"  cy="7" r="3.5" fill="var(--accent)" opacity="0.5" />
-                <circle cx="109" cy="7" r="2.5" fill="var(--accent)" opacity="0.35" />
-                <circle cx="208" cy="7" r="3.5" fill="var(--accent)" opacity="0.5" />
+                <line x1="10" y1="7" x2="208" y2="7" stroke="rgba(255,255,255,0.28)" strokeWidth="1" strokeDasharray="4 6" />
+                <circle cx="10"  cy="7" r="3.5" fill="var(--accent)" opacity="0.6" />
+                <circle cx="109" cy="7" r="2.5" fill="var(--accent)" opacity="0.42" />
+                <circle cx="208" cy="7" r="3.5" fill="var(--accent)" opacity="0.6" />
               </svg>
-              <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-muted)", margin: 0 }}>
+              <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", margin: 0 }}>
                 {availableDestinations.length} destinations
               </p>
 
@@ -363,7 +365,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
           {/* ── Mobile illustrated scene (hidden on desktop) ── */}
           <div className="home-hero-mobile-scene" aria-hidden="true">
-            <div style={{ position: "relative", width: "100%", height: "200px", borderRadius: "1rem", overflow: "hidden" }}>
+            <div style={{ position: "relative", width: "100%", height: "165px", borderRadius: "1rem", overflow: "hidden" }}>
 
               {/* Full-bleed main photo */}
               <img

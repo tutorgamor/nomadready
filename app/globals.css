@@ -108,6 +108,19 @@ a:hover {
   border-radius: 1rem;
   padding: 1.375rem;
   box-shadow: var(--card-shadow);
+  position: relative;
+}
+
+/* Editorial paper texture — faint grain overlay for tactile field-guide warmth */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/assets/ui/editorial-paper-texture.webp') center / cover;
+  border-radius: inherit;
+  opacity: 0.038;
+  pointer-events: none;
+  mix-blend-mode: multiply;
 }
 
 /* Warm card variant — paper texture feel */
@@ -132,7 +145,19 @@ a:hover {
   text-decoration: none;
   color: inherit;
   display: block;
+  position: relative;
   transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+
+/* Editorial paper texture — extends across card header and body */
+.dest-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/assets/ui/editorial-paper-texture.webp') center / cover;
+  opacity: 0.042;
+  pointer-events: none;
+  mix-blend-mode: multiply;
 }
 
 .dest-card:hover,

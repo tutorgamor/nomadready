@@ -48,6 +48,7 @@ const HERO_IMGS = {
   tropic: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop",
   nomad:  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=320&q=75&auto=format&fit=crop",
   japan:  "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&q=78&auto=format&fit=crop",
+  map:    "https://images.unsplash.com/photo-1526178618343-7f6c6c99a1d7?w=480&q=75&auto=format&fit=crop",
 } as const;
 
 interface HomePageProps {
@@ -191,6 +192,35 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               {/* Layered editorial photo collage */}
               <div style={{ position: "relative", width: "400px", height: "340px" }}>
 
+                {/* Travel atlas texture — worn map background fills the panel with narrative depth */}
+                <div style={{ position: "absolute", inset: 0, borderRadius: "1rem", overflow: "hidden", zIndex: 0 }}>
+                  <img
+                    src={HERO_IMGS.map}
+                    alt=""
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div style={{ position: "absolute", inset: 0, background: "rgba(247,243,238,0.82)" }} />
+                </div>
+
+                {/* Narrative route arcs — dashed travel itinerary connecting photo landmarks */}
+                <svg
+                  viewBox="0 0 400 340"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 8, pointerEvents: "none", display: "block" }}
+                >
+                  {/* Arc: Japan polaroid → Tropical polaroid */}
+                  <path d="M 168 252 C 185 208 155 185 90 140" stroke="rgba(217,119,6,0.28)" strokeWidth="1.5" strokeDasharray="4 7" fill="none" />
+                  {/* Arc: Tropical polaroid top-right → Nomad stamp */}
+                  <path d="M 154 14 C 218 2 268 24 302 49" stroke="rgba(217,119,6,0.22)" strokeWidth="1" strokeDasharray="3 6" fill="none" />
+                  {/* Pin marker — Tropical polaroid anchor */}
+                  <circle cx="90" cy="140" r="3" fill="none" stroke="rgba(217,119,6,0.50)" strokeWidth="1.5" />
+                  <circle cx="90" cy="140" r="1.5" fill="rgba(217,119,6,0.65)" />
+                  {/* Pin marker — Japan polaroid anchor */}
+                  <circle cx="168" cy="252" r="2.5" fill="none" stroke="rgba(217,119,6,0.42)" strokeWidth="1.5" />
+                  <circle cx="168" cy="252" r="1.5" fill="rgba(217,119,6,0.55)" />
+                </svg>
+
                 {/* Main scene — Adventure & Mountains (background anchor) */}
                 <div
                   style={{
@@ -222,7 +252,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    transform: "rotate(-7deg)",
+                    transform: "rotate(-6deg)",
                     background: "#ffffff",
                     padding: "8px 8px 28px",
                     borderRadius: "3px",
@@ -238,6 +268,14 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     loading="lazy"
                     decoding="async"
                   />
+                  {/* Postmark stamp — explorer journal detail */}
+                  <div style={{ position: "absolute", top: "10px", right: "8px" }}>
+                    <svg width="30" height="30" viewBox="0 0 30 30">
+                      <circle cx="15" cy="15" r="12.5" fill="none" stroke="rgba(217,119,6,0.42)" strokeWidth="1.5" strokeDasharray="2 2.5" />
+                      <text x="15" y="13" textAnchor="middle" fontSize="4.5" fontWeight="700" letterSpacing="0.8" fill="rgba(217,119,6,0.52)" fontFamily="system-ui,sans-serif">NOMAD</text>
+                      <text x="15" y="19" textAnchor="middle" fontSize="4.5" fontWeight="700" letterSpacing="0.8" fill="rgba(217,119,6,0.52)" fontFamily="system-ui,sans-serif">READY</text>
+                    </svg>
+                  </div>
                   <p style={{ margin: "6px 0 0", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", textAlign: "center" }}>
                     ✦ Into the wild
                   </p>
@@ -292,6 +330,28 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     loading="lazy"
                     decoding="async"
                   />
+                </div>
+
+                {/* Field notes card — fills the bottom-right void, anchors the composition */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "8px",
+                    right: "4px",
+                    transform: "rotate(-1.5deg)",
+                    background: "#fffef9",
+                    borderLeft: "2.5px solid var(--accent)",
+                    borderRadius: "0 4px 4px 0",
+                    padding: "0.35rem 0.7rem 0.35rem 0.55rem",
+                    width: "148px",
+                    boxShadow: "0 3px 12px rgba(0,0,0,0.12)",
+                    zIndex: 11,
+                  }}
+                >
+                  <p style={{ margin: 0, fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)" }}>✦ trip notes</p>
+                  <p style={{ margin: "2px 0 0", fontSize: "0.6rem", fontWeight: 600, color: "var(--text-secondary)", lineHeight: 1.3 }}>
+                    {availableDestinations.length} destinations mapped
+                  </p>
                 </div>
 
               </div>

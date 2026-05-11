@@ -78,6 +78,25 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
             borderRadius: "50%",
           }}
         />
+        {/* Editorial region tag — geographic stamp in cover corner */}
+        <div
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "12px",
+            fontSize: "0.5rem",
+            fontWeight: 700,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.72)",
+            lineHeight: 1,
+            zIndex: 1,
+          }}
+          aria-hidden="true"
+        >
+          {region}
+        </div>
+
         {/* SVG terrain — illustrated horizon layers */}
         <svg
           viewBox="0 0 280 116"

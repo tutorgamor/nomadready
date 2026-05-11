@@ -43,6 +43,21 @@ function formatMonths(months: ReadyData["best_season"]["overall_best_months"]): 
   return `${months[0]}–${months[months.length - 1]}`;
 }
 
+interface MobileAtlasCard {
+  top: string;
+  left?: string;
+  right?: string;
+  transform: string;
+  w: string;
+  h: string;
+}
+
+const MOBILE_ATLAS_CARDS: MobileAtlasCard[] = [
+  { top: "16px", left: "5%",              transform: "rotate(-2.5deg)", w: "80px", h: "66px" },
+  { top: "10px", left: "calc(50% - 46px)", transform: "rotate(1.5deg)",  w: "92px", h: "76px" },
+  { top: "16px", right: "5%",             transform: "rotate(2deg)",    w: "80px", h: "66px" },
+];
+
 interface AtlasCard {
   top?: string;
   bottom?: string;
@@ -306,6 +321,109 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </div>
 
           </div>
+
+          {/* ── Mobile illustrated scene (hidden on desktop) ── */}
+          <div className="home-hero-mobile-scene" aria-hidden="true">
+            <div style={{ position: "relative", width: "100%", height: "196px", borderRadius: "1rem", overflow: "hidden" }}>
+
+              {/* Layered landscape background */}
+              <svg
+                viewBox="0 0 400 196"
+                preserveAspectRatio="xMidYMid slice"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", display: "block" }}
+              >
+                <defs>
+                  <linearGradient id="mobileHeroSky" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#bde0f4" />
+                    <stop offset="40%" stopColor="#cce8d6" />
+                    <stop offset="100%" stopColor="#e2d9c6" />
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="196" fill="url(#mobileHeroSky)" />
+                {/* Sun */}
+                <circle cx="362" cy="36" r="22" fill="rgba(255,185,50,0.15)" />
+                <circle cx="362" cy="36" r="13" fill="rgba(255,210,70,0.28)" />
+                {/* Clouds */}
+                <ellipse cx="54"  cy="30" rx="36" ry="11" fill="rgba(255,255,255,0.55)" />
+                <ellipse cx="70"  cy="22" rx="24" ry="8"  fill="rgba(255,255,255,0.42)" />
+                <ellipse cx="200" cy="20" rx="32" ry="10" fill="rgba(255,255,255,0.48)" />
+                <ellipse cx="216" cy="13" rx="20" ry="7"  fill="rgba(255,255,255,0.36)" />
+                <ellipse cx="350" cy="26" rx="20" ry="7"  fill="rgba(255,255,255,0.28)" />
+                {/* Background mountain ridge */}
+                <path d="M0 92 Q50 58 100 80 Q140 96 192 64 Q232 40 290 66 Q328 82 400 60 L400 140 L0 140 Z" fill="rgba(155,201,165,0.28)" />
+                {/* Midground terrain */}
+                <path d="M0 128 Q82 106 180 120 Q280 134 400 108 L400 196 L0 196 Z" fill="rgba(155,201,165,0.42)" />
+                {/* Foreground water */}
+                <path d="M0 160 Q100 148 200 156 Q300 163 400 150 L400 196 L0 196 Z" fill="rgba(167,213,247,0.45)" />
+                <path d="M0 174 Q130 166 260 172 Q340 176 400 168 L400 196 L0 196 Z" fill="rgba(167,213,247,0.28)" />
+                {/* Decorative travel route arc */}
+                <path d="M62 90 Q200 116 338 90" stroke="rgba(217,119,6,0.28)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+              </svg>
+
+              {/* Three floating destination cards */}
+              {availableDestinations.slice(0, 3).map((dest, i) => {
+                const cfg = MOBILE_ATLAS_CARDS[i];
+                const isFocal = i === 1;
+                return (
+                  <div
+                    key={dest.id}
+                    style={{
+                      position: "absolute",
+                      top: cfg.top,
+                      left: cfg.left,
+                      right: cfg.right,
+                      transform: cfg.transform,
+                      width: cfg.w,
+                      height: cfg.h,
+                      backgroundColor: dest.cover_color,
+                      borderRadius: "0.75rem",
+                      overflow: "hidden",
+                      boxShadow: isFocal
+                        ? "0 6px 22px rgba(0,0,0,0.22), 0 0 0 2px rgba(255,255,255,0.38)"
+                        : "0 3px 12px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.22)",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-end",
+                      padding: "0.375rem 0.4375rem",
+                    }}
+                  >
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(150deg, rgba(255,255,255,0.18) 0%, rgba(0,0,0,0.12) 100%)" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(0,0,0,0.28) 0%, transparent 60%)" }} />
+                    <svg viewBox="0 0 92 76" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+                      <path d="M-5 46 Q22 26 46 40 Q70 52 97 32 L97 85 L-5 85 Z" fill="rgba(255,255,255,0.12)" />
+                      <path d="M-5 60 Q28 48 60 56 Q80 62 97 52 L97 85 L-5 85 Z" fill="rgba(255,255,255,0.08)" />
+                    </svg>
+                    <span style={{ position: "relative", fontSize: isFocal ? "1.5rem" : "1.25rem", lineHeight: 1, filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.25))" }}>
+                      {dest.emoji}
+                    </span>
+                    <span style={{ position: "relative", fontSize: "0.575rem", fontWeight: 700, color: "rgba(255,255,255,0.92)", letterSpacing: "0.02em", lineHeight: 1.2, marginTop: "0.125rem", textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
+                      {dest.label}
+                    </span>
+                  </div>
+                );
+              })}
+
+              {/* Destination count pill */}
+              <div style={{ position: "absolute", bottom: "10px", left: 0, right: 0, display: "flex", justifyContent: "center" }}>
+                <span style={{
+                  fontSize: "0.625rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.07em",
+                  textTransform: "uppercase",
+                  color: "rgba(28,25,23,0.55)",
+                  background: "rgba(255,255,255,0.62)",
+                  backdropFilter: "blur(4px)",
+                  WebkitBackdropFilter: "blur(4px)",
+                  padding: "0.2rem 0.625rem",
+                  borderRadius: "9999px",
+                }}>
+                  {availableDestinations.length} destinations
+                </span>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </header>
 

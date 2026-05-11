@@ -193,6 +193,17 @@ a:hover {
   border-radius: 0 0.3rem 0.3rem 0;
 }
 
+/* Mobile illustrated scene — compact travel atlas below hero text */
+.home-hero-mobile-scene {
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .home-hero-mobile-scene {
+    display: none;
+  }
+}
+
 /* Editorial section label — travel-guide chapter feel */
 .section-label-editorial {
   display: flex;

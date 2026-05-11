@@ -43,6 +43,24 @@ function formatMonths(months: ReadyData["best_season"]["overall_best_months"]): 
   return `${months[0]}–${months[months.length - 1]}`;
 }
 
+interface AtlasCard {
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+  rotate: string;
+  w: string;
+  h: string;
+}
+
+const ATLAS_CARDS: AtlasCard[] = [
+  { top: "10px",   left: "10px",   rotate: "-3deg",   w: "86px",  h: "70px"  },
+  { top: "18px",   right: "10px",  rotate: "2.5deg",  w: "84px",  h: "68px"  },
+  { top: "108px",  left: "120px",  rotate: "-1.5deg", w: "100px", h: "82px"  },
+  { bottom: "20px", left: "16px",  rotate: "2deg",    w: "84px",  h: "68px"  },
+  { bottom: "28px", right: "12px", rotate: "-2.5deg", w: "86px",  h: "70px"  },
+];
+
 interface HomePageProps {
   searchParams: Promise<{ passport?: string }>;
 }
@@ -141,34 +159,6 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             />
           </svg>
         </div>
-        {/* Route constellation — decorative travel map accent (desktop only) */}
-        <svg
-          aria-hidden="true"
-          className="home-hero-deco"
-          style={{
-            position: "absolute",
-            top: "1.75rem",
-            right: "var(--page-gutter)",
-            opacity: 0.22,
-            pointerEvents: "none",
-          }}
-          width="130"
-          height="90"
-          viewBox="0 0 130 90"
-          fill="none"
-        >
-          <circle cx="14" cy="14" r="3" fill="var(--accent)" />
-          <circle cx="62" cy="7" r="2" fill="var(--accent)" />
-          <circle cx="104" cy="20" r="2.5" fill="var(--accent)" />
-          <circle cx="118" cy="58" r="2" fill="var(--accent)" />
-          <circle cx="36" cy="68" r="2.5" fill="var(--accent)" />
-          <circle cx="80" cy="48" r="3.5" fill="var(--accent)" />
-          <line x1="14" y1="14" x2="80" y2="48" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
-          <line x1="80" y1="48" x2="104" y2="20" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
-          <line x1="80" y1="48" x2="118" y2="58" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
-          <line x1="80" y1="48" x2="36" y2="68" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
-          <line x1="14" y1="14" x2="62" y2="7" stroke="var(--accent)" strokeWidth="0.9" strokeDasharray="3.5 5.5" />
-        </svg>
         <div className="page-container">
           <div className="home-hero-layout">
 
@@ -206,53 +196,113 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
             </div>
 
-            {/* ── Right: destination mosaic (desktop only) ── */}
+            {/* ── Right: Illustrated travel atlas composition (desktop only) ── */}
             <div className="home-hero-aside" aria-hidden="true">
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "0.5rem",
-                }}
-              >
-                {availableDestinations.slice(0, 9).map((dest, i) => (
-                  <div
-                    key={dest.id}
-                    style={{
-                      width: "66px",
-                      height: i % 3 === 1 ? "56px" : "50px",
-                      borderRadius: "0.875rem",
-                      backgroundColor: dest.cover_color,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "1.35rem",
-                      position: "relative",
-                      overflow: "hidden",
-                      boxShadow: "0 2px 10px rgba(28,25,23,0.14), 0 0 0 1px rgba(255,255,255,0.1)",
-                      alignSelf: i % 3 === 1 ? "flex-end" : "flex-start",
-                    }}
-                  >
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, rgba(255,255,255,0.16) 0%, rgba(0,0,0,0.12) 100%)" }} />
-                    {/* Tiny terrain */}
-                    <svg viewBox="0 0 66 56" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-                      <path d="M-2 38 Q18 22 33 30 Q48 38 68 24 L68 60 L-2 60 Z" fill="rgba(255,255,255,0.12)" />
-                      <path d="M-2 46 Q20 36 40 42 Q54 47 68 36 L68 60 L-2 60 Z" fill="rgba(255,255,255,0.08)" />
-                    </svg>
-                    <span style={{ position: "relative", filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.2))" }}>{dest.emoji}</span>
-                  </div>
-                ))}
+
+              {/* Travel atlas scene — layered illustrated landscape with floating destinations */}
+              <div style={{ position: "relative", width: "340px", height: "300px" }}>
+
+                {/* Layered landscape background */}
+                <svg
+                  viewBox="0 0 340 300"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "1.25rem",
+                    overflow: "hidden",
+                  }}
+                >
+                  <defs>
+                    <linearGradient id="heroSceneSky" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#bde0f4" />
+                      <stop offset="38%" stopColor="#cce8d6" />
+                      <stop offset="100%" stopColor="#e2d9c6" />
+                    </linearGradient>
+                  </defs>
+                  {/* Sky fill */}
+                  <rect width="340" height="300" rx="20" ry="20" fill="url(#heroSceneSky)" />
+                  {/* Sun glow */}
+                  <circle cx="292" cy="55" r="26" fill="rgba(255,185,50,0.15)" />
+                  <circle cx="292" cy="55" r="15" fill="rgba(255,210,70,0.28)" />
+                  {/* Cloud clusters */}
+                  <ellipse cx="56"  cy="42" rx="40" ry="13" fill="rgba(255,255,255,0.55)" />
+                  <ellipse cx="74"  cy="33" rx="28" ry="10" fill="rgba(255,255,255,0.42)" />
+                  <ellipse cx="230" cy="28" rx="36" ry="12" fill="rgba(255,255,255,0.50)" />
+                  <ellipse cx="250" cy="20" rx="24" ry="8"  fill="rgba(255,255,255,0.38)" />
+                  <ellipse cx="290" cy="36" rx="22" ry="7"  fill="rgba(255,255,255,0.30)" />
+                  {/* Background mountain ridge */}
+                  <path d="M0 145 Q45 88 108 122 Q148 145 196 100 Q238 62 290 96 Q318 114 340 90 L340 195 L0 195 Z" fill="rgba(155,201,165,0.28)" />
+                  {/* Midground terrain */}
+                  <path d="M0 185 Q65 155 160 174 Q238 190 340 160 L340 300 L0 300 Z" fill="rgba(155,201,165,0.42)" />
+                  {/* Foreground water */}
+                  <path d="M0 248 Q82 232 188 242 Q268 250 340 236 L340 300 L0 300 Z" fill="rgba(167,213,247,0.45)" />
+                  <path d="M0 268 Q108 256 224 264 Q294 270 340 258 L340 300 L0 300 Z" fill="rgba(167,213,247,0.28)" />
+                  {/* Dotted travel routes between destinations */}
+                  <path d="M55 80 Q88 118 163 170"   stroke="rgba(217,119,6,0.30)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+                  <path d="M177 165 Q212 112 266 82"  stroke="rgba(217,119,6,0.30)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+                  <path d="M148 192 Q102 218 62 248"  stroke="rgba(217,119,6,0.22)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+                  <path d="M192 192 Q232 220 268 244" stroke="rgba(217,119,6,0.22)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+                </svg>
+
+                {/* Floating destination cards — positioned at scene landmarks */}
+                {availableDestinations.slice(0, 5).map((dest, i) => {
+                  const cfg = ATLAS_CARDS[i];
+                  const isFocal = i === 2;
+                  return (
+                    <div
+                      key={dest.id}
+                      style={{
+                        position: "absolute",
+                        top: cfg.top,
+                        bottom: cfg.bottom,
+                        left: cfg.left,
+                        right: cfg.right,
+                        transform: `rotate(${cfg.rotate})`,
+                        width: cfg.w,
+                        height: cfg.h,
+                        backgroundColor: dest.cover_color,
+                        borderRadius: "0.75rem",
+                        overflow: "hidden",
+                        boxShadow: isFocal
+                          ? "0 8px 28px rgba(0,0,0,0.22), 0 0 0 2px rgba(255,255,255,0.38)"
+                          : "0 4px 14px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.22)",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-end",
+                        padding: "0.4rem 0.5rem",
+                      }}
+                    >
+                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(150deg, rgba(255,255,255,0.18) 0%, rgba(0,0,0,0.12) 100%)" }} />
+                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(0,0,0,0.28) 0%, transparent 60%)" }} />
+                      <svg viewBox="0 0 100 82" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+                        <ellipse cx="70" cy="18" rx="20" ry="6" fill="rgba(255,255,255,0.10)" />
+                        <path d="M-5 50 Q22 28 50 42 Q76 56 105 36 L105 90 L-5 90 Z" fill="rgba(255,255,255,0.12)" />
+                        <path d="M-5 64 Q30 52 65 60 Q85 66 105 56 L105 90 L-5 90 Z" fill="rgba(255,255,255,0.08)" />
+                      </svg>
+                      <span style={{ position: "relative", fontSize: isFocal ? "1.7rem" : "1.375rem", lineHeight: 1, filter: "drop-shadow(0 1px 5px rgba(0,0,0,0.25))" }}>
+                        {dest.emoji}
+                      </span>
+                      <span style={{ position: "relative", fontSize: "0.6rem", fontWeight: 700, color: "rgba(255,255,255,0.92)", letterSpacing: "0.02em", lineHeight: 1.2, marginTop: "0.15rem", textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
+                        {dest.label}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
-              {/* Route line below mosaic */}
-              <svg width="218" height="14" viewBox="0 0 218 14" fill="none" style={{ marginTop: "0.125rem" }}>
+
+              {/* Route decoration + destination count */}
+              <svg width="218" height="14" viewBox="0 0 218 14" fill="none">
                 <line x1="10" y1="7" x2="208" y2="7" stroke="var(--border-strong)" strokeWidth="1" strokeDasharray="4 6" />
-                <circle cx="10" cy="7" r="3.5" fill="var(--accent)" opacity="0.5" />
+                <circle cx="10"  cy="7" r="3.5" fill="var(--accent)" opacity="0.5" />
                 <circle cx="109" cy="7" r="2.5" fill="var(--accent)" opacity="0.35" />
                 <circle cx="208" cy="7" r="3.5" fill="var(--accent)" opacity="0.5" />
               </svg>
               <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-muted)", margin: 0 }}>
                 {availableDestinations.length} destinations
               </p>
+
             </div>
 
           </div>

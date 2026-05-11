@@ -43,13 +43,26 @@ function formatMonths(months: ReadyData["best_season"]["overall_best_months"]): 
   return `${months[0]}–${months[months.length - 1]}`;
 }
 
+// Resolves a hero asset from /public/assets/hero/ when present,
+// otherwise falls back to the Unsplash CDN placeholder.
+function heroAsset(filename: string, fallback: string): string {
+  return fs.existsSync(path.join(process.cwd(), "public", "assets", "hero", filename))
+    ? `/assets/hero/${filename}`
+    : fallback;
+}
+
 const HERO_IMGS = {
-  main:   "https://images.unsplash.com/photo-1464822759844-d150ad6a8c1d?w=640&q=82&auto=format&fit=crop",
-  tropic: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop",
-  nomad:  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=320&q=75&auto=format&fit=crop",
-  japan:  "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&q=78&auto=format&fit=crop",
-  map:    "https://images.unsplash.com/photo-1526178618343-7f6c6c99a1d7?w=480&q=75&auto=format&fit=crop",
-} as const;
+  // Slot: hero-main-bg.webp — main cinematic scene (full-bleed scenic photo)
+  main:   heroAsset("hero-main-bg.webp",       "https://images.unsplash.com/photo-1464822759844-d150ad6a8c1d?w=640&q=82&auto=format&fit=crop"),
+  // Slot: polaroid-thailand.webp — tropical/beach polaroid snap (top-left)
+  tropic: heroAsset("polaroid-thailand.webp",  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop"),
+  // Slot: polaroid-community.webp — nomad workspace stamp card (top-right floating)
+  nomad:  heroAsset("polaroid-community.webp", "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=320&q=75&auto=format&fit=crop"),
+  // Slot: polaroid-japan.webp — Japan street mood polaroid (bottom-left)
+  japan:  heroAsset("polaroid-japan.webp",     "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&q=78&auto=format&fit=crop"),
+  // Slot: passport-stamps.png — worn atlas / map background texture (behind composition)
+  map:    heroAsset("passport-stamps.png",     "https://images.unsplash.com/photo-1526178618343-7f6c6c99a1d7?w=480&q=75&auto=format&fit=crop"),
+};
 
 interface HomePageProps {
   searchParams: Promise<{ passport?: string }>;
@@ -101,13 +114,26 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       <header
         className="home-header"
         style={{
-          background: "linear-gradient(175deg, #e8ddd0 0%, #ede4d7 28%, #f2ebe1 62%, var(--bg-base) 100%)",
+          background: "var(--bg-base)",
           borderBottom: "1px solid var(--border)",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Amber radial glow — warm atmospheric light */}
+        {/* Full-bleed cinematic background — desktop only, graceful fallback via CSS display:none */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="home-hero-bg"
+          src={HERO_IMGS.main}
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          decoding="async"
+        />
+        {/* Directional warm overlay — preserves text readability on left, reveals photo on right */}
+        <div className="home-hero-overlay" aria-hidden="true" />
+
+        {/* Amber radial glow — warm atmospheric accent over the photo */}
         <div
           aria-hidden="true"
           style={{
@@ -116,8 +142,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             right: 0,
             width: "55%",
             height: "100%",
-            background: "radial-gradient(ellipse 75% 65% at 85% 25%, rgba(217,119,6,0.07) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse 75% 65% at 85% 25%, rgba(217,119,6,0.10) 0%, transparent 70%)",
             pointerEvents: "none",
+            zIndex: 2,
           }}
         />
         {/* Terrain wave — landscape horizon transition to content */}
@@ -129,7 +156,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             left: 0,
             right: 0,
             height: "44px",
-            zIndex: 2,
+            zIndex: 3,
             pointerEvents: "none",
           }}
         >
@@ -149,7 +176,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             />
           </svg>
         </div>
-        <div className="page-container">
+        <div className="page-container" style={{ position: "relative", zIndex: 4 }}>
           <div className="home-hero-layout">
 
             {/* ── Left: text + selector ── */}
@@ -192,59 +219,22 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               {/* Layered editorial photo collage */}
               <div style={{ position: "relative", width: "400px", height: "340px" }}>
 
-                {/* Travel atlas texture — worn map background fills the panel with narrative depth */}
-                <div style={{ position: "absolute", inset: 0, borderRadius: "1rem", overflow: "hidden", zIndex: 0 }}>
-                  <img
-                    src={HERO_IMGS.map}
-                    alt=""
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div style={{ position: "absolute", inset: 0, background: "rgba(247,243,238,0.82)" }} />
-                </div>
-
                 {/* Narrative route arcs — dashed travel itinerary connecting photo landmarks */}
                 <svg
                   viewBox="0 0 400 340"
                   style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 8, pointerEvents: "none", display: "block" }}
                 >
                   {/* Arc: Japan polaroid → Tropical polaroid */}
-                  <path d="M 168 252 C 185 208 155 185 90 140" stroke="rgba(217,119,6,0.28)" strokeWidth="1.5" strokeDasharray="4 7" fill="none" />
+                  <path d="M 168 252 C 185 208 155 185 90 140" stroke="rgba(217,119,6,0.52)" strokeWidth="1.5" strokeDasharray="4 7" fill="none" />
                   {/* Arc: Tropical polaroid top-right → Nomad stamp */}
-                  <path d="M 154 14 C 218 2 268 24 302 49" stroke="rgba(217,119,6,0.22)" strokeWidth="1" strokeDasharray="3 6" fill="none" />
+                  <path d="M 154 14 C 218 2 268 24 302 49" stroke="rgba(217,119,6,0.42)" strokeWidth="1" strokeDasharray="3 6" fill="none" />
                   {/* Pin marker — Tropical polaroid anchor */}
-                  <circle cx="90" cy="140" r="3" fill="none" stroke="rgba(217,119,6,0.50)" strokeWidth="1.5" />
-                  <circle cx="90" cy="140" r="1.5" fill="rgba(217,119,6,0.65)" />
+                  <circle cx="90" cy="140" r="3" fill="none" stroke="rgba(217,119,6,0.72)" strokeWidth="1.5" />
+                  <circle cx="90" cy="140" r="1.5" fill="rgba(217,119,6,0.88)" />
                   {/* Pin marker — Japan polaroid anchor */}
-                  <circle cx="168" cy="252" r="2.5" fill="none" stroke="rgba(217,119,6,0.42)" strokeWidth="1.5" />
-                  <circle cx="168" cy="252" r="1.5" fill="rgba(217,119,6,0.55)" />
+                  <circle cx="168" cy="252" r="2.5" fill="none" stroke="rgba(217,119,6,0.65)" strokeWidth="1.5" />
+                  <circle cx="168" cy="252" r="1.5" fill="rgba(217,119,6,0.78)" />
                 </svg>
-
-                {/* Main scene — Adventure & Mountains (background anchor) */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "50px",
-                    right: 0,
-                    width: "272px",
-                    height: "234px",
-                    borderRadius: "1.25rem",
-                    overflow: "hidden",
-                    boxShadow: "0 24px 60px -10px rgba(0,0,0,0.40), 0 8px 20px rgba(0,0,0,0.18)",
-                    zIndex: 1,
-                  }}
-                >
-                  <img
-                    src={HERO_IMGS.main}
-                    alt=""
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                    fetchPriority="high"
-                    decoding="async"
-                  />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 42%, rgba(0,0,0,0.3) 100%)" }} />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 45%)" }} />
-                </div>
 
                 {/* Polaroid snap — Tropical Explorer (top-left, primary scatter card) */}
                 <div
@@ -344,7 +334,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     borderRadius: "0 4px 4px 0",
                     padding: "0.35rem 0.7rem 0.35rem 0.55rem",
                     width: "148px",
-                    boxShadow: "0 3px 12px rgba(0,0,0,0.12)",
+                    boxShadow: "0 4px 18px rgba(0,0,0,0.22), 0 1px 4px rgba(0,0,0,0.12)",
                     zIndex: 11,
                   }}
                 >

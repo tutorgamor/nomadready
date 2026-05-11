@@ -326,6 +326,46 @@ a:hover {
   }
 }
 
+/* Homepage hero — full-bleed cinematic background image (desktop only) */
+.home-hero-bg {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .home-hero-bg {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    z-index: 0;
+  }
+}
+
+/* Homepage hero — directional overlay: warm/readable on left, photo reveals on right */
+.home-hero-overlay {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .home-hero-overlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      108deg,
+      rgba(247,243,238,0.96) 0%,
+      rgba(247,243,238,0.88) 30%,
+      rgba(247,243,238,0.28) 56%,
+      rgba(247,243,238,0.04) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
 /* Hide scrollbar while keeping scroll functionality */
 .hide-scrollbar {
   scrollbar-width: none;        /* Firefox */

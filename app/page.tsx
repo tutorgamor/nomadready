@@ -142,7 +142,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             right: 0,
             width: "55%",
             height: "100%",
-            background: "radial-gradient(ellipse 75% 65% at 85% 25%, rgba(217,119,6,0.10) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse 75% 65% at 85% 25%, rgba(217,119,6,0.13) 0%, transparent 70%)",
             pointerEvents: "none",
             zIndex: 2,
           }}
@@ -238,9 +238,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 <div
                   style={{
                     position: "absolute",
-                    top: 0,
-                    left: 0,
-                    transform: "rotate(-5deg)",
+                    top: "10px",
+                    left: "10px",
+                    transform: "rotate(-4.5deg)",
                     background: "#ffffff",
                     padding: "8px 8px 28px",
                     borderRadius: "3px",
@@ -275,9 +275,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 <div
                   style={{
                     position: "absolute",
-                    bottom: "20px",
-                    left: "32px",
-                    transform: "rotate(5deg)",
+                    bottom: "18px",
+                    left: "16px",
+                    transform: "rotate(4.5deg)",
                     background: "#ffffff",
                     padding: "7px 7px 24px",
                     borderRadius: "3px",
@@ -304,9 +304,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 <div
                   style={{
                     position: "absolute",
-                    top: "14px",
-                    right: "6px",
-                    transform: "rotate(2.5deg)",
+                    top: "20px",
+                    right: "16px",
+                    transform: "rotate(2deg)",
                     width: "92px",
                     height: "70px",
                     borderRadius: "0.5rem",
@@ -328,9 +328,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 <div
                   style={{
                     position: "absolute",
-                    bottom: "8px",
-                    right: "4px",
-                    transform: "rotate(-1.5deg)",
+                    bottom: "14px",
+                    right: "12px",
+                    transform: "rotate(-1deg)",
                     background: "#fffef9",
                     borderLeft: "2.5px solid var(--accent)",
                     borderRadius: "0 4px 4px 0",

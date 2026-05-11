@@ -103,7 +103,7 @@ a:hover {
 
 /* Card base */
 .card {
-  background: linear-gradient(160deg, #ffffff 0%, #fdfaf6 100%);
+  background: linear-gradient(160deg, #ffffff 0%, #fef9f3 60%, #fdfaf6 100%);
   border: 1px solid var(--border);
   border-radius: 1rem;
   padding: 1.375rem;
@@ -186,11 +186,11 @@ a:hover {
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.875rem;
-  padding: 0.275rem 0.875rem 0.275rem 0.625rem;
+  padding: 0.3rem 0.875rem 0.3rem 0.75rem;
   border-left: 3px solid var(--accent);
   letter-spacing: -0.02em;
-  background: linear-gradient(90deg, rgba(254,243,199,0.7) 0%, transparent 75%);
-  border-radius: 0 0.3rem 0.3rem 0;
+  background: linear-gradient(90deg, rgba(254,243,199,0.85) 0%, rgba(254,243,199,0.25) 55%, transparent 100%);
+  border-radius: 0 0.375rem 0.375rem 0;
 }
 
 /* Mobile illustrated scene — compact travel atlas below hero text */
@@ -313,16 +313,16 @@ a:hover {
   }
 }
 
-/* Travel Ready hero — more padding on desktop (extra bottom for terrain wave) */
+/* Travel Ready hero — cinematic padding that fills the taller hero height */
 .ready-hero-content {
-  padding-top: 2rem;
-  padding-bottom: 3.5rem;
+  padding-top: 2.25rem;
+  padding-bottom: 4.25rem;
 }
 
 @media (min-width: 768px) {
   .ready-hero-content {
-    padding-top: 3.75rem;
-    padding-bottom: 5rem;
+    padding-top: 4.5rem;
+    padding-bottom: 6rem;
   }
 }
 
@@ -406,4 +406,66 @@ a:hover {
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none;                /* Chrome / Safari / new Edge */
+}
+
+/* ─── Destination Hero — Cinematic ──────────────────────── */
+
+/* Controlled hero height for cinematic atmosphere */
+.dest-hero-header {
+  min-height: 340px;
+}
+
+@media (min-width: 768px) {
+  .dest-hero-header {
+    min-height: 500px;
+  }
+}
+
+/* Full-bleed cinematic background image */
+.dest-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  z-index: 0;
+}
+
+/* Cinematic warm directional overlay — darkens left/bottom for text, opens top-right */
+.dest-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    155deg,
+    rgba(10,6,2,0.80) 0%,
+    rgba(10,6,2,0.58) 35%,
+    rgba(6,3,0,0.30) 62%,
+    rgba(0,0,0,0.10) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Warm amber atmospheric glow — editorial light source top-right */
+.dest-hero-amber-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 55% 50% at 80% 18%,
+    rgba(217,119,6,0.20) 0%,
+    rgba(217,119,6,0.06) 50%,
+    transparent 72%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Bottom vignette — ensures terrain wave blends cleanly */
+.dest-hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 30%, transparent 52%);
+  z-index: 1;
+  pointer-events: none;
 }

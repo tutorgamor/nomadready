@@ -106,47 +106,33 @@ export default async function ReadyPage({ params }: Props) {
 
       {/* ── Hero ──────────────────────────────────────────────── */}
       <header
+        className="dest-hero-header"
         style={{
           backgroundColor: dest.cover_color,
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Diagonal depth overlay */}
-        <div
+        {/* Cinematic background image */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/assets/destination/destination-hero-bg.webp"
+          alt=""
           aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(155deg, rgba(255,255,255,0.14) 0%, rgba(0,0,0,0.28) 100%)",
-          }}
+          className="dest-hero-bg"
+          fetchPriority="high"
         />
-        {/* Bottom-to-top dark vignette for text contrast */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(0deg, rgba(0,0,0,0.38) 0%, transparent 55%)",
-          }}
-        />
-        {/* Sun glow — atmospheric light source */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: "-20%",
-            right: "10%",
-            width: "45%",
-            paddingBottom: "45%",
-            background: "radial-gradient(ellipse, rgba(255,255,255,0.22) 0%, transparent 65%)",
-            borderRadius: "50%",
-            pointerEvents: "none",
-          }}
-        />
-        {/* Distant mountain silhouette — adds depth layer before main terrain wave */}
+
+        {/* Cinematic warm directional overlay */}
+        <div aria-hidden="true" className="dest-hero-overlay" />
+
+        {/* Warm amber atmospheric glow — top-right light source */}
+        <div aria-hidden="true" className="dest-hero-amber-glow" />
+
+        {/* Bottom vignette — terrain wave transition */}
+        <div aria-hidden="true" className="dest-hero-vignette" />
+
+        {/* Distant mountain silhouette — depth layer */}
         <div
           aria-hidden="true"
           style={{
@@ -155,7 +141,7 @@ export default async function ReadyPage({ params }: Props) {
             left: 0,
             right: 0,
             height: "38px",
-            zIndex: 1,
+            zIndex: 2,
             pointerEvents: "none",
           }}
         >
@@ -166,10 +152,11 @@ export default async function ReadyPage({ params }: Props) {
           >
             <path
               d="M0 26 Q120 6 280 18 Q400 26 520 10 Q620 0 740 8 Q860 18 980 6 Q1100 -2 1220 10 Q1340 20 1440 8 L1440 38 L0 38 Z"
-              fill="rgba(255,255,255,0.08)"
+              fill="rgba(255,255,255,0.06)"
             />
           </svg>
         </div>
+
         {/* Terrain wave — organic landscape horizon at hero bottom */}
         <div
           aria-hidden="true"
@@ -179,7 +166,7 @@ export default async function ReadyPage({ params }: Props) {
             left: 0,
             right: 0,
             height: "56px",
-            zIndex: 2,
+            zIndex: 3,
             pointerEvents: "none",
           }}
         >
@@ -204,6 +191,7 @@ export default async function ReadyPage({ params }: Props) {
           className="page-container ready-hero-content"
           style={{
             position: "relative",
+            zIndex: 4,
             display: "flex",
             flexDirection: "column",
             gap: "1.5rem",
@@ -219,22 +207,26 @@ export default async function ReadyPage({ params }: Props) {
               gap: "0.3rem",
               fontSize: "0.8125rem",
               fontWeight: 500,
-              color: "#ffffff",
-              background: "rgba(0, 0, 0, 0.28)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
+              color: "rgba(255,255,255,0.92)",
+              background: "rgba(0, 0, 0, 0.38)",
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)",
               padding: "0.35rem 0.85rem 0.35rem 0.6rem",
               borderRadius: "9999px",
               textDecoration: "none",
-              border: "1px solid rgba(255,255,255,0.15)",
+              border: "1px solid rgba(255,255,255,0.18)",
+              letterSpacing: "0.01em",
             }}
           >
             ← All destinations
           </Link>
 
           {/* Emoji + routing line + title */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-            <span style={{ fontSize: "4.5rem", lineHeight: 1, filter: "drop-shadow(0 3px 8px rgba(0,0,0,0.25))" }} aria-hidden="true">
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <span
+              style={{ fontSize: "4.5rem", lineHeight: 1, filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.45))" }}
+              aria-hidden="true"
+            >
               {dest.emoji}
             </span>
 
@@ -244,10 +236,11 @@ export default async function ReadyPage({ params }: Props) {
                 style={{
                   fontSize: "0.72rem",
                   fontWeight: 600,
-                  letterSpacing: "0.09em",
+                  letterSpacing: "0.10em",
                   textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.7)",
-                  margin: "0 0 0.35rem",
+                  color: "rgba(255,255,255,0.65)",
+                  margin: "0 0 0.4rem",
+                  textShadow: "0 1px 4px rgba(0,0,0,0.4)",
                 }}
               >
                 {pass.emoji} {pass.label} →
@@ -256,13 +249,13 @@ export default async function ReadyPage({ params }: Props) {
               {/* Destination name */}
               <h1
                 style={{
-                  fontSize: "clamp(2.25rem, 10vw, 2.75rem)",
+                  fontSize: "clamp(2.5rem, 11vw, 3.25rem)",
                   fontWeight: 800,
                   letterSpacing: "-0.045em",
                   color: "#ffffff",
                   margin: 0,
                   lineHeight: 1.0,
-                  textShadow: "0 2px 8px rgba(0,0,0,0.22)",
+                  textShadow: "0 2px 20px rgba(0,0,0,0.55), 0 1px 4px rgba(0,0,0,0.35)",
                 }}
               >
                 {dest.label}
@@ -272,10 +265,11 @@ export default async function ReadyPage({ params }: Props) {
               <p
                 style={{
                   fontSize: "0.9375rem",
-                  color: "rgba(255,255,255,0.85)",
-                  margin: "0.5rem 0 0",
-                  lineHeight: 1.45,
-                  maxWidth: "36ch",
+                  color: "rgba(255,255,255,0.82)",
+                  margin: "0.6rem 0 0",
+                  lineHeight: 1.5,
+                  maxWidth: "38ch",
+                  textShadow: "0 1px 8px rgba(0,0,0,0.35)",
                 }}
               >
                 {dest.hero_tag}
@@ -288,13 +282,15 @@ export default async function ReadyPage({ params }: Props) {
             <span
               style={{
                 fontSize: "0.68rem",
-                fontWeight: 600,
-                letterSpacing: "0.07em",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.92)",
-                background: "rgba(0,0,0,0.25)",
-                border: "1px solid rgba(255,255,255,0.2)",
-                padding: "0.25rem 0.7rem",
+                color: "rgba(255,255,255,0.95)",
+                background: "rgba(0,0,0,0.38)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.22)",
+                padding: "0.28rem 0.75rem",
                 borderRadius: "9999px",
               }}
             >
@@ -303,7 +299,8 @@ export default async function ReadyPage({ params }: Props) {
             <span
               style={{
                 fontSize: "0.75rem",
-                color: "rgba(255,255,255,0.62)",
+                color: "rgba(255,255,255,0.55)",
+                textShadow: "0 1px 4px rgba(0,0,0,0.3)",
               }}
             >
               Reviewed {reviewedDate}

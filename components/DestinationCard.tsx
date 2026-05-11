@@ -153,6 +153,7 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
 
       {/* ── Card body ── */}
       <div
+        className="dest-card-body"
         style={{
           padding: "1.1rem 1.25rem 1.1rem",
           display: "flex",
@@ -234,39 +235,98 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
 
         {/* ── Highlights grid ── */}
         {summary && (
-          <div
-            style={{
-              borderTop: "1px solid var(--border)",
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              rowGap: "0.625rem",
-              columnGap: "0.5rem",
-              background: "linear-gradient(160deg, rgba(254,243,199,0.22) 0%, transparent 100%)",
-              borderRadius: "0.5rem",
-              margin: "0.25rem -0.5rem -0.5rem",
-              padding: "0.75rem 0.5rem 0.5rem",
-            }}
-          >
-            <div>
-              <p style={STAT_LABEL}>Score</p>
-              <p style={{ ...STAT_VALUE, color: "var(--text-primary)", fontWeight: 700 }}>
-                {travel_score?.overall ?? "—"}
-                <span style={{ fontSize: "0.6875rem", fontWeight: 400, color: "var(--text-muted)" }}>/100</span>
-              </p>
+          <>
+            {/* Perforation tear line */}
+            <div
+              aria-hidden="true"
+              style={{
+                margin: "0.35rem -1.25rem 0",
+                height: "1px",
+                backgroundImage:
+                  "repeating-linear-gradient(90deg, rgba(180,130,60,0.32) 0px, rgba(180,130,60,0.32) 4px, transparent 4px, transparent 9px)",
+              }}
+            />
+            {/* Travel briefing slip */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                rowGap: "0.625rem",
+                columnGap: "0.5rem",
+                background: "linear-gradient(160deg, rgba(255,248,224,0.92) 0%, rgba(254,242,195,0.78) 100%)",
+                borderRadius: "0.5rem",
+                margin: "0.25rem -0.5rem -0.5rem",
+                padding: "0.75rem 0.5rem 0.5rem",
+                border: "1px solid rgba(200,155,65,0.24)",
+                boxShadow: "inset 0 1px 5px rgba(120,80,20,0.07), 0 1px 3px rgba(120,80,20,0.04)",
+                position: "relative",
+              }}
+            >
+              {/* Passport stamp mark */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  top: "0.5rem",
+                  right: "0.5rem",
+                  width: "22px",
+                  height: "22px",
+                  borderRadius: "50%",
+                  border: "1.5px solid rgba(180,130,50,0.35)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  opacity: 0.48,
+                  pointerEvents: "none",
+                }}
+              >
+                <div
+                  style={{
+                    width: "14px",
+                    height: "14px",
+                    borderRadius: "50%",
+                    border: "1px solid rgba(180,130,50,0.3)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "5px",
+                      fontWeight: 800,
+                      letterSpacing: "0.04em",
+                      textTransform: "uppercase",
+                      color: "rgba(160,100,15,0.65)",
+                      lineHeight: 1,
+                    }}
+                  >
+                    OK
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <p style={STAT_LABEL}>Score</p>
+                <p style={{ ...STAT_VALUE, color: "var(--text-primary)", fontWeight: 700 }}>
+                  {travel_score?.overall ?? "—"}
+                  <span style={{ fontSize: "0.6875rem", fontWeight: 400, color: "var(--text-muted)" }}>/100</span>
+                </p>
+              </div>
+              <div>
+                <p style={STAT_LABEL}>Visa</p>
+                <p style={STAT_VALUE}>{summary.visaLabel}</p>
+              </div>
+              <div>
+                <p style={STAT_LABEL}>Budget from</p>
+                <p style={STAT_VALUE}>{summary.budgetFrom}</p>
+              </div>
+              <div>
+                <p style={STAT_LABEL}>Best time</p>
+                <p style={STAT_VALUE}>{summary.bestMonths}</p>
+              </div>
             </div>
-            <div>
-              <p style={STAT_LABEL}>Visa</p>
-              <p style={STAT_VALUE}>{summary.visaLabel}</p>
-            </div>
-            <div>
-              <p style={STAT_LABEL}>Budget from</p>
-              <p style={STAT_VALUE}>{summary.budgetFrom}</p>
-            </div>
-            <div>
-              <p style={STAT_LABEL}>Best time</p>
-              <p style={STAT_VALUE}>{summary.bestMonths}</p>
-            </div>
-          </div>
+          </>
         )}
       </div>
     </Link>

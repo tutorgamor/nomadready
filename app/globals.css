@@ -417,7 +417,7 @@ a:hover {
 
 @media (min-width: 768px) {
   .dest-hero-header {
-    min-height: 500px;
+    min-height: 600px;
   }
 }
 
@@ -430,6 +430,12 @@ a:hover {
   object-fit: cover;
   object-position: center 30%;
   z-index: 0;
+}
+
+@media (min-width: 768px) {
+  .dest-hero-bg {
+    object-position: center 45%;
+  }
 }
 
 /* Cinematic warm directional overlay — darkens left/bottom for text, opens top-right */

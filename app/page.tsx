@@ -43,38 +43,12 @@ function formatMonths(months: ReadyData["best_season"]["overall_best_months"]): 
   return `${months[0]}–${months[months.length - 1]}`;
 }
 
-interface MobileAtlasCard {
-  top: string;
-  left?: string;
-  right?: string;
-  transform: string;
-  w: string;
-  h: string;
-}
-
-const MOBILE_ATLAS_CARDS: MobileAtlasCard[] = [
-  { top: "16px", left: "5%",              transform: "rotate(-2.5deg)", w: "80px", h: "66px" },
-  { top: "10px", left: "calc(50% - 46px)", transform: "rotate(1.5deg)",  w: "92px", h: "76px" },
-  { top: "16px", right: "5%",             transform: "rotate(2deg)",    w: "80px", h: "66px" },
-];
-
-interface AtlasCard {
-  top?: string;
-  bottom?: string;
-  left?: string;
-  right?: string;
-  rotate: string;
-  w: string;
-  h: string;
-}
-
-const ATLAS_CARDS: AtlasCard[] = [
-  { top: "10px",   left: "10px",   rotate: "-3deg",   w: "86px",  h: "70px"  },
-  { top: "18px",   right: "10px",  rotate: "2.5deg",  w: "84px",  h: "68px"  },
-  { top: "108px",  left: "120px",  rotate: "-1.5deg", w: "100px", h: "82px"  },
-  { bottom: "20px", left: "16px",  rotate: "2deg",    w: "84px",  h: "68px"  },
-  { bottom: "28px", right: "12px", rotate: "-2.5deg", w: "86px",  h: "70px"  },
-];
+const HERO_IMGS = {
+  main:   "https://images.unsplash.com/photo-1464822759844-d150ad6a8c1d?w=640&q=82&auto=format&fit=crop",
+  tropic: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop",
+  nomad:  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=320&q=75&auto=format&fit=crop",
+  japan:  "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&q=78&auto=format&fit=crop",
+} as const;
 
 interface HomePageProps {
   searchParams: Promise<{ passport?: string }>;
@@ -211,100 +185,115 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
             </div>
 
-            {/* ── Right: Illustrated travel atlas composition (desktop only) ── */}
+            {/* ── Right: Cinematic photo composition (desktop only) ── */}
             <div className="home-hero-aside" aria-hidden="true">
 
-              {/* Travel atlas scene — layered illustrated landscape with floating destinations */}
-              <div style={{ position: "relative", width: "340px", height: "300px" }}>
+              {/* Layered editorial photo collage */}
+              <div style={{ position: "relative", width: "400px", height: "340px" }}>
 
-                {/* Layered landscape background */}
-                <svg
-                  viewBox="0 0 340 300"
+                {/* Main scene — Adventure & Mountains (background anchor) */}
+                <div
                   style={{
                     position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
+                    top: "50px",
+                    right: 0,
+                    width: "272px",
+                    height: "234px",
                     borderRadius: "1.25rem",
                     overflow: "hidden",
+                    boxShadow: "0 24px 60px -10px rgba(0,0,0,0.40), 0 8px 20px rgba(0,0,0,0.18)",
+                    zIndex: 1,
                   }}
                 >
-                  <defs>
-                    <linearGradient id="heroSceneSky" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#bde0f4" />
-                      <stop offset="38%" stopColor="#cce8d6" />
-                      <stop offset="100%" stopColor="#e2d9c6" />
-                    </linearGradient>
-                  </defs>
-                  {/* Sky fill */}
-                  <rect width="340" height="300" rx="20" ry="20" fill="url(#heroSceneSky)" />
-                  {/* Sun glow */}
-                  <circle cx="292" cy="55" r="26" fill="rgba(255,185,50,0.15)" />
-                  <circle cx="292" cy="55" r="15" fill="rgba(255,210,70,0.28)" />
-                  {/* Cloud clusters */}
-                  <ellipse cx="56"  cy="42" rx="40" ry="13" fill="rgba(255,255,255,0.55)" />
-                  <ellipse cx="74"  cy="33" rx="28" ry="10" fill="rgba(255,255,255,0.42)" />
-                  <ellipse cx="230" cy="28" rx="36" ry="12" fill="rgba(255,255,255,0.50)" />
-                  <ellipse cx="250" cy="20" rx="24" ry="8"  fill="rgba(255,255,255,0.38)" />
-                  <ellipse cx="290" cy="36" rx="22" ry="7"  fill="rgba(255,255,255,0.30)" />
-                  {/* Background mountain ridge */}
-                  <path d="M0 145 Q45 88 108 122 Q148 145 196 100 Q238 62 290 96 Q318 114 340 90 L340 195 L0 195 Z" fill="rgba(155,201,165,0.28)" />
-                  {/* Midground terrain */}
-                  <path d="M0 185 Q65 155 160 174 Q238 190 340 160 L340 300 L0 300 Z" fill="rgba(155,201,165,0.42)" />
-                  {/* Foreground water */}
-                  <path d="M0 248 Q82 232 188 242 Q268 250 340 236 L340 300 L0 300 Z" fill="rgba(167,213,247,0.45)" />
-                  <path d="M0 268 Q108 256 224 264 Q294 270 340 258 L340 300 L0 300 Z" fill="rgba(167,213,247,0.28)" />
-                  {/* Dotted travel routes between destinations */}
-                  <path d="M55 80 Q88 118 163 170"   stroke="rgba(217,119,6,0.30)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
-                  <path d="M177 165 Q212 112 266 82"  stroke="rgba(217,119,6,0.30)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
-                  <path d="M148 192 Q102 218 62 248"  stroke="rgba(217,119,6,0.22)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
-                  <path d="M192 192 Q232 220 268 244" stroke="rgba(217,119,6,0.22)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
-                </svg>
+                  <img
+                    src={HERO_IMGS.main}
+                    alt=""
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 42%, rgba(0,0,0,0.3) 100%)" }} />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 45%)" }} />
+                </div>
 
-                {/* Floating destination cards — positioned at scene landmarks */}
-                {availableDestinations.slice(0, 5).map((dest, i) => {
-                  const cfg = ATLAS_CARDS[i];
-                  const isFocal = i === 2;
-                  return (
-                    <div
-                      key={dest.id}
-                      style={{
-                        position: "absolute",
-                        top: cfg.top,
-                        bottom: cfg.bottom,
-                        left: cfg.left,
-                        right: cfg.right,
-                        transform: `rotate(${cfg.rotate})`,
-                        width: cfg.w,
-                        height: cfg.h,
-                        backgroundColor: dest.cover_color,
-                        borderRadius: "0.75rem",
-                        overflow: "hidden",
-                        boxShadow: isFocal
-                          ? "0 8px 28px rgba(0,0,0,0.22), 0 0 0 2px rgba(255,255,255,0.38)"
-                          : "0 4px 14px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.22)",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "flex-end",
-                        padding: "0.4rem 0.5rem",
-                      }}
-                    >
-                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(150deg, rgba(255,255,255,0.18) 0%, rgba(0,0,0,0.12) 100%)" }} />
-                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(0,0,0,0.28) 0%, transparent 60%)" }} />
-                      <svg viewBox="0 0 100 82" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-                        <ellipse cx="70" cy="18" rx="20" ry="6" fill="rgba(255,255,255,0.10)" />
-                        <path d="M-5 50 Q22 28 50 42 Q76 56 105 36 L105 90 L-5 90 Z" fill="rgba(255,255,255,0.12)" />
-                        <path d="M-5 64 Q30 52 65 60 Q85 66 105 56 L105 90 L-5 90 Z" fill="rgba(255,255,255,0.08)" />
-                      </svg>
-                      <span style={{ position: "relative", fontSize: isFocal ? "1.7rem" : "1.375rem", lineHeight: 1, filter: "drop-shadow(0 1px 5px rgba(0,0,0,0.25))" }}>
-                        {dest.emoji}
-                      </span>
-                      <span style={{ position: "relative", fontSize: "0.6rem", fontWeight: 700, color: "rgba(255,255,255,0.92)", letterSpacing: "0.02em", lineHeight: 1.2, marginTop: "0.15rem", textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
-                        {dest.label}
-                      </span>
-                    </div>
-                  );
-                })}
+                {/* Polaroid snap — Tropical Explorer (top-left, primary scatter card) */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    transform: "rotate(-7deg)",
+                    background: "#ffffff",
+                    padding: "8px 8px 28px",
+                    borderRadius: "3px",
+                    width: "158px",
+                    boxShadow: "0 14px 40px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.1)",
+                    zIndex: 10,
+                  }}
+                >
+                  <img
+                    src={HERO_IMGS.tropic}
+                    alt=""
+                    style={{ width: "100%", height: "106px", objectFit: "cover", display: "block" }}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <p style={{ margin: "6px 0 0", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", textAlign: "center" }}>
+                    ✦ Into the wild
+                  </p>
+                </div>
+
+                {/* Polaroid snap — Japan Street (bottom-left, slight angle) */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "20px",
+                    left: "32px",
+                    transform: "rotate(5deg)",
+                    background: "#ffffff",
+                    padding: "7px 7px 24px",
+                    borderRadius: "3px",
+                    width: "136px",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.08)",
+                    zIndex: 9,
+                  }}
+                >
+                  <img
+                    src={HERO_IMGS.japan}
+                    alt=""
+                    style={{ width: "100%", height: "94px", objectFit: "cover", display: "block" }}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <p style={{ margin: "5px 0 0", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", textAlign: "center" }}>
+                    ✦ Golden hour
+                  </p>
+                </div>
+
+                {/* Stamp card — Digital Nomad workspace (pinned over main photo top) */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "14px",
+                    right: "6px",
+                    transform: "rotate(2.5deg)",
+                    width: "92px",
+                    height: "70px",
+                    borderRadius: "0.5rem",
+                    overflow: "hidden",
+                    boxShadow: "0 6px 18px rgba(0,0,0,0.26), 0 0 0 2.5px rgba(255,255,255,0.72)",
+                    zIndex: 12,
+                  }}
+                >
+                  <img
+                    src={HERO_IMGS.nomad}
+                    alt=""
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+
               </div>
 
               {/* Route decoration + destination count */}
@@ -324,99 +313,84 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
           {/* ── Mobile illustrated scene (hidden on desktop) ── */}
           <div className="home-hero-mobile-scene" aria-hidden="true">
-            <div style={{ position: "relative", width: "100%", height: "196px", borderRadius: "1rem", overflow: "hidden" }}>
+            <div style={{ position: "relative", width: "100%", height: "200px", borderRadius: "1rem", overflow: "hidden" }}>
 
-              {/* Layered landscape background */}
-              <svg
-                viewBox="0 0 400 196"
-                preserveAspectRatio="xMidYMid slice"
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", display: "block" }}
+              {/* Full-bleed main photo */}
+              <img
+                src={HERO_IMGS.main}
+                alt=""
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                loading="lazy"
+                decoding="async"
+              />
+              {/* Cinematic gradient overlays */}
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 38%, rgba(0,0,0,0.35) 100%)" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,0.14) 0%, transparent 55%)" }} />
+
+              {/* Polaroid snap — Japan Street (top-right) */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  transform: "rotate(3.5deg)",
+                  background: "#ffffff",
+                  padding: "5px 5px 18px",
+                  borderRadius: "3px",
+                  width: "82px",
+                  boxShadow: "0 6px 18px rgba(0,0,0,0.3)",
+                  zIndex: 10,
+                }}
               >
-                <defs>
-                  <linearGradient id="mobileHeroSky" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#bde0f4" />
-                    <stop offset="40%" stopColor="#cce8d6" />
-                    <stop offset="100%" stopColor="#e2d9c6" />
-                  </linearGradient>
-                </defs>
-                <rect width="400" height="196" fill="url(#mobileHeroSky)" />
-                {/* Sun */}
-                <circle cx="362" cy="36" r="22" fill="rgba(255,185,50,0.15)" />
-                <circle cx="362" cy="36" r="13" fill="rgba(255,210,70,0.28)" />
-                {/* Clouds */}
-                <ellipse cx="54"  cy="30" rx="36" ry="11" fill="rgba(255,255,255,0.55)" />
-                <ellipse cx="70"  cy="22" rx="24" ry="8"  fill="rgba(255,255,255,0.42)" />
-                <ellipse cx="200" cy="20" rx="32" ry="10" fill="rgba(255,255,255,0.48)" />
-                <ellipse cx="216" cy="13" rx="20" ry="7"  fill="rgba(255,255,255,0.36)" />
-                <ellipse cx="350" cy="26" rx="20" ry="7"  fill="rgba(255,255,255,0.28)" />
-                {/* Background mountain ridge */}
-                <path d="M0 92 Q50 58 100 80 Q140 96 192 64 Q232 40 290 66 Q328 82 400 60 L400 140 L0 140 Z" fill="rgba(155,201,165,0.28)" />
-                {/* Midground terrain */}
-                <path d="M0 128 Q82 106 180 120 Q280 134 400 108 L400 196 L0 196 Z" fill="rgba(155,201,165,0.42)" />
-                {/* Foreground water */}
-                <path d="M0 160 Q100 148 200 156 Q300 163 400 150 L400 196 L0 196 Z" fill="rgba(167,213,247,0.45)" />
-                <path d="M0 174 Q130 166 260 172 Q340 176 400 168 L400 196 L0 196 Z" fill="rgba(167,213,247,0.28)" />
-                {/* Decorative travel route arc */}
-                <path d="M62 90 Q200 116 338 90" stroke="rgba(217,119,6,0.28)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
-              </svg>
+                <img
+                  src={HERO_IMGS.japan}
+                  alt=""
+                  style={{ width: "100%", height: "54px", objectFit: "cover", display: "block" }}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
 
-              {/* Three floating destination cards */}
-              {availableDestinations.slice(0, 3).map((dest, i) => {
-                const cfg = MOBILE_ATLAS_CARDS[i];
-                const isFocal = i === 1;
-                return (
-                  <div
-                    key={dest.id}
-                    style={{
-                      position: "absolute",
-                      top: cfg.top,
-                      left: cfg.left,
-                      right: cfg.right,
-                      transform: cfg.transform,
-                      width: cfg.w,
-                      height: cfg.h,
-                      backgroundColor: dest.cover_color,
-                      borderRadius: "0.75rem",
-                      overflow: "hidden",
-                      boxShadow: isFocal
-                        ? "0 6px 22px rgba(0,0,0,0.22), 0 0 0 2px rgba(255,255,255,0.38)"
-                        : "0 3px 12px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.22)",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-end",
-                      padding: "0.375rem 0.4375rem",
-                    }}
-                  >
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(150deg, rgba(255,255,255,0.18) 0%, rgba(0,0,0,0.12) 100%)" }} />
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(0,0,0,0.28) 0%, transparent 60%)" }} />
-                    <svg viewBox="0 0 92 76" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-                      <path d="M-5 46 Q22 26 46 40 Q70 52 97 32 L97 85 L-5 85 Z" fill="rgba(255,255,255,0.12)" />
-                      <path d="M-5 60 Q28 48 60 56 Q80 62 97 52 L97 85 L-5 85 Z" fill="rgba(255,255,255,0.08)" />
-                    </svg>
-                    <span style={{ position: "relative", fontSize: isFocal ? "1.5rem" : "1.25rem", lineHeight: 1, filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.25))" }}>
-                      {dest.emoji}
-                    </span>
-                    <span style={{ position: "relative", fontSize: "0.575rem", fontWeight: 700, color: "rgba(255,255,255,0.92)", letterSpacing: "0.02em", lineHeight: 1.2, marginTop: "0.125rem", textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}>
-                      {dest.label}
-                    </span>
-                  </div>
-                );
-              })}
+              {/* Small stamp — Tropical Explorer (top-left) */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  left: "10px",
+                  transform: "rotate(-3deg)",
+                  width: "68px",
+                  height: "52px",
+                  borderRadius: "6px",
+                  overflow: "hidden",
+                  boxShadow: "0 4px 14px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.65)",
+                  zIndex: 10,
+                }}
+              >
+                <img
+                  src={HERO_IMGS.tropic}
+                  alt=""
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
 
               {/* Destination count pill */}
               <div style={{ position: "absolute", bottom: "10px", left: 0, right: 0, display: "flex", justifyContent: "center" }}>
-                <span style={{
-                  fontSize: "0.625rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.07em",
-                  textTransform: "uppercase",
-                  color: "rgba(28,25,23,0.55)",
-                  background: "rgba(255,255,255,0.62)",
-                  backdropFilter: "blur(4px)",
-                  WebkitBackdropFilter: "blur(4px)",
-                  padding: "0.2rem 0.625rem",
-                  borderRadius: "9999px",
-                }}>
+                <span
+                  style={{
+                    fontSize: "0.625rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.07em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.9)",
+                    background: "rgba(0,0,0,0.32)",
+                    backdropFilter: "blur(6px)",
+                    WebkitBackdropFilter: "blur(6px)",
+                    padding: "0.2rem 0.75rem",
+                    borderRadius: "9999px",
+                  }}
+                >
                   {availableDestinations.length} destinations
                 </span>
               </div>

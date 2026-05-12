@@ -187,14 +187,32 @@ export interface EmergencyInfo {
 
 // ─── Local Gems ───────────────────────────────────────────────
 
+export type GemType =
+  | "cowork"
+  | "cafe"
+  | "bakery"
+  | "restaurant"
+  | "laundry"
+  | "viewpoint"
+  | "temple"
+  | "beach"
+  | "museum";
+
+export type GemGroup =
+  | "Work-Friendly"
+  | "Coffee & Bakery"
+  | "Local Food"
+  | "Practical"
+  | "Explore";
+
 export interface LocalGem {
   name: string;
   area: string;
   budget: "$" | "$$" | "$$$";
-  tags: string[];
-  short_note: string;
-  why_good: string;
-  watch_out?: string;
+  type: GemType;
+  group: GemGroup;
+  field_highlight: string;
+  micro_watch_out?: string;
   confidence: "low" | "medium" | "high";
 }
 

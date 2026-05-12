@@ -1,6 +1,6 @@
 "use client";
 
-import type { LocalGem } from "@/lib/types";
+import type { LocalGem, GemGroup } from "@/lib/types";
 import { useProfileContext } from "@/lib/profile";
 
 const BUDGET_COLOR: Record<"$" | "$$" | "$$$", string> = {
@@ -9,12 +9,20 @@ const BUDGET_COLOR: Record<"$" | "$$" | "$$$", string> = {
   "$$$": "#c2410c",
 };
 
+const GROUP_ORDER: GemGroup[] = [
+  "Work-Friendly",
+  "Coffee & Bakery",
+  "Local Food",
+  "Practical",
+  "Explore",
+];
+
 function GemRow({ gem, isLast }: { gem: LocalGem; isLast: boolean }) {
   return (
     <div
       style={{
-        paddingTop: "1rem",
-        paddingBottom: isLast ? 0 : "1rem",
+        paddingTop: "0.875rem",
+        paddingBottom: "0.875rem",
         borderBottom: isLast ? "none" : "1px solid var(--border)",
       }}
     >
@@ -25,7 +33,7 @@ function GemRow({ gem, isLast }: { gem: LocalGem; isLast: boolean }) {
           alignItems: "baseline",
           justifyContent: "space-between",
           gap: "0.75rem",
-          marginBottom: "0.35rem",
+          marginBottom: "0.3rem",
         }}
       >
         <span
@@ -55,51 +63,21 @@ function GemRow({ gem, isLast }: { gem: LocalGem; isLast: boolean }) {
         </div>
       </div>
 
-      {/* Tags */}
-      <div
-        style={{
-          display: "flex",
-          gap: "0.25rem",
-          flexWrap: "wrap",
-          marginBottom: "0.5rem",
-        }}
-      >
-        {gem.tags.map((tag) => (
-          <span
-            key={tag}
-            style={{
-              fontSize: "0.6rem",
-              fontWeight: 600,
-              letterSpacing: "0.04em",
-              textTransform: "uppercase",
-              color: "var(--text-muted)",
-              background: "var(--bg-surface, #f5f3ef)",
-              border: "1px solid var(--border)",
-              borderRadius: "9999px",
-              padding: "0.1rem 0.45rem",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {/* Short note */}
+      {/* Field highlight */}
       <p
         style={{
           fontSize: "0.8125rem",
           color: "var(--text-secondary)",
           fontStyle: "italic",
-          lineHeight: 1.6,
-          margin: "0 0 0.45rem",
+          lineHeight: 1.55,
+          margin: gem.micro_watch_out ? "0 0 0.25rem" : 0,
         }}
       >
-        {gem.short_note}
+        "{gem.field_highlight}"
       </p>
 
-      {/* Why good + watch out */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+      {/* Micro watch out */}
+      {gem.micro_watch_out && (
         <p
           style={{
             fontSize: "0.75rem",
@@ -110,24 +88,37 @@ function GemRow({ gem, isLast }: { gem: LocalGem; isLast: boolean }) {
             gap: "0.35rem",
           }}
         >
-          <span style={{ color: "#16a34a", flexShrink: 0 }}>✓</span>
-          <span>{gem.why_good}</span>
+          <span style={{ color: "#b45309", flexShrink: 0 }}>⚠</span>
+          <span>{gem.micro_watch_out}</span>
         </p>
-        {gem.watch_out && (
-          <p
-            style={{
-              fontSize: "0.75rem",
-              color: "var(--text-muted)",
-              margin: 0,
-              lineHeight: 1.5,
-              display: "flex",
-              gap: "0.35rem",
-            }}
-          >
-            <span style={{ color: "#b45309", flexShrink: 0 }}>⚠</span>
-            <span>{gem.watch_out}</span>
-          </p>
-        )}
+      )}
+    </div>
+  );
+}
+
+function GemGroup({ groupName, gems }: { groupName: GemGroup; gems: LocalGem[] }) {
+  return (
+    <div>
+      {/* Group label */}
+      <div style={{ padding: "0.75rem 1.375rem 0" }}>
+        <span
+          style={{
+            fontSize: "0.6rem",
+            fontWeight: 700,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "var(--text-muted)",
+          }}
+        >
+          {groupName}
+        </span>
+      </div>
+
+      {/* Gems in this group */}
+      <div style={{ padding: "0 1.375rem" }}>
+        {gems.map((gem, i) => (
+          <GemRow key={gem.name} gem={gem} isLast={i === gems.length - 1} />
+        ))}
       </div>
     </div>
   );
@@ -135,6 +126,10 @@ function GemRow({ gem, isLast }: { gem: LocalGem; isLast: boolean }) {
 
 export function LocalGemsSection({ gems }: { gems: LocalGem[] }) {
   const { profile } = useProfileContext();
+
+  const grouped = GROUP_ORDER
+    .map((g) => ({ group: g, gems: gems.filter((gem) => gem.group === g) }))
+    .filter(({ gems: g }) => g.length > 0);
 
   return (
     <div className="card" style={{ overflow: "hidden", padding: 0 }}>
@@ -161,12 +156,17 @@ export function LocalGemsSection({ gems }: { gems: LocalGem[] }) {
         </p>
       </div>
 
-      {/* Gem list */}
-      <div style={{ padding: "0 1.375rem" }}>
-        {gems.map((gem, i) => (
-          <GemRow key={gem.name} gem={gem} isLast={i === gems.length - 1} />
-        ))}
-      </div>
+      {/* Grouped gems */}
+      {grouped.map(({ group, gems: groupGems }, gi) => (
+        <div
+          key={group}
+          style={{
+            borderBottom: gi < grouped.length - 1 ? "1px solid var(--border)" : "none",
+          }}
+        >
+          <GemGroup groupName={group} gems={groupGems} />
+        </div>
+      ))}
 
       {/* Disclaimer */}
       <p

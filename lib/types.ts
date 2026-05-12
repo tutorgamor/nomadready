@@ -255,6 +255,27 @@ export interface RemoteWork {
   remote_work_zones?: RemoteWorkZone[];
 }
 
+// ─── Bangkok Local Gems ───────────────────────────────────────
+
+export interface BangkokGem {
+  name: string;
+  area: string;
+  budget: "$" | "$$" | "$$$";
+  tags: string[];
+  short_note: string;
+  why_good: string;
+  watch_out?: string;
+  confidence: "low" | "medium" | "high";
+}
+
+export interface BangkokLocalGems {
+  remote_work: BangkokGem[];
+  cafes_bakery: BangkokGem[];
+  local_food: BangkokGem[];
+  practical: BangkokGem[];
+  explore: BangkokGem[];
+}
+
 // ─── Root ReadyData ───────────────────────────────────────────
 
 export interface ReadyData {

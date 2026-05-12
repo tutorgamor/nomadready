@@ -1,0 +1,134 @@
+{
+  "bangkok_local_gems": {
+    "remote_work": [
+      {
+        "name": "The Work Loft Silom",
+        "area": "Silom",
+        "budget": "$$",
+        "tags": ["laptop friendly", "good for calls", "quiet", "reliable WiFi"],
+        "short_note": "Clean co-working in Bangkok's business district. Consistent air-con, real desk space, and WiFi that holds a call.",
+        "why_good": "Central Silom location means easy BTS access. Handles calls without the café noise problem.",
+        "watch_out": "Peak hours (10am–noon) can fill up. Some days require booking ahead.",
+        "confidence": "medium"
+      },
+      {
+        "name": "Launchpad",
+        "area": "BTS accessible",
+        "budget": "$$",
+        "tags": ["co-working", "community", "laptop friendly"],
+        "short_note": "One of Bangkok's established co-working spaces with a genuine community feel. Popular with long-stay nomads.",
+        "why_good": "Reliable infrastructure. Hot desks and private pods available. Good for month-long stays.",
+        "watch_out": "Can get busy during startup events. Check the schedule before dropping in.",
+        "confidence": "medium"
+      },
+      {
+        "name": "The Hive Thonglor",
+        "area": "Thonglor",
+        "budget": "$$",
+        "tags": ["co-working", "laptop friendly", "good for calls"],
+        "short_note": "Design-forward co-working in trendy Thonglor. Comfortable and professional for longer work sessions.",
+        "why_good": "Strong WiFi, ergonomic seating, and a quiet atmosphere that actually holds focus.",
+        "watch_out": "Thonglor is pricier. Day pass rates add up over a full week.",
+        "confidence": "medium"
+      }
+    ],
+    "cafes_bakery": [
+      {
+        "name": "Sarnies Bangkok",
+        "area": "Silom",
+        "budget": "$$",
+        "tags": ["specialty coffee", "laptop friendly", "quiet mornings"],
+        "short_note": "Singapore import that nails the specialty coffee and good-food formula. Reliably good flat whites.",
+        "why_good": "Consistent quality where the food actually matches the coffee. Good table-to-outlet ratio.",
+        "watch_out": "Popular spot — arrive before 9am or after 2pm to avoid queues.",
+        "confidence": "medium"
+      },
+      {
+        "name": "Artis Coffee",
+        "area": "Phrom Phong",
+        "budget": "$$",
+        "tags": ["specialty coffee", "calm", "laptop friendly"],
+        "short_note": "Serious about coffee without the attitude. Clean space, quality beans, and a calm atmosphere for morning work sessions.",
+        "why_good": "Multiple roasters on rotation. Real barista knowledge. Good table-to-outlet ratio.",
+        "watch_out": "Small space. Not suited for marathon 5-hour sessions.",
+        "confidence": "medium"
+      },
+      {
+        "name": "Holey Artisan Bakery",
+        "area": "Sukhumvit",
+        "budget": "$$",
+        "tags": ["bakery", "breakfast", "specialty coffee"],
+        "short_note": "Bangkok's best bagels alongside excellent sourdough. Feels like a real bakery, not just Instagram content.",
+        "why_good": "Consistently well-executed bakes. Their coffee programme is solid. Great for a working breakfast.",
+        "watch_out": "Pastries sell out by mid-morning on weekends.",
+        "confidence": "medium"
+      }
+    ],
+    "local_food": [
+      {
+        "name": "Kajohn",
+        "area": "Bang Rak",
+        "budget": "$",
+        "tags": ["local favorite", "authentic", "budget-friendly"],
+        "short_note": "Proper Thai street-food restaurant that's been around for decades. No tourist menu, no English upsell.",
+        "why_good": "Pad see ew and khao man gai at prices that make you wonder why you'd eat anywhere else.",
+        "watch_out": "Cash only. Very busy at lunch. Basic seating — eat fast or go off-peak.",
+        "confidence": "medium"
+      },
+      {
+        "name": "Kurissara Thai Cuisine",
+        "area": "Bangkok",
+        "budget": "$$",
+        "tags": ["authentic", "sit-down", "curated menu"],
+        "short_note": "Thoughtfully curated Thai menu without tourist-trap pricing. Worth it for a proper sit-down Thai meal.",
+        "why_good": "Quality ingredients, attentive service, and dishes that taste like actual home cooking.",
+        "watch_out": "Pricier than street food, but the gap is justified. Reservations help on weekends.",
+        "confidence": "medium"
+      }
+    ],
+    "practical": [
+      {
+        "name": "GO Laundry PX",
+        "area": "Phrom Phong",
+        "budget": "$",
+        "tags": ["budget-friendly", "nomad essential", "drop-off"],
+        "short_note": "Reliable drop-off laundry service. Clean results, no drama, next-day turnaround.",
+        "why_good": "Straightforward pricing and a central location near BTS Phrom Phong. Professional handling.",
+        "watch_out": "Same-day service costs extra. Drop off before noon for next-day pickup.",
+        "confidence": "medium"
+      },
+      {
+        "name": "Laundry Service Bangkok",
+        "area": "Central Bangkok",
+        "budget": "$",
+        "tags": ["practical", "nomad essential", "multiple locations"],
+        "short_note": "Solid backup laundry option. Multiple locations, per-kilo pricing, handles bulk loads without fuss.",
+        "why_good": "Affordable and accessible. Good for weeks-long stays where laundry becomes a logistics task.",
+        "watch_out": "Quality can vary between branches. Check recent reviews for your specific location.",
+        "confidence": "medium"
+      }
+    ],
+    "explore": [
+      {
+        "name": "Mahanakhon Skywalk",
+        "area": "Silom / Sathon",
+        "budget": "$$$",
+        "tags": ["scenic", "premium", "panoramic views"],
+        "short_note": "Glass-floor observation deck at the top of Bangkok's tallest building. Worth doing once.",
+        "why_good": "Unobstructed 360° views of Bangkok. The glass floor section is genuinely impressive at sunset.",
+        "watch_out": "Pricey entry (~฿875). Go at sunset for the best light. Skip entirely on cloudy days.",
+        "confidence": "medium"
+      },
+      {
+        "name": "Wat Arun Viewing Point",
+        "area": "Thonburi riverside",
+        "budget": "$",
+        "tags": ["scenic", "local favorite", "cultural", "free viewpoint"],
+        "short_note": "The Wat Arun riverside view at golden hour is one of Bangkok's iconic sights — and free from the opposite bank.",
+        "why_good": "The view from the Tha Tien pier side is better than being inside the temple itself.",
+        "watch_out": "Very busy on weekends. Go early morning for clean photos and breathing room.",
+        "confidence": "medium"
+      }
+    ]
+  }
+}

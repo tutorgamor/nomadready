@@ -22,7 +22,8 @@ import { LocalGemsSection }          from "@/components/ready/LocalGemsSection";
 import { RealTravelNotesSection }    from "@/components/ready/RealTravelNotesSection";
 import { ProfileSummaryCard }        from "@/components/ready/ProfileSummaryCard";
 import { RemoteWorkSection }         from "@/components/ready/RemoteWorkSection";
-import type { Place, BudgetTier, RealTravelNote, RemoteWork } from "@/lib/types";
+import { BangkokGemsSection }        from "@/components/ready/BangkokGemsSection";
+import type { Place, BudgetTier, RealTravelNote, RemoteWork, BangkokLocalGems } from "@/lib/types";
 
 const destinations = destinationsData as Destination[];
 const passports = passportsData as Passport[];
@@ -99,6 +100,11 @@ export default async function ReadyPage({ params }: Props) {
   const remoteWorkPath = path.join(process.cwd(), "data", "remote-work", `${destination}.json`);
   const remoteWork: RemoteWork | null = fs.existsSync(remoteWorkPath)
     ? (JSON.parse(fs.readFileSync(remoteWorkPath, "utf-8")) as RemoteWork)
+    : null;
+
+  const bangkokGemsPath = path.join(process.cwd(), "data", "bangkok-gems", `${destination}.json`);
+  const bangkokGems: BangkokLocalGems | null = fs.existsSync(bangkokGemsPath)
+    ? (JSON.parse(fs.readFileSync(bangkokGemsPath, "utf-8")) as { bangkok_local_gems: BangkokLocalGems }).bangkok_local_gems
     : null;
 
   const reviewedDate = new Date(data.last_reviewed).toLocaleDateString("en-GB", {
@@ -316,7 +322,12 @@ export default async function ReadyPage({ params }: Props) {
       </header>
 
       {/* ── Sticky section nav ────────────────────────────────── */}
-      <SectionNav hasGems={places !== null} hasNotes={notes !== null && notes.length > 0} hasRemoteWork={remoteWork !== null} />
+      <SectionNav
+        hasGems={places !== null}
+        hasNotes={notes !== null && notes.length > 0}
+        hasRemoteWork={remoteWork !== null}
+        hasBangkokGems={bangkokGems !== null}
+      />
 
       {/* ── All 10 sections ───────────────────────────────────── */}
       <div
@@ -361,6 +372,11 @@ export default async function ReadyPage({ params }: Props) {
         {places && (
           <div id="gems" style={SECTION_OFFSET}>
             <LocalGemsSection places={places} />
+          </div>
+        )}
+        {bangkokGems && (
+          <div id="bangkok-gems" style={SECTION_OFFSET}>
+            <BangkokGemsSection gems={bangkokGems} />
           </div>
         )}
       </div>

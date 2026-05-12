@@ -157,7 +157,7 @@ export function RemoteWorkSection({ remoteWork }: { remoteWork: RemoteWork }) {
       </div>
 
       {/* Best for */}
-      <div style={{ marginBottom: "0.75rem" }}>
+      <div style={{ marginBottom: "0.625rem" }}>
         <p
           style={{
             fontSize: "0.75rem",
@@ -190,68 +190,20 @@ export function RemoteWorkSection({ remoteWork }: { remoteWork: RemoteWork }) {
         </div>
       </div>
 
-      {/* Watch out */}
-      <div style={{ marginBottom: "0.75rem" }}>
+      {/* Single micro-insight */}
+      {remoteWork.field_notes && remoteWork.field_notes.length > 0 && (
         <p
           style={{
-            fontSize: "0.75rem",
-            fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.07em",
+            fontSize: "0.8125rem",
             color: "var(--text-muted)",
-            margin: "0 0 0.4rem",
+            fontStyle: "italic",
+            lineHeight: 1.5,
+            margin: "0 0 0.75rem",
           }}
         >
-          Watch out
+          {remoteWork.field_notes[0]}
         </p>
-        <ul
-          style={{
-            margin: 0,
-            paddingLeft: "1.1rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.25rem",
-          }}
-        >
-          {remoteWork.watch_out.map((item) => (
-            <li
-              key={item}
-              style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.5 }}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Field notes */}
-      <div
-        style={{
-          background: "var(--bg-subtle, #faf7f4)",
-          border: "1px solid var(--border)",
-          borderRadius: "0.5rem",
-          padding: "0.625rem 0.75rem",
-          marginBottom: "0.875rem",
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.3rem",
-        }}
-      >
-        {remoteWork.field_notes.map((note) => (
-          <p
-            key={note}
-            style={{
-              margin: 0,
-              fontSize: "0.8125rem",
-              color: "var(--text-secondary)",
-              lineHeight: 1.55,
-              fontStyle: "italic",
-            }}
-          >
-            {note}
-          </p>
-        ))}
-      </div>
+      )}
 
       {/* Trust meta */}
       <div style={{ paddingTop: "0.625rem", borderTop: "1px solid var(--border)" }}>

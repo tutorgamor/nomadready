@@ -233,6 +233,14 @@ export interface RealTravelNote {
   note: string;
 }
 
+// ─── Nomad Reality ────────────────────────────────────────────
+
+export interface NomadRealityNote {
+  title: string;
+  note: string;
+  confidence: "low" | "medium" | "high";
+}
+
 // ─── Remote Work Readiness ────────────────────────────────────
 
 export interface RemoteWorkZone {

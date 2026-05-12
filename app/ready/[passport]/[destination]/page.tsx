@@ -22,7 +22,8 @@ import { LocalGemsSection }          from "@/components/ready/LocalGemsSection";
 import { RealTravelNotesSection }    from "@/components/ready/RealTravelNotesSection";
 import { ProfileSummaryCard }        from "@/components/ready/ProfileSummaryCard";
 import { RemoteWorkSection }         from "@/components/ready/RemoteWorkSection";
-import type { LocalGem, BudgetTier, RealTravelNote, RemoteWork } from "@/lib/types";
+import { NomadRealitySection }       from "@/components/ready/NomadRealitySection";
+import type { LocalGem, BudgetTier, RealTravelNote, RemoteWork, NomadRealityNote } from "@/lib/types";
 
 const destinations = destinationsData as Destination[];
 const passports = passportsData as Passport[];
@@ -99,6 +100,11 @@ export default async function ReadyPage({ params }: Props) {
   const remoteWorkPath = path.join(process.cwd(), "data", "remote-work", `${destination}.json`);
   const remoteWork: RemoteWork | null = fs.existsSync(remoteWorkPath)
     ? (JSON.parse(fs.readFileSync(remoteWorkPath, "utf-8")) as RemoteWork)
+    : null;
+
+  const nomadRealityPath = path.join(process.cwd(), "data", "nomad-reality", `${destination}.json`);
+  const nomadReality: NomadRealityNote[] | null = fs.existsSync(nomadRealityPath)
+    ? (JSON.parse(fs.readFileSync(nomadRealityPath, "utf-8")) as NomadRealityNote[])
     : null;
 
   const reviewedDate = new Date(data.last_reviewed).toLocaleDateString("en-GB", {
@@ -320,6 +326,7 @@ export default async function ReadyPage({ params }: Props) {
         hasGems={gems !== null}
         hasNotes={notes !== null && notes.length > 0}
         hasRemoteWork={remoteWork !== null}
+        hasNomadReality={nomadReality !== null && nomadReality.length > 0}
       />
 
       {/* ── All 10 sections ───────────────────────────────────── */}
@@ -355,6 +362,11 @@ export default async function ReadyPage({ params }: Props) {
         {remoteWork && (
           <div id="remote" style={SECTION_OFFSET}>
             <RemoteWorkSection remoteWork={remoteWork} />
+          </div>
+        )}
+        {nomadReality && nomadReality.length > 0 && (
+          <div id="reality" style={SECTION_OFFSET}>
+            <NomadRealitySection notes={nomadReality} />
           </div>
         )}
         {notes && notes.length > 0 && (

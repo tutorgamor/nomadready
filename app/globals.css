@@ -525,3 +525,118 @@ a:hover {
   z-index: 1;
   pointer-events: none;
 }
+
+/* ─── Desktop Editorial Overrides ───────────────────────── */
+
+/* Liberate reading container on desktop — match standard page-container widths */
+@media (min-width: 768px) {
+  .page-container.page-container--reading {
+    max-width: 940px;
+  }
+}
+@media (min-width: 1100px) {
+  .page-container.page-container--reading {
+    max-width: 1080px;
+  }
+}
+
+/* ─── Remote Work — Desktop Editorial Split ──────────────── */
+
+/* On desktop: scores panel left | zones panel right */
+@media (min-width: 768px) {
+  .rw-desktop-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+}
+
+/* Zones panel: mobile has top gap, desktop grid handles spacing */
+.rw-zones {
+  margin-top: 1.25rem;
+}
+@media (min-width: 768px) {
+  .rw-zones {
+    margin-top: 0;
+  }
+}
+
+/* ─── Nomad Reality — Desktop 2-col Note Grid ────────────── */
+
+/* Mobile: stacked with separator borders */
+.reality-note-cell {
+  border-bottom: 1px solid var(--border);
+}
+.reality-note-cell:last-child {
+  border-bottom: none;
+}
+
+/* Desktop: 2-column editorial diptych */
+@media (min-width: 768px) {
+  .reality-notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border);
+  }
+  .reality-note-cell {
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  /* Even column: no right border */
+  .reality-note-cell:nth-child(2n) {
+    border-right: none;
+  }
+  /* Last item (actual) */
+  .reality-note-cell:last-child {
+    border-bottom: none;
+  }
+  /* Second-to-last when it's the left item of the final full row */
+  .reality-note-cell:nth-last-child(2):nth-child(2n+1) {
+    border-bottom: none;
+  }
+  /* Lone last item in odd position spans full row */
+  .reality-note-cell:last-child:nth-child(2n+1) {
+    grid-column: 1 / -1;
+    border-right: none;
+  }
+}
+
+/* ─── Local Gems — Desktop 2-col Group Grid ──────────────── */
+
+/* Mobile: stacked with separator borders */
+.gems-group-cell {
+  border-bottom: 1px solid var(--border);
+}
+.gems-group-cell:last-child {
+  border-bottom: none;
+}
+
+/* Desktop: 2-column newspaper columns */
+@media (min-width: 768px) {
+  .gems-groups-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .gems-group-cell {
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  /* Even column: no right border */
+  .gems-group-cell:nth-child(2n) {
+    border-right: none;
+  }
+  /* Last item (actual) */
+  .gems-group-cell:last-child {
+    border-bottom: none;
+  }
+  /* Second-to-last when it's the left item of the final full row */
+  .gems-group-cell:nth-last-child(2):nth-child(2n+1) {
+    border-bottom: none;
+  }
+  /* Lone last group spans full row */
+  .gems-group-cell:last-child:nth-child(2n+1) {
+    grid-column: 1 / -1;
+    border-right: none;
+  }
+}

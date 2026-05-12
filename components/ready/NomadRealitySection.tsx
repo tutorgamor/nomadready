@@ -1,13 +1,8 @@
 import type { NomadRealityNote } from "@/lib/types";
 
-function RealityNoteRow({ note, isLast }: { note: NomadRealityNote; isLast: boolean }) {
+function RealityNoteRow({ note }: { note: NomadRealityNote }) {
   return (
-    <div
-      style={{
-        padding: "0.9375rem 1.375rem",
-        borderBottom: isLast ? "none" : "1px solid var(--border)",
-      }}
-    >
+    <div style={{ padding: "0.9375rem 1.375rem" }}>
       <p
         style={{
           fontSize: "0.8125rem",
@@ -61,10 +56,14 @@ export function NomadRealitySection({ notes }: { notes: NomadRealityNote[] }) {
         </p>
       </div>
 
-      {/* Notes */}
-      {notes.map((note, i) => (
-        <RealityNoteRow key={note.title} note={note} isLast={i === notes.length - 1} />
-      ))}
+      {/* Notes — desktop: 2-column editorial diptych */}
+      <div className="reality-notes-grid">
+        {notes.map((note) => (
+          <div key={note.title} className="reality-note-cell">
+            <RealityNoteRow note={note} />
+          </div>
+        ))}
+      </div>
 
       {/* Credibility footer */}
       <p

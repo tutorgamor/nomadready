@@ -73,7 +73,7 @@ function GemRow({ gem, isLast }: { gem: LocalGem; isLast: boolean }) {
           margin: gem.micro_watch_out ? "0 0 0.25rem" : 0,
         }}
       >
-        "{gem.field_highlight}"
+        &ldquo;{gem.field_highlight}&rdquo;
       </p>
 
       {/* Micro watch out */}
@@ -96,7 +96,7 @@ function GemRow({ gem, isLast }: { gem: LocalGem; isLast: boolean }) {
   );
 }
 
-function GemGroup({ groupName, gems }: { groupName: GemGroup; gems: LocalGem[] }) {
+function GemGroupPanel({ groupName, gems }: { groupName: GemGroup; gems: LocalGem[] }) {
   return (
     <div>
       {/* Group label */}
@@ -156,17 +156,14 @@ export function LocalGemsSection({ gems }: { gems: LocalGem[] }) {
         </p>
       </div>
 
-      {/* Grouped gems */}
-      {grouped.map(({ group, gems: groupGems }, gi) => (
-        <div
-          key={group}
-          style={{
-            borderBottom: gi < grouped.length - 1 ? "1px solid var(--border)" : "none",
-          }}
-        >
-          <GemGroup groupName={group} gems={groupGems} />
-        </div>
-      ))}
+      {/* Groups — desktop: 2-column newspaper layout */}
+      <div className="gems-groups-grid">
+        {grouped.map(({ group, gems: groupGems }) => (
+          <div key={group} className="gems-group-cell">
+            <GemGroupPanel groupName={group} gems={groupGems} />
+          </div>
+        ))}
+      </div>
 
       {/* Disclaimer */}
       <p

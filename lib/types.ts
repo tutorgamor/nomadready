@@ -225,6 +225,24 @@ export interface RealTravelNote {
   note: string;
 }
 
+// ─── Remote Work Readiness ────────────────────────────────────
+
+export interface RemoteWork {
+  overall: number;
+  wifi_reliability: number;
+  mobile_data: number;
+  quiet_for_calls: number;
+  cowork_availability: number;
+  cafe_work_friendly: number;
+  night_work_friendly: number;
+  long_stay_suitability: number;
+  best_for: string[];
+  watch_out: string[];
+  field_notes: string[];
+  confidence: "low" | "medium" | "high";
+  source_type: string[];
+}
+
 // ─── Root ReadyData ───────────────────────────────────────────
 
 export interface ReadyData {

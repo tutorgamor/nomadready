@@ -1,4 +1,4 @@
-import type { RemoteWork } from "@/lib/types";
+import type { RemoteWork, RemoteWorkZone } from "@/lib/types";
 
 function scoreStyle(score: number): { color: string } {
   if (score >= 85) return { color: "#15803d" };
@@ -252,6 +252,170 @@ export function RemoteWorkSection({ remoteWork }: { remoteWork: RemoteWork }) {
         }}
       >
         Remote work scores are editorial and should be verified with recent reviews before booking.
+      </p>
+
+      {/* Remote Work Zones */}
+      {remoteWork.remote_work_zones && remoteWork.remote_work_zones.length > 0 && (
+        <RemoteWorkZones zones={remoteWork.remote_work_zones} />
+      )}
+    </div>
+  );
+}
+
+function confidenceBadge(level: RemoteWorkZone["confidence"]): { bg: string; color: string; label: string } {
+  if (level === "high")   return { bg: "#f0fdf4", color: "#15803d", label: "High confidence" };
+  if (level === "medium") return { bg: "#fffbeb", color: "#92400e", label: "Medium confidence" };
+  return                         { bg: "#fef2f2", color: "#b91c1c", label: "Low confidence" };
+}
+
+function RemoteWorkZones({ zones }: { zones: RemoteWorkZone[] }) {
+  return (
+    <div style={{ marginTop: "1.25rem" }}>
+      {/* Subsection heading */}
+      <p
+        style={{
+          fontSize: "0.75rem",
+          fontWeight: 700,
+          textTransform: "uppercase",
+          letterSpacing: "0.07em",
+          color: "var(--text-muted)",
+          margin: "0 0 0.625rem",
+        }}
+      >
+        Remote Work Zones
+      </p>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+        {zones.map((zone) => {
+          const conf = confidenceBadge(zone.confidence);
+          return (
+            <div
+              key={zone.name}
+              style={{
+                border: "1px solid var(--border)",
+                borderRadius: "0.625rem",
+                padding: "0.75rem",
+                background: "var(--bg-subtle, #faf7f4)",
+              }}
+            >
+              {/* Zone header row */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                  gap: "0.5rem",
+                  marginBottom: "0.35rem",
+                }}
+              >
+                <span style={{ fontSize: "0.9rem", fontWeight: 700, color: "var(--text-primary, #1a1a1a)" }}>
+                  {zone.name}
+                </span>
+                <span
+                  style={{
+                    fontSize: "0.625rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    background: conf.bg,
+                    color: conf.color,
+                    padding: "0.15rem 0.45rem",
+                    borderRadius: "9999px",
+                    flexShrink: 0,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {conf.label}
+                </span>
+              </div>
+
+              {/* Summary */}
+              <p
+                style={{
+                  fontSize: "0.8rem",
+                  color: "var(--text-secondary)",
+                  lineHeight: 1.5,
+                  margin: "0 0 0.5rem",
+                }}
+              >
+                {zone.summary}
+              </p>
+
+              {/* Best for */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem", marginBottom: "0.5rem" }}>
+                {zone.best_for.map((tag) => (
+                  <span
+                    key={tag}
+                    style={{
+                      fontSize: "0.7rem",
+                      fontWeight: 500,
+                      padding: "0.15rem 0.5rem",
+                      borderRadius: "9999px",
+                      background: "#f0fdf4",
+                      border: "1px solid #86efac",
+                      color: "#15803d",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              {/* Good areas */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem", marginBottom: "0.5rem" }}>
+                {zone.good_areas.map((area) => (
+                  <span
+                    key={area}
+                    style={{
+                      fontSize: "0.7rem",
+                      fontWeight: 500,
+                      padding: "0.15rem 0.5rem",
+                      borderRadius: "9999px",
+                      background: "var(--bg-card, #fff)",
+                      border: "1px solid var(--border)",
+                      color: "var(--text-secondary)",
+                    }}
+                  >
+                    {area}
+                  </span>
+                ))}
+              </div>
+
+              {/* Watch out */}
+              <ul
+                style={{
+                  margin: 0,
+                  paddingLeft: "1rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.2rem",
+                }}
+              >
+                {zone.watch_out.map((item) => (
+                  <li
+                    key={item}
+                    style={{ fontSize: "0.775rem", color: "var(--text-secondary)", lineHeight: 1.45 }}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Zone disclaimer */}
+      <p
+        style={{
+          fontSize: "0.6875rem",
+          color: "var(--text-muted)",
+          margin: "0.625rem 0 0",
+          lineHeight: 1.5,
+          fontStyle: "italic",
+        }}
+      >
+        Zone notes are editorial field notes. Always verify recent accommodation and cowork reviews before booking.
       </p>
     </div>
   );

@@ -28,5 +28,43 @@
     "personal experience",
     "public reviews needed",
     "cowork/café verification needed"
+  ],
+  "remote_work_zones": [
+    {
+      "name": "Bangkok",
+      "summary": "Best all-round option for serious remote work — backup internet, coworking, and late-night convenience.",
+      "best_for": ["online teachers", "backup internet", "coworking", "late work"],
+      "good_areas": ["Ari", "On Nut", "Phrom Phong", "Silom / Sathorn"],
+      "watch_out": [
+        "Traffic can make daily movement exhausting.",
+        "Condo sound insulation varies a lot.",
+        "Cafés can be noisy or unsuitable for calls."
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Chiang Mai",
+      "summary": "Strong budget nomad base with many cafés and a slower rhythm, but seasonality matters.",
+      "best_for": ["budget nomads", "cafés", "deep work", "long stays"],
+      "good_areas": ["Nimman", "Santitham", "Old City quiet streets"],
+      "watch_out": [
+        "Burning season (Feb–Apr) can seriously affect comfort.",
+        "Some older apartments have weak sound insulation.",
+        "Internet is usually good but always verify accommodation reviews."
+      ],
+      "confidence": "medium"
+    },
+    {
+      "name": "Koh Phangan",
+      "summary": "Great for flexible remote workers and slow island lifestyle, less ideal for strict daily video calls.",
+      "best_for": ["flexible workers", "wellness nomads", "slow travel", "creative work"],
+      "good_areas": ["Sri Thanu", "Thong Sala", "Hin Kong"],
+      "watch_out": [
+        "Island internet can be inconsistent — always test on arrival.",
+        "Backup cowork / café options are more limited than Bangkok or Chiang Mai.",
+        "Rainy season and power outages can affect reliability."
+      ],
+      "confidence": "medium"
+    }
   ]
 }

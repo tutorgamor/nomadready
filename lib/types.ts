@@ -227,6 +227,15 @@ export interface RealTravelNote {
 
 // ─── Remote Work Readiness ────────────────────────────────────
 
+export interface RemoteWorkZone {
+  name: string;
+  summary: string;
+  best_for: string[];
+  good_areas: string[];
+  watch_out: string[];
+  confidence: "low" | "medium" | "high";
+}
+
 export interface RemoteWork {
   overall: number;
   wifi_reliability: number;
@@ -241,6 +250,7 @@ export interface RemoteWork {
   field_notes: string[];
   confidence: "low" | "medium" | "high";
   source_type: string[];
+  remote_work_zones?: RemoteWorkZone[];
 }
 
 // ─── Root ReadyData ───────────────────────────────────────────

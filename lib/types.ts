@@ -250,6 +250,8 @@ export interface RemoteWork {
   field_notes: string[];
   confidence: "low" | "medium" | "high";
   source_type: string[];
+  last_reviewed?: string;
+  verify_note?: string;
   remote_work_zones?: RemoteWorkZone[];
 }
 

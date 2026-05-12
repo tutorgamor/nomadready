@@ -12,6 +12,18 @@ function overallBadgeStyle(score: number): { bg: string; border: string; color: 
   return { bg: "#fef2f2", border: "#fca5a5", color: "#b91c1c" };
 }
 
+function confidenceBadge(level: "low" | "medium" | "high"): { bg: string; color: string; label: string } {
+  if (level === "high")   return { bg: "#f0fdf4", color: "#15803d", label: "High confidence" };
+  if (level === "medium") return { bg: "#fffbeb", color: "#92400e", label: "Medium confidence" };
+  return                         { bg: "#fef2f2", color: "#b91c1c", label: "Low confidence" };
+}
+
+function formatReviewed(iso: string): string {
+  const [year, month] = iso.split("-");
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return `${months[parseInt(month, 10) - 1]} ${year}`;
+}
+
 const CATEGORIES = [
   { key: "wifi_reliability"    as const, label: "WiFi reliability",  icon: "📶" },
   { key: "mobile_data"         as const, label: "Mobile data",        icon: "📡" },
@@ -241,18 +253,52 @@ export function RemoteWorkSection({ remoteWork }: { remoteWork: RemoteWork }) {
         ))}
       </div>
 
-      {/* Disclaimer */}
-      <p
-        style={{
-          fontSize: "0.6875rem",
-          color: "var(--text-muted)",
-          margin: 0,
-          lineHeight: 1.5,
-          fontStyle: "italic",
-        }}
-      >
-        Remote work scores are editorial and should be verified with recent reviews before booking.
-      </p>
+      {/* Trust meta */}
+      <div style={{ paddingTop: "0.625rem", borderTop: "1px solid var(--border)" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem", alignItems: "center", marginBottom: "0.375rem" }}>
+          {(() => {
+            const conf = confidenceBadge(remoteWork.confidence);
+            return (
+              <span
+                style={{
+                  fontSize: "0.625rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  background: conf.bg,
+                  color: conf.color,
+                  padding: "0.15rem 0.45rem",
+                  borderRadius: "9999px",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {conf.label}
+              </span>
+            );
+          })()}
+          {remoteWork.source_type.map((src) => (
+            <span
+              key={src}
+              style={{
+                fontSize: "0.625rem",
+                fontWeight: 500,
+                padding: "0.15rem 0.45rem",
+                borderRadius: "9999px",
+                background: "var(--bg-card, #fff)",
+                border: "1px solid var(--border)",
+                color: "var(--text-muted)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {src}
+            </span>
+          ))}
+        </div>
+        <p style={{ fontSize: "0.6875rem", color: "var(--text-muted)", margin: 0, lineHeight: 1.5, fontStyle: "italic" }}>
+          {remoteWork.verify_note ?? "Remote work scores are editorial. Verify with recent reviews before booking."}
+          {remoteWork.last_reviewed && <> · Reviewed {formatReviewed(remoteWork.last_reviewed)}</>}
+        </p>
+      </div>
 
       {/* Remote Work Zones */}
       {remoteWork.remote_work_zones && remoteWork.remote_work_zones.length > 0 && (
@@ -260,12 +306,6 @@ export function RemoteWorkSection({ remoteWork }: { remoteWork: RemoteWork }) {
       )}
     </div>
   );
-}
-
-function confidenceBadge(level: RemoteWorkZone["confidence"]): { bg: string; color: string; label: string } {
-  if (level === "high")   return { bg: "#f0fdf4", color: "#15803d", label: "High confidence" };
-  if (level === "medium") return { bg: "#fffbeb", color: "#92400e", label: "Medium confidence" };
-  return                         { bg: "#fef2f2", color: "#b91c1c", label: "Low confidence" };
 }
 
 function RemoteWorkZones({ zones }: { zones: RemoteWorkZone[] }) {

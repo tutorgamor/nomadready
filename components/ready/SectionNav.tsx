@@ -15,30 +15,18 @@ const BASE_SECTIONS = [
   { id: "checklist",  label: "✅ Checklist" },
 ] as const;
 
-const NOTES_SECTION        = { id: "notes",        label: "📌 Notes"   } as const;
-const GEMS_SECTION         = { id: "gems",         label: "💎 Gems"    } as const;
-const REMOTE_SECTION       = { id: "remote",       label: "💻 Remote"  } as const;
-const BANGKOK_GEMS_SECTION = { id: "bangkok-gems", label: "📍 Bangkok" } as const;
+const NOTES_SECTION  = { id: "notes",  label: "📌 Notes"  } as const;
+const GEMS_SECTION   = { id: "gems",   label: "💎 Gems"   } as const;
+const REMOTE_SECTION = { id: "remote", label: "💻 Remote" } as const;
 
-type SectionId = (typeof BASE_SECTIONS)[number]["id"] | "notes" | "gems" | "remote" | "bangkok-gems";
+type SectionId = (typeof BASE_SECTIONS)[number]["id"] | "notes" | "gems" | "remote";
 
-export function SectionNav({
-  hasGems = false,
-  hasNotes = false,
-  hasRemoteWork = false,
-  hasBangkokGems = false,
-}: {
-  hasGems?: boolean;
-  hasNotes?: boolean;
-  hasRemoteWork?: boolean;
-  hasBangkokGems?: boolean;
-}) {
+export function SectionNav({ hasGems = false, hasNotes = false, hasRemoteWork = false }: { hasGems?: boolean; hasNotes?: boolean; hasRemoteWork?: boolean }) {
   const sections = [
     ...BASE_SECTIONS,
-    ...(hasNotes        ? [NOTES_SECTION]        : []),
-    ...(hasGems         ? [GEMS_SECTION]         : []),
-    ...(hasRemoteWork   ? [REMOTE_SECTION]       : []),
-    ...(hasBangkokGems  ? [BANGKOK_GEMS_SECTION] : []),
+    ...(hasNotes      ? [NOTES_SECTION]  : []),
+    ...(hasGems       ? [GEMS_SECTION]   : []),
+    ...(hasRemoteWork ? [REMOTE_SECTION] : []),
   ];
   const [active, setActive] = useState<SectionId>(BASE_SECTIONS[0].id);
   const navRef = useRef<HTMLElement>(null);

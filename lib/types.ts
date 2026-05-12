@@ -187,25 +187,15 @@ export interface EmergencyInfo {
 
 // ─── Local Gems ───────────────────────────────────────────────
 
-export type PlaceCategory =
-  | "restaurant" | "bakery" | "cafe" | "scooter_rental"
-  | "beach" | "snorkeling" | "viewpoint" | "temple"
-  | "monument" | "museum" | "transport" | "practical";
-
-export type PriceLevel = "free" | "budget" | "mid" | "splurge";
-
-export interface Place {
-  id: string;
+export interface LocalGem {
   name: string;
-  country: string;
-  city_or_area: string;
-  category: PlaceCategory;
+  area: string;
+  budget: "$" | "$$" | "$$$";
   tags: string[];
-  personal_note: string;
-  google_maps_url: string;  // empty string when URL not yet added
-  recommended_by: string;
-  price_level: PriceLevel;
-  best_for: string[];
+  short_note: string;
+  why_good: string;
+  watch_out?: string;
+  confidence: "low" | "medium" | "high";
 }
 
 // ─── Checklist ────────────────────────────────────────────────
@@ -253,27 +243,6 @@ export interface RemoteWork {
   last_reviewed?: string;
   verify_note?: string;
   remote_work_zones?: RemoteWorkZone[];
-}
-
-// ─── Bangkok Local Gems ───────────────────────────────────────
-
-export interface BangkokGem {
-  name: string;
-  area: string;
-  budget: "$" | "$$" | "$$$";
-  tags: string[];
-  short_note: string;
-  why_good: string;
-  watch_out?: string;
-  confidence: "low" | "medium" | "high";
-}
-
-export interface BangkokLocalGems {
-  remote_work: BangkokGem[];
-  cafes_bakery: BangkokGem[];
-  local_food: BangkokGem[];
-  practical: BangkokGem[];
-  explore: BangkokGem[];
 }
 
 // ─── Root ReadyData ───────────────────────────────────────────

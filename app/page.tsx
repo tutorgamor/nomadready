@@ -11,6 +11,7 @@ import { DestinationCard } from "@/components/DestinationCard";
 import type { DestinationSummary } from "@/components/DestinationCard";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { TripPlanner } from "@/components/TripPlanner";
+import { WorldMapScene } from "@/components/WorldMapScene";
 
 export const metadata: Metadata = {
   title: { absolute: "NomadReady — Travel Readiness for Backpackers" },
@@ -452,6 +453,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
         </div>
       </header>
+
+      {/* ── World map scene — editorial atlas transition ─────── */}
+      <WorldMapScene
+        destinations={availableDestinations.map((d) => ({ id: d.id, label: d.label, emoji: d.emoji }))}
+      />
 
       {/* ── Destination grid ──────────────────────────────────── */}
       <section

@@ -1312,3 +1312,60 @@ a:hover {
   flex-shrink: 0;
   opacity: 0.85;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   Phase 6 — World Map Scene (wms-*)
+   Editorial atlas transition · SVG/CSS only · no map library
+   ══════════════════════════════════════════════════════════ */
+
+.wms-section {
+  /* Sits between hero and destination grid — compact, not dominant */
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.wms-label {
+  /* Reuses .section-label-editorial styles; override bottom margin */
+  margin-bottom: 0.625rem;
+}
+
+.wms-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-subtle);
+  background: #b8d0de; /* ocean fallback while SVG loads */
+  /* Fixed heights per breakpoint — slice preserves full-width fill */
+  height: 150px;
+}
+
+@media (min-width: 768px) {
+  .wms-stage {
+    height: 215px;
+    border-radius: var(--radius-2xl);
+  }
+}
+
+@media (min-width: 1100px) {
+  .wms-stage {
+    height: 255px;
+  }
+}
+
+.wms-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Warm paper texture — same editorial grain used across the design system */
+.wms-paper {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/ui/editorial-paper-texture.webp') center / cover;
+  opacity: 0.042;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  border-radius: inherit;
+}

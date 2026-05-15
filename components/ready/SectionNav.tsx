@@ -15,20 +15,22 @@ const BASE_SECTIONS = [
   { id: "checklist",  label: "✅ Checklist" },
 ] as const;
 
-const NOTES_SECTION   = { id: "notes",   label: "📌 Notes"   } as const;
-const GEMS_SECTION    = { id: "gems",    label: "💎 Gems"    } as const;
-const REMOTE_SECTION  = { id: "remote",  label: "💻 Remote"  } as const;
-const REALITY_SECTION = { id: "reality", label: "🧭 Reality" } as const;
+const NOTES_SECTION   = { id: "notes",    label: "📌 Notes"   } as const;
+const GEMS_SECTION    = { id: "gems",     label: "💎 Gems"    } as const;
+const REMOTE_SECTION  = { id: "remote",   label: "💻 Remote"  } as const;
+const REALITY_SECTION = { id: "reality",  label: "🧭 Reality" } as const;
+const MAP_SECTION     = { id: "city-map", label: "🗺️ Map"     } as const;
 
-type SectionId = (typeof BASE_SECTIONS)[number]["id"] | "notes" | "gems" | "remote" | "reality";
+type SectionId = (typeof BASE_SECTIONS)[number]["id"] | "notes" | "gems" | "remote" | "reality" | "city-map";
 
-export function SectionNav({ hasGems = false, hasNotes = false, hasRemoteWork = false, hasNomadReality = false }: { hasGems?: boolean; hasNotes?: boolean; hasRemoteWork?: boolean; hasNomadReality?: boolean }) {
+export function SectionNav({ hasGems = false, hasNotes = false, hasRemoteWork = false, hasNomadReality = false, hasCityMap = false }: { hasGems?: boolean; hasNotes?: boolean; hasRemoteWork?: boolean; hasNomadReality?: boolean; hasCityMap?: boolean }) {
   const sections = [
     ...BASE_SECTIONS,
     ...(hasRemoteWork   ? [REMOTE_SECTION]  : []),
     ...(hasNomadReality ? [REALITY_SECTION] : []),
     ...(hasNotes        ? [NOTES_SECTION]   : []),
     ...(hasGems         ? [GEMS_SECTION]    : []),
+    ...(hasCityMap      ? [MAP_SECTION]     : []),
   ];
   const [active, setActive] = useState<SectionId>(BASE_SECTIONS[0].id);
   const navRef = useRef<HTMLElement>(null);

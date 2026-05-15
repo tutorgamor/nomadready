@@ -339,6 +339,7 @@ export default async function ReadyPage({ params }: Props) {
         hasNotes={notes !== null && notes.length > 0}
         hasRemoteWork={remoteWork !== null}
         hasNomadReality={nomadReality !== null && nomadReality.length > 0}
+        hasCityMap={cityFieldMap !== null}
       />
 
       {/* ── All 10 sections ───────────────────────────────────── */}

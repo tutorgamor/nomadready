@@ -879,3 +879,197 @@ a:hover {
     border-right: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   Phase 2 — Animation Layer
+   Keyframes · Utility classes · Hover polish
+   ══════════════════════════════════════════════════════════ */
+
+/* ─── Keyframes ──────────────────────────────────────────── */
+
+@keyframes nr-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes nr-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes nr-fade-down {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0);     }
+}
+
+@keyframes nr-scale-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+/* Ambient float — smooth bob for decorative / polaroid elements */
+@keyframes nr-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-7px); }
+}
+
+/* Gentle float with subtle rotation — more organic, less mechanical */
+@keyframes nr-float-gentle {
+  0%, 100% { transform: translateY(0px)  rotate(0deg);    }
+  40%       { transform: translateY(-4px) rotate(0.5deg);  }
+  70%       { transform: translateY(-2px) rotate(-0.3deg); }
+}
+
+/* Slide in from left — editorial chapter reveal */
+@keyframes nr-slide-right {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+/* ─── Animation Utility Classes ──────────────────────────── */
+
+/* Basic appear — overlays, tooltips, quick reveals */
+.anim-fade-in {
+  animation: nr-fade-in var(--duration-moderate) var(--ease-smooth) both;
+}
+
+/* Enter from below — most common content reveal */
+.anim-fade-up {
+  animation: nr-fade-up var(--duration-slow) var(--ease-cinematic) both;
+}
+
+/* Enter from above — dropdowns, notifications */
+.anim-fade-down {
+  animation: nr-fade-down var(--duration-moderate) var(--ease-cinematic) both;
+}
+
+/* Pop in — chips, badges, interactive elements */
+.anim-scale-in {
+  animation: nr-scale-in var(--duration-moderate) var(--ease-spring) both;
+}
+
+/* Cinematic reveal — hero moments and featured content */
+.anim-reveal {
+  animation: nr-fade-up var(--duration-cinematic) var(--ease-cinematic) both;
+}
+
+/* Ambient float — for decorative elements and polaroids */
+.anim-float {
+  animation: nr-float 5s ease-in-out infinite;
+}
+
+.anim-float-gentle {
+  animation: nr-float-gentle 7s ease-in-out infinite;
+}
+
+/* Editorial slide — chapter headings and section labels */
+.anim-slide-right {
+  animation: nr-slide-right var(--duration-moderate) var(--ease-cinematic) both;
+}
+
+/* Delay utility tokens — compose with any .anim-* class */
+.anim-delay-1 { animation-delay:  60ms; }
+.anim-delay-2 { animation-delay: 120ms; }
+.anim-delay-3 { animation-delay: 180ms; }
+.anim-delay-4 { animation-delay: 240ms; }
+.anim-delay-5 { animation-delay: 300ms; }
+.anim-delay-6 { animation-delay: 400ms; }
+.anim-delay-7 { animation-delay: 520ms; }
+
+/* ─── Destination Grid Reveal ─────────────────────────────── */
+
+/* Staggered fade-up: each card enters in sequence on page load */
+.dest-grid .dest-card {
+  animation: nr-fade-up var(--duration-slow) var(--ease-cinematic) both;
+}
+.dest-grid .dest-card:nth-child(1)    { animation-delay:   0ms; }
+.dest-grid .dest-card:nth-child(2)    { animation-delay:  55ms; }
+.dest-grid .dest-card:nth-child(3)    { animation-delay: 110ms; }
+.dest-grid .dest-card:nth-child(4)    { animation-delay: 165ms; }
+.dest-grid .dest-card:nth-child(5)    { animation-delay: 220ms; }
+.dest-grid .dest-card:nth-child(6)    { animation-delay: 275ms; }
+.dest-grid .dest-card:nth-child(7)    { animation-delay: 330ms; }
+.dest-grid .dest-card:nth-child(8)    { animation-delay: 385ms; }
+.dest-grid .dest-card:nth-child(n+9)  { animation-delay: 440ms; }
+
+/* ─── Hover Transition Polish ─────────────────────────────── */
+
+/* Destination card — upgrade transition timing to motion tokens */
+.dest-card {
+  transition:
+    box-shadow   var(--transition-hover),
+    transform    var(--transition-hover),
+    border-color var(--transition-moderate);
+}
+
+/* Card body — warm surface warms slightly on card hover */
+.dest-card-body {
+  transition: background var(--duration-moderate) var(--ease-smooth);
+}
+.dest-card:hover .dest-card-body {
+  background: linear-gradient(180deg, #fefaf5 0%, #faf4ec 100%);
+}
+
+/* CFM category tabs — precise property list instead of `all` */
+.cfm-tab {
+  transition:
+    background-color var(--transition-quick),
+    color            var(--transition-quick),
+    border-color     var(--transition-quick),
+    transform        var(--transition-quick);
+}
+.cfm-tab:hover {
+  transform: translateY(-1px);
+}
+
+/* Passport chip — accent ring on hover */
+.passport-chip {
+  transition:
+    border-color var(--transition-quick),
+    box-shadow   var(--transition-quick);
+}
+.passport-chip:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 10px rgba(217,119,6,0.15), 0 1px 4px rgba(28,25,23,0.08);
+}
+
+/* Badge — micro-lift on hover */
+.badge {
+  transition: transform var(--transition-quick);
+}
+.badge:hover {
+  transform: scale(1.05);
+}
+
+/* Section heading — accent stripe intensifies on hover */
+.section-heading {
+  transition: background var(--transition-moderate);
+}
+.section-heading:hover {
+  background: linear-gradient(90deg, rgba(254,243,199,1.0) 0%, rgba(254,243,199,0.45) 55%, transparent 100%);
+}
+
+/* ─── Reduced Motion — Animation Kill Switch ─────────────── */
+/* Supplements the duration-token override above with an      */
+/* explicit `animation: none` for hardcoded-duration classes. */
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-in,
+  .anim-fade-up,
+  .anim-fade-down,
+  .anim-scale-in,
+  .anim-reveal,
+  .anim-float,
+  .anim-float-gentle,
+  .anim-slide-right {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .dest-grid .dest-card {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}

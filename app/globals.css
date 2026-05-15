@@ -523,8 +523,8 @@ a:hover {
 
 @media (min-width: 768px) {
   .home-header {
-    padding-top: 6rem;
-    padding-bottom: 4.75rem;
+    padding-top: 6.75rem;
+    padding-bottom: 5.5rem;
   }
 }
 
@@ -607,9 +607,9 @@ a:hover {
     inset: 0;
     background: linear-gradient(
       108deg,
-      rgba(8,5,2,0.52) 0%,
-      rgba(8,5,2,0.30) 42%,
-      rgba(4,2,0,0.07) 62%,
+      rgba(8,5,2,0.68) 0%,
+      rgba(8,5,2,0.40) 44%,
+      rgba(4,2,0,0.12) 64%,
       rgba(0,0,0,0.01) 100%
     );
     z-index: 1;
@@ -623,11 +623,11 @@ a:hover {
     color: rgba(255,255,255,0.90);
   }
   .home-header .hero-heading-light {
-    color: rgba(255,255,255,0.96);
-    text-shadow: 0 2px 18px rgba(0,0,0,0.45);
+    color: rgba(255,255,255,0.97);
+    text-shadow: 0 2px 28px rgba(0,0,0,0.60), 0 1px 6px rgba(0,0,0,0.32);
   }
   .home-header .hero-text-light-sub {
-    color: rgba(247,243,238,0.68);
+    color: rgba(247,243,238,0.78);
   }
 }
 
@@ -640,13 +640,13 @@ a:hover {
 
 @media (min-width: 768px) {
   .hero-controls-glass {
-    background: rgba(247,243,238,0.82);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.22);
+    background: rgba(252,247,239,0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.26);
     border-radius: 1rem;
-    padding: 1.125rem 1.25rem;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1px 6px rgba(0,0,0,0.10);
+    padding: 1.25rem 1.375rem;
+    box-shadow: 0 6px 32px rgba(0,0,0,0.22), 0 1px 6px rgba(0,0,0,0.10), 0 0 0 1px rgba(217,119,6,0.10);
   }
 }
 

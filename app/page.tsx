@@ -183,7 +183,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
 
               {/* Brand wordmark */}
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+              <div className="anim-fade-down" style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                 <span style={{ fontSize: "0.9rem", color: "var(--accent)", lineHeight: 1, marginTop: "1px" }} aria-hidden="true">✦</span>
                 <span className="hero-text-light" style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Nomad</span>
                 <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--accent)" }}>Ready</span>
@@ -191,19 +191,19 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
               {/* Headline */}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-                <p style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent)", margin: 0, opacity: 0.85 }}>
+                <p className="anim-fade-up anim-delay-1" style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent)", margin: 0, opacity: 0.85 }}>
                   Travel field guide
                 </p>
-                <h1 className="hero-heading-light" style={{ fontSize: "clamp(2rem, 7vw, 2.75rem)", fontWeight: 800, letterSpacing: "-0.045em", lineHeight: 1.1, margin: 0 }}>
+                <h1 className="hero-heading-light anim-reveal" style={{ fontSize: "clamp(2.5rem, 8vw, 4.25rem)", fontWeight: 800, letterSpacing: "-0.05em", lineHeight: 1.08, margin: 0 }}>
                   Where are you<br />heading next?
                 </h1>
-                <p className="hero-text-light-sub" style={{ fontSize: "0.9375rem", margin: 0, maxWidth: "32ch", lineHeight: 1.55 }}>
-                  Get your full travel brief in one scroll — visa, budget, scams and more.
+                <p className="hero-text-light-sub anim-fade-up anim-delay-3" style={{ fontSize: "0.9375rem", margin: 0, maxWidth: "34ch", lineHeight: 1.55 }}>
+                  Choose your passport, pick a destination — visa rules, budget tiers, and field notes in one scroll.
                 </p>
               </div>
 
               {/* Passport selector + profile selector — frosted glass card on desktop */}
-              <div className="hero-controls-glass">
+              <div className="hero-controls-glass anim-fade-up anim-delay-5">
                 <PassportSelector passports={passports} activeId={activePassportId} />
                 <ProfileSelector />
                 <ProfileNote field="insightLine" />
@@ -212,7 +212,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             </div>
 
             {/* ── Right: Cinematic photo composition (desktop only) ── */}
-            <div className="home-hero-aside" aria-hidden="true">
+            <div className="home-hero-aside anim-fade-up anim-delay-2" aria-hidden="true">
 
               {/* Layered editorial photo collage */}
               <div style={{ position: "relative", width: "400px", height: "340px" }}>
@@ -235,18 +235,16 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 </svg>
 
                 {/* Polaroid snap — Thailand (top-left, primary scatter card) */}
+                <div className="anim-float-gentle" style={{ position: "absolute", top: "10px", left: "10px", zIndex: 10 }}>
                 <div
                   style={{
-                    position: "absolute",
-                    top: "10px",
-                    left: "10px",
+                    position: "relative",
                     transform: "rotate(-4.5deg)",
                     background: "#ffffff",
                     padding: "8px 8px 28px",
                     borderRadius: "3px",
                     width: "158px",
                     boxShadow: "0 20px 52px rgba(0,0,0,0.40), 0 4px 14px rgba(0,0,0,0.22)",
-                    zIndex: 10,
                   }}
                 >
                   {/* Tape strip — travel journal adhesive detail */}
@@ -270,20 +268,19 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     ✦ Into the wild
                   </p>
                 </div>
+                </div>
 
                 {/* Polaroid snap — Japan Street (bottom-left, slight angle) */}
+                <div className="anim-float-gentle" style={{ position: "absolute", bottom: "18px", left: "16px", zIndex: 9, animationDelay: "1.4s" }}>
                 <div
                   style={{
-                    position: "absolute",
-                    bottom: "18px",
-                    left: "16px",
+                    position: "relative",
                     transform: "rotate(4.5deg)",
                     background: "#ffffff",
                     padding: "7px 7px 24px",
                     borderRadius: "3px",
                     width: "136px",
                     boxShadow: "0 16px 44px rgba(0,0,0,0.36), 0 4px 12px rgba(0,0,0,0.18)",
-                    zIndex: 9,
                   }}
                 >
                   <img
@@ -299,9 +296,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     ✦ Golden hour
                   </p>
                 </div>
+                </div>
 
                 {/* Stamp card — Community / nomad workspace (pinned upper-right) */}
                 <div
+                  className="anim-scale-in anim-delay-4"
                   style={{
                     position: "absolute",
                     top: "20px",
@@ -326,6 +325,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
                 {/* Field notes card — fills the bottom-right void, anchors the composition */}
                 <div
+                  className="anim-fade-up anim-delay-5"
                   style={{
                     position: "absolute",
                     bottom: "14px",
@@ -365,7 +365,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
           {/* ── Mobile illustrated scene (hidden on desktop) ── */}
           <div className="home-hero-mobile-scene" aria-hidden="true">
-            <div style={{ position: "relative", width: "100%", height: "165px", borderRadius: "1rem", overflow: "hidden" }}>
+            <div style={{ position: "relative", width: "100%", height: "185px", borderRadius: "1rem", overflow: "hidden" }}>
 
               {/* Full-bleed main photo */}
               <img

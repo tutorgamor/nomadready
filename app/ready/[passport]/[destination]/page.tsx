@@ -372,7 +372,7 @@ export default async function ReadyPage({ params }: Props) {
           </div>
         )}
         {zonesGuide && (
-          <div id="zones-guide" style={SECTION_OFFSET}>
+          <div id="city-map" style={SECTION_OFFSET}>
             <RemoteWorkZonesGuide data={zonesGuide} />
           </div>
         )}

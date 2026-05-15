@@ -23,8 +23,9 @@ import { RealTravelNotesSection }    from "@/components/ready/RealTravelNotesSec
 import { ProfileSummaryCard }        from "@/components/ready/ProfileSummaryCard";
 import { RemoteWorkSection }         from "@/components/ready/RemoteWorkSection";
 import { RemoteWorkZonesGuide }      from "@/components/ready/RemoteWorkZonesGuide";
+import { CityFieldMap }              from "@/components/ready/CityFieldMap";
 import { NomadRealitySection }       from "@/components/ready/NomadRealitySection";
-import type { LocalGem, BudgetTier, RealTravelNote, RemoteWork, NomadRealityNote, RemoteWorkZonesData } from "@/lib/types";
+import type { LocalGem, BudgetTier, RealTravelNote, RemoteWork, NomadRealityNote, RemoteWorkZonesData, CityFieldMapData } from "@/lib/types";
 
 const destinations = destinationsData as Destination[];
 const passports = passportsData as Passport[];
@@ -111,6 +112,11 @@ export default async function ReadyPage({ params }: Props) {
   const zonesGuidePath = path.join(process.cwd(), "data", "remote-work-zones", `${destination}.json`);
   const zonesGuide: RemoteWorkZonesData | null = fs.existsSync(zonesGuidePath)
     ? (JSON.parse(fs.readFileSync(zonesGuidePath, "utf-8")) as RemoteWorkZonesData)
+    : null;
+
+  const cityFieldMapPath = path.join(process.cwd(), "data", "city-field-map", `${destination}.json`);
+  const cityFieldMap: CityFieldMapData | null = fs.existsSync(cityFieldMapPath)
+    ? (JSON.parse(fs.readFileSync(cityFieldMapPath, "utf-8")) as CityFieldMapData)
     : null;
 
   const reviewedDate = new Date(data.last_reviewed).toLocaleDateString("en-GB", {
@@ -390,6 +396,11 @@ export default async function ReadyPage({ params }: Props) {
         {gems && (
           <div id="gems" style={SECTION_OFFSET}>
             <LocalGemsSection gems={gems} />
+          </div>
+        )}
+        {cityFieldMap && (
+          <div id="city-map" style={SECTION_OFFSET}>
+            <CityFieldMap data={cityFieldMap} />
           </div>
         )}
       </div>

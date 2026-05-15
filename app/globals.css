@@ -540,6 +540,68 @@ a:hover {
   }
 }
 
+/* ─── City Field Map (cfm-*) ─────────────────────────────── */
+
+/* Category tabs row */
+.cfm-tabs {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 0.875rem;
+}
+
+.cfm-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-right: 1px solid var(--border);
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  transition: background 0.12s, color 0.12s;
+  white-space: nowrap;
+}
+
+.cfm-tab:last-child {
+  border-right: none;
+}
+
+.cfm-tab:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-secondary);
+}
+
+.cfm-tab--active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Map + detail layout */
+.cfm-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .cfm-layout {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 1.125rem;
+    align-items: start;
+  }
+}
+
 /* ─── Remote Work Zones Field Guide (rzg-*) ─────────────── */
 
 /* Hero: headline left, meta-table right */

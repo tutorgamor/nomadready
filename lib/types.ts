@@ -271,6 +271,38 @@ export interface RemoteWork {
   remote_work_zones?: RemoteWorkZone[];
 }
 
+// ─── City Field Map ───────────────────────────────────────────
+
+export type MarkerCategory = "work" | "food" | "practical" | "explore";
+
+export interface CityMapMarker {
+  id: string;
+  name: string;
+  area: string;
+  category: MarkerCategory;
+  budget?: "$" | "$$" | "$$$";
+  note: string;
+  tags: string[];
+  x: number;   // 0-100 in SVG viewBox
+  y: number;   // 0-100 in SVG viewBox
+}
+
+/** Map background config — decorations only, no zone markers */
+export interface MapBackground {
+  label: string;
+  attribution: string;
+  legend: Array<{ color: string; label: string; type: "fill" | "line" | "dot" }>;
+  decorations: MapDecoration[];
+}
+
+export interface CityFieldMapData {
+  city: string;
+  country: string;
+  map: MapBackground;
+  theme: CityTheme;
+  markers: CityMapMarker[];
+}
+
 // ─── Remote Work Zones Field Guide ────────────────────────────
 
 export interface ZoneMetrics {

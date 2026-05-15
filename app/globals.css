@@ -136,6 +136,12 @@ a:hover {
   background-size: 22px 22px, 100%;
 }
 
+@media (min-width: 768px) {
+  .card--map-grid {
+    padding: 1.875rem;
+  }
+}
+
 /* Destination card — interactive */
 .dest-card {
   background-color: var(--bg-card);
@@ -588,8 +594,15 @@ a:hover {
   .cfm-layout {
     display: grid;
     grid-template-columns: 55% 45%;
-    gap: 1.125rem;
+    gap: 1.5rem;
     align-items: start;
+  }
+}
+
+@media (min-width: 1100px) {
+  .cfm-layout {
+    grid-template-columns: 58% 42%;
+    gap: 1.875rem;
   }
 }
 

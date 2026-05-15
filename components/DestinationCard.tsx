@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { CSSProperties } from "react";
 import type { Destination } from "@/lib/types";
 import { ProfileCardBadge } from "@/components/ProfileCardBadge";
@@ -14,6 +15,9 @@ interface DestinationCardProps {
   passportId: string;
   summary?: DestinationSummary;
 }
+
+// Populate with real cover photos as they become available — fallback is cover_color
+const COVER_IMAGES: Record<string, string> = {};
 
 const STAT_LABEL: CSSProperties = {
   fontSize: "0.625rem",
@@ -34,51 +38,99 @@ const STAT_VALUE: CSSProperties = {
 
 export function DestinationCard({ destination, passportId, summary }: DestinationCardProps) {
   const { id, label, emoji, hero_tag, cover_color, region, travel_score } = destination;
+  const coverImage = COVER_IMAGES[id];
 
   return (
     <Link href={`/ready/${passportId}/${id}`} className="dest-card" aria-label={`Travel guide for ${label}`}>
-      {/* ── Colour accent bar ── */}
+
+      {/* ── Cover zone ──────────────────────────────────────── */}
       <div
+        className="dest-card-cover"
         style={{
           backgroundColor: cover_color,
-          height: "116px",
+          height: "168px",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          alignItems: "flex-end",
           position: "relative",
           overflow: "hidden",
         }}
         aria-hidden="true"
       >
-        {/* Diagonal depth overlay */}
+        {/* Real photo when available */}
+        {coverImage && (
+          <Image
+            src={coverImage}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 340px, (min-width: 480px) 260px, calc(100vw - 2rem)"
+            style={{ objectFit: "cover", objectPosition: "center 40%" }}
+          />
+        )}
+
+        {/* Diagonal tonal depth — warm light from top-left */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(155deg, rgba(255,255,255,0.16) 0%, rgba(0,0,0,0.14) 100%)",
+            background: "linear-gradient(155deg, rgba(255,255,255,0.14) 0%, rgba(0,0,0,0.20) 100%)",
           }}
         />
-        {/* Bottom vignette */}
+
+        {/* Atmospheric glow — diffuse light source upper-right */}
         <div
           style={{
             position: "absolute",
-            inset: 0,
-            background: "linear-gradient(0deg, rgba(0,0,0,0.12) 0%, transparent 55%)",
-          }}
-        />
-        {/* Sun glow — atmospheric light source */}
-        <div
-          style={{
-            position: "absolute",
-            top: "-25%",
-            right: "15%",
-            width: "55%",
-            paddingBottom: "55%",
-            background: "radial-gradient(ellipse, rgba(255,255,255,0.24) 0%, transparent 65%)",
+            top: "-30%",
+            right: "10%",
+            width: "62%",
+            paddingBottom: "62%",
+            background: "radial-gradient(ellipse, rgba(255,255,255,0.22) 0%, transparent 65%)",
             borderRadius: "50%",
           }}
         />
-        {/* Editorial region tag — geographic stamp in cover corner */}
+
+        {/* Bottom vignette — cinematic pull-down, eases into card body */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(0deg, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.12) 42%, transparent 68%)",
+          }}
+        />
+
+        {/* SVG terrain — illustrated horizon layers scaled to full cover height */}
+        <svg
+          viewBox="0 0 280 168"
+          preserveAspectRatio="xMidYMid slice"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        >
+          {/* Sky cloud puffs */}
+          <ellipse cx="42"  cy="28" rx="32" ry="9"  fill="rgba(255,255,255,0.09)" />
+          <ellipse cx="228" cy="20" rx="22" ry="6"  fill="rgba(255,255,255,0.07)" />
+          <ellipse cx="140" cy="38" rx="18" ry="5"  fill="rgba(255,255,255,0.05)" />
+          {/* Distant ridge */}
+          <path
+            d="M-10 72 Q48 34 104 58 Q155 78 200 46 Q240 18 290 44 L290 180 L-10 180 Z"
+            fill="rgba(255,255,255,0.065)"
+          />
+          {/* Midground hills */}
+          <path
+            d="M-10 96 Q62 56 148 80 Q210 98 290 62 L290 180 L-10 180 Z"
+            fill="rgba(255,255,255,0.11)"
+          />
+          {/* Foreground slope */}
+          <path
+            d="M-10 114 Q80 88 174 108 Q232 122 290 94 L290 180 L-10 180 Z"
+            fill="rgba(255,255,255,0.08)"
+          />
+          {/* Water horizon band */}
+          <path
+            d="M-10 136 Q100 120 200 132 Q248 138 290 122 L290 180 L-10 180 Z"
+            fill="rgba(255,255,255,0.052)"
+          />
+        </svg>
+
+        {/* Top-left: editorial region stamp */}
         <div
           style={{
             position: "absolute",
@@ -86,109 +138,116 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
             left: "12px",
             fontSize: "0.5rem",
             fontWeight: 700,
-            letterSpacing: "0.1em",
+            letterSpacing: "0.11em",
             textTransform: "uppercase",
-            color: "rgba(255,255,255,0.72)",
+            color: "rgba(255,255,255,0.68)",
             lineHeight: 1,
-            zIndex: 1,
+            zIndex: 2,
           }}
-          aria-hidden="true"
         >
           {region}
         </div>
 
-        {/* SVG terrain — illustrated horizon layers */}
-        <svg
-          viewBox="0 0 280 116"
-          preserveAspectRatio="xMidYMid slice"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-        >
-          {/* Cloud puffs — atmospheric sky detail */}
-          <ellipse cx="42" cy="22" rx="26" ry="7" fill="rgba(255,255,255,0.10)" />
-          <ellipse cx="220" cy="16" rx="18" ry="5" fill="rgba(255,255,255,0.08)" />
-          {/* Background mountain ridge */}
-          <path
-            d="M-10 58 Q40 26 90 46 Q138 62 178 34 Q218 10 260 34 Q274 42 290 28 L290 124 L-10 124 Z"
-            fill="rgba(255,255,255,0.07)"
-          />
-          {/* Midground hills */}
-          <path
-            d="M-10 78 Q55 44 135 64 Q195 80 290 46 L290 124 L-10 124 Z"
-            fill="rgba(255,255,255,0.13)"
-          />
-          {/* Foreground slope */}
-          <path
-            d="M-10 92 Q72 70 162 86 Q222 98 290 74 L290 124 L-10 124 Z"
-            fill="rgba(255,255,255,0.09)"
-          />
-        </svg>
-        {/* Frosted glass emoji ring */}
+        {/* Top-right: score pill — frosted glass */}
+        {travel_score && (
+          <div
+            style={{
+              position: "absolute",
+              top: "8px",
+              right: "10px",
+              display: "flex",
+              alignItems: "baseline",
+              gap: "1px",
+              background: "rgba(0,0,0,0.30)",
+              backdropFilter: "blur(6px)",
+              WebkitBackdropFilter: "blur(6px)",
+              border: "1px solid rgba(255,255,255,0.16)",
+              borderRadius: "var(--radius-full)",
+              padding: "0.2rem 0.5rem",
+              zIndex: 2,
+            }}
+          >
+            <span
+              style={{
+                fontSize: "0.6875rem",
+                fontWeight: 800,
+                color: "rgba(255,255,255,0.94)",
+                letterSpacing: "-0.01em",
+                lineHeight: 1,
+              }}
+            >
+              {travel_score.overall}
+            </span>
+            <span
+              style={{
+                fontSize: "0.5rem",
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.50)",
+                letterSpacing: "0.03em",
+                lineHeight: 1,
+              }}
+            >
+              /100
+            </span>
+          </div>
+        )}
+
+        {/* Bottom-left: flag emoji — anchored over vignette */}
         <div
           style={{
             position: "relative",
-            width: "62px",
-            height: "62px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "rgba(255,255,255,0.14)",
-            borderRadius: "50%",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
-            border: "1px solid rgba(255,255,255,0.22)",
-            boxShadow: "0 2px 12px rgba(0,0,0,0.12)",
+            zIndex: 2,
+            marginLeft: "12px",
+            marginBottom: "10px",
+            fontSize: "1.875rem",
+            lineHeight: 1,
+            filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.32))",
           }}
         >
-          <span
-            style={{
-              fontSize: "2.625rem",
-              lineHeight: 1,
-              filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.18))",
-            }}
-          >
-            {emoji}
-          </span>
+          {emoji}
         </div>
       </div>
 
-      {/* ── Card body ── */}
+      {/* ── Card body ─────────────────────────────────────────── */}
       <div
         className="dest-card-body"
         style={{
-          padding: "1.1rem 1.25rem 1.1rem",
+          padding: "0.9rem 1.25rem 1.1rem",
           display: "flex",
           flexDirection: "column",
-          gap: "0.4rem",
+          gap: "0.3rem",
         }}
       >
-        {/* Top row: label + arrow */}
+        {/* Destination name + directional arrow */}
         <div
           style={{
             display: "flex",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "space-between",
             gap: "0.5rem",
           }}
         >
           <h2
             style={{
-              fontSize: "1.125rem",
-              fontWeight: 700,
-              letterSpacing: "-0.03em",
+              fontSize: "1.25rem",
+              fontWeight: 800,
+              letterSpacing: "-0.04em",
               color: "var(--text-primary)",
               margin: 0,
-              lineHeight: 1.15,
+              lineHeight: 1.1,
             }}
           >
             {label}
           </h2>
           <span
+            className="dest-card-arrow"
             style={{
               color: "var(--accent)",
-              fontSize: "0.875rem",
+              fontSize: "1rem",
               flexShrink: 0,
-              marginTop: "1px",
-              opacity: 0.7,
+              marginTop: "3px",
+              opacity: 0.6,
+              display: "inline-block",
             }}
             aria-hidden="true"
           >
@@ -196,69 +255,74 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
           </span>
         </div>
 
-        {/* Hero tag */}
+        {/* Hero tag — editorial subtitle */}
         <p
           style={{
-            fontSize: "0.8125rem",
+            fontSize: "0.8rem",
             color: "var(--text-secondary)",
             margin: 0,
-            lineHeight: 1.5,
+            lineHeight: 1.45,
+            letterSpacing: "-0.01em",
           }}
         >
           {hero_tag}
         </p>
 
-        {/* Region badge */}
-        <div style={{ marginTop: "0.5rem" }}>
+        {/* Badges row — region stamp + profile highlight */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.375rem",
+            flexWrap: "wrap",
+            marginTop: "0.375rem",
+          }}
+        >
           <span
             style={{
               display: "inline-block",
-              fontSize: "0.68rem",
-              fontWeight: 600,
-              letterSpacing: "0.06em",
+              fontSize: "0.625rem",
+              fontWeight: 700,
+              letterSpacing: "0.07em",
               textTransform: "uppercase",
-              color: "var(--accent-dark)",
-              backgroundColor: "rgba(254,243,199,0.55)",
-              border: "1px solid rgba(217,119,6,0.18)",
-              borderRadius: "9999px",
-              padding: "0.2rem 0.6rem",
+              color: "var(--text-muted)",
+              backgroundColor: "var(--surface-sunken)",
+              border: "1px solid var(--border)",
+              borderRadius: "var(--radius-full)",
+              padding: "0.2rem 0.55rem",
             }}
           >
             {region}
           </span>
-        </div>
-
-        {/* Profile-specific highlight badge */}
-        <div>
           <ProfileCardBadge travelScore={travel_score} />
         </div>
 
-        {/* ── Highlights grid ── */}
+        {/* ── Travel briefing strip (when summary provided) ─── */}
         {summary && (
           <>
             {/* Perforation tear line */}
             <div
               aria-hidden="true"
               style={{
-                margin: "0.35rem -1.25rem 0",
+                margin: "0.45rem -1.25rem 0",
                 height: "1px",
                 backgroundImage:
-                  "repeating-linear-gradient(90deg, rgba(180,130,60,0.32) 0px, rgba(180,130,60,0.32) 4px, transparent 4px, transparent 9px)",
+                  "repeating-linear-gradient(90deg, rgba(180,130,60,0.28) 0px, rgba(180,130,60,0.28) 4px, transparent 4px, transparent 9px)",
               }}
             />
-            {/* Travel briefing slip */}
+            {/* Amber briefing slip */}
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
                 rowGap: "0.625rem",
                 columnGap: "0.5rem",
-                background: "linear-gradient(160deg, rgba(255,248,224,0.92) 0%, rgba(254,242,195,0.78) 100%)",
-                borderRadius: "0.5rem",
-                margin: "0.25rem -0.5rem -0.5rem",
+                background: "linear-gradient(160deg, rgba(255,248,224,0.90) 0%, rgba(254,242,195,0.75) 100%)",
+                borderRadius: "var(--radius-md)",
+                margin: "0.3rem -0.5rem -0.5rem",
                 padding: "0.75rem 0.5rem 0.5rem",
-                border: "1px solid rgba(200,155,65,0.24)",
-                boxShadow: "inset 0 1px 5px rgba(120,80,20,0.07), 0 1px 3px rgba(120,80,20,0.04)",
+                border: "1px solid rgba(200,155,65,0.22)",
+                boxShadow: "inset 0 1px 5px rgba(120,80,20,0.06), 0 1px 3px rgba(120,80,20,0.04)",
                 position: "relative",
               }}
             >
@@ -272,11 +336,11 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
                   width: "22px",
                   height: "22px",
                   borderRadius: "50%",
-                  border: "1.5px solid rgba(180,130,50,0.35)",
+                  border: "1.5px solid rgba(180,130,50,0.32)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  opacity: 0.48,
+                  opacity: 0.44,
                   pointerEvents: "none",
                 }}
               >
@@ -285,7 +349,7 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
                     width: "14px",
                     height: "14px",
                     borderRadius: "50%",
-                    border: "1px solid rgba(180,130,50,0.3)",
+                    border: "1px solid rgba(180,130,50,0.28)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -297,7 +361,7 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
                       fontWeight: 800,
                       letterSpacing: "0.04em",
                       textTransform: "uppercase",
-                      color: "rgba(160,100,15,0.65)",
+                      color: "rgba(160,100,15,0.60)",
                       lineHeight: 1,
                     }}
                   >

@@ -1010,6 +1010,25 @@ a:hover {
   background: linear-gradient(180deg, #fefaf5 0%, #faf4ec 100%);
 }
 
+/* Cover zone — subtle brightness lift on card hover */
+.dest-card-cover {
+  transition: filter var(--transition-hover);
+}
+.dest-card:hover .dest-card-cover {
+  filter: brightness(1.05);
+}
+
+/* Directional arrow — slides right and sharpens on card hover */
+.dest-card-arrow {
+  transition:
+    opacity   var(--transition-hover),
+    transform var(--transition-hover);
+}
+.dest-card:hover .dest-card-arrow {
+  opacity: 1 !important;
+  transform: translateX(3px);
+}
+
 /* CFM category tabs — precise property list instead of `all` */
 .cfm-tab {
   transition:

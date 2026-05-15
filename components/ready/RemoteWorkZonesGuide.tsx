@@ -7,6 +7,7 @@ import type {
   CityTheme,
   ZoneMetrics,
 } from "@/lib/types";
+import { MapDecorations } from "@/components/shared/MapDecorations";
 
 /* ─── Helpers ──────────────────────────────────────────────── */
 
@@ -140,58 +141,7 @@ function CityMap({
           preserveAspectRatio="xMidYMid meet"
           aria-label={map.label}
         >
-          {/* Decorations: water blobs, parks, transit lines */}
-          {map.decorations.map((deco, i) => {
-            if (deco.type === "water" && deco.path) {
-              return (
-                <path
-                  key={i}
-                  d={deco.path}
-                  fill={deco.fill ?? theme.waterColor}
-                  opacity={0.55}
-                />
-              );
-            }
-            if (deco.type === "park" && deco.path) {
-              return (
-                <path
-                  key={i}
-                  d={deco.path}
-                  fill={deco.fill ?? theme.parkColor}
-                  opacity={0.55}
-                />
-              );
-            }
-            if (deco.type === "line" && deco.points) {
-              const pts = deco.points.map(([x, y]) => `${x},${y}`).join(" ");
-              const mid = deco.points[Math.floor(deco.points.length / 2)];
-              return (
-                <g key={i}>
-                  <polyline
-                    points={pts}
-                    fill="none"
-                    stroke={deco.stroke ?? "#b0a090"}
-                    strokeWidth="0.7"
-                    strokeDasharray="1.8,1.4"
-                    opacity={0.75}
-                  />
-                  {deco.label && (
-                    <text
-                      x={mid[0] + 2}
-                      y={mid[1] - 1.5}
-                      fontSize="2.4"
-                      fill="#a09080"
-                      letterSpacing="0.25"
-                      fontWeight="600"
-                    >
-                      {deco.label}
-                    </text>
-                  )}
-                </g>
-              );
-            }
-            return null;
-          })}
+          <MapDecorations decorations={map.decorations} theme={theme} />
 
           {/* Zone markers */}
           {map.markers.map((marker) => {
@@ -350,14 +300,10 @@ const METRIC_ROWS: { key: keyof ZoneMetrics; label: string }[] = [
 
 function ZoneDetailPanel({
   zone,
-  zoneIndex,
-  zonesTotal,
   reviewed,
   theme,
 }: {
   zone: FieldGuideZone;
-  zoneIndex: number;
-  zonesTotal: number;
   reviewed: string;
   theme: CityTheme;
 }) {
@@ -614,13 +560,11 @@ function ZoneCard({
   isActive,
   onClick,
   theme,
-  isLast,
 }: {
   zone: FieldGuideZone;
   isActive: boolean;
   onClick: () => void;
   theme: CityTheme;
-  isLast: boolean;
 }) {
   return (
     <div
@@ -695,7 +639,6 @@ export function RemoteWorkZonesGuide({ data }: { data: RemoteWorkZonesData }) {
   const [selectedId, setSelectedId] = useState(data.zones[0].id);
 
   const selectedZone = data.zones.find((z) => z.id === selectedId) ?? data.zones[0];
-  const selectedIndex = data.zones.findIndex((z) => z.id === selectedId);
 
   return (
     <div>
@@ -773,8 +716,6 @@ export function RemoteWorkZonesGuide({ data }: { data: RemoteWorkZonesData }) {
         <CityMap data={data} selectedZoneId={selectedId} onSelectZone={setSelectedId} />
         <ZoneDetailPanel
           zone={selectedZone}
-          zoneIndex={selectedIndex}
-          zonesTotal={data.zones.length}
           reviewed={data.reviewed}
           theme={data.theme}
         />
@@ -820,14 +761,13 @@ export function RemoteWorkZonesGuide({ data }: { data: RemoteWorkZonesData }) {
           className="rzg-zones-grid"
           style={{ "--rzg-cols": data.zones.length } as React.CSSProperties}
         >
-          {data.zones.map((zone, i) => (
+          {data.zones.map((zone) => (
             <ZoneCard
               key={zone.id}
               zone={zone}
               isActive={zone.id === selectedId}
               onClick={() => setSelectedId(zone.id)}
               theme={data.theme}
-              isLast={i === data.zones.length - 1}
             />
           ))}
         </div>

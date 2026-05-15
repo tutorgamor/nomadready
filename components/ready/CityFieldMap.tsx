@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { CityFieldMapData, CityMapMarker, MarkerCategory, MapBackground, CityTheme } from "@/lib/types";
+import { MapDecorations } from "@/components/shared/MapDecorations";
 
 /* ─── Category config ──────────────────────────────────────── */
 
@@ -140,48 +141,7 @@ function FieldMapSVG({
         preserveAspectRatio="xMidYMid meet"
         aria-label={map.label}
       >
-        {/* Map decorations */}
-        {map.decorations.map((deco, i) => {
-          if (deco.type === "water" && deco.path) {
-            return (
-              <path key={i} d={deco.path} fill={theme.waterColor} opacity={0.5} />
-            );
-          }
-          if (deco.type === "park" && deco.path) {
-            return (
-              <path key={i} d={deco.path} fill={theme.parkColor} opacity={0.5} />
-            );
-          }
-          if (deco.type === "line" && deco.points) {
-            const pts = deco.points.map(([x, y]) => `${x},${y}`).join(" ");
-            const mid = deco.points[Math.floor(deco.points.length / 2)];
-            return (
-              <g key={i}>
-                <polyline
-                  points={pts}
-                  fill="none"
-                  stroke="#b0a090"
-                  strokeWidth="0.7"
-                  strokeDasharray="1.8,1.4"
-                  opacity={0.6}
-                />
-                {deco.label && (
-                  <text
-                    x={mid[0] + 2}
-                    y={mid[1] - 1.5}
-                    fontSize="2.2"
-                    fill="#a09080"
-                    letterSpacing="0.25"
-                    fontWeight="600"
-                  >
-                    {deco.label}
-                  </text>
-                )}
-              </g>
-            );
-          }
-          return null;
-        })}
+        <MapDecorations decorations={map.decorations} theme={theme} opacity={0.5} />
 
         {/* Category markers */}
         {markers.map((m) => {

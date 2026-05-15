@@ -2,8 +2,8 @@
  * MapDecorations — shared SVG decoration elements for editorial city maps.
  *
  * Renders inside an existing <svg viewBox="0 0 100 100"> element.
- * Both RemoteWorkZonesGuide and CityFieldMap import this so that
- * map backgrounds (water, parks, transit lines) are defined once.
+ * Renders map backgrounds (water, parks, transit lines) defined once,
+ * shared across all discovery layers of the unified city map.
  *
  * To add a city: supply its own MapDecoration[] in the city data file.
  * No code changes needed here.

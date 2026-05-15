@@ -287,22 +287,6 @@ export interface CityMapMarker {
   y: number;   // 0-100 in SVG viewBox
 }
 
-/** Map background config — decorations only, no zone markers */
-export interface MapBackground {
-  label: string;
-  attribution: string;
-  legend: Array<{ color: string; label: string; type: "fill" | "line" | "dot" }>;
-  decorations: MapDecoration[];
-}
-
-export interface CityFieldMapData {
-  city: string;
-  country: string;
-  map: MapBackground;
-  theme: CityTheme;
-  markers: CityMapMarker[];
-}
-
 // ─── Remote Work Zones Field Guide ────────────────────────────
 
 export interface ZoneMetrics {
@@ -380,6 +364,7 @@ export interface RemoteWorkZonesData {
   zones: FieldGuideZone[];
   map: CityMapConfig;
   theme: CityTheme;
+  markers?: CityMapMarker[];  // Food / Practical / Explore discovery layer
 }
 
 // ─── Root ReadyData ───────────────────────────────────────────

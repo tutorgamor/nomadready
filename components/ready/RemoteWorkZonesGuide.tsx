@@ -6,6 +6,8 @@ import type {
   FieldGuideZone,
   CityTheme,
   ZoneMetrics,
+  CityMapMarker,
+  MarkerCategory,
 } from "@/lib/types";
 import { MapDecorations } from "@/components/shared/MapDecorations";
 
@@ -76,18 +78,96 @@ function ScoreBar({ value, color }: { value: number; color: string }) {
   );
 }
 
-/* ─── SVG City Map ─────────────────────────────────────────── */
+/* ─── Category config ──────────────────────────────────────── */
 
-function CityMap({
+const CAT: Record<MarkerCategory, { label: string; color: string }> = {
+  work:      { label: "Work",      color: "#d97706" },
+  food:      { label: "Food",      color: "#c2410c" },
+  practical: { label: "Practical", color: "#3A7CA5" },
+  explore:   { label: "Explore",   color: "#4d7c0f" },
+};
+
+const CATEGORY_ORDER: MarkerCategory[] = ["work", "food", "practical", "explore"];
+
+/* ─── Category tabs ────────────────────────────────────────── */
+
+function CategoryTabs({
+  active,
+  counts,
+  onSelect,
+}: {
+  active: MarkerCategory;
+  counts: Record<MarkerCategory, number>;
+  onSelect: (c: MarkerCategory) => void;
+}) {
+  return (
+    <div className="cfm-tabs" role="tablist" style={{ marginBottom: "1rem" }}>
+      {CATEGORY_ORDER.map((cat) => {
+        const isActive = cat === active;
+        const { label, color } = CAT[cat];
+        if (counts[cat] === 0) return null;
+        return (
+          <button
+            key={cat}
+            role="tab"
+            aria-selected={isActive}
+            onClick={() => onSelect(cat)}
+            className={`cfm-tab${isActive ? " cfm-tab--active" : ""}`}
+            style={isActive ? { color, borderBottomColor: color } : undefined}
+          >
+            <span
+              style={{
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                background: isActive ? color : "var(--border-strong)",
+                display: "inline-block",
+                marginRight: "0.3rem",
+                flexShrink: 0,
+                verticalAlign: "middle",
+              }}
+            />
+            {label}
+            <span
+              style={{
+                marginLeft: "0.3rem",
+                fontSize: "0.575rem",
+                fontWeight: 400,
+                color: isActive ? color : "var(--text-muted)",
+                opacity: 0.85,
+              }}
+            >
+              {counts[cat]}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ─── Unified SVG City Map ─────────────────────────────────── */
+
+function UnifiedCityMap({
   data,
+  activeCategory,
   selectedZoneId,
+  selectedMarkerId,
+  visibleMarkers,
   onSelectZone,
+  onSelectMarker,
 }: {
   data: RemoteWorkZonesData;
+  activeCategory: MarkerCategory;
   selectedZoneId: string;
+  selectedMarkerId: string | null;
+  visibleMarkers: CityMapMarker[];
   onSelectZone: (id: string) => void;
+  onSelectMarker: (id: string) => void;
 }) {
   const { map, zones, theme } = data;
+  const catColor = CAT[activeCategory].color;
+  const isWorkTab = activeCategory === "work";
 
   return (
     <div
@@ -143,63 +223,90 @@ function CityMap({
         >
           <MapDecorations decorations={map.decorations} theme={theme} />
 
-          {/* Zone markers */}
-          {map.markers.map((marker) => {
-            const zone = zones.find((z) => z.id === marker.zoneId);
-            if (!zone) return null;
-            const active = marker.zoneId === selectedZoneId;
-
-            return (
-              <g
-                key={marker.zoneId}
-                onClick={() => onSelectZone(marker.zoneId)}
-                style={{ cursor: "pointer" }}
-                role="button"
-                aria-label={zone.name}
-              >
-                {/* Tap target */}
-                <circle cx={marker.x} cy={marker.y} r="6" fill="transparent" />
-
-                {/* Visible marker */}
-                {active ? (
-                  <circle cx={marker.x} cy={marker.y} r="2.8" fill={theme.accent} />
-                ) : (
-                  <circle
-                    cx={marker.x}
-                    cy={marker.y}
-                    r="2.4"
-                    fill="white"
-                    stroke="#8c8070"
-                    strokeWidth="0.65"
-                  />
-                )}
-
-                {/* Number above */}
-                <text
-                  x={marker.x}
-                  y={marker.y - 4.2}
-                  fontSize="2.3"
-                  fill={active ? theme.accent : "#a09080"}
-                  textAnchor="middle"
-                  fontWeight={active ? "700" : "400"}
-                >
-                  {zone.number}
-                </text>
-
-                {/* Name below */}
-                <text
-                  x={marker.x}
-                  y={marker.y + 6}
-                  fontSize="3"
-                  fill={active ? theme.accent : "var(--text-primary)"}
-                  textAnchor="middle"
-                  fontWeight={active ? "700" : "500"}
-                >
-                  {zone.name}
-                </text>
-              </g>
-            );
-          })}
+          {isWorkTab
+            ? map.markers.map((marker) => {
+                const zone = zones.find((z) => z.id === marker.zoneId);
+                if (!zone) return null;
+                const active = marker.zoneId === selectedZoneId;
+                return (
+                  <g
+                    key={marker.zoneId}
+                    onClick={() => onSelectZone(marker.zoneId)}
+                    style={{ cursor: "pointer" }}
+                    role="button"
+                    aria-label={zone.name}
+                  >
+                    <circle cx={marker.x} cy={marker.y} r="6" fill="transparent" />
+                    {active ? (
+                      <circle cx={marker.x} cy={marker.y} r="2.8" fill={theme.accent} />
+                    ) : (
+                      <circle
+                        cx={marker.x}
+                        cy={marker.y}
+                        r="2.4"
+                        fill="white"
+                        stroke="#8c8070"
+                        strokeWidth="0.65"
+                      />
+                    )}
+                    <text
+                      x={marker.x}
+                      y={marker.y - 4.2}
+                      fontSize="2.3"
+                      fill={active ? theme.accent : "#a09080"}
+                      textAnchor="middle"
+                      fontWeight={active ? "700" : "400"}
+                    >
+                      {zone.number}
+                    </text>
+                    <text
+                      x={marker.x}
+                      y={marker.y + 6}
+                      fontSize="3"
+                      fill={active ? theme.accent : "var(--text-primary)"}
+                      textAnchor="middle"
+                      fontWeight={active ? "700" : "500"}
+                    >
+                      {zone.name}
+                    </text>
+                  </g>
+                );
+              })
+            : visibleMarkers.map((m) => {
+                const isSelected = m.id === selectedMarkerId;
+                return (
+                  <g
+                    key={m.id}
+                    onClick={() => onSelectMarker(m.id)}
+                    style={{ cursor: "pointer" }}
+                    role="button"
+                    aria-label={m.name}
+                  >
+                    <circle cx={m.x} cy={m.y} r="7" fill="transparent" />
+                    {isSelected && (
+                      <circle cx={m.x} cy={m.y} r="5" fill={catColor} opacity={0.18} />
+                    )}
+                    <circle
+                      cx={m.x}
+                      cy={m.y}
+                      r={isSelected ? 3.2 : 2.4}
+                      fill={catColor}
+                      opacity={isSelected ? 1 : 0.7}
+                    />
+                    {isSelected && <circle cx={m.x} cy={m.y} r="1.1" fill="white" />}
+                    <text
+                      x={m.x}
+                      y={m.y + 6.5}
+                      fontSize="2.7"
+                      fill={isSelected ? catColor : "var(--text-primary)"}
+                      textAnchor="middle"
+                      fontWeight={isSelected ? "700" : "500"}
+                    >
+                      {m.name}
+                    </text>
+                  </g>
+                );
+              })}
         </svg>
       </div>
 
@@ -285,7 +392,7 @@ function CityMap({
   );
 }
 
-/* ─── Metric labels config ─────────────────────────────────── */
+/* ─── Metric label config ──────────────────────────────────── */
 
 const METRIC_ROWS: { key: keyof ZoneMetrics; label: string }[] = [
   { key: "noise_level",      label: "Noise level" },
@@ -551,6 +658,172 @@ function ZoneDetailPanel({
   );
 }
 
+/* ─── Marker detail panel ──────────────────────────────────── */
+
+function MarkerDetail({
+  marker,
+  activeCategory,
+}: {
+  marker: CityMapMarker | null;
+  activeCategory: MarkerCategory;
+}) {
+  const { color, label } = CAT[activeCategory];
+
+  if (!marker) {
+    return (
+      <div
+        style={{
+          border: "1px dashed var(--border)",
+          borderRadius: "0.75rem",
+          padding: "1.5rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "200px",
+          textAlign: "center",
+          gap: "0.5rem",
+        }}
+      >
+        <span
+          style={{
+            width: "8px",
+            height: "8px",
+            borderRadius: "50%",
+            background: color,
+            display: "inline-block",
+          }}
+        />
+        <p style={{ fontSize: "0.8125rem", color: "var(--text-muted)", margin: 0, fontStyle: "italic" }}>
+          Select a {label.toLowerCase()} spot on the map
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        border: "1px solid var(--border)",
+        borderRadius: "0.75rem",
+        padding: "1.5rem",
+        background: "#fff",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Category + area row */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "1rem",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
+          <span
+            style={{
+              width: "7px",
+              height: "7px",
+              borderRadius: "50%",
+              background: color,
+              display: "inline-block",
+              flexShrink: 0,
+            }}
+          />
+          <span
+            style={{
+              fontSize: "0.6rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color,
+            }}
+          >
+            {label}
+          </span>
+        </div>
+        <span
+          style={{
+            fontSize: "0.6875rem",
+            fontWeight: 500,
+            color: "var(--text-muted)",
+            background: "var(--bg-base)",
+            border: "1px solid var(--border)",
+            borderRadius: "9999px",
+            padding: "0.1rem 0.55rem",
+          }}
+        >
+          {marker.area}
+        </span>
+      </div>
+
+      {/* Name */}
+      <h2
+        style={{
+          fontSize: "clamp(1.875rem, 4vw, 2.75rem)",
+          fontWeight: 800,
+          letterSpacing: "-0.04em",
+          color: "var(--text-primary)",
+          margin: "0 0 0.5rem",
+          lineHeight: 1,
+        }}
+      >
+        {marker.name}
+      </h2>
+
+      {/* Note */}
+      <p
+        style={{
+          fontSize: "0.9375rem",
+          fontStyle: "italic",
+          color: "var(--text-secondary)",
+          lineHeight: 1.55,
+          margin: "0 0 1.125rem",
+        }}
+      >
+        {marker.note}
+      </p>
+
+      <hr style={{ border: "none", borderTop: "1px solid var(--border)", margin: "0 0 1rem" }} />
+
+      {/* Budget + tags */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", alignItems: "center", flex: 1 }}>
+        {marker.budget && (
+          <span
+            style={{
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              padding: "0.2rem 0.65rem",
+              borderRadius: "9999px",
+              border: `1.5px solid ${color}`,
+              color,
+            }}
+          >
+            {marker.budget}
+          </span>
+        )}
+        {marker.tags.map((tag) => (
+          <span
+            key={tag}
+            style={{
+              fontSize: "0.75rem",
+              fontWeight: 500,
+              padding: "0.2rem 0.65rem",
+              borderRadius: "9999px",
+              border: "1.5px solid var(--border)",
+              color: "var(--text-secondary)",
+            }}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ─── Zone card (at a glance) ─────────────────────────────── */
 
 const SCORE_BAR_COLORS = { work: "#4d7c0f", stay: "#b45309", play: "#c2410c" } as const;
@@ -636,9 +909,40 @@ function ZoneCard({
 /* ─── Main exported component ──────────────────────────────── */
 
 export function RemoteWorkZonesGuide({ data }: { data: RemoteWorkZonesData }) {
-  const [selectedId, setSelectedId] = useState(data.zones[0].id);
+  const hasMarkers = !!data.markers?.length;
 
-  const selectedZone = data.zones.find((z) => z.id === selectedId) ?? data.zones[0];
+  const [activeCategory, setActiveCategory] = useState<MarkerCategory>("work");
+  const [selectedZoneId, setSelectedZoneId] = useState(data.zones[0].id);
+  const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(
+    data.markers?.find((m) => m.category !== "work")?.id ?? null
+  );
+
+  const selectedZone = data.zones.find((z) => z.id === selectedZoneId) ?? data.zones[0];
+  const visibleMarkers =
+    activeCategory !== "work"
+      ? (data.markers?.filter((m) => m.category === activeCategory) ?? [])
+      : [];
+  const selectedMarker =
+    visibleMarkers.find((m) => m.id === selectedMarkerId) ?? visibleMarkers[0] ?? null;
+
+  const counts = CATEGORY_ORDER.reduce(
+    (acc, cat) => {
+      acc[cat] =
+        cat === "work"
+          ? data.zones.length
+          : (data.markers?.filter((m) => m.category === cat).length ?? 0);
+      return acc;
+    },
+    {} as Record<MarkerCategory, number>
+  );
+
+  function handleCategoryChange(cat: MarkerCategory) {
+    setActiveCategory(cat);
+    if (cat !== "work") {
+      const first = data.markers?.find((m) => m.category === cat);
+      setSelectedMarkerId(first?.id ?? null);
+    }
+  }
 
   return (
     <div>
@@ -711,67 +1015,93 @@ export function RemoteWorkZonesGuide({ data }: { data: RemoteWorkZonesData }) {
         </div>
       </div>
 
-      {/* Map + zone detail */}
-      <div className="rzg-main-layout">
-        <CityMap data={data} selectedZoneId={selectedId} onSelectZone={setSelectedId} />
-        <ZoneDetailPanel
-          zone={selectedZone}
-          reviewed={data.reviewed}
-          theme={data.theme}
+      {/* Category tabs — only when extra marker layers exist */}
+      {hasMarkers && (
+        <CategoryTabs
+          active={activeCategory}
+          counts={counts}
+          onSelect={handleCategoryChange}
         />
+      )}
+
+      {/* Map + detail panel */}
+      <div className="rzg-main-layout">
+        <UnifiedCityMap
+          data={data}
+          activeCategory={activeCategory}
+          selectedZoneId={selectedZoneId}
+          selectedMarkerId={selectedMarkerId}
+          visibleMarkers={visibleMarkers}
+          onSelectZone={setSelectedZoneId}
+          onSelectMarker={setSelectedMarkerId}
+        />
+        {activeCategory === "work" ? (
+          <ZoneDetailPanel
+            zone={selectedZone}
+            reviewed={data.reviewed}
+            theme={data.theme}
+          />
+        ) : (
+          <MarkerDetail marker={selectedMarker} activeCategory={activeCategory} />
+        )}
       </div>
 
-      {/* At a glance */}
-      <div style={{ marginTop: "2rem" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-            marginBottom: "0.875rem",
-            paddingBottom: "0.625rem",
-            borderBottom: "2px solid var(--text-primary)",
-          }}
-        >
-          <h3
+      {/* At a glance — shown only on the Work tab */}
+      {activeCategory === "work" && (
+        <div style={{ marginTop: "2rem" }}>
+          <div
             style={{
-              fontSize: "1.25rem",
-              fontWeight: 700,
-              letterSpacing: "-0.03em",
-              color: "var(--text-primary)",
-              margin: 0,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              marginBottom: "0.875rem",
+              paddingBottom: "0.625rem",
+              borderBottom: "2px solid var(--text-primary)",
             }}
           >
-            All {data.zones.length}, at a glance
-          </h3>
-          <span
-            style={{
-              fontSize: "0.6rem",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "var(--text-muted)",
-            }}
-          >
-            Click a zone to read in detail →
-          </span>
-        </div>
+            <h3
+              style={{
+                fontSize: "1.25rem",
+                fontWeight: 700,
+                letterSpacing: "-0.03em",
+                color: "var(--text-primary)",
+                margin: 0,
+              }}
+            >
+              All {data.zones.length}, at a glance
+            </h3>
+            <span
+              style={{
+                fontSize: "0.6rem",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "var(--text-muted)",
+              }}
+            >
+              Click a zone to read in detail →
+            </span>
+          </div>
 
-        <div
-          className="rzg-zones-grid"
-          style={{ "--rzg-cols": data.zones.length } as React.CSSProperties}
-        >
-          {data.zones.map((zone) => (
-            <ZoneCard
-              key={zone.id}
-              zone={zone}
-              isActive={zone.id === selectedId}
-              onClick={() => setSelectedId(zone.id)}
-              theme={data.theme}
-            />
-          ))}
+          <div
+            className="rzg-zones-grid"
+            style={{ "--rzg-cols": data.zones.length } as React.CSSProperties}
+          >
+            {data.zones.map((zone) => (
+              <ZoneCard
+                key={zone.id}
+                zone={zone}
+                isActive={zone.id === selectedZoneId}
+                onClick={() => {
+                  setSelectedZoneId(zone.id);
+                  setActiveCategory("work");
+                }}
+                theme={data.theme}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Footer */}
       <div

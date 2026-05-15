@@ -21,10 +21,9 @@ import { TravelScoreSection }   from "@/components/ready/TravelScoreSection";
 import { LocalGemsSection }          from "@/components/ready/LocalGemsSection";
 import { RealTravelNotesSection }    from "@/components/ready/RealTravelNotesSection";
 import { ProfileSummaryCard }        from "@/components/ready/ProfileSummaryCard";
-import { RemoteWorkSection }         from "@/components/ready/RemoteWorkSection";
 import { RemoteWorkZonesGuide }      from "@/components/ready/RemoteWorkZonesGuide";
 import { NomadRealitySection }       from "@/components/ready/NomadRealitySection";
-import type { LocalGem, BudgetTier, RealTravelNote, RemoteWork, NomadRealityNote, RemoteWorkZonesData } from "@/lib/types";
+import type { LocalGem, BudgetTier, RealTravelNote, NomadRealityNote, RemoteWorkZonesData } from "@/lib/types";
 
 const destinations = destinationsData as Destination[];
 const passports = passportsData as Passport[];
@@ -96,11 +95,6 @@ export default async function ReadyPage({ params }: Props) {
   const notesPath = path.join(process.cwd(), "data", "notes", `${destination}.json`);
   const notes: RealTravelNote[] | null = fs.existsSync(notesPath)
     ? (JSON.parse(fs.readFileSync(notesPath, "utf-8")) as RealTravelNote[])
-    : null;
-
-  const remoteWorkPath = path.join(process.cwd(), "data", "remote-work", `${destination}.json`);
-  const remoteWork: RemoteWork | null = fs.existsSync(remoteWorkPath)
-    ? (JSON.parse(fs.readFileSync(remoteWorkPath, "utf-8")) as RemoteWork)
     : null;
 
   const nomadRealityPath = path.join(process.cwd(), "data", "nomad-reality", `${destination}.json`);
@@ -331,7 +325,7 @@ export default async function ReadyPage({ params }: Props) {
       <SectionNav
         hasGems={gems !== null}
         hasNotes={notes !== null && notes.length > 0}
-        hasRemoteWork={remoteWork !== null}
+        hasRemoteWork={false}
         hasNomadReality={nomadReality !== null && nomadReality.length > 0}
         hasCityMap={zonesGuide !== null}
       />
@@ -366,11 +360,6 @@ export default async function ReadyPage({ params }: Props) {
         <div id="phrases"    style={SECTION_OFFSET}><PhrasesSection    phrases={data.phrases} /></div>
         <div id="emergency"  style={SECTION_OFFSET}><EmergencySection  emergency={data.emergency} /></div>
         <div id="checklist"  style={SECTION_OFFSET}><ChecklistSection  checklist={data.checklist} /></div>
-        {remoteWork && (
-          <div id="remote" style={SECTION_OFFSET}>
-            <RemoteWorkSection remoteWork={remoteWork} />
-          </div>
-        )}
         {zonesGuide && (
           <div id="city-map" style={SECTION_OFFSET}>
             <RemoteWorkZonesGuide data={zonesGuide} />

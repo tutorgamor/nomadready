@@ -50,6 +50,13 @@ const CAT: Record<MarkerCategory, { label: string; color: string }> = {
   explore:   { label: "Explore",   color: "#4d7c0f" },
 };
 
+const CAT_LIGHT: Record<MarkerCategory, string> = {
+  work:      "rgba(217, 119,  6, 0.09)",
+  food:      "rgba(194,  65, 12, 0.09)",
+  practical: "rgba( 58, 124,165, 0.09)",
+  explore:   "rgba( 77, 124, 15, 0.09)",
+};
+
 const CATEGORY_ORDER: MarkerCategory[] = ["work", "food", "practical", "explore"];
 
 /* ─── Category tabs ────────────────────────────────────────── */
@@ -76,7 +83,7 @@ function CategoryTabs({
             aria-selected={isActive}
             onClick={() => onSelect(cat)}
             className={`cfm-tab${isActive ? " cfm-tab--active" : ""}`}
-            style={isActive ? { color, borderBottomColor: color } : undefined}
+            style={isActive ? { color, borderColor: color, background: CAT_LIGHT[cat] } : undefined}
           >
             <span
               style={{
@@ -136,11 +143,12 @@ function UnifiedCityMap({
     <div
       style={{
         background: theme.mapBackground,
-        borderRadius: "0.625rem",
-        border: "1px solid var(--border)",
-        padding: "0.875rem",
+        borderRadius: "1.125rem",
+        border: "1px solid rgba(180,130,65,0.20)",
+        padding: "1rem",
         display: "flex",
         flexDirection: "column",
+        boxShadow: "0 2px 14px -3px rgba(28,25,23,0.09), 0 1px 4px rgba(0,0,0,0.05)",
       }}
     >
       {/* Map header */}
@@ -360,11 +368,13 @@ function ZoneDetailPanel({
     <div
       style={{
         border: "1px solid var(--border)",
-        borderRadius: "0.625rem",
-        padding: "1.125rem",
-        background: "#fff",
+        borderLeft: `3px solid ${theme.accent}`,
+        borderRadius: "1.125rem",
+        padding: "1.25rem",
+        background: "linear-gradient(145deg, #fffdf9 0%, #fdf7ee 100%)",
         display: "flex",
         flexDirection: "column",
+        boxShadow: "0 2px 10px -3px rgba(28,25,23,0.07), 0 1px 3px rgba(0,0,0,0.04)",
       }}
     >
       {/* Zone number + confidence badge */}
@@ -566,9 +576,10 @@ function MarkerDetail({
     return (
       <div
         style={{
-          border: "1px dashed var(--border)",
-          borderRadius: "0.625rem",
+          background: "var(--bg-base)",
+          borderRadius: "1.125rem",
           padding: "1.5rem 1.25rem",
+          border: "1.5px dashed var(--border-strong)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -605,12 +616,14 @@ function MarkerDetail({
     <div
       style={{
         border: "1px solid var(--border)",
-        borderRadius: "0.625rem",
-        padding: "1.125rem",
-        background: "#fff",
+        borderTop: `3px solid ${color}`,
+        borderRadius: "1.125rem",
+        padding: "1.25rem",
+        background: "linear-gradient(145deg, #fffdf9 0%, #fdf7ee 100%)",
         display: "flex",
         flexDirection: "column",
         gap: "0",
+        boxShadow: "0 2px 10px -3px rgba(28,25,23,0.07), 0 1px 3px rgba(0,0,0,0.04)",
       }}
     >
       {/* Category + area row */}
@@ -772,9 +785,21 @@ export function RemoteWorkZonesGuide({ data }: { data: RemoteWorkZonesData }) {
   return (
     <div className="card card--map-grid">
       {/* Section heading */}
-      <p className="section-heading" style={{ marginBottom: "0.875rem" }}>
-        📍 {data.city} Field Map
-      </p>
+      <div style={{ marginBottom: "1rem", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.75rem" }}>
+        <div>
+          <p style={{ fontSize: "0.625rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-muted)", margin: "0 0 0.2rem" }}>
+            City Field Guide
+          </p>
+          <h2 style={{ fontSize: "1.25rem", fontWeight: 800, letterSpacing: "-0.035em", color: "var(--text-primary)", margin: 0, lineHeight: 1.1 }}>
+            📍 {data.city} Field Map
+          </h2>
+        </div>
+        <div aria-hidden="true" style={{ display: "flex", gap: "0.25rem", paddingTop: "0.25rem", flexShrink: 0 }}>
+          <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FFB46B", display: "inline-block", opacity: 0.65 }} />
+          <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#9BC9A5", display: "inline-block", opacity: 0.6, alignSelf: "flex-end", marginBottom: "1px" }} />
+          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#A7D5F7", display: "inline-block", opacity: 0.55, alignSelf: "center" }} />
+        </div>
+      </div>
 
       {/* Category tabs */}
       {hasMarkers && (
@@ -808,17 +833,11 @@ export function RemoteWorkZonesGuide({ data }: { data: RemoteWorkZonesData }) {
       </div>
 
       {/* Footer note */}
-      <p
-        style={{
-          fontSize: "0.6875rem",
-          color: "var(--text-muted)",
-          fontStyle: "italic",
-          margin: "0.875rem 0 0",
-          lineHeight: 1.5,
-        }}
-      >
-        Field positions are editorial approximations. Always verify hours and locations before visiting.
-      </p>
+      <div style={{ marginTop: "1rem", paddingTop: "0.75rem", borderTop: "1px solid var(--border)" }}>
+        <p style={{ fontSize: "0.6875rem", color: "var(--text-muted)", fontStyle: "italic", margin: 0, lineHeight: 1.5 }}>
+          Field positions are editorial approximations. Always verify hours and locations before visiting.
+        </p>
+      </div>
     </div>
   );
 }

@@ -373,9 +373,7 @@ export default async function ReadyPage({ params }: Props) {
         )}
         {zonesGuide && (
           <div id="zones-guide" style={SECTION_OFFSET}>
-            <div className="card card--warm">
-              <RemoteWorkZonesGuide data={zonesGuide} />
-            </div>
+            <RemoteWorkZonesGuide data={zonesGuide} />
           </div>
         )}
         {nomadReality && nomadReality.length > 0 && (

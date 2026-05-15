@@ -271,6 +271,85 @@ export interface RemoteWork {
   remote_work_zones?: RemoteWorkZone[];
 }
 
+// ─── Remote Work Zones Field Guide ────────────────────────────
+
+export interface ZoneMetrics {
+  noise_level: number;        // 1-5
+  remote_work_fit: number;    // 1-5
+  long_stay_comfort: number;  // 1-5
+  nightlife: number;          // 1-5
+  cafe_density: number;       // 1-5
+  call_ready: number;         // 1-5
+}
+
+export interface ZoneScores {
+  work: number;   // 1-5
+  stay: number;   // 1-5
+  play: number;   // 1-5
+}
+
+export interface FieldGuideZone {
+  id: string;
+  number: string;               // "01", "02", etc.
+  name: string;
+  tagline: string;
+  best_for: string[];
+  metrics: ZoneMetrics;
+  field_notes: string[];
+  confidence: "low" | "medium" | "high";
+  summary: string;              // one-liner for at-a-glance card
+  scores: ZoneScores;
+}
+
+export interface ZoneMarker {
+  zoneId: string;
+  x: number;    // 0-100 in SVG viewBox
+  y: number;    // 0-100 in SVG viewBox
+}
+
+export interface MapDecoration {
+  type: "water" | "park" | "line";
+  label?: string;
+  path?: string;                // SVG path data (water / park blobs)
+  points?: [number, number][];  // polyline points for transit lines
+  fill?: string;
+  stroke?: string;
+}
+
+export interface CityMapConfig {
+  label: string;
+  attribution: string;
+  legend: Array<{
+    color: string;
+    label: string;
+    type: "fill" | "line" | "dot";
+  }>;
+  decorations: MapDecoration[];
+  markers: ZoneMarker[];
+}
+
+export interface CityTheme {
+  accent: string;
+  mapBackground: string;
+  waterColor: string;
+  parkColor: string;
+}
+
+export interface RemoteWorkZonesData {
+  city: string;
+  country: string;
+  issue: string;              // "Vol. 04"
+  issue_number: string;       // "04"
+  headline: string;
+  headline_italic_word: string;
+  subheadline: string;
+  reviewed: string;           // "May 2026"
+  authors: string;
+  zones: FieldGuideZone[];
+  map: CityMapConfig;
+  theme: CityTheme;
+}
+
 // ─── Root ReadyData ───────────────────────────────────────────
 
 export interface ReadyData {

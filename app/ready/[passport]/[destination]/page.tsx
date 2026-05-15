@@ -22,8 +22,9 @@ import { LocalGemsSection }          from "@/components/ready/LocalGemsSection";
 import { RealTravelNotesSection }    from "@/components/ready/RealTravelNotesSection";
 import { ProfileSummaryCard }        from "@/components/ready/ProfileSummaryCard";
 import { RemoteWorkSection }         from "@/components/ready/RemoteWorkSection";
+import { RemoteWorkZonesGuide }      from "@/components/ready/RemoteWorkZonesGuide";
 import { NomadRealitySection }       from "@/components/ready/NomadRealitySection";
-import type { LocalGem, BudgetTier, RealTravelNote, RemoteWork, NomadRealityNote } from "@/lib/types";
+import type { LocalGem, BudgetTier, RealTravelNote, RemoteWork, NomadRealityNote, RemoteWorkZonesData } from "@/lib/types";
 
 const destinations = destinationsData as Destination[];
 const passports = passportsData as Passport[];
@@ -105,6 +106,11 @@ export default async function ReadyPage({ params }: Props) {
   const nomadRealityPath = path.join(process.cwd(), "data", "nomad-reality", `${destination}.json`);
   const nomadReality: NomadRealityNote[] | null = fs.existsSync(nomadRealityPath)
     ? (JSON.parse(fs.readFileSync(nomadRealityPath, "utf-8")) as NomadRealityNote[])
+    : null;
+
+  const zonesGuidePath = path.join(process.cwd(), "data", "remote-work-zones", `${destination}.json`);
+  const zonesGuide: RemoteWorkZonesData | null = fs.existsSync(zonesGuidePath)
+    ? (JSON.parse(fs.readFileSync(zonesGuidePath, "utf-8")) as RemoteWorkZonesData)
     : null;
 
   const reviewedDate = new Date(data.last_reviewed).toLocaleDateString("en-GB", {
@@ -362,6 +368,13 @@ export default async function ReadyPage({ params }: Props) {
         {remoteWork && (
           <div id="remote" style={SECTION_OFFSET}>
             <RemoteWorkSection remoteWork={remoteWork} />
+          </div>
+        )}
+        {zonesGuide && (
+          <div id="zones-guide" style={SECTION_OFFSET}>
+            <div className="card card--warm">
+              <RemoteWorkZonesGuide data={zonesGuide} />
+            </div>
           </div>
         )}
         {nomadReality && nomadReality.length > 0 && (

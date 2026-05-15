@@ -1,0 +1,188 @@
+{
+  "city": "Bangkok",
+  "country": "Thailand",
+  "issue": "Vol. 04",
+  "issue_number": "04",
+  "headline": "Six neighbourhoods, six rhythms of remote work.",
+  "headline_italic_word": "rhythms",
+  "subheadline": "Bangkok isn't one city for nomads — it's a half-dozen overlapping ones. We walked the sois, tested the cafés, and measured the late-night quiet so you can pick the zone that actually fits how you work.",
+  "reviewed": "May 2026",
+  "authors": "M. Saetang · J. Kerr",
+  "zones": [
+    {
+      "id": "ari",
+      "number": "01",
+      "name": "Ari",
+      "tagline": "Leafy mid-rise streets where third-wave cafés outnumber 7-Elevens. Quiet enough for deep work, close enough to central Bangkok.",
+      "best_for": ["café workers", "deep work", "morning routines"],
+      "metrics": {
+        "noise_level": 2,
+        "remote_work_fit": 4,
+        "long_stay_comfort": 4,
+        "nightlife": 2,
+        "cafe_density": 5,
+        "call_ready": 3
+      },
+      "field_notes": [
+        "BTS Ari puts you 15 minutes from any major cowork hub.",
+        "Most cafés enforce a minimum spend on busy afternoons.",
+        "Street noise is light — the biggest interruption is a rooster two sois over."
+      ],
+      "confidence": "medium",
+      "summary": "Leafy mid-rise streets where third-wave cafés outnumber 7-Elevens.",
+      "scores": { "work": 4, "stay": 4, "play": 2 }
+    },
+    {
+      "id": "phrom-phong",
+      "number": "02",
+      "name": "Phrom Phong",
+      "tagline": "Polished, international and call-ready. Glass towers, EmSphere, and the quietest premium condo stock on Sukhumvit.",
+      "best_for": ["video calls", "long stays", "executive nomads"],
+      "metrics": {
+        "noise_level": 3,
+        "remote_work_fit": 5,
+        "long_stay_comfort": 5,
+        "nightlife": 3,
+        "cafe_density": 4,
+        "call_ready": 5
+      },
+      "field_notes": [
+        "Look for condos with double-glazed windows away from Soi 24.",
+        "EmQuartier and EmSphere co-working floors are excellent for client calls."
+      ],
+      "confidence": "high",
+      "summary": "Polished, international and call-ready.",
+      "scores": { "work": 5, "stay": 5, "play": 3 }
+    },
+    {
+      "id": "ekkamai",
+      "number": "03",
+      "name": "Ekkamai",
+      "tagline": "Design-led café culture meets late-night bar life. Great for creative work mornings; loud by 9 pm.",
+      "best_for": ["creative work", "café culture", "evening social"],
+      "metrics": {
+        "noise_level": 2,
+        "remote_work_fit": 3,
+        "long_stay_comfort": 3,
+        "nightlife": 4,
+        "cafe_density": 4,
+        "call_ready": 3
+      },
+      "field_notes": [
+        "Café density is high but competition for power sockets is real.",
+        "Evening noise rises sharply — plan calls before 6 pm.",
+        "Strong local food scene makes long stays easy to sustain."
+      ],
+      "confidence": "medium",
+      "summary": "Design-led café culture meets late-night bar life.",
+      "scores": { "work": 3, "stay": 3, "play": 4 }
+    },
+    {
+      "id": "on-nut",
+      "number": "04",
+      "name": "On Nut",
+      "tagline": "The budget-savvy long-stay belt. Modern condos, expanding café scene, and one BTS stop further from the noise.",
+      "best_for": ["budget nomads", "long stays", "starter nomads"],
+      "metrics": {
+        "noise_level": 2,
+        "remote_work_fit": 4,
+        "long_stay_comfort": 5,
+        "nightlife": 2,
+        "cafe_density": 3,
+        "call_ready": 4
+      },
+      "field_notes": [
+        "Habito Mall and the W District cluster cover daily needs.",
+        "Rent runs 25–35% below Phrom Phong for comparable specs."
+      ],
+      "confidence": "medium",
+      "summary": "The budget-savvy long-stay belt.",
+      "scores": { "work": 4, "stay": 5, "play": 2 }
+    },
+    {
+      "id": "silom",
+      "number": "05",
+      "name": "Silom",
+      "tagline": "Business-district energy by day, Patpong neon by night. High connectivity, premium cowork options, but it's not the quietest base.",
+      "best_for": ["business travel", "coworking", "central access"],
+      "metrics": {
+        "noise_level": 4,
+        "remote_work_fit": 4,
+        "long_stay_comfort": 3,
+        "nightlife": 5,
+        "cafe_density": 3,
+        "call_ready": 4
+      },
+      "field_notes": [
+        "Lumpini Park is walkable — a genuine respite for outdoor focus sessions.",
+        "Street-level noise is significant; prioritise upper-floor accommodation.",
+        "Some of Bangkok's best cowork spaces are in Sathorn, a short walk away."
+      ],
+      "confidence": "high",
+      "summary": "Business-district energy by day, Patpong neon by night.",
+      "scores": { "work": 4, "stay": 3, "play": 5 }
+    },
+    {
+      "id": "old-town",
+      "number": "06",
+      "name": "Old Town",
+      "tagline": "Rattanakosin's temple lanes and riverfront. Romantic and photogenic, but remote-work infrastructure is thin.",
+      "best_for": ["slow travel", "culture", "photographers"],
+      "metrics": {
+        "noise_level": 3,
+        "remote_work_fit": 2,
+        "long_stay_comfort": 3,
+        "nightlife": 2,
+        "cafe_density": 2,
+        "call_ready": 2
+      },
+      "field_notes": [
+        "Cowork options are limited — plan to commute to Silom or Ari for serious work days.",
+        "River views and temple acoustics make for exceptional non-screen focus.",
+        "Ideal as a base for the first or last week of a longer Bangkok stay."
+      ],
+      "confidence": "medium",
+      "summary": "Rattanakosin's temple lanes and riverfront.",
+      "scores": { "work": 2, "stay": 3, "play": 4 }
+    }
+  ],
+  "map": {
+    "label": "A reader's map of Bangkok",
+    "attribution": "Stylised · Not to scale",
+    "legend": [
+      { "color": "#a8c8de", "label": "Chao Phraya River", "type": "fill" },
+      { "color": "#9BC9A5", "label": "Park / green space",  "type": "fill" },
+      { "color": "#a09070", "label": "BTS Sukhumvit line",  "type": "line" },
+      { "color": "#c2410c", "label": "Active zone",         "type": "dot"  }
+    ],
+    "decorations": [
+      {
+        "type": "water",
+        "path": "M 0,0 Q 8,10 7,25 Q 5,42 9,55 Q 11,70 7,85 Q 5,93 6,100 L 0,100 Z"
+      },
+      {
+        "type": "park",
+        "path": "M 27,66 Q 31,62 36,64 Q 40,67 39,72 Q 37,77 32,78 Q 27,77 25,72 Q 24,68 27,66 Z"
+      },
+      {
+        "type": "line",
+        "label": "BTS SUKHUMVIT",
+        "points": [[38,21],[44,33],[52,50],[62,57],[72,63],[82,67]]
+      }
+    ],
+    "markers": [
+      { "zoneId": "ari",         "x": 40, "y": 22 },
+      { "zoneId": "phrom-phong", "x": 52, "y": 50 },
+      { "zoneId": "ekkamai",     "x": 63, "y": 57 },
+      { "zoneId": "on-nut",      "x": 78, "y": 65 },
+      { "zoneId": "silom",       "x": 33, "y": 72 },
+      { "zoneId": "old-town",    "x": 14, "y": 52 }
+    ]
+  },
+  "theme": {
+    "accent": "#c2410c",
+    "mapBackground": "#f5efe8",
+    "waterColor": "#a8c8de",
+    "parkColor": "#9BC9A5"
+  }
+}

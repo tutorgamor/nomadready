@@ -65,13 +65,13 @@ const HERO_IMGS = {
   map:    heroAsset("passport-stamps.png",     "https://images.unsplash.com/photo-1526178618343-7f6c6c99a1d7?w=480&q=75&auto=format&fit=crop"),
 };
 
-// Shared reveal config for below-fold sections — restrained, premium
+// Shared reveal config for below-fold sections
 const REVEAL = {
-  hidden:  { opacity: 0, y: 14 },
+  hidden:  { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0  },
 };
-const REVEAL_TX   = { duration: 0.52, ease: [0.25, 1, 0.5, 1] as const };
-const REVEAL_OPTS: UseInViewOptions = { once: true, margin: "0px 0px -60px 0px" };
+const REVEAL_TX   = { duration: 0.55, ease: [0.25, 1, 0.5, 1] };
+const REVEAL_OPTS: UseInViewOptions = { once: true, amount: 0.2 };
 
 interface HomePageProps {
   searchParams: Promise<{ passport?: string }>;
@@ -467,19 +467,21 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         style={{ flex: 1, paddingTop: "1.75rem", paddingBottom: "1.75rem" }}
         aria-labelledby="destinations-heading"
       >
-        <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
-          <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
+          {/* Label reveals first, cards follow 0.1 s later — stagger effect */}
+          <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
             <h2 id="destinations-heading" className="section-label-editorial">
               <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
               {availableDestinations.length} destination{availableDestinations.length !== 1 ? "s" : ""} available
             </h2>
+          </InView>
 
-            {/* Cards — responsive grid: 1-col mobile, 2-col tablet, 3-col desktop */}
+          <InView variants={REVEAL} transition={{ ...REVEAL_TX, delay: 0.1 }} viewOptions={REVEAL_OPTS}>
             <DestinationGrid destinations={availableDestinations} passportId={activePassportId} summaries={summaries} />
+          </InView>
 
-          </div>
-        </InView>
+        </div>
       </section>
 
       {/* ── Comparison strip ─────────────────────────────────── */}

@@ -76,6 +76,42 @@ function formatMonthRange(months: string[]): string {
   return `${months[0]}–${months[months.length - 1]}`;
 }
 
+// ─── Destination hero photography ─────────────────────────────────────────────
+// Curated Unsplash CDN URLs per destination — chosen for atmospheric quality
+// and cinematic color temperature matching the brand register.
+// Local assets in /public/assets/hero/dest-{id}.webp take priority automatically.
+
+const DEST_HERO_PHOTOS: Record<string, string> = {
+  thailand:      "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=1400&q=85&auto=format&fit=crop",
+  malaysia:      "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1400&q=85&auto=format&fit=crop",
+  indonesia:     "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1400&q=85&auto=format&fit=crop",
+  georgia:       "https://images.unsplash.com/photo-1565008887274-377b4a6c4e03?w=1400&q=85&auto=format&fit=crop",
+  turkey:        "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=1400&q=85&auto=format&fit=crop",
+  vietnam:       "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1400&q=85&auto=format&fit=crop",
+  philippines:   "https://images.unsplash.com/photo-1518509562904-e7ef99cdce86?w=1400&q=85&auto=format&fit=crop",
+  japan:         "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=1400&q=85&auto=format&fit=crop",
+  "south-korea": "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=1400&q=85&auto=format&fit=crop",
+};
+
+/** Returns the hero photo URL — local asset when present, Unsplash CDN fallback. */
+function heroPhoto(destinationId: string): string {
+  const localFile = `dest-${destinationId}.webp`;
+  const localPath = path.join(process.cwd(), "public", "assets", "hero", localFile);
+  if (fs.existsSync(localPath)) return `/assets/hero/${localFile}`;
+  return DEST_HERO_PHOTOS[destinationId] ?? DEST_HERO_PHOTOS.thailand;
+}
+
+/** Short visa label for the hero signal strip. */
+function heroVisaLabel(visa: ReadyData["visa"]): string {
+  const d = visa.duration_days;
+  switch (visa.type) {
+    case "Visa Exemption":  return `Free · ${d}d`;
+    case "e-Visa":          return `e-Visa · ${d}d`;
+    case "Visa on Arrival": return `On Arrival · ${d}d`;
+    default:                return visa.type;
+  }
+}
+
 export default async function ReadyPage({ params }: Props) {
   const { passport: passportId, destination } = await params;
 
@@ -125,173 +161,260 @@ export default async function ReadyPage({ params }: Props) {
           overflow: "hidden",
         }}
       >
-        {/* Cinematic background image */}
+        {/* Per-destination hero photograph — Unsplash CDN fallback until
+            /public/assets/hero/dest-{id}.webp assets are added          */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/assets/destination/destination-hero-bg.webp"
+          src={heroPhoto(dest.id)}
           alt=""
           aria-hidden="true"
           className="dest-hero-bg"
           fetchPriority="high"
         />
 
-        {/* Cinematic warm directional overlay */}
+        {/* Directional cinematic overlay — dark top-left for legibility */}
         <div aria-hidden="true" className="dest-hero-overlay" />
 
         {/* Warm amber atmospheric glow — top-right light source */}
         <div aria-hidden="true" className="dest-hero-amber-glow" />
 
-        {/* Bottom vignette — terrain wave transition */}
+        {/* Bottom vignette — eases into terrain wave */}
         <div aria-hidden="true" className="dest-hero-vignette" />
 
-        {/* Distant mountain silhouette — depth layer */}
+        {/* Terrain wave — organic transition to page content */}
         <div
           aria-hidden="true"
-          style={{
-            position: "absolute",
-            bottom: "56px",
-            left: 0,
-            right: 0,
-            height: "38px",
-            zIndex: 2,
-            pointerEvents: "none",
-          }}
+          style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "56px", zIndex: 3, pointerEvents: "none" }}
         >
-          <svg
-            viewBox="0 0 1440 38"
-            preserveAspectRatio="none"
-            style={{ width: "100%", height: "100%", display: "block" }}
-          >
-            <path
-              d="M0 26 Q120 6 280 18 Q400 26 520 10 Q620 0 740 8 Q860 18 980 6 Q1100 -2 1220 10 Q1340 20 1440 8 L1440 38 L0 38 Z"
-              fill="rgba(255,255,255,0.06)"
-            />
-          </svg>
-        </div>
-
-        {/* Terrain wave — organic landscape horizon at hero bottom */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "56px",
-            zIndex: 3,
-            pointerEvents: "none",
-          }}
-        >
-          <svg
-            viewBox="0 0 1440 56"
-            preserveAspectRatio="none"
-            style={{ width: "100%", height: "100%", display: "block" }}
-          >
-            <path
-              d="M0 38 Q180 16 360 28 Q540 42 720 22 Q900 6 1080 24 Q1260 40 1440 18 L1440 56 L0 56 Z"
-              fill="var(--bg-base)"
-            />
-            <path
-              d="M0 46 Q240 34 480 42 Q720 50 960 38 Q1200 28 1440 36 L1440 56 L0 56 Z"
-              fill="var(--bg-base)"
-              opacity="0.55"
-            />
+          <svg viewBox="0 0 1440 56" preserveAspectRatio="none" style={{ width: "100%", height: "100%", display: "block" }}>
+            <path d="M0 38 Q180 16 360 28 Q540 42 720 22 Q900 6 1080 24 Q1260 40 1440 18 L1440 56 L0 56 Z" fill="var(--bg-base)" />
+            <path d="M0 46 Q240 34 480 42 Q720 50 960 38 Q1200 28 1440 36 L1440 56 L0 56 Z" fill="var(--bg-base)" opacity="0.55" />
           </svg>
         </div>
 
         <div
           className="page-container ready-hero-content"
-          style={{
-            position: "relative",
-            zIndex: 4,
-            display: "flex",
-            flexDirection: "column",
-            gap: "1.5rem",
-          }}
+          style={{ position: "relative", zIndex: 4, display: "flex", flexDirection: "column" }}
         >
-          {/* Back link — preserves active passport in URL */}
-          <Link
-            href={`/?passport=${passportId}`}
+
+          {/* ── Top row: back link + field score ── */}
+          <div
             style={{
-              alignSelf: "flex-start",
-              display: "inline-flex",
+              display: "flex",
               alignItems: "center",
-              gap: "0.3rem",
-              fontSize: "0.8125rem",
-              fontWeight: 500,
-              color: "rgba(255,255,255,0.92)",
-              background: "rgba(0, 0, 0, 0.38)",
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
-              padding: "0.35rem 0.85rem 0.35rem 0.6rem",
-              borderRadius: "9999px",
-              textDecoration: "none",
-              border: "1px solid rgba(255,255,255,0.18)",
-              letterSpacing: "0.01em",
+              justifyContent: "space-between",
+              marginBottom: "clamp(1.75rem, 5vw, 3.25rem)",
             }}
           >
-            ← All destinations
-          </Link>
-
-          {/* Emoji + routing line + title */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            <span
-              style={{ fontSize: "4.5rem", lineHeight: 1, filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.45))" }}
-              aria-hidden="true"
+            {/* Back link */}
+            <Link
+              href={`/?passport=${passportId}`}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.3rem",
+                fontSize: "0.8125rem",
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.92)",
+                background: "rgba(0,0,0,0.36)",
+                backdropFilter: "blur(10px)",
+                WebkitBackdropFilter: "blur(10px)",
+                padding: "0.35rem 0.85rem 0.35rem 0.6rem",
+                borderRadius: "9999px",
+                textDecoration: "none",
+                border: "1px solid rgba(255,255,255,0.16)",
+                letterSpacing: "0.01em",
+              }}
             >
-              {dest.emoji}
-            </span>
+              ← All destinations
+            </Link>
 
-            <div>
-              {/* Route label */}
-              <p
+            {/* Field score — editorial stamp, not a metric widget */}
+            {dest.travel_score && (
+              <div
                 style={{
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.10em",
-                  textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.65)",
-                  margin: "0 0 0.4rem",
-                  textShadow: "0 1px 4px rgba(0,0,0,0.4)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-end",
+                  background: "rgba(0,0,0,0.34)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  borderRadius: "0.75rem",
+                  padding: "0.4rem 0.8rem",
                 }}
               >
-                {pass.emoji} {pass.label} →
-              </p>
-
-              {/* Destination name */}
-              <h1
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(3rem, 12vw, 4.5rem)",
-                  fontWeight: 300,
-                  letterSpacing: "-0.015em",
-                  color: "#ffffff",
-                  margin: 0,
-                  lineHeight: 1.0,
-                  textShadow: "0 2px 24px rgba(0,0,0,0.55), 0 1px 6px rgba(0,0,0,0.35)",
-                }}
-              >
-                {dest.label}
-              </h1>
-
-              {/* Hero tag */}
-              <p
-                style={{
-                  fontSize: "0.9375rem",
-                  color: "rgba(255,255,255,0.82)",
-                  margin: "0.6rem 0 0",
-                  lineHeight: 1.5,
-                  maxWidth: "38ch",
-                  textShadow: "0 1px 8px rgba(0,0,0,0.35)",
-                }}
-              >
-                {dest.hero_tag}
-              </p>
-            </div>
+                <span
+                  style={{
+                    fontSize: "1.5rem",
+                    fontWeight: 700,
+                    color: "rgba(255,255,255,0.96)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.02em",
+                    fontFamily: "var(--font-geist-sans)",
+                  }}
+                >
+                  {dest.travel_score.overall}
+                </span>
+                <span
+                  style={{
+                    fontSize: "0.55rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.10em",
+                    textTransform: "uppercase",
+                    color: "rgba(217,119,6,0.82)",
+                    lineHeight: 1,
+                    marginTop: "0.15rem",
+                  }}
+                >
+                  Field Score
+                </span>
+              </div>
+            )}
           </div>
 
-          {/* Meta row: region badge + last reviewed */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", flexWrap: "wrap" }}>
+          {/* ── Destination identity block ── */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+
+            {/* Eyebrow: passport + region breadcrumb */}
+            <p
+              style={{
+                fontSize: "0.68rem",
+                fontWeight: 600,
+                letterSpacing: "0.10em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.60)",
+                margin: 0,
+                textShadow: "0 1px 4px rgba(0,0,0,0.4)",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                flexWrap: "wrap",
+              }}
+            >
+              <span aria-hidden>{pass.emoji}</span>
+              {pass.label} passport
+              <span aria-hidden style={{ opacity: 0.38 }}>·</span>
+              {dest.region}
+            </p>
+
+            {/* Destination name — Cormorant Garamond 300 display */}
+            <h1
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(3.5rem, 13vw, 5.5rem)",
+                fontWeight: 300,
+                letterSpacing: "-0.02em",
+                color: "rgba(255,255,255,0.97)",
+                margin: 0,
+                lineHeight: 0.95,
+                textShadow: "0 2px 28px rgba(0,0,0,0.55), 0 1px 6px rgba(0,0,0,0.35)",
+              }}
+            >
+              {dest.label}
+            </h1>
+
+            {/* Hero tag */}
+            <p
+              style={{
+                fontSize: "1rem",
+                color: "rgba(255,255,255,0.80)",
+                margin: 0,
+                lineHeight: 1.5,
+                maxWidth: "42ch",
+                textShadow: "0 1px 8px rgba(0,0,0,0.35)",
+              }}
+            >
+              {dest.hero_tag}
+            </p>
+          </div>
+
+          {/* ── Signal strip: the 3 most important signals before scrolling ──
+              Visa status, budget floor, and best season answer
+              "can I go / what will it cost / when?" without scrolling.    */}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.5rem",
+              marginTop: "1.375rem",
+            }}
+          >
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.35rem",
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.92)",
+                background: "rgba(0,0,0,0.32)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.18)",
+                padding: "0.32rem 0.78rem",
+                borderRadius: "9999px",
+              }}
+            >
+              <span aria-hidden style={{ color: "rgba(217,119,6,0.82)", fontSize: "0.8rem", lineHeight: 1 }}>◎</span>
+              {heroVisaLabel(data.visa)}
+            </span>
+
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.92)",
+                background: "rgba(0,0,0,0.32)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.18)",
+                padding: "0.32rem 0.78rem",
+                borderRadius: "9999px",
+              }}
+            >
+              from {formatTierAmount(data.budget.tiers.budget, data.budget.currency_symbol)}
+            </span>
+
+            {data.best_season.overall_best_months.length > 0 && (
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.92)",
+                  background: "rgba(0,0,0,0.32)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                  padding: "0.32rem 0.78rem",
+                  borderRadius: "9999px",
+                }}
+              >
+                {formatMonthRange(data.best_season.overall_best_months)}
+              </span>
+            )}
+          </div>
+
+          {/* ── Bottom meta: region + reviewed date ── */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              marginTop: "1.25rem",
+              flexWrap: "wrap",
+            }}
+          >
             <span
               style={{
                 fontSize: "0.68rem",
@@ -299,10 +422,10 @@ export default async function ReadyPage({ params }: Props) {
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 color: "rgba(255,255,255,0.95)",
-                background: "rgba(0,0,0,0.38)",
+                background: "rgba(0,0,0,0.36)",
                 backdropFilter: "blur(8px)",
                 WebkitBackdropFilter: "blur(8px)",
-                border: "1px solid rgba(255,255,255,0.22)",
+                border: "1px solid rgba(255,255,255,0.20)",
                 padding: "0.28rem 0.75rem",
                 borderRadius: "9999px",
               }}
@@ -312,7 +435,7 @@ export default async function ReadyPage({ params }: Props) {
             <span
               style={{
                 fontSize: "0.75rem",
-                color: "rgba(255,255,255,0.55)",
+                color: "rgba(255,255,255,0.50)",
                 textShadow: "0 1px 4px rgba(0,0,0,0.3)",
               }}
             >

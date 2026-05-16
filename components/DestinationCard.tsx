@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import type { Destination } from "@/lib/types";
 import { ProfileCardBadge } from "@/components/ProfileCardBadge";
+import { CoverPatternSVG } from "@/components/DestinationCoverPattern";
 
 export interface DestinationSummary {
   visaLabel: string;
@@ -98,36 +99,15 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
           }}
         />
 
-        {/* SVG terrain — illustrated horizon layers scaled to full cover height */}
+        {/* Regional SVG pattern — batik, Bolnisi cross, Iznik star,
+            seigaiha/sakura, or dancheong/taeguk depending on region + id */}
         <svg
           viewBox="0 0 280 168"
           preserveAspectRatio="xMidYMid slice"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+          aria-hidden="true"
         >
-          {/* Sky cloud puffs */}
-          <ellipse cx="42"  cy="28" rx="32" ry="9"  fill="rgba(255,255,255,0.09)" />
-          <ellipse cx="228" cy="20" rx="22" ry="6"  fill="rgba(255,255,255,0.07)" />
-          <ellipse cx="140" cy="38" rx="18" ry="5"  fill="rgba(255,255,255,0.05)" />
-          {/* Distant ridge */}
-          <path
-            d="M-10 72 Q48 34 104 58 Q155 78 200 46 Q240 18 290 44 L290 180 L-10 180 Z"
-            fill="rgba(255,255,255,0.065)"
-          />
-          {/* Midground hills */}
-          <path
-            d="M-10 96 Q62 56 148 80 Q210 98 290 62 L290 180 L-10 180 Z"
-            fill="rgba(255,255,255,0.11)"
-          />
-          {/* Foreground slope */}
-          <path
-            d="M-10 114 Q80 88 174 108 Q232 122 290 94 L290 180 L-10 180 Z"
-            fill="rgba(255,255,255,0.08)"
-          />
-          {/* Water horizon band */}
-          <path
-            d="M-10 136 Q100 120 200 132 Q248 138 290 122 L290 180 L-10 180 Z"
-            fill="rgba(255,255,255,0.052)"
-          />
+          <CoverPatternSVG id={id} region={region} />
         </svg>
 
         {/* Top-left: editorial region stamp */}

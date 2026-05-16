@@ -13,6 +13,7 @@ import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { TripPlanner } from "@/components/TripPlanner";
 import { AtlasMapSection } from "@/components/home/AtlasMapSection";
 import { AmbientLayer } from "@/components/home/AmbientLayer";
+import { PassportGatewayHero } from "@/components/home/PassportGatewayHero";
 import { InView } from "@/components/motion-primitives/in-view";
 import type { UseInViewOptions } from "motion/react";
 export const metadata: Metadata = {
@@ -121,6 +122,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         flexDirection: "column",
       }}
     >
+      {/* Cinematic passport entry gateway — fixed overlay, fades away on enter */}
+      <PassportGatewayHero defaultPassportId={activePassportId} />
+
       {/* Atmospheric rendering layer — fixed, zIndex:200, pointerEvents:none.
           Cursor-reactive warm light + static SE Asia zone + editorial grain. */}
       <AmbientLayer />

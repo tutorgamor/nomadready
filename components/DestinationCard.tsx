@@ -140,7 +140,8 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
             fontWeight: 700,
             letterSpacing: "0.11em",
             textTransform: "uppercase",
-            color: "rgba(255,255,255,0.68)",
+            color: "rgba(255,255,255,0.88)",
+            textShadow: "0 1px 4px rgba(0,0,0,0.5)",
             lineHeight: 1,
             zIndex: 2,
           }}
@@ -171,7 +172,7 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
               style={{
                 fontSize: "0.6875rem",
                 fontWeight: 800,
-                color: "rgba(255,255,255,0.94)",
+                color: "rgba(255,255,255,0.95)",
                 letterSpacing: "-0.01em",
                 lineHeight: 1,
               }}
@@ -182,7 +183,7 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
               style={{
                 fontSize: "0.5rem",
                 fontWeight: 500,
-                color: "rgba(255,255,255,0.50)",
+                color: "rgba(255,255,255,0.80)",
                 letterSpacing: "0.03em",
                 lineHeight: 1,
               }}

@@ -43,7 +43,7 @@ export function ProfileSelector() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "0.3rem",
-                  padding: "0.325rem 0.75rem",
+                  padding: "0.625rem 0.875rem",
                   borderRadius: "9999px",
                   border: isActive
                     ? "1.5px solid var(--accent-dark)"

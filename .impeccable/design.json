@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-16T00:00:00.000Z",
+  "title": "Design System: NomadReady",
+  "extensions": {
+    "colorMeta": {
+      "parchment-mist":    { "role": "neutral",   "displayName": "Parchment Mist",    "canonical": "#f7f3ee", "tonalRamp": ["#2a2520","#4a3e35","#7a6a5a","#a8957e","#c8b49a","#e0d0b8","#ede4d6","#f7f3ee"] },
+      "ember-gold":        { "role": "primary",   "displayName": "Ember Gold",         "canonical": "#d97706", "tonalRamp": ["#451a03","#78350f","#92400e","#b45309","#d97706","#f59e0b","#fbbf24","#fef3c7"] },
+      "field-guide-black": { "role": "neutral",   "displayName": "Field Guide Black",  "canonical": "#1c1917", "tonalRamp": ["#0a0907","#1c1917","#292524","#44403c","#57534e","#78716c","#a8a29e","#f5f5f4"] },
+      "forest-green":      { "role": "secondary", "displayName": "Forest Green",       "canonical": "#16a34a", "tonalRamp": ["#052e16","#14532d","#166534","#15803d","#16a34a","#22c55e","#86efac","#f0fdf4"] },
+      "danger-red":        { "role": "tertiary",  "displayName": "Danger Red",         "canonical": "#dc2626", "tonalRamp": ["#450a0a","#7f1d1d","#991b1b","#b91c1c","#dc2626","#ef4444","#fca5a5","#fef2f2"] },
+      "cinematic-night":   { "role": "neutral",   "displayName": "Cinematic Night",    "canonical": "#0c1020", "tonalRamp": ["#050810","#0c1020","#141828","#1e2640","#2a3558","#3d4f7a","#6b80b2","#c5cde8"] },
+      "warm-ink":          { "role": "neutral",   "displayName": "Warm Ink",           "canonical": "#57534e", "tonalRamp": ["#1c1917","#292524","#44403c","#57534e","#78716c","#a8a29e","#d6d3d1","#fafaf9"] },
+      "warm-border":       { "role": "neutral",   "displayName": "Warm Border",        "canonical": "#e7e0d6", "tonalRamp": ["#78716c","#a8a29e","#c7bdb2","#d6cfc6","#e7e0d6","#f3ede6","#f9f6f0","#fdfcfb"] }
+    },
+    "typographyMeta": {
+      "display":  { "displayName": "Display",  "purpose": "Hero headlines only. 'Where are you heading next?' Lives on cinematic photo backgrounds." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles, destination names on cards, page-level anchors." },
+      "title":    { "displayName": "Title",    "purpose": "Card headings, subsection titles, modal headers." },
+      "body":     { "displayName": "Body",     "purpose": "All running copy. 65-75ch max line length." },
+      "label":    { "displayName": "Label",    "purpose": "ALL CAPS data field names: VISA, SCORE, BUDGET FROM. Section eyebrows, category tags." }
+    },
+    "shadows": [
+      { "name": "flush",       "value": "0 1px 2px rgba(28,25,23,0.05)",                                                                                           "purpose": "Barely-there separation — chips at rest, subtle dividers." },
+      { "name": "subtle",      "value": "0 1px 3px rgba(28,25,23,0.07), 0 2px 8px -2px rgba(28,25,23,0.06)",                                                       "purpose": "Resting cards, inputs, passport chip." },
+      { "name": "card",        "value": "0 1px 3px rgba(28,25,23,0.07), 0 4px 16px -4px rgba(28,25,23,0.07)",                                                      "purpose": "Standard destination card at rest." },
+      { "name": "elevated",    "value": "0 4px 12px rgba(28,25,23,0.10), 0 12px 32px -6px rgba(28,25,23,0.13), 0 20px 48px -12px rgba(120,75,15,0.10)",            "purpose": "Hovered or focused card — warm amber diffuse layer." },
+      { "name": "float",       "value": "0 8px 24px rgba(28,25,23,0.12), 0 24px 56px -8px rgba(28,25,23,0.18), 0 2px 6px rgba(0,0,0,0.04)",                        "purpose": "Modals, drawers, dropdowns — maximum separation." },
+      { "name": "cinematic",   "value": "0 20px 56px -8px rgba(28,25,23,0.22), 0 4px 14px -2px rgba(120,75,15,0.13), 0 0 0 1.5px rgba(217,119,6,0.16)",            "purpose": "Featured hero moments — amber ring glows the subject." },
+      { "name": "amber-glow",  "value": "0 0 24px -4px rgba(217,119,6,0.22), 0 0 64px -8px rgba(217,119,6,0.10)",                                                  "purpose": "Atmospheric bloom for CTA hover, active passport gateway." },
+      { "name": "inset",       "value": "inset 0 2px 6px rgba(28,25,23,0.08), inset 0 1px 2px rgba(28,25,23,0.05)",                                                "purpose": "Pressed / recessed surfaces." }
+    ],
+    "motion": [
+      { "name": "instant",    "value": "80ms",                               "purpose": "Micro-feedback — focus rings, tooltip appearance." },
+      { "name": "quick",      "value": "150ms cubic-bezier(0.19,1,0.22,1)", "purpose": "State changes — button hover, chip selection, border-color." },
+      { "name": "moderate",   "value": "260ms cubic-bezier(0.25,0.46,0.45,0.94)", "purpose": "Card transitions, dropdown open/close." },
+      { "name": "slow",       "value": "400ms cubic-bezier(0.16,1,0.30,1)", "purpose": "Page-level panel slides, drawer open." },
+      { "name": "cinematic",  "value": "700ms cubic-bezier(0.16,1,0.30,1)", "purpose": "Scroll reveals, hero entrance animations." },
+      { "name": "dramatic",   "value": "1100ms cubic-bezier(0.16,1,0.30,1)","purpose": "Passport gateway zoom transition, full-page transitions." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px",  "purpose": "Mobile-to-desktop split — hero image, two-column layout, glass controls card." },
+      { "name": "lg", "value": "1100px", "purpose": "Wide desktop — page container widens to 1080px, hero image repositions." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main CTA — amber fill, pill shape, white text. Used for passport entry, confirmation, primary actions.",
+      "html": "<button class=\"ds-btn-primary\">Enter the Guide →</button>",
+      "css": ".ds-btn-primary { background: #d97706; color: #ffffff; padding: 10px 20px; border-radius: 9999px; border: none; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.01em; cursor: pointer; transition: background 150ms cubic-bezier(0.19,1,0.22,1), transform 150ms cubic-bezier(0.19,1,0.22,1), box-shadow 150ms cubic-bezier(0.19,1,0.22,1); } .ds-btn-primary:hover { background: #b45309; transform: translateY(-1px); box-shadow: 0 0 24px -4px rgba(217,119,6,0.22), 0 0 64px -8px rgba(217,119,6,0.10); } .ds-btn-primary:active { transform: translateY(0); } .ds-btn-primary:focus-visible { outline: 2px solid #d97706; outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action — transparent background, amber text, pill shape. Used in glass-card contexts.",
+      "html": "<button class=\"ds-btn-ghost\">View All →</button>",
+      "css": ".ds-btn-ghost { background: transparent; color: #d97706; padding: 8px 16px; border-radius: 9999px; border: 1px solid rgba(217,119,6,0.3); font-family: 'Geist Sans', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.01em; cursor: pointer; transition: background 150ms cubic-bezier(0.19,1,0.22,1); } .ds-btn-ghost:hover { background: rgba(217,119,6,0.08); } .ds-btn-ghost:focus-visible { outline: 2px solid #d97706; outline-offset: 2px; }"
+    },
+    {
+      "name": "Profile Chip (unselected)",
+      "kind": "chip",
+      "refersTo": "passport-chip",
+      "description": "Travel style or passport selector pill — white at rest, amber fill when active.",
+      "html": "<button class=\"ds-chip\">🎒 Backpacker</button>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 9999px; border: 1.5px solid #c7bdb2; background: #ffffff; color: #1c1917; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 0.8125rem; font-weight: 400; cursor: pointer; transition: background 180ms ease, color 180ms ease, border-color 180ms ease; box-shadow: 0 1px 2px rgba(28,25,23,0.05); } .ds-chip:hover { border-color: #d97706; background: #fffbeb; } .ds-chip:focus-visible { outline: 2px solid #d97706; outline-offset: 2px; }"
+    },
+    {
+      "name": "Profile Chip (active)",
+      "kind": "chip",
+      "refersTo": "profile-chip-active",
+      "description": "Active travel style chip — amber fill stamps the selection.",
+      "html": "<button class=\"ds-chip ds-chip--active\">🎒 Backpacker</button>",
+      "css": ".ds-chip--active { background: #d97706; color: #ffffff; border-color: #d97706; font-weight: 500; } .ds-chip--active:hover { background: #b45309; border-color: #b45309; }"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Data label badge — amber tint for budget/score highlights.",
+      "html": "<span class=\"ds-badge\">Budget · 90</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 9999px; background: #fef3c7; color: #92400e; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.01em; }"
+    },
+    {
+      "name": "Content Card",
+      "kind": "card",
+      "refersTo": "destination-card",
+      "description": "Base content surface — warm gradient, paper grain, amber border that deepens on hover.",
+      "html": "<div class=\"ds-card\"><p class=\"ds-card-body\">Card content</p></div>",
+      "css": ".ds-card { background: linear-gradient(160deg, #ffffff 0%, #fef9f3 60%, #fdfaf6 100%); border: 1px solid rgba(180,130,65,0.2); border-radius: 16px; padding: 20px; box-shadow: 0 1px 3px rgba(28,25,23,0.07), 0 4px 16px -4px rgba(28,25,23,0.07); position: relative; overflow: hidden; transition: box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease; } .ds-card::after { content: ''; position: absolute; inset: 0; background: url('/assets/ui/editorial-paper-texture.webp') center / cover; border-radius: inherit; opacity: 0.038; pointer-events: none; mix-blend-mode: multiply; } .ds-card:hover { box-shadow: 0 4px 12px rgba(28,25,23,0.10), 0 12px 32px -6px rgba(28,25,23,0.13), 0 20px 48px -12px rgba(120,75,15,0.10); transform: translateY(-4px); border-color: rgba(217,119,6,0.38); } .ds-card-body { color: #57534e; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 0.9375rem; line-height: 1.6; margin: 0; }"
+    },
+    {
+      "name": "Section Label",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Editorial chapter marker — ALL CAPS, muted, with gradient rule extending right. Used above every major section.",
+      "html": "<p class=\"ds-section-label\">✦ 9 Destinations Available</p>",
+      "css": ".ds-section-label { display: flex; align-items: center; gap: 8px; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #a8a29e; margin: 0; } .ds-section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, #e7e0d6 0%, transparent 100%); }"
+    },
+    {
+      "name": "Section Heading",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Data subsection title — 3px amber left border, gradient amber background wash. Used inside Ready pages.",
+      "html": "<h3 class=\"ds-section-heading\"><svg width=\"14\" height=\"14\" fill=\"none\" viewBox=\"0 0 14 14\"><circle cx=\"7\" cy=\"7\" r=\"6\" stroke=\"#d97706\" stroke-width=\"1.5\"/></svg> Visa Requirements</h3>",
+      "css": ".ds-section-heading { font-family: 'Geist Sans', system-ui, sans-serif; font-size: 1rem; font-weight: 700; color: #1c1917; display: flex; align-items: center; gap: 8px; margin-bottom: 14px; padding: 5px 14px 5px 12px; border-left: 3px solid #d97706; letter-spacing: -0.02em; background: linear-gradient(90deg, rgba(254,243,199,0.85) 0%, rgba(254,243,199,0.25) 55%, transparent 100%); border-radius: 0 6px 6px 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Worn Atlas",
+    "overview": "NomadReady's visual system is built around a single unifying metaphor: a physical travel artifact rendered in software. Think of a leather-bound atlas that has been carried through a dozen countries — embossed covers, gold ink worn smooth, paper grain warmed by the sun, edges soft from use. Every surface, every shadow, every typographic choice should feel like it could exist as a printed object you'd find at the bottom of a well-traveled bag.\n\nThe system lives in a warm, atmospheric light register — not the sterile white of a SaaS dashboard, not the dark drama of a fintech product, but something closer to afternoon light in a field guide. The dominant palette is Parchment Mist and warm ink tones, punctuated by a single amber accent (Ember Gold) that appears sparingly — used the way a cartographer would use red ink: to mark what matters.\n\nThis system explicitly rejects: generic travel SaaS aesthetics, fintech/crypto UI (glassmorphism, neon), childish app design (pastel blobs, confetti, bouncy motion), flat corporate UI, and startup motion language.",
+    "keyCharacteristics": [
+      "Single warm typeface family (Geist Sans) throughout — no serif display, no decorative pairing",
+      "Amber accent used at ≤15% surface coverage; its scarcity is intentional",
+      "Paper grain texture at 3–7% opacity on all card surfaces via multiply blend",
+      "Shadow system has five named tiers; cards lift on hover with warm-tinted shadows",
+      "Motion is restrained: state changes at 150–260ms, reveals at 700ms cinematic ease",
+      "Hero sections use full-bleed photography with directional dark overlays — text always reads at WCAG AA",
+      "Passport gateway experience: cinematic dark (#0c1020) with amber atmospheric glows"
+    ],
+    "rules": [
+      { "name": "The One Voice Rule",    "body": "Ember Gold appears on ≤15% of any given screen. Every additional use must earn its place. If you're wondering whether to use it, the answer is probably no.", "section": "colors" },
+      { "name": "The No-Cool-Gray Rule", "body": "Every neutral must be warm — nudged toward red/amber. #57534e not #6b7280. If a gray looks bluish or neutral in context, replace it.", "section": "colors" },
+      { "name": "The Night Register Rule","body": "#0c1020 (Cinematic Night) is reserved exclusively for full-immersion surfaces: the passport gateway, full-bleed hero overlays, modal backdrops. Never for cards, sidebars, or utility surfaces.", "section": "colors" },
+      { "name": "The Tight Display Rule","body": "Display-size text always sets at −0.04em or tighter. Loose tracking on large headings reads as amateur. The atlas is authoritative.", "section": "typography" },
+      { "name": "The Label Uppercase Rule","body": "Labels above data fields are always ALL CAPS, 0.7rem, 700 weight, tracking +0.08em, color ink-muted. Breaking it anywhere breaks it everywhere.", "section": "typography" },
+      { "name": "The Warm Shadow Rule",  "body": "No neutral or cool shadows, ever. Every shadow uses rgba(28,25,23,...) (warm ink) or rgba(120,75,15,...) (amber ink). If a shadow looks gray, it is wrong.", "section": "elevation" },
+      { "name": "The Lift Rule",         "body": "Cards at rest use Card shadow. On hover, Elevated shadow + translateY(-4px) over 180ms. The lift and shadow change happen together — never one without the other.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Ember Gold only for the active/primary state of one control per screen section.",
+      "Do add paper grain (editorial-paper-texture.webp, multiply blend, 3–7% opacity) to every card surface.",
+      "Do use the warm shadow tiers in order: Card at rest → Elevated on hover.",
+      "Do tighten heading tracking to −0.03em or lower at display/headline sizes.",
+      "Do keep label text ALL CAPS, 0.7rem, +0.08em, ink-muted.",
+      "Do use cinematic photography full-bleed in hero sections with directional dark overlay, ensuring ≥4.5:1 text contrast.",
+      "Do keep motion at 150–260ms for state changes, 700ms for scroll reveals.",
+      "Do collapse all --duration-* tokens to 1ms when prefers-reduced-motion: reduce is active.",
+      "Do keep card borders as warm amber-tinted outlines at rest, deepening on hover."
+    ],
+    "donts": [
+      "Don't use glassmorphism except on the hero controls card (a deliberate, isolated exception over a full-bleed photo).",
+      "Don't use neon, cyberpunk, or saturated blue/purple/green gradients.",
+      "Don't build generic SaaS UI — no filter bars, no star ratings, no Notion-clone whitespace.",
+      "Don't use cool or neutral grays. Every gray must be warm.",
+      "Don't add motion for its own sake — no bouncing loaders, no staggered-everything entrances.",
+      "Don't use pure black (#000000) anywhere. Warmest dark is #1c1917; cinematic dark is #0c1020.",
+      "Don't place text over a hero image without the directional overlay.",
+      "Don't put Ember Gold on more than 15% of any screen surface.",
+      "Don't use childish design patterns — no confetti, no gamification badges, no pastel blob illustrations."
+    ]
+  }
+}

@@ -1,0 +1,270 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { PassportObject } from "./PassportObject";
+
+const PASSPORTS = [
+  { id: "fr", emoji: "🇫🇷", label: "France" },
+  { id: "uk", emoji: "🇬🇧", label: "UK" },
+  { id: "de", emoji: "🇩🇪", label: "Germany" },
+  { id: "nl", emoji: "🇳🇱", label: "Netherlands" },
+  { id: "es", emoji: "🇪🇸", label: "Spain" },
+  { id: "it", emoji: "🇮🇹", label: "Italy" },
+  { id: "be", emoji: "🇧🇪", label: "Belgium" },
+  { id: "us", emoji: "🇺🇸", label: "USA" },
+  { id: "ca", emoji: "🇨🇦", label: "Canada" },
+  { id: "au", emoji: "🇦🇺", label: "Australia" },
+];
+
+interface PassportGatewayHeroProps {
+  defaultPassportId?: string;
+}
+
+export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewayHeroProps) {
+  const [visible, setVisible] = useState(false);
+  const [activeId, setActiveId] = useState(defaultPassportId);
+  const [isEntering, setIsEntering] = useState(false);
+  const [overlayFading, setOverlayFading] = useState(false);
+  const prefersReduced = useReducedMotion();
+
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("nr_gateway_passed") === "1") return;
+    } catch {
+      // private browsing — always show
+    }
+    setVisible(true);
+  }, []);
+
+  const handleEnter = useCallback(() => {
+    if (isEntering) return;
+    setIsEntering(true);
+
+    const fadDelay = prefersReduced ? 0 : 380;
+    const removeDelay = prefersReduced ? 50 : 950;
+
+    setTimeout(() => setOverlayFading(true), fadDelay);
+    setTimeout(() => {
+      setVisible(false);
+      try { sessionStorage.setItem("nr_gateway_passed", "1"); } catch { /* ignore */ }
+    }, removeDelay);
+  }, [isEntering, prefersReduced]);
+
+  if (!visible) return null;
+
+  const fadeDuration = prefersReduced ? 0.01 : 0.55;
+  const entranceDuration = prefersReduced ? 0.01 : 0.6;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: overlayFading ? 0 : 1 }}
+      transition={overlayFading
+        ? { duration: fadeDuration, ease: "easeInOut" }
+        : { duration: fadeDuration, ease: "easeOut" }
+      }
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 500,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        background: `linear-gradient(160deg, var(--cinematic-night, #0c1020) 0%, color-mix(in srgb, var(--cinematic-night, #0c1020) 85%, #202840) 45%, oklch(8% 0.012 250) 100%)`,
+        overflow: "hidden",
+      }}
+    >
+      {/* Atmospheric glows */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: "-15%",
+          right: "-5%",
+          width: "60%",
+          height: "65%",
+          background: "radial-gradient(ellipse, rgba(200,164,40,0.055) 0%, transparent 65%)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          bottom: "-10%",
+          left: "-10%",
+          width: "50%",
+          height: "55%",
+          background: "radial-gradient(ellipse, rgba(60,100,200,0.04) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "url('/assets/ui/paper-grain.png')",
+          backgroundRepeat: "repeat",
+          backgroundSize: "240px 240px",
+          opacity: 0.025,
+          mixBlendMode: "screen",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Content */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "0 24px",
+        }}
+      >
+        {/* Eyebrow */}
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: entranceDuration, delay: prefersReduced ? 0 : 0.15, ease: [0.25, 1, 0.5, 1] }}
+          style={{
+            color: "rgba(200,164,40,0.65)",
+            fontSize: 10,
+            letterSpacing: "0.28em",
+            fontWeight: 500,
+            textTransform: "uppercase",
+            textAlign: "center",
+            marginBottom: 28,
+            fontFamily: "var(--font-geist-sans)",
+          }}
+        >
+          ✦ Travel Field Guide
+        </motion.p>
+
+        {/* Passport object */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: entranceDuration, delay: prefersReduced ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
+          style={{ marginBottom: 36 }}
+        >
+          <PassportObject
+            passportId={activeId}
+            isEntering={isEntering}
+            onEnter={handleEnter}
+          />
+        </motion.div>
+
+        {/* Passport selector — radiogroup for a11y */}
+        <motion.div
+          role="radiogroup"
+          aria-label="Select your passport"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: entranceDuration, delay: prefersReduced ? 0 : 0.45, ease: [0.25, 1, 0.5, 1] }}
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: 6,
+            maxWidth: 340,
+            marginBottom: 32,
+          }}
+        >
+          {PASSPORTS.map((p) => {
+            const isActive = activeId === p.id;
+            return (
+              <button
+                key={p.id}
+                role="radio"
+                aria-checked={isActive}
+                onClick={() => !isEntering && setActiveId(p.id)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 5,
+                  paddingInline: 12,
+                  paddingBlock: 10,           /* min 44px touch target via combined padding + text */
+                  minHeight: 36,              /* ensures touch target at ≥44px with container */
+                  borderRadius: 100,
+                  border: `1px solid ${isActive ? "rgba(200,164,40,0.5)" : "rgba(255,255,255,0.08)"}`,
+                  background: isActive ? "rgba(200,164,40,0.1)" : "rgba(255,255,255,0.03)",
+                  color: isActive ? "rgba(200,164,40,0.95)" : "rgba(255,255,255,0.45)",
+                  fontSize: 11.5,
+                  fontWeight: isActive ? 500 : 400,
+                  cursor: "pointer",
+                  transition: "all 0.18s ease",
+                  fontFamily: "var(--font-geist-sans)",
+                  letterSpacing: "0.01em",
+                  outline: "none",
+                }}
+                onFocus={(e) => { e.currentTarget.style.boxShadow = "0 0 0 2px rgba(200,164,40,0.5)"; }}
+                onBlur={(e) => { e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <span style={{ fontSize: 13 }} aria-hidden>{p.emoji}</span>
+                {p.label}
+              </button>
+            );
+          })}
+        </motion.div>
+
+        {/* Enter CTA */}
+        <motion.button
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: entranceDuration, delay: prefersReduced ? 0 : 0.6, ease: [0.25, 1, 0.5, 1] }}
+          onClick={handleEnter}
+          disabled={isEntering}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            paddingInline: 24,
+            paddingBlock: 13,
+            borderRadius: 100,
+            border: "1px solid rgba(200,164,40,0.3)",
+            background: "rgba(200,164,40,0.08)",
+            color: "rgba(200,164,40,0.85)",
+            fontSize: 13,
+            fontWeight: 500,
+            letterSpacing: "0.06em",
+            cursor: isEntering ? "default" : "pointer",
+            fontFamily: "var(--font-geist-sans)",
+            opacity: isEntering ? 0.4 : 1,
+            transition: "opacity 0.2s ease, background 0.2s ease",
+            textTransform: "uppercase",
+            outline: "none",
+          }}
+          whileHover={!isEntering ? { background: "rgba(200,164,40,0.13)" } : {}}
+          whileTap={!isEntering ? { scale: 0.97 } : {}}
+          onFocus={(e) => { e.currentTarget.style.boxShadow = "0 0 0 2px rgba(200,164,40,0.5)"; }}
+          onBlur={(e) => { e.currentTarget.style.boxShadow = "none"; }}
+        >
+          Enter the Guide
+          <span style={{ fontSize: 11, opacity: 0.7 }} aria-hidden>→</span>
+        </motion.button>
+
+        {/* Hint */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: entranceDuration, delay: prefersReduced ? 0 : 0.85 }}
+          style={{
+            marginTop: 16,
+            color: "rgba(255,255,255,0.18)",
+            fontSize: 10.5,
+            textAlign: "center",
+            letterSpacing: "0.04em",
+            fontFamily: "var(--font-geist-sans)",
+          }}
+        >
+          or click the passport
+        </motion.p>
+      </div>
+    </motion.div>
+  );
+}

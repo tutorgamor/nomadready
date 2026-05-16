@@ -14,6 +14,7 @@ import { TripPlanner } from "@/components/TripPlanner";
 import { AtlasMapSection } from "@/components/home/AtlasMapSection";
 import { AmbientLayer } from "@/components/home/AmbientLayer";
 import { PassportGatewayHero } from "@/components/home/PassportGatewayHero";
+import { OpenGatewayLink } from "@/components/home/OpenGatewayLink";
 import { InView } from "@/components/motion-primitives/in-view";
 import type { UseInViewOptions } from "motion/react";
 export const metadata: Metadata = {
@@ -229,7 +230,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
               {/* Passport selector + profile selector — frosted glass card on desktop */}
               <div className="hero-controls-glass anim-fade-up anim-delay-5">
-                <PassportSelector passports={passports} activeId={activePassportId} />
+                <div>
+                  <PassportSelector passports={passports} activeId={activePassportId} />
+                  {/* Re-opens the cinematic gateway for passport changes */}
+                  <OpenGatewayLink />
+                </div>
                 <ProfileSelector />
                 <ProfileNote field="insightLine" />
               </div>

@@ -34,6 +34,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import { PassportObject } from "./PassportObject";
 
@@ -65,6 +66,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
   const [overlayFading, setOverlayFading] = useState(false);
 
   const prefersReduced = useReducedMotion();
+  const router         = useRouter();
 
   // ── Parallax system ───────────────────────────────────────────────────────
   // Tracks cursor-relative position (−0.5 → 0.5) and interpolates smoothly.
@@ -123,7 +125,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
     };
   }, [prefersReduced]);
 
-  // ── Visibility gating ─────────────────────────────────────────────────────
+  // ── Visibility gating — initial show ────────────────────────────────────
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") {
       setVisible(true);
@@ -135,24 +137,48 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
     setVisible(true);
   }, []);
 
+  // ── Re-show listener — dispatched by OpenGatewayLink from anywhere ───────
+  // Reads the current URL passport so the gateway pre-selects correctly.
+  useEffect(() => {
+    const validIds = new Set(PASSPORTS.map((p) => p.id));
+
+    function handleShowGateway() {
+      // Sync to whatever passport the URL currently carries
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlPassport = params.get("passport") ?? "fr";
+        setActiveId(validIds.has(urlPassport) ? urlPassport : "fr");
+      } catch { /* no URL API — keep current */ }
+
+      setIsEntering(false);
+      setOverlayFading(false);
+      setVisible(true);
+    }
+
+    window.addEventListener("nr:show-gateway", handleShowGateway);
+    return () => window.removeEventListener("nr:show-gateway", handleShowGateway);
+  }, []); // stable — setters and PASSPORTS never change
+
   // ── Enter handler ─────────────────────────────────────────────────────────
   const handleEnter = useCallback(() => {
     if (isEntering) return;
     setIsEntering(true);
 
+    // Navigate to the selected passport — triggers server re-render of page
+    // content while the cinematic exit animation plays (920ms total).
+    router.push(`/?passport=${activeId}`);
+
     // Overlay starts fading 250ms after passport begins zooming
-    // so the passport eclipses the background mid-transition
-    const fadDelay    = prefersReduced ? 0   : 250;
-    const removeDelay = prefersReduced ? 50  : 920;
+    // so the passport eclipses the background mid-transition.
+    const fadDelay    = prefersReduced ? 0  : 250;
+    const removeDelay = prefersReduced ? 50 : 920;
 
     setTimeout(() => setOverlayFading(true), fadDelay);
     setTimeout(() => {
       setVisible(false);
-      if (process.env.NODE_ENV === "production") {
-        try { sessionStorage.setItem("nr_gateway_passed", "1"); } catch { /* ignore */ }
-      }
+      try { sessionStorage.setItem("nr_gateway_passed", "1"); } catch { /* ignore */ }
     }, removeDelay);
-  }, [isEntering, prefersReduced]);
+  }, [isEntering, prefersReduced, activeId, router]);
 
   if (!visible) return null;
 

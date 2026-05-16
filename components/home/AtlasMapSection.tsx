@@ -74,16 +74,9 @@ export function AtlasMapSection({ destinationCount: _d }: AtlasMapSectionProps) 
             sepia+...    → warm white toward parchment (#e0d5bc range)
             url(#atl-relief) → SVG emboss fires on the tinted result       */}
       <div
-        className="atlas-breath"
+        className="atlas-breath atlas-map-wrapper"
         aria-hidden="true"
-        style={{
-          position: "absolute",
-          width: "108%",
-          left: "-4%",
-          top: "50%",
-          transform: "translateY(-50%)",
-          background: "#e9e0d0",
-        }}
+        style={{ background: "#e9e0d0" }}
       >
         {/* Aspect-ratio lock — natural SVG ratio 665.96 / 1009.67 ≈ 65.97 % */}
         <div style={{ position: "relative", width: "100%", paddingBottom: "65.97%" }}>

@@ -1336,6 +1336,32 @@ a:hover {
   50%       { opacity: 0.84; }
 }
 
+/* ── Atlas map positioning ───────────────────────────────── */
+/* Extracted from inline styles so mobile can override.       */
+.atlas-map-wrapper {
+  position: absolute;
+  width: 108%;
+  left: -4%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Mobile: pin to section top, wider scale, higher opacity.
+   Cards have solid backgrounds; map shows in the heading gap
+   and section padding areas — enough for ambient presence.   */
+@media (max-width: 767px) {
+  .atlas-map-wrapper {
+    top: 0;
+    transform: none;
+    width: 140%;
+    left: -20%;
+  }
+  @keyframes atlas-breathe {
+    0%, 100% { opacity: 0.86; }
+    50%       { opacity: 0.96; }
+  }
+}
+
 /* ── Deep ambient field — environmental base scale ───────── */
 /* Largest layer (160%), very slow (78 s). Gives the page a
    sense of environmental scale, like light from a window far
@@ -1405,8 +1431,10 @@ a:hover {
 }
 
 /* ── Drifting warm light A — main SE Asia zone ───────────── */
-/* Largest blob, very slow organic drift (38 s).              */
+/* will-change promotes to compositor layer — translate+opacity
+   runs entirely off main thread.                              */
 .amb-drift-a {
+  will-change: transform, opacity;
   position: absolute;
   width: 120%;
   height: 120%;
@@ -1430,8 +1458,8 @@ a:hover {
 }
 
 /* ── Drifting warm light B — counterpoint, upper-left ────── */
-/* Cooler ivory tone, independent timing (47 s offset).       */
 .amb-drift-b {
+  will-change: transform, opacity;
   position: absolute;
   width: 110%;
   height: 110%;
@@ -1453,8 +1481,11 @@ a:hover {
 }
 
 /* ── Depth fog — blurred diffusion, creates air between layers */
-/* filter:blur runs on GPU; large single element, minimal cost. */
+/* Rotate() removed from keyframes — animating rotate on a
+   blurred element forces repaint each frame. translate+opacity
+   only, promoted with will-change.                             */
 .amb-fog {
+  will-change: transform, opacity;
   position: absolute;
   width: 140%;
   height: 80%;
@@ -1471,11 +1502,11 @@ a:hover {
   pointer-events: none;
 }
 @keyframes amb-fog {
-  0%   { transform: translate(  0px,  0px) rotate( 0.0deg); opacity: 0.80; }
-  28%  { transform: translate( 16px,-13px) rotate( 1.4deg); opacity: 1.00; }
-  58%  { transform: translate(-11px, 17px) rotate(-0.9deg); opacity: 0.88; }
-  82%  { transform: translate(  7px, -7px) rotate( 0.4deg); opacity: 0.95; }
-  100% { transform: translate(  0px,  0px) rotate( 0.0deg); opacity: 0.80; }
+  0%   { transform: translate(  0px,  0px); opacity: 0.80; }
+  28%  { transform: translate( 16px,-13px); opacity: 1.00; }
+  58%  { transform: translate(-11px, 17px); opacity: 0.88; }
+  82%  { transform: translate(  7px, -7px); opacity: 0.95; }
+  100% { transform: translate(  0px,  0px); opacity: 0.80; }
 }
 
 /* ── Bloom zone 1 — focused SE Asia warm glow ────────────── */
@@ -1511,14 +1542,16 @@ a:hover {
   animation: amb-bloom 28s ease-in-out infinite reverse;
   pointer-events: none;
 }
+/* scale() on blurred elements forces repaint — opacity only. */
 @keyframes amb-bloom {
-  0%, 100% { opacity: 0.70; transform: scale(1.00); }
-  50%       { opacity: 1.00; transform: scale(1.09); }
+  0%, 100% { opacity: 0.68; }
+  50%       { opacity: 1.00; }
 }
 
-/* ── Far fog — deeper atmospheric plane (85 s / −42 s phase) ─
-   Second fog layer at different timing creates parallax depth
-   between the two fog strata — air between layers.            */
+/* ── Far fog — deeper atmospheric plane ──────────────────── */
+/* Static — 62 px blur on a 160%-wide animated element was the
+   single most expensive render operation. Depth separation is
+   still perceptible via the blur amount vs the near fog (28 px). */
 .amb-fog-far {
   position: absolute;
   width: 160%;
@@ -1527,13 +1560,12 @@ a:hover {
   top: 5%;
   background: radial-gradient(
     ellipse 52% 62% at 45% 56%,
-    rgba(238, 224, 202, 0.038) 0%,
-    rgba(230, 216, 192, 0.013) 48%,
+    rgba(238, 224, 202, 0.034) 0%,
+    rgba(230, 216, 192, 0.012) 48%,
     transparent 72%
   );
   filter: blur(62px);
-  animation: amb-fog 85s ease-in-out infinite;
-  animation-delay: -42s;
+  opacity: 0.85;
   pointer-events: none;
 }
 
@@ -1566,9 +1598,9 @@ a:hover {
 }
 
 /* ── Atlas surface light drift ───────────────────────────── */
-/* A blurred warm radial that drifts slowly over the atlas,
-   simulating sunlight moving across terrain. 62 s cycle.      */
+/* translate+opacity only — promoted to compositor layer.      */
 .atlas-light-drift {
+  will-change: transform, opacity;
   position: absolute;
   width: 150%;
   height: 150%;
@@ -1621,9 +1653,10 @@ a:hover {
   pointer-events: none;
 }
 
-/* ── Atmospheric ceiling — warm light from above ─────────── */
-/* Simulates diffuse overhead light entering the space, like
-   a skylight or high window. Slow drift (52 s) stays subtle. */
+/* ── Atmospheric ceiling — warm diffuse overhead light ───── */
+/* Static — scaleX+translateY animation on a blurred element
+   forces repaint each frame. Static gradient achieves the
+   same atmospheric quality at zero animation cost.           */
 .amb-ceiling {
   position: absolute;
   width: 100%;
@@ -1632,26 +1665,19 @@ a:hover {
   left: 0;
   background: radial-gradient(
     ellipse 85% 100% at 50% 0%,
-    rgba(255, 248, 228, 0.052) 0%,
-    rgba(252, 241, 214, 0.018) 46%,
+    rgba(255, 248, 228, 0.048) 0%,
+    rgba(252, 241, 214, 0.016) 46%,
     transparent 68%
   );
   filter: blur(22px);
-  animation: amb-ceiling-drift 52s ease-in-out infinite;
-  animation-delay: -18s;
+  opacity: 0.88;
   pointer-events: none;
 }
-@keyframes amb-ceiling-drift {
-  0%, 100% { opacity: 0.80; transform: scaleX(1.00) translateY(  0px); }
-  38%       { opacity: 1.00; transform: scaleX(1.06) translateY( -9px); }
-  72%       { opacity: 0.74; transform: scaleX(0.95) translateY(  6px); }
-}
 
-/* ── Atlas directional shadow — opposite phase to light ───── */
-/* Shadow moves in the opposite direction to atlas-light-drift
-   (animation-delay: -31s = half the 62 s cycle). When light
-   is upper-right, shadow pools lower-left and vice versa.
-   Creates convincing directional light on the relief surface. */
+/* ── Atlas directional shadow — static bottom-left depth ─── */
+/* Animation removed — mix-blend-mode:multiply + blur +
+   animated transform required a full repaint each frame.
+   Fixed position still gives directional depth to the relief. */
 .atlas-shadow-drift {
   position: absolute;
   width: 160%;
@@ -1660,26 +1686,19 @@ a:hover {
   left: -25%;
   background: radial-gradient(
     ellipse 38% 32% at 34% 60%,
-    rgba(38, 26, 10, 0.045) 0%,
-    rgba(28, 18, 6,  0.015) 40%,
+    rgba(38, 26, 10, 0.040) 0%,
+    rgba(28, 18, 6,  0.013) 40%,
     transparent 62%
   );
   filter: blur(26px);
   mix-blend-mode: multiply;
-  animation: atlas-shadow-move 62s ease-in-out infinite;
-  animation-delay: -31s;
+  opacity: 0.82;
   pointer-events: none;
 }
-@keyframes atlas-shadow-move {
-  /* Translates in exact anti-phase to atlas-light-move */
-  0%   { transform: translate(  0px,  0px); opacity: 0.78; }
-  24%  { transform: translate(-32px, 22px); opacity: 1.00; }
-  50%  { transform: translate(-18px,-28px); opacity: 0.72; }
-  76%  { transform: translate( 22px,-14px); opacity: 0.90; }
-  100% { transform: translate(  0px,  0px); opacity: 0.78; }
-}
 
-/* ── Reduced motion — pause all environmental animations ──── */
+/* ── Reduced motion — pause all remaining animations ──────── */
+/* ceiling, fog-far, atlas-shadow-drift are already static.
+   Only the elements that still animate need to be listed.     */
 @media (prefers-reduced-motion: reduce) {
   .atlas-breath,
   .amb-deep-field,
@@ -1687,15 +1706,12 @@ a:hover {
   .amb-drift-a,
   .amb-drift-b,
   .amb-fog,
-  .amb-fog-far,
   .amb-bloom-1,
   .amb-bloom-2,
-  .amb-ceiling,
-  .atlas-light-drift,
-  .atlas-shadow-drift {
+  .atlas-light-drift {
     animation: none;
   }
-  .atlas-breath  { opacity: 0.80; }
+  .atlas-breath { opacity: 0.80; }
   .amb-depth-shift {
     background: linear-gradient(
       180deg,

@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Magnetic } from "@/components/motion-primitives/magnetic";
+
+const SPRING = { stiffness: 26.7, damping: 4.1, mass: 0.2 };
 
 const BASE_SECTIONS = [
   { id: "visa",       label: "🛂 Visa" },
@@ -97,30 +100,31 @@ export function SectionNav({ hasGems = false, hasNotes = false, hasRemoteWork = 
       {sections.map(({ id, label }) => {
         const isActive = active === id;
         return (
-          <a
-            key={id}
-            href={`#${id}`}
-            data-section={id}
-            aria-current={isActive ? "true" : undefined}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-              flexShrink: 0,
-              fontSize: "0.8125rem",
-              fontWeight: isActive ? 600 : 400,
-              padding: "0.3rem 0.75rem",
-              borderRadius: "9999px",
-              border: "1px solid",
-              borderColor: isActive ? "var(--accent)" : "var(--border)",
-              background: isActive ? "var(--accent-light)" : "var(--bg-card)",
-              color: isActive ? "var(--accent-dark)" : "var(--text-secondary)",
-              textDecoration: "none",
-              transition: "background 0.12s, color 0.12s, border-color 0.12s, font-weight 0s",
-            }}
-          >
-            {label}
-          </a>
+          <Magnetic key={id} intensity={0.2} range={80} actionArea="self" springOptions={SPRING}>
+            <a
+              href={`#${id}`}
+              data-section={id}
+              aria-current={isActive ? "true" : undefined}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                whiteSpace: "nowrap",
+                flexShrink: 0,
+                fontSize: "0.8125rem",
+                fontWeight: isActive ? 600 : 400,
+                padding: "0.3rem 0.75rem",
+                borderRadius: "9999px",
+                border: "1px solid",
+                borderColor: isActive ? "var(--accent)" : "var(--border)",
+                background: isActive ? "var(--accent-light)" : "var(--bg-card)",
+                color: isActive ? "var(--accent-dark)" : "var(--text-secondary)",
+                textDecoration: "none",
+                transition: "background 0.12s, color 0.12s, border-color 0.12s, font-weight 0s",
+              }}
+            >
+              {label}
+            </a>
+          </Magnetic>
         );
       })}
     </nav>

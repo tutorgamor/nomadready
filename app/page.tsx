@@ -7,8 +7,8 @@ import type { Passport, Destination, ReadyData } from "@/lib/types";
 import { PassportSelector } from "@/components/PassportSelector";
 import { ProfileSelector } from "@/components/ProfileSelector";
 import { ProfileNote } from "@/components/ProfileNote";
-import { DestinationCard } from "@/components/DestinationCard";
 import type { DestinationSummary } from "@/components/DestinationCard";
+import { DestinationGrid } from "@/components/DestinationGrid";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { TripPlanner } from "@/components/TripPlanner";
 import { WorldMapScene } from "@/components/WorldMapScene";
@@ -472,11 +472,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           </h2>
 
           {/* Cards — responsive grid: 1-col mobile, 2-col tablet, 3-col desktop */}
-          <div className="dest-grid">
-            {availableDestinations.map((dest) => (
-              <DestinationCard key={dest.id} destination={dest} passportId={activePassportId} summary={summaries.get(dest.id)} />
-            ))}
-          </div>
+          <DestinationGrid destinations={availableDestinations} passportId={activePassportId} summaries={summaries} />
 
         </div>
       </section>

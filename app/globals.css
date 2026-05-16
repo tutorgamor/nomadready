@@ -502,7 +502,7 @@ a:hover {
   max-width: 700px;
 }
 
-/* Destination card grid */
+/* Destination card grid (legacy — kept for reference) */
 .dest-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
@@ -513,6 +513,12 @@ a:hover {
   .dest-grid {
     gap: 1.125rem;
   }
+}
+
+/* Destination carousel wrapper — reserves space for nav controls below */
+.dest-carousel-wrap {
+  position: relative;
+  padding-bottom: 3rem;
 }
 
 /* Homepage header — more generous padding on desktop */

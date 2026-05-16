@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { BudgetInfo, BudgetTier } from "@/lib/types";
 import { CURRENCY_SYMBOLS, getDailyLocal } from "@/lib/budget";
+import { AnimatedNumber } from "@/components/motion-primitives/animated-number";
 
 type Style = "Backpacker" | "Comfort" | "Boutique";
 const STYLES: Style[] = ["Backpacker", "Comfort", "Boutique"];
@@ -156,10 +157,10 @@ export function BudgetCalculator({ budget, passportCurrency }: Props) {
                 lineHeight: 1,
               }}
             >
-              ~{refSymbol}{totalRef.toLocaleString()}
+              ~{refSymbol}<AnimatedNumber value={totalRef} />
             </p>
             <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", margin: "0.2rem 0 0" }}>
-              {currency_symbol}{totalLocal.toLocaleString()} {currency}
+              {currency_symbol}<AnimatedNumber value={totalLocal} /> {currency}
             </p>
           </div>
           <div style={{ textAlign: "right", flexShrink: 0 }}>
@@ -167,7 +168,7 @@ export function BudgetCalculator({ budget, passportCurrency }: Props) {
               {days} day{days !== 1 ? "s" : ""} · {style}
             </p>
             <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", margin: "0.1rem 0 0" }}>
-              ~{refSymbol}{Math.round(totalRef / days).toLocaleString()}/day
+              ~{refSymbol}<AnimatedNumber value={Math.round(totalRef / days)} />/day
             </p>
           </div>
         </div>

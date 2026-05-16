@@ -11,8 +11,8 @@ import type { DestinationSummary } from "@/components/DestinationCard";
 import { DestinationGrid } from "@/components/DestinationGrid";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { TripPlanner } from "@/components/TripPlanner";
-import { WorldMapScene } from "@/components/WorldMapScene";
-
+import { InView } from "@/components/motion-primitives/in-view";
+import type { UseInViewOptions } from "motion/react";
 export const metadata: Metadata = {
   title: { absolute: "NomadReady — Travel Readiness for Backpackers" },
   description:
@@ -64,6 +64,14 @@ const HERO_IMGS = {
   // Slot: passport-stamps.png — worn atlas / map background texture (behind composition)
   map:    heroAsset("passport-stamps.png",     "https://images.unsplash.com/photo-1526178618343-7f6c6c99a1d7?w=480&q=75&auto=format&fit=crop"),
 };
+
+// Shared reveal config for below-fold sections — restrained, premium
+const REVEAL = {
+  hidden:  { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0  },
+};
+const REVEAL_TX   = { duration: 0.52, ease: [0.25, 1, 0.5, 1] as const };
+const REVEAL_OPTS: UseInViewOptions = { once: true, margin: "0px 0px -60px 0px" };
 
 interface HomePageProps {
   searchParams: Promise<{ passport?: string }>;
@@ -454,56 +462,57 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         </div>
       </header>
 
-      {/* ── World map scene — editorial atlas transition ─────── */}
-      <WorldMapScene
-        destinations={availableDestinations.map((d) => ({ id: d.id, label: d.label, emoji: d.emoji }))}
-      />
-
       {/* ── Destination grid ──────────────────────────────────── */}
       <section
         style={{ flex: 1, paddingTop: "1.75rem", paddingBottom: "1.75rem" }}
         aria-labelledby="destinations-heading"
       >
-        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
+          <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
-          <h2 id="destinations-heading" className="section-label-editorial">
-            <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
-            {availableDestinations.length} destination{availableDestinations.length !== 1 ? "s" : ""} available
-          </h2>
+            <h2 id="destinations-heading" className="section-label-editorial">
+              <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
+              {availableDestinations.length} destination{availableDestinations.length !== 1 ? "s" : ""} available
+            </h2>
 
-          {/* Cards — responsive grid: 1-col mobile, 2-col tablet, 3-col desktop */}
-          <DestinationGrid destinations={availableDestinations} passportId={activePassportId} summaries={summaries} />
+            {/* Cards — responsive grid: 1-col mobile, 2-col tablet, 3-col desktop */}
+            <DestinationGrid destinations={availableDestinations} passportId={activePassportId} summaries={summaries} />
 
-        </div>
+          </div>
+        </InView>
       </section>
 
       {/* ── Comparison strip ─────────────────────────────────── */}
       <section style={{ paddingBottom: "3rem" }}>
-        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-            <h2 className="section-label-editorial">
-              <span aria-hidden="true" style={{ color: "var(--accent)", opacity: 0.5 }}>⊞</span>
-              Quick comparison
-            </h2>
-            <ProfileNote field="comparisonNote" />
+        <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
+          <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+              <h2 className="section-label-editorial">
+                <span aria-hidden="true" style={{ color: "var(--accent)", opacity: 0.5 }}>⊞</span>
+                Quick comparison
+              </h2>
+              <ProfileNote field="comparisonNote" />
+            </div>
+            <ComparisonStrip destinations={availableDestinations} summaries={summaries} />
           </div>
-          <ComparisonStrip destinations={availableDestinations} summaries={summaries} />
-        </div>
+        </InView>
       </section>
 
       {/* ── Trip planner ─────────────────────────────────────── */}
       <section style={{ paddingBottom: "3rem" }}>
-        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-          <h2 className="section-label-editorial">
-            <span aria-hidden="true" style={{ color: "var(--accent)", opacity: 0.5 }}>◷</span>
-            Plan by trip length
-          </h2>
-          <TripPlanner
-            destinations={availableDestinations}
-            budgets={budgetRecord}
-            passportCurrency={passportCurrency}
-          />
-        </div>
+        <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
+          <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <h2 className="section-label-editorial">
+              <span aria-hidden="true" style={{ color: "var(--accent)", opacity: 0.5 }}>◷</span>
+              Plan by trip length
+            </h2>
+            <TripPlanner
+              destinations={availableDestinations}
+              budgets={budgetRecord}
+              passportCurrency={passportCurrency}
+            />
+          </div>
+        </InView>
       </section>
 
       {/* ── Footer ────────────────────────────────────────────── */}

@@ -1,8 +1,19 @@
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { Cormorant_Garamond } from "next/font/google";
 import { ProfileProvider } from "@/components/ProfileProvider";
 import "./globals.css";
+
+// Cormorant Garamond — display serif for editorial headlines only.
+// Next.js self-hosts and caches the font; zero runtime Google Fonts call.
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
 
 /* ─── Metadata ───────────────────────────────────────────── */
 
@@ -51,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${cormorant.variable}`}>
       <body>
         {/* Global layout wrapper — mobile-first, centered */}
         <div className="min-h-dvh flex flex-col">

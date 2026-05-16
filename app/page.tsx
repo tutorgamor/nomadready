@@ -212,7 +212,14 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 <p className="anim-fade-up anim-delay-1" style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent)", margin: 0, opacity: 0.85 }}>
                   Travel field guide
                 </p>
-                <h1 className="hero-heading-light anim-reveal" style={{ fontSize: "clamp(2.5rem, 8vw, 4.25rem)", fontWeight: 800, letterSpacing: "-0.05em", lineHeight: 1.08, margin: 0 }}>
+                <h1 className="hero-heading-light anim-reveal" style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2.75rem, 8.5vw, 4.75rem)",
+                  fontWeight: 300,
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.05,
+                  margin: 0,
+                }}>
                   Where are you<br />heading next?
                 </h1>
                 <p className="hero-text-light-sub anim-fade-up anim-delay-3" style={{ fontSize: "0.9375rem", margin: 0, maxWidth: "34ch", lineHeight: 1.55 }}>

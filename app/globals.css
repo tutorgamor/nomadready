@@ -247,6 +247,13 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ─── Display Font Token ─────────────────────────────────── */
+/* Cormorant Garamond — editorial serif for hero and section display only.  */
+/* Use var(--font-display) on h1/h2 display text; never on body, labels, or UI. */
+:root {
+  --font-display: var(--font-cormorant), "Georgia", "Times New Roman", serif;
+}
+
 body {
   background-color: var(--bg-base);
   background-image:

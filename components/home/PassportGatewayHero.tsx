@@ -29,6 +29,12 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
+    // In development, always show the gateway so it can be iterated on.
+    // In production, skip it once the user has entered.
+    if (process.env.NODE_ENV !== "production") {
+      setVisible(true);
+      return;
+    }
     try {
       if (sessionStorage.getItem("nr_gateway_passed") === "1") return;
     } catch {
@@ -47,7 +53,9 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
     setTimeout(() => setOverlayFading(true), fadDelay);
     setTimeout(() => {
       setVisible(false);
-      try { sessionStorage.setItem("nr_gateway_passed", "1"); } catch { /* ignore */ }
+      if (process.env.NODE_ENV === "production") {
+        try { sessionStorage.setItem("nr_gateway_passed", "1"); } catch { /* ignore */ }
+      }
     }, removeDelay);
   }, [isEntering, prefersReduced]);
 

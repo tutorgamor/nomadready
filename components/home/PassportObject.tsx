@@ -133,9 +133,10 @@ interface PassportObjectProps {
   passportId: string;
   isEntering: boolean;
   onEnter: () => void;
+  className?: string;
 }
 
-export function PassportObject({ passportId, isEntering, onEnter }: PassportObjectProps) {
+export function PassportObject({ passportId, isEntering, onEnter, className }: PassportObjectProps) {
   const theme = THEMES[passportId] ?? THEMES.fr;
   const prefersReduced = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -232,6 +233,7 @@ export function PassportObject({ passportId, isEntering, onEnter }: PassportObje
       tabIndex={isEntering ? -1 : 0}
       aria-label={`Enter with ${theme.line2} passport`}
       aria-disabled={isEntering}
+      className={className}
       style={{
         perspective: "1100px",
         perspectiveOrigin: "50% 50%",

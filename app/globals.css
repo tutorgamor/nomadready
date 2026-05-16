@@ -1729,3 +1729,161 @@ a:hover {
     );
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   Passport Gateway — Cinematic Mobile Split Layout
+   Desktop: centered column (unchanged).
+   Mobile ≤639px: top zone (passport hero) + bottom panel
+   (selector + CTA) that reads like a native bottom sheet.
+   ══════════════════════════════════════════════════════════ */
+
+/* Shell — full-height flex container, replaces the old
+   inline display:flex centering on the outer fixed div.    */
+.gateway-shell {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+}
+
+/* Top zone — eyebrow + passport. On desktop: just a flex
+   column wrapper with no extra behaviour.                  */
+.gateway-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Eyebrow bottom margin — moved from inline style so mobile
+   can suppress it (gap on gateway-top handles spacing).    */
+.gateway-eyebrow {
+  margin-bottom: 28px;
+}
+
+/* Passport motion-wrapper bottom margin — same rationale.  */
+.gateway-passport-wrap {
+  margin-bottom: 36px;
+}
+
+/* Bottom zone — selector chips, CTA, hint. On desktop:
+   plain centered column, same visual flow as before.       */
+.gateway-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Chips radiogroup — on desktop: centered wrapping flex    */
+.gateway-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 340px;
+  margin-bottom: 32px;
+}
+
+/* Visible label above chips — desktop: hidden, redundant    */
+.gateway-selector-label {
+  display: none;
+}
+
+/* Hint text margin — moved from inline style.              */
+.gateway-hint {
+  margin-top: 16px;
+}
+
+/* Passport object size — matches existing inline sizes on
+   desktop; shrinks on mobile for the top-zone proportion. */
+.gateway-passport {
+  width: min(240px, 72vw);
+  height: min(336px, calc(72vw * 1.4));
+}
+
+/* ── Mobile split ───────────────────────────────────────── */
+@media (max-width: 639px) {
+  /* Shell switches from centered-column to full-height split */
+  .gateway-shell {
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 0;
+  }
+
+  /* Top zone: fills available space above the bottom panel,
+     centers its content (eyebrow + passport) within it.   */
+  .gateway-top {
+    flex: 1;
+    min-height: 0;
+    padding-top: max(env(safe-area-inset-top, 0px), 32px);
+    padding-inline: 24px;
+    justify-content: center;
+    gap: 12px;
+    overflow: hidden;
+  }
+
+  /* No margin — top zone gap handles the spacing.         */
+  .gateway-eyebrow    { margin-bottom: 0; }
+  .gateway-passport-wrap { margin-bottom: 0; }
+
+  /* Smaller passport — proportional in the top zone       */
+  .gateway-passport {
+    /* !important overrides the inline style in PassportObject */
+    width:  min(180px, 52vw) !important;
+    height: min(252px, calc(52vw * 1.4)) !important;
+  }
+
+  /* Bottom panel — cinematic frosted bottom-sheet          */
+  .gateway-bottom {
+    align-items: stretch;
+    gap: 10px;
+    padding: 16px 20px max(calc(18px + env(safe-area-inset-bottom, 0px)), 26px);
+    background: rgba(8, 12, 28, 0.92);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border-top: 1px solid rgba(200, 164, 40, 0.15);
+    border-radius: 20px 20px 0 0;
+  }
+
+  /* Visible "YOUR PASSPORT" label above chips on mobile    */
+  .gateway-selector-label {
+    display: block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(200, 164, 40, 0.45);
+    font-family: var(--font-geist-sans);
+    margin: 0;
+  }
+
+  /* Chips — single-line horizontal scroll                  */
+  .gateway-chips {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    max-width: none;
+    margin-bottom: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* Bleed chips to panel edges for edge-to-edge scroll   */
+    margin-inline: -20px;
+    padding: 2px 20px;
+  }
+  .gateway-chips::-webkit-scrollbar { display: none; }
+
+  /* CTA — full-width on mobile for visual weight           */
+  .gateway-cta {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Hint — no extra top margin inside the panel gap        */
+  .gateway-hint {
+    margin-top: 0;
+    text-align: center;
+  }
+}

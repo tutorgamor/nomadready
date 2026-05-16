@@ -1320,58 +1320,389 @@ a:hover {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Phase 6 — World Map Scene (wms-*)
-   Editorial atlas transition · SVG/CSS only · no map library
+   World Presence System
+   All animations use only opacity + transform → compositor
+   thread, zero layout/paint cost. Timings are long (14–90 s)
+   to remain subconscious, never decorative.
    ══════════════════════════════════════════════════════════ */
 
-.wms-section {
-  /* Sits between hero and destination grid — compact, not dominant */
-  padding-top: 0.5rem;
-  padding-bottom: 1rem;
+/* ── Atlas map breathing ─────────────────────────────────── */
+.atlas-breath {
+  opacity: 0.80;
+  animation: atlas-breathe 14s ease-in-out infinite;
+}
+@keyframes atlas-breathe {
+  0%, 100% { opacity: 0.77; }
+  50%       { opacity: 0.84; }
 }
 
-.wms-label {
-  /* Reuses .section-label-editorial styles; override bottom margin */
-  margin-bottom: 0.625rem;
+/* ── Deep ambient field — environmental base scale ───────── */
+/* Largest layer (160%), very slow (78 s). Gives the page a
+   sense of environmental scale, like light from a window far
+   off. Beneath all other drift layers.                        */
+.amb-deep-field {
+  position: absolute;
+  width: 160%;
+  height: 160%;
+  left: -25%;
+  top: -25%;
+  background: radial-gradient(
+    ellipse 58% 50% at 58% 52%,
+    rgba(217, 119, 6, 0.018) 0%,
+    rgba(217, 119, 6, 0.006) 42%,
+    transparent 65%
+  );
+  animation: amb-deep-field 78s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes amb-deep-field {
+  0%   { transform: translate(  0px,  0px) scale(1.00); opacity: 0.80; }
+  18%  { transform: translate( 35px,-22px) scale(1.06); opacity: 1.00; }
+  42%  { transform: translate( 24px, 30px) scale(0.96); opacity: 0.74; }
+  66%  { transform: translate(-20px, 18px) scale(1.04); opacity: 0.92; }
+  84%  { transform: translate( 12px,-14px) scale(1.02); opacity: 0.88; }
+  100% { transform: translate(  0px,  0px) scale(1.00); opacity: 0.80; }
 }
 
-.wms-stage {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-subtle);
-  background: #b8d0de; /* ocean fallback while SVG loads */
-  /* Fixed heights per breakpoint — slice preserves full-width fill */
-  height: 150px;
-}
-
-@media (min-width: 768px) {
-  .wms-stage {
-    height: 215px;
-    border-radius: var(--radius-2xl);
-  }
-}
-
-@media (min-width: 1100px) {
-  .wms-stage {
-    height: 255px;
-  }
-}
-
-.wms-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* Warm paper texture — same editorial grain used across the design system */
-.wms-paper {
+/* ── Section depth shift — animated atmospheric climates ──── */
+/* Hero: bright ivory dawn → Destinations: warm sandy →
+   Lower: dusk parchment. 65 s cycle, gradient colors
+   interpolate natively (same structure each keyframe).        */
+.amb-depth-shift {
   position: absolute;
   inset: 0;
-  background: url('/assets/ui/editorial-paper-texture.webp') center / cover;
-  opacity: 0.042;
+  animation: amb-depth-climate 65s ease-in-out infinite;
   pointer-events: none;
+}
+@keyframes amb-depth-climate {
+  0%, 100% {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 250, 242, 0.000)  0%,
+      rgba(240, 225, 200, 0.040) 35%,
+      rgba(222, 207, 178, 0.072) 68%,
+      rgba(208, 190, 162, 0.105) 100%
+    );
+  }
+  32% {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 252, 244, 0.000)  0%,
+      rgba(245, 232, 210, 0.052) 35%,
+      rgba(228, 213, 186, 0.086) 68%,
+      rgba(215, 197, 170, 0.118) 100%
+    );
+  }
+  68% {
+    background: linear-gradient(
+      180deg,
+      rgba(252, 248, 238, 0.000)  0%,
+      rgba(236, 220, 195, 0.030) 35%,
+      rgba(218, 202, 172, 0.060) 68%,
+      rgba(204, 185, 156, 0.092) 100%
+    );
+  }
+}
+
+/* ── Drifting warm light A — main SE Asia zone ───────────── */
+/* Largest blob, very slow organic drift (38 s).              */
+.amb-drift-a {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  left: 5%;
+  top: -10%;
+  background: radial-gradient(
+    ellipse 65% 55% at 68% 52%,
+    rgba(217, 119, 6, 0.022) 0%,
+    rgba(217, 119, 6, 0.007) 45%,
+    transparent 70%
+  );
+  animation: amb-drift-a 38s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes amb-drift-a {
+  0%   { transform: translate(  0px,   0px) scale(1.00); opacity: 0.88; }
+  22%  { transform: translate( 26px, -18px) scale(1.04); opacity: 1.00; }
+  48%  { transform: translate( 18px,  14px) scale(0.97); opacity: 0.80; }
+  74%  { transform: translate(-14px,  24px) scale(1.05); opacity: 0.94; }
+  100% { transform: translate(  0px,   0px) scale(1.00); opacity: 0.88; }
+}
+
+/* ── Drifting warm light B — counterpoint, upper-left ────── */
+/* Cooler ivory tone, independent timing (47 s offset).       */
+.amb-drift-b {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  left: -5%;
+  top: -5%;
+  background: radial-gradient(
+    ellipse 52% 44% at 28% 35%,
+    rgba(232, 220, 195, 0.028) 0%,
+    transparent 62%
+  );
+  animation: amb-drift-b 47s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes amb-drift-b {
+  0%   { transform: translate(  0px,  0px); opacity: 0.75; }
+  33%  { transform: translate(-20px, 16px); opacity: 0.95; }
+  66%  { transform: translate( 16px,-11px); opacity: 0.82; }
+  100% { transform: translate(  0px,  0px); opacity: 0.75; }
+}
+
+/* ── Depth fog — blurred diffusion, creates air between layers */
+/* filter:blur runs on GPU; large single element, minimal cost. */
+.amb-fog {
+  position: absolute;
+  width: 140%;
+  height: 80%;
+  left: -20%;
+  top: 10%;
+  background: radial-gradient(
+    ellipse 60% 70% at 55% 52%,
+    rgba(242, 228, 205, 0.052) 0%,
+    rgba(235, 218, 192, 0.018) 50%,
+    transparent 74%
+  );
+  filter: blur(28px);
+  animation: amb-fog 55s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes amb-fog {
+  0%   { transform: translate(  0px,  0px) rotate( 0.0deg); opacity: 0.80; }
+  28%  { transform: translate( 16px,-13px) rotate( 1.4deg); opacity: 1.00; }
+  58%  { transform: translate(-11px, 17px) rotate(-0.9deg); opacity: 0.88; }
+  82%  { transform: translate(  7px, -7px) rotate( 0.4deg); opacity: 0.95; }
+  100% { transform: translate(  0px,  0px) rotate( 0.0deg); opacity: 0.80; }
+}
+
+/* ── Bloom zone 1 — focused SE Asia warm glow ────────────── */
+.amb-bloom-1 {
+  position: absolute;
+  width: 55%;
+  height: 65%;
+  right: 2%;
+  top: 18%;
+  background: radial-gradient(
+    ellipse 70% 70% at 58% 50%,
+    rgba(217, 119, 6, 0.016) 0%,
+    transparent 58%
+  );
+  filter: blur(22px);
+  animation: amb-bloom 22s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Bloom zone 2 — lower parchment warmth ───────────────── */
+.amb-bloom-2 {
+  position: absolute;
+  width: 42%;
+  height: 48%;
+  left: 8%;
+  bottom: 3%;
+  background: radial-gradient(
+    ellipse 70% 70% at 42% 58%,
+    rgba(210, 180, 140, 0.022) 0%,
+    transparent 62%
+  );
+  filter: blur(28px);
+  animation: amb-bloom 28s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+@keyframes amb-bloom {
+  0%, 100% { opacity: 0.70; transform: scale(1.00); }
+  50%       { opacity: 1.00; transform: scale(1.09); }
+}
+
+/* ── Far fog — deeper atmospheric plane (85 s / −42 s phase) ─
+   Second fog layer at different timing creates parallax depth
+   between the two fog strata — air between layers.            */
+.amb-fog-far {
+  position: absolute;
+  width: 160%;
+  height: 90%;
+  left: -28%;
+  top: 5%;
+  background: radial-gradient(
+    ellipse 52% 62% at 45% 56%,
+    rgba(238, 224, 202, 0.038) 0%,
+    rgba(230, 216, 192, 0.013) 48%,
+    transparent 72%
+  );
+  filter: blur(62px);
+  animation: amb-fog 85s ease-in-out infinite;
+  animation-delay: -42s;
+  pointer-events: none;
+}
+
+/* ── Cinematic vignette — dark edge, very subtle ────────────*/
+.amb-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 88% 82% at 50% 50%,
+    transparent 52%,
+    rgba(18, 12, 6, 0.042) 80%,
+    rgba(18, 12, 6, 0.072) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Warm vignette — golden hour lens character ──────────── */
+/* Complements the dark vignette with a warm amber edge that
+   creates the emotional quality of late-afternoon sunlight.   */
+.amb-warm-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 92% 88% at 50% 50%,
+    transparent 50%,
+    rgba(180, 130, 60, 0.022) 76%,
+    rgba(155, 105, 35, 0.042) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Atlas surface light drift ───────────────────────────── */
+/* A blurred warm radial that drifts slowly over the atlas,
+   simulating sunlight moving across terrain. 62 s cycle.      */
+.atlas-light-drift {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -20%;
+  background: radial-gradient(
+    ellipse 44% 38% at 54% 46%,
+    rgba(255, 248, 225, 0.052) 0%,
+    rgba(255, 242, 208, 0.018) 38%,
+    transparent 60%
+  );
+  filter: blur(24px);
+  animation: atlas-light-move 62s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes atlas-light-move {
+  0%   { transform: translate(  0px,  0px); opacity: 0.82; }
+  24%  { transform: translate( 34px,-24px); opacity: 1.00; }
+  50%  { transform: translate( 20px, 30px); opacity: 0.76; }
+  76%  { transform: translate(-24px, 16px); opacity: 0.92; }
+  100% { transform: translate(  0px,  0px); opacity: 0.82; }
+}
+
+/* ── Paper grain ─────────────────────────────────────────── */
+.amb-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/ui/editorial-paper-texture.webp');
+  background-size: 520px 520px;
+  opacity: 0.042;
   mix-blend-mode: multiply;
-  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ── Paper substrate — warm physical base of the page ───────
+   Two large radials simulate ambient room light on the paper
+   surface: warm from upper-right (window), subtle fill from
+   lower-left (reflected warmth). Entirely static.             */
+.amb-paper-base {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 140% 80% at 62% 28%,
+      rgba(252, 242, 222, 0.062) 0%,
+      rgba(248, 236, 212, 0.022) 42%,
+      transparent 58%),
+    radial-gradient(ellipse 85% 100% at 14% 78%,
+      rgba(238, 224, 200, 0.038) 0%,
+      transparent 52%);
+  pointer-events: none;
+}
+
+/* ── Atmospheric ceiling — warm light from above ─────────── */
+/* Simulates diffuse overhead light entering the space, like
+   a skylight or high window. Slow drift (52 s) stays subtle. */
+.amb-ceiling {
+  position: absolute;
+  width: 100%;
+  height: 55%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(
+    ellipse 85% 100% at 50% 0%,
+    rgba(255, 248, 228, 0.052) 0%,
+    rgba(252, 241, 214, 0.018) 46%,
+    transparent 68%
+  );
+  filter: blur(22px);
+  animation: amb-ceiling-drift 52s ease-in-out infinite;
+  animation-delay: -18s;
+  pointer-events: none;
+}
+@keyframes amb-ceiling-drift {
+  0%, 100% { opacity: 0.80; transform: scaleX(1.00) translateY(  0px); }
+  38%       { opacity: 1.00; transform: scaleX(1.06) translateY( -9px); }
+  72%       { opacity: 0.74; transform: scaleX(0.95) translateY(  6px); }
+}
+
+/* ── Atlas directional shadow — opposite phase to light ───── */
+/* Shadow moves in the opposite direction to atlas-light-drift
+   (animation-delay: -31s = half the 62 s cycle). When light
+   is upper-right, shadow pools lower-left and vice versa.
+   Creates convincing directional light on the relief surface. */
+.atlas-shadow-drift {
+  position: absolute;
+  width: 160%;
+  height: 160%;
+  top: -30%;
+  left: -25%;
+  background: radial-gradient(
+    ellipse 38% 32% at 34% 60%,
+    rgba(38, 26, 10, 0.045) 0%,
+    rgba(28, 18, 6,  0.015) 40%,
+    transparent 62%
+  );
+  filter: blur(26px);
+  mix-blend-mode: multiply;
+  animation: atlas-shadow-move 62s ease-in-out infinite;
+  animation-delay: -31s;
+  pointer-events: none;
+}
+@keyframes atlas-shadow-move {
+  /* Translates in exact anti-phase to atlas-light-move */
+  0%   { transform: translate(  0px,  0px); opacity: 0.78; }
+  24%  { transform: translate(-32px, 22px); opacity: 1.00; }
+  50%  { transform: translate(-18px,-28px); opacity: 0.72; }
+  76%  { transform: translate( 22px,-14px); opacity: 0.90; }
+  100% { transform: translate(  0px,  0px); opacity: 0.78; }
+}
+
+/* ── Reduced motion — pause all environmental animations ──── */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-breath,
+  .amb-deep-field,
+  .amb-depth-shift,
+  .amb-drift-a,
+  .amb-drift-b,
+  .amb-fog,
+  .amb-fog-far,
+  .amb-bloom-1,
+  .amb-bloom-2,
+  .amb-ceiling,
+  .atlas-light-drift,
+  .atlas-shadow-drift {
+    animation: none;
+  }
+  .atlas-breath  { opacity: 0.80; }
+  .amb-depth-shift {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 250, 242, 0.000)  0%,
+      rgba(240, 225, 200, 0.040) 35%,
+      rgba(222, 207, 178, 0.072) 68%,
+      rgba(208, 190, 162, 0.105) 100%
+    );
+  }
 }

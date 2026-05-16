@@ -11,6 +11,8 @@ import type { DestinationSummary } from "@/components/DestinationCard";
 import { DestinationGrid } from "@/components/DestinationGrid";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { TripPlanner } from "@/components/TripPlanner";
+import { AtlasMapSection } from "@/components/home/AtlasMapSection";
+import { AmbientLayer } from "@/components/home/AmbientLayer";
 import { InView } from "@/components/motion-primitives/in-view";
 import type { UseInViewOptions } from "motion/react";
 export const metadata: Metadata = {
@@ -119,6 +121,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         flexDirection: "column",
       }}
     >
+      {/* Atmospheric rendering layer — fixed, zIndex:200, pointerEvents:none.
+          Cursor-reactive warm light + static SE Asia zone + editorial grain. */}
+      <AmbientLayer />
       {/* ── Hero / header section ─────────────────────────────── */}
       <header
         className="home-header"
@@ -462,14 +467,25 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         </div>
       </header>
 
-      {/* ── Destination grid ──────────────────────────────────── */}
+      {/* ── Destinations — ambient atlas background + content ───────── */}
       <section
-        style={{ flex: 1, paddingTop: "1.75rem", paddingBottom: "1.75rem" }}
+        style={{
+          flex: 1,
+          position: "relative",
+          overflow: "hidden",
+          paddingTop: "2.5rem",
+          paddingBottom: "3.5rem",
+        }}
         aria-labelledby="destinations-heading"
       >
-        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        {/* Ambient atlas — absolute background layer, zIndex: 0 */}
+        <AtlasMapSection destinationCount={availableDestinations.length} />
 
-          {/* Label reveals first, cards follow 0.1 s later — stagger effect */}
+        {/* Content floats above the map at zIndex: 1 */}
+        <div
+          className="page-container"
+          style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: "1.75rem" }}
+        >
           <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
             <h2 id="destinations-heading" className="section-label-editorial">
               <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
@@ -480,7 +496,6 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <InView variants={REVEAL} transition={{ ...REVEAL_TX, delay: 0.1 }} viewOptions={REVEAL_OPTS}>
             <DestinationGrid destinations={availableDestinations} passportId={activePassportId} summaries={summaries} />
           </InView>
-
         </div>
       </section>
 

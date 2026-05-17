@@ -318,7 +318,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
               margin: 0,
             }}
           >
-            ✦ {t.travelFieldGuide}
+            {t.travelFieldGuide}
           </motion.p>
 
           {/* Passport — descends from above, "lands" on the surface */}

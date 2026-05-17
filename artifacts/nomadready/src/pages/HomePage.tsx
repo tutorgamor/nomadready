@@ -6,8 +6,7 @@ import type { Passport, Destination, ReadyData } from "@/lib/types";
 import { PassportSelector } from "@/components/PassportSelector";
 import { ProfileSelector } from "@/components/ProfileSelector";
 import { ProfileNote } from "@/components/ProfileNote";
-import { ComparisonStrip } from "@/components/ComparisonStrip";
-import { TripPlanner } from "@/components/TripPlanner";
+import { InsightsPanel } from "@/components/InsightsPanel";
 import { AmbientLayer } from "@/components/home/AmbientLayer";
 import { PassportGatewayHero } from "@/components/home/PassportGatewayHero";
 import { OpenGatewayLink } from "@/components/home/OpenGatewayLink";
@@ -159,7 +158,6 @@ export default function HomePage() {
         <div className="home-hero-wordmark anim-fade-down" aria-label="NomadReady">
           <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
-              <span aria-hidden="true" style={{ fontSize: "0.75rem", color: "var(--accent)", lineHeight: 1 }}>✦</span>
               <span style={{ fontSize: "0.9375rem", fontWeight: 700, letterSpacing: "-0.03em", color: "rgba(255,255,255,0.96)" }}>
                 Nomad<span style={{ color: "var(--accent)" }}>Ready</span>
               </span>
@@ -180,7 +178,6 @@ export default function HomePage() {
           <div className="home-hero-layout">
             <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
               <div className="home-wordmark-inline anim-fade-down" style={{ alignItems: "center", gap: "0.4rem" }}>
-                <span style={{ fontSize: "0.9rem", color: "var(--accent)", lineHeight: 1, marginTop: "1px" }} aria-hidden="true">✦</span>
                 <span className="hero-text-light" style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Nomad</span>
                 <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--accent)" }}>Ready</span>
               </div>
@@ -245,7 +242,6 @@ export default function HomePage() {
         <InView variants={REVEAL} transition={{ ...REVEAL_TX, delay: 0.08 }} viewOptions={REVEAL_OPTS}>
           <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.125rem" }}>
             <h2 className="section-label-editorial">
-              <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
               {availableDestinations.length} destinations — explore the map
             </h2>
             <DestinationPicker
@@ -270,14 +266,12 @@ export default function HomePage() {
 
             <GlobeMap />
 
-            <div className="plan-compare-grid">
-              <ComparisonStrip destinations={availableDestinations} summaries={summaries} />
-              <TripPlanner
-                destinations={availableDestinations}
-                budgets={budgetRecord}
-                passportCurrency={passportCurrency}
-              />
-            </div>
+            <InsightsPanel
+              destinations={availableDestinations}
+              summaries={summaries}
+              budgets={budgetRecord}
+              passportCurrency={passportCurrency}
+            />
           </div>
         </InView>
       </section>
@@ -285,7 +279,6 @@ export default function HomePage() {
       <footer style={{ borderTop: "1px solid rgba(180,130,65,0.22)", paddingBlock: "1.5rem" }}>
         <div className="page-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flexShrink: 0 }}>
-            <span style={{ fontSize: "0.7rem", color: "var(--accent)" }} aria-hidden="true">✦</span>
             <span style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text-muted)" }}>NomadReady</span>
           </div>
           <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", margin: 0, textAlign: "right", lineHeight: 1.5 }}>

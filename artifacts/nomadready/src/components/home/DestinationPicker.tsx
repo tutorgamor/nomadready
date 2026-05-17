@@ -139,7 +139,7 @@ export function DestinationPicker({ destinations, summaries, passportId }: Props
                           {sum.budgetFrom}
                         </span>
                         <span style={{ fontSize: "0.55rem", fontWeight: 600, color: "rgba(255,255,255,0.55)", whiteSpace: "nowrap" }}>
-                          ✦ {sum.bestMonths}
+                          {sum.bestMonths}
                         </span>
                       </div>
                     )}

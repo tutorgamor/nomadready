@@ -23,7 +23,7 @@ const DEST_IMAGES: Record<string, string> = {
   philippines:  "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800&q=80&auto=format&fit=crop", // El Nido / Palawan
   georgia:      "https://images.unsplash.com/photo-1561049933-c8fbef47b329?w=800&q=80&auto=format&fit=crop", // Tbilisi old town
   thailand:     "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80&auto=format&fit=crop", // Wat Arun, Bangkok
-  malaysia:     "https://images.unsplash.com/photo-1596422846543-986a7c5feacc?w=800&q=80&auto=format&fit=crop", // Petronas towers
+  malaysia:     "/images/malaysia-hero.jpg", // Petronas towers at night (local)
   vietnam:      "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=800&q=80&auto=format&fit=crop", // Hoi An lanterns
   japan:        "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&q=80&auto=format&fit=crop", // Mt Fuji + cherry blossom
   "south-korea":"https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=800&q=80&auto=format&fit=crop", // Gyeongbokgung Palace

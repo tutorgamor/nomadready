@@ -3067,3 +3067,384 @@ video.home-hero-bg {
   color: rgba(255,255,255,0.18);
   margin: 0;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   GUIDE — Animated Metrics (Visa + Budget)
+   Used by the redesigned DestinationPage editorial guide sections.
+══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Visa metric row ─────────────────────────────────────────────────────── */
+.guide-metric-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3.5rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 640px) {
+  .guide-metric-row { grid-template-columns: 1fr; gap: 1.75rem; }
+}
+
+.guide-metric-number-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 10rem;
+}
+
+.guide-metric-big {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  line-height: 1;
+}
+
+.guide-metric-num {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 7rem);
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  color: rgba(255,255,255,0.95);
+  line-height: 0.9;
+}
+
+.guide-metric-unit {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(217,119,6,0.75);
+  padding-bottom: 0.75rem;
+}
+
+.guide-metric-sublabel {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  margin: 0;
+}
+
+.guide-metric-bar {
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.75rem;
+  width: 8rem;
+}
+
+.guide-metric-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(180,100,10,0.72), rgba(251,191,36,0.95));
+  border-radius: 999px;
+}
+
+.guide-metric-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+.guide-metric-detail-text {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.48);
+  margin: 0;
+  line-height: 1.72;
+  max-width: 58ch;
+}
+
+.guide-metric-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.guide-badge {
+  font-size: 0.525rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.guide-badge--green {
+  color: rgba(110,231,183,0.92);
+  border-color: rgba(110,231,183,0.28);
+  background: rgba(110,231,183,0.07);
+}
+
+.guide-badge--amber {
+  color: rgba(251,191,36,0.92);
+  border-color: rgba(251,191,36,0.28);
+  background: rgba(251,191,36,0.07);
+}
+
+.guide-badge--gray {
+  color: rgba(255,255,255,0.40);
+  border-color: rgba(255,255,255,0.12);
+  background: transparent;
+}
+
+/* ── Budget tiers ────────────────────────────────────────────────────────── */
+.guide-budget-band {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+@media (max-width: 560px) {
+  .guide-budget-band { grid-template-columns: 1fr; }
+}
+
+.guide-budget-tier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.75rem 1.875rem;
+  border-right: 1px solid rgba(255,255,255,0.07);
+  cursor: default;
+  transition: background 0.22s;
+}
+
+.guide-budget-tier:last-child { border-right: none; }
+
+.guide-budget-tier:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.guide-budget-tier-label {
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: rgba(217,119,6,0.62);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.guide-budget-tier-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.guide-budget-num {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  color: rgba(255,255,255,0.92);
+  line-height: 1;
+}
+
+.guide-budget-sym {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.48);
+  font-weight: 400;
+}
+
+.guide-budget-perday {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.28);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.guide-budget-includes {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Apps grid ───────────────────────────────────────────────────────────── */
+.guide-apps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .guide-apps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 380px) {
+  .guide-apps-grid { grid-template-columns: 1fr; }
+}
+
+.guide-app-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 1.125rem;
+  background: rgba(255,255,255,0.38);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: default;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.guide-app-card:hover {
+  background: rgba(255,255,255,0.58);
+  border-color: rgba(217,119,6,0.22);
+}
+
+.guide-app-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.guide-app-use {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.guide-app-platform {
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(217,119,6,0.62);
+  margin-top: 0.2rem;
+}
+
+/* ── Transport list ──────────────────────────────────────────────────────── */
+.guide-transport-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0.75rem;
+}
+
+.guide-transport-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.guide-transport-item:last-child { border-bottom: none; }
+
+.guide-transport-dot {
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  border-radius: 50%;
+  background: rgba(217,119,6,0.60);
+  margin-top: 0.5rem;
+}
+
+/* ── Scams list ──────────────────────────────────────────────────────────── */
+.guide-scams-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0.75rem;
+  border: 1px solid rgba(217,119,6,0.18);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.guide-scam-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(217,119,6,0.10);
+  background: rgba(217,119,6,0.03);
+}
+
+.guide-scam-item:last-child { border-bottom: none; }
+
+.guide-scam-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(217,119,6,0.85);
+}
+
+.guide-scam-desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Phrases grid ────────────────────────────────────────────────────────── */
+.guide-phrases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin-top: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+@media (max-width: 540px) {
+  .guide-phrases-grid { grid-template-columns: 1fr; }
+}
+
+.guide-phrase-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.875rem 1.125rem;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+
+.guide-phrase-card:nth-child(odd) {
+  border-right: 1px solid var(--border);
+}
+
+.guide-phrase-card:last-child,
+.guide-phrase-card:nth-last-child(2):nth-child(odd) {
+  border-bottom: none;
+}
+
+.guide-phrase-local {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.guide-phrase-pronun {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.guide-phrase-meaning {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(217,119,6,0.70);
+  text-align: right;
+  white-space: nowrap;
+}

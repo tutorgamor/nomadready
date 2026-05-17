@@ -366,11 +366,10 @@ export default function ThailandPage() {
           <Reveal delay={0.12}>
             <div className="th-cta-actions">
               <Link to="/ready/fr/thailand" className="th-cta-primary">
-                Guide complet Thaïlande
-                <span aria-hidden style={{ marginLeft: "0.5em", opacity: 0.75 }}>→</span>
+                Données & terrain complet →
               </Link>
-              <Link to="/ready/fr/indonesia" className="th-cta-secondary">
-                Comparer avec l'Indonésie →
+              <Link to="/ready/fr/malaysia" className="th-cta-secondary">
+                Comparer avec la Malaisie →
               </Link>
               <Link to="/" className="th-cta-tertiary">
                 Retour à l'atlas →

@@ -1,7 +1,12 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { TravelScore } from "@/lib/types";
 import { useProfileContext } from "@/lib/profile";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CATEGORIES: { key: keyof Omit<TravelScore, "overall">; label: string }[] = [
   { key: "visa_ease",       label: "Visa"     },
@@ -20,10 +25,50 @@ function scoreColor(v: number): string {
 
 export function TravelScoreSection({ score }: { score: TravelScore }) {
   const { profile } = useProfileContext();
+  const container   = useRef<HTMLDivElement>(null);
+  const [displayed, setDisplayed] = useState(0);
   const color = scoreColor(score.overall);
+
+  useEffect(() => {
+    const el = container.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const triggerConfig = { trigger: el, start: "top 85%", once: true };
+
+      // ── Central score counter ────────────────────────────
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: score.overall,
+        duration: 1.5,
+        ease: "power2.out",
+        onUpdate() { setDisplayed(Math.round(obj.val)); },
+        scrollTrigger: triggerConfig,
+      });
+
+      // ── Sub-score cells stagger ──────────────────────────
+      gsap.fromTo(
+        ".score-cell",
+        { opacity: 0, y: 10, scale: 0.88 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.38,
+          stagger: 0.055,
+          ease: "back.out(1.4)",
+          scrollTrigger: triggerConfig,
+        }
+      );
+    }, el);
+
+    return () => ctx.revert();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [score.overall]);
 
   return (
     <div
+      ref={container}
       className="card"
       style={{ padding: 0, overflow: "hidden" }}
     >
@@ -64,7 +109,7 @@ export function TravelScoreSection({ score }: { score: TravelScore }) {
         </p>
       </div>
 
-      {/* ── Instrument body: dial + sub-score grid ── */}
+      {/* ── Instrument body ── */}
       <div
         style={{
           display: "grid",
@@ -74,7 +119,7 @@ export function TravelScoreSection({ score }: { score: TravelScore }) {
           alignItems: "center",
         }}
       >
-        {/* Central field-score dial */}
+        {/* Central dial — shows animated counter */}
         <div
           style={{
             display: "flex",
@@ -106,9 +151,10 @@ export function TravelScoreSection({ score }: { score: TravelScore }) {
                 letterSpacing: "-0.04em",
                 color,
                 lineHeight: 1,
+                fontVariantNumeric: "tabular-nums",
               }}
             >
-              {score.overall}
+              {displayed}
             </span>
             <span
               style={{
@@ -137,7 +183,7 @@ export function TravelScoreSection({ score }: { score: TravelScore }) {
           </p>
         </div>
 
-        {/* 3 × 2 sub-score cell grid */}
+        {/* 3 × 2 sub-score grid */}
         <div
           style={{
             display: "grid",
@@ -148,19 +194,18 @@ export function TravelScoreSection({ score }: { score: TravelScore }) {
         >
           {CATEGORIES.map(({ key, label }) => {
             const val = score[key] as number;
-            const c = scoreColor(val);
+            const c   = scoreColor(val);
             const highlighted = profile.scoreHighlight.includes(key);
             return (
               <div
                 key={key}
+                className="score-cell"
                 style={{
                   position: "relative",
                   padding: "0.625rem 0.75rem 0.5rem",
                   borderRight: "1px solid var(--border)",
                   borderBottom: "1px solid var(--border)",
-                  background: highlighted
-                    ? "rgba(254,243,199,0.42)"
-                    : "transparent",
+                  background: highlighted ? "rgba(254,243,199,0.42)" : "transparent",
                 }}
               >
                 {highlighted && (
@@ -185,6 +230,7 @@ export function TravelScoreSection({ score }: { score: TravelScore }) {
                     color: c,
                     margin: 0,
                     lineHeight: 1,
+                    fontVariantNumeric: "tabular-nums",
                   }}
                 >
                   {val}

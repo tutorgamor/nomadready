@@ -1,3 +1,4 @@
+import { SectionHeading } from './SectionHeading';
 import type { NomadRealityNote } from "@/lib/types";
 
 function RealityNoteRow({ note }: { note: NomadRealityNote }) {
@@ -41,9 +42,9 @@ export function NomadRealitySection({ notes }: { notes: NomadRealityNote[] }) {
           background: "linear-gradient(160deg, #f9f7f5 0%, #f2f0ec 100%)",
         }}
       >
-        <p className="section-heading" style={{ margin: "0 0 0.125rem" }}>
+        <SectionHeading category="reality" style={{ margin: "0 0 0.125rem" }}>
           Nomad Reality
-        </p>
+        </SectionHeading>
         <p
           style={{
             fontSize: "0.8125rem",

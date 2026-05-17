@@ -1,3 +1,4 @@
+import { SectionHeading } from './SectionHeading';
 import type { ChecklistItem, ChecklistPriority } from "@/lib/types";
 
 const PRIORITY_CONFIG: Record<
@@ -23,7 +24,7 @@ export function ChecklistSection({ checklist }: { checklist: ChecklistItem[] }) 
 
   return (
     <div className="card">
-      <p className="section-heading">Pre-trip Checklist</p>
+      <SectionHeading category="checklist" style={{ marginBottom: "0.875rem" }}>Pre-trip Checklist</SectionHeading>
       <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
         {PRIORITY_ORDER.map((priority) => {
           const items = grouped[priority];

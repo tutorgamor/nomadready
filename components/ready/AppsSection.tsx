@@ -1,9 +1,10 @@
+import { SectionHeading } from './SectionHeading';
 import type { UsefulApp } from "@/lib/types";
 
 export function AppsSection({ apps }: { apps: UsefulApp[] }) {
   return (
     <div className="card">
-      <p className="section-heading">Useful Apps</p>
+      <SectionHeading category="apps" style={{ marginBottom: "0.875rem" }}>Useful Apps</SectionHeading>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {apps.map((app, i) => (
           <div

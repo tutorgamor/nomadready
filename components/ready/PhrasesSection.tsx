@@ -1,9 +1,10 @@
+import { SectionHeading } from './SectionHeading';
 import type { Phrase } from "@/lib/types";
 
 export function PhrasesSection({ phrases }: { phrases: Phrase[] }) {
   return (
     <div className="card">
-      <p className="section-heading">Local Phrases</p>
+      <SectionHeading category="phrases" style={{ marginBottom: "0.875rem" }}>Local Phrases</SectionHeading>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {phrases.map((p, i) => (
           <div

@@ -1,3 +1,4 @@
+import { SectionHeading } from './SectionHeading';
 import type { BestSeason, Month } from "@/lib/types";
 
 const ALL_MONTHS: Month[] = [
@@ -89,7 +90,7 @@ export function BestSeasonSection({ bestSeason }: { bestSeason: BestSeason }) {
         @media (hover: hover) { .bsh-cell:hover { filter: brightness(0.93); transform: translateY(-1px); } }
       `}</style>
 
-      <p className="section-heading">Best Season</p>
+      <SectionHeading category="season" style={{ marginBottom: "0.875rem" }}>Best Season</SectionHeading>
 
       {/* Heatmap — overall 12-month view */}
       <div className="bsh-grid" style={{ marginBottom: "0.5rem" }}>

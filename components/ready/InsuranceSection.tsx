@@ -1,9 +1,10 @@
+import { SectionHeading } from './SectionHeading';
 import type { InsuranceInfo } from "@/lib/types";
 
 export function InsuranceSection({ insurance }: { insurance: InsuranceInfo }) {
   return (
     <div className="card">
-      <p className="section-heading">Insurance</p>
+      <SectionHeading category="insurance" style={{ marginBottom: "0.875rem" }}>Insurance</SectionHeading>
 
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.875rem" }}>
         <span

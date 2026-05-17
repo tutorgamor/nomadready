@@ -1,7 +1,8 @@
+import { SectionHeading } from './SectionHeading';
 export function TransportSection({ transport }: { transport: string[] }) {
   return (
     <div className="card">
-      <p className="section-heading">Transport</p>
+      <SectionHeading category="transport" style={{ marginBottom: "0.875rem" }}>Transport</SectionHeading>
       <ul
         style={{
           display: "flex",

@@ -11,6 +11,20 @@ interface PassportSidebarProps {
 
 const SPRING = { type: "spring" as const, stiffness: 440, damping: 13 };
 
+// Map passport id → ISO 3166-1 alpha-2 code for local /flags/{code}.png
+const FLAG_CODE: Record<string, string> = {
+  fr: "fr",
+  uk: "gb",
+  de: "de",
+  nl: "nl",
+  es: "es",
+  it: "it",
+  be: "be",
+  us: "us",
+  ca: "ca",
+  au: "au",
+};
+
 export function PassportSidebar({ passports, activeId }: PassportSidebarProps) {
   const [, setLocation] = useLocation();
 
@@ -22,6 +36,9 @@ export function PassportSidebar({ passports, activeId }: PassportSidebarProps) {
     >
       {passports.map((p) => {
         const isActive = p.id === activeId;
+        const flagCode = FLAG_CODE[p.id] ?? p.id;
+        const flagSrc = `${import.meta.env.BASE_URL}flags/${flagCode}.png`;
+
         return (
           <motion.button
             key={p.id}
@@ -55,25 +72,24 @@ export function PassportSidebar({ passports, activeId }: PassportSidebarProps) {
               flexShrink: 0,
             }}
           >
-            {/* Flag — fills the button */}
-            <span
+            {/* Flag image — local file, fills the circle */}
+            <img
+              src={flagSrc}
+              alt=""
               aria-hidden="true"
               style={{
                 position: "absolute",
                 inset: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "1.35rem",
-                lineHeight: 1,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
                 opacity: isActive ? 0.92 : 0.55,
                 transition: "opacity 0.2s",
+                pointerEvents: "none",
               }}
-            >
-              {p.emoji}
-            </span>
+            />
 
-            {/* Country code — overlaid on top */}
+            {/* Country code overlaid on top */}
             <span
               style={{
                 position: "relative",

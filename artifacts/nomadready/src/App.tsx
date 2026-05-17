@@ -2,6 +2,7 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { ProfileProvider } from "@/components/ProfileProvider";
 import HomePage from "@/pages/HomePage";
 import DestinationPage from "@/pages/DestinationPage";
+import ThailandPage from "@/pages/ThailandPage";
 import "@/globals.css";
 
 function NotFound() {
@@ -35,6 +36,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
+      <Route path="/destinations/thailand" component={ThailandPage} />
       <Route path="/ready/:passport/:destination" component={DestinationPage} />
       <Route component={NotFound} />
     </Switch>

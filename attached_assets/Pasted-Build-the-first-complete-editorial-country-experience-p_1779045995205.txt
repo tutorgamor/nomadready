@@ -1,0 +1,198 @@
+Build the first complete editorial country experience page for Thailand.
+
+Read:
+- docs/ai-context.md
+- docs/visual-direction.md
+- docs/implementation-rules.md
+
+Route:
+- /destinations/thailand
+
+Goal:
+Create the first flagship destination experience for NomadReady.
+
+This page must feel like:
+a cinematic travel field guide chapter rendered in software.
+
+It is NOT:
+- a blog article
+- a travel guide website
+- a dashboard page
+- a startup landing page
+
+The experience should feel:
+- cinematic
+- emotional
+- tactile
+- editorial
+- warm
+- immersive
+- calm
+- premium
+- spatial and desktop-native
+
+Core emotional narrative:
+Bangkok initially feels overwhelming:
+- noise
+- heat
+- movement
+- density
+- sensory overload
+
+But after staying longer, the city becomes:
+- rhythmic
+- strangely comforting
+- emotionally alive
+- familiar
+- difficult to leave
+
+The emotional transformation matters:
+chaos → rhythm → attachment.
+
+Visual direction:
+The page should feel like:
+- Monocle meets cinematic travel diary
+- luxury field guide
+- atmospheric editorial publication
+- premium travel artifact
+
+Use existing NomadReady styles and assets when useful,
+BUT you are allowed to generate or source additional assets, textures, overlays, atmospheric media, and editorial elements if needed to preserve and elevate the established visual direction.
+
+Any generated or sourced assets must remain:
+- restrained
+- warm
+- tactile
+- cinematic
+- editorial
+- cohesive with NomadReady
+
+Do NOT introduce:
+- startup graphics
+- generic travel illustrations
+- fintech UI
+- cold gradients
+- neon/cyberpunk aesthetics
+- flashy animations
+- gimmicky interactions
+
+Hero requirements:
+Use a cinematic Thailand/Bangkok video background.
+
+Preferred direction:
+- Bangkok night atmosphere
+- warm rain reflections
+- street movement
+- markets
+- café interiors
+- tuk-tuk lights
+- humid cinematic atmosphere
+- subtle travel montage
+
+The hero video should feel similar in quality and atmosphere to the homepage cinematic loop.
+
+Use:
+- warm overlays
+- cinematic gradients
+- atmospheric diffusion
+- restrained motion
+- clear readability
+
+Avoid:
+- tourism advertisement feeling
+- influencer vlog energy
+- hyperactive edits
+- drone montage overload
+
+Required sections:
+
+1. Cinematic Hero
+- immersive Thailand/Bangkok video
+- premium editorial typography
+- short emotional headline
+- restrained supporting copy
+- subtle readiness metadata
+
+2. Field Note
+A short emotional editorial fragment.
+3–5 lines maximum.
+Personal, restrained, atmospheric.
+
+3. Readiness Intelligence
+Present:
+- visa feel
+- budget rhythm
+- internet/workability
+- safety awareness
+- energy level
+- productivity atmosphere
+
+These should feel like:
+travel intelligence artifacts,
+NOT SaaS widgets.
+
+4. Who Thailand Is For
+Examples:
+- remote workers needing momentum
+- people rebuilding discipline
+- travelers who enjoy movement and stimulation
+- solo nomads who like living cities
+
+5. Micro Memories
+Very short cinematic fragments.
+Examples:
+- rainy café work session
+- late-night food market
+- first calm morning in Bangkok
+- traffic noise becoming familiar
+
+6. Practical Reality
+Grounded observations:
+- heat fatigue
+- scams
+- overstimulation
+- adaptation curve
+- emotional payoff after settling in
+
+7. CTA
+- compare Thailand with Indonesia
+- return to dashboard
+- continue exploring Asia
+
+Interaction direction:
+Study inspiration from:
+- Apple storytelling pacing
+- Monocle editorial calm
+- Aman hospitality atmosphere
+- Rimowa luxury restraint
+- Linear interaction smoothness
+
+Extract only:
+- cinematic pacing
+- restrained text reveal
+- calm motion
+- editorial spacing rhythm
+- subtle hover behavior
+- immersive transitions
+
+Avoid:
+- Awwwards gimmicks
+- heavy parallax
+- scroll hijacking
+- WebGL overload
+- excessive animation
+
+Technical constraints:
+- preserve performance
+- preserve accessibility
+- support reduced motion
+- avoid unnecessary complexity
+- maintain responsive behavior
+
+Workflow:
+1. Analyze current architecture and design system
+2. Plan the Thailand page structure
+3. Generate/source any needed atmospheric assets or motion elements
+4. Implement the Thailand experience page
+5. Verify responsiveness and performance
+6. Summarize exactly what was added or changed

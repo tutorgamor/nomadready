@@ -1,0 +1,96 @@
+Build the first complete editorial country experience page for Thailand.
+
+Read:
+- docs/ai-context.md
+- docs/visual-direction.md
+- docs/implementation-rules.md
+
+Use only assets from:
+public/assets/editorial/
+
+Create route:
+- /destinations/thailand
+
+Goal:
+This must be the first flagship destination page for NomadReady.
+
+It should feel like:
+a cinematic field-guide chapter, not a blog post and not a dashboard.
+
+Content direction:
+Thailand, with Bangkok as the emotional anchor.
+
+Core personal narrative:
+Bangkok first feels overwhelming: heat, density, noise, movement, sensory overload.
+After staying longer, the chaos becomes rhythm.
+The city becomes strangely comforting, alive, familiar, and hard to leave.
+
+Required sections:
+1. Cinematic hero
+- use existing Bangkok/Thailand video or image asset if available
+- warm overlay
+- headline: “Thailand rewards the traveler who stays long enough.”
+- subcopy: short, calm, editorial
+- passport/readiness mini data
+
+2. Field Note
+- short personal editorial fragment
+- not bloggy
+- not influencer tone
+- 3–5 lines max
+
+3. Readiness Intelligence
+- visa window
+- budget feel
+- internet/workability
+- safety/scam awareness
+- use tactile cards, not SaaS widgets
+
+4. Who Thailand Is For
+- remote workers needing energy
+- first-time long-term nomads
+- travelers who like movement, food, heat, late nights
+
+5. Micro Memories
+- rainy café work session
+- late-night street food
+- motorbike noise becoming background rhythm
+- first morning when the city felt normal
+
+6. Practical Reality
+- heat is real
+- scams exist but are manageable
+- Bangkok is easier after week one
+- islands are slower but less productive
+
+7. CTA
+- compare Thailand with Indonesia
+- return to passport dashboard
+
+Visual rules:
+- cinematic
+- warm
+- tactile
+- editorial
+- parchment/amber palette
+- subtle stamps/tickets only
+- no travel blog layout
+- no SEO article blocks
+- no startup cards
+- no cold gray
+- no blue gradients
+- no heavy animation
+
+Interaction ideas:
+- subtle text reveal on scroll
+- very light image parallax
+- warm hover lift on cards
+- reduced motion support
+
+Workflow:
+1. Inspect existing routing and data structure.
+2. Reuse existing components where appropriate.
+3. Add only the Thailand page and minimal shared components if needed.
+4. Preserve homepage/dashboard.
+5. Run checks.
+6. Summarize files changed.

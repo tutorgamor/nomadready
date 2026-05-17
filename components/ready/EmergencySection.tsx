@@ -39,7 +39,7 @@ export function EmergencySection({ emergency }: { emergency: EmergencyInfo }) {
 
   return (
     <div className="card">
-      <p className="section-heading">🆘 Emergency Contacts</p>
+      <p className="section-heading">Emergency Contacts</p>
 
       {/* Numbers grid */}
       <div

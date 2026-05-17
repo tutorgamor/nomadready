@@ -142,7 +142,7 @@ export function LocalGemsSection({ gems }: { gems: LocalGem[] }) {
         }}
       >
         <p className="section-heading" style={{ margin: "0 0 0.125rem" }}>
-          💎 Local Gems
+          Local Gems
         </p>
         <p
           style={{

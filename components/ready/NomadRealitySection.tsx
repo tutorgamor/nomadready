@@ -42,7 +42,7 @@ export function NomadRealitySection({ notes }: { notes: NomadRealityNote[] }) {
         }}
       >
         <p className="section-heading" style={{ margin: "0 0 0.125rem" }}>
-          🧭 Nomad Reality
+          Nomad Reality
         </p>
         <p
           style={{

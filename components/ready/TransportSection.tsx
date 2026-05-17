@@ -1,7 +1,7 @@
 export function TransportSection({ transport }: { transport: string[] }) {
   return (
     <div className="card">
-      <p className="section-heading">🚌 Transport</p>
+      <p className="section-heading">Transport</p>
       <ul
         style={{
           display: "flex",

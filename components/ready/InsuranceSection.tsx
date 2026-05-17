@@ -3,7 +3,7 @@ import type { InsuranceInfo } from "@/lib/types";
 export function InsuranceSection({ insurance }: { insurance: InsuranceInfo }) {
   return (
     <div className="card">
-      <p className="section-heading">🏥 Insurance</p>
+      <p className="section-heading">Insurance</p>
 
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.875rem" }}>
         <span

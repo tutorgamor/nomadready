@@ -81,7 +81,7 @@ export function ProfileSummaryCard({
           margin: "0 0 0.375rem",
         }}
       >
-        {profile.emoji} For {profile.label} travelers
+        For {profile.label} travelers
       </p>
       <p
         style={{

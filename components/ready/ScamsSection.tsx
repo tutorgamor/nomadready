@@ -3,7 +3,7 @@ import type { Scam } from "@/lib/types";
 export function ScamsSection({ scams }: { scams: Scam[] }) {
   return (
     <div className="card">
-      <p className="section-heading">⚠️ Common Scams</p>
+      <p className="section-heading">Common Scams</p>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {scams.map((scam, i) => (
           <div

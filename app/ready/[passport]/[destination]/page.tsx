@@ -298,17 +298,17 @@ export default async function ReadyPage({ params }: Props) {
               {dest.region}
             </p>
 
-            {/* Destination name — Cormorant Garamond 300 display */}
+            {/* Destination name — Cormorant Garamond display */}
             <h1
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(3.5rem, 13vw, 5.5rem)",
-                fontWeight: 300,
-                letterSpacing: "-0.02em",
+                fontWeight: 600,
+                letterSpacing: "-0.03em",
                 color: "rgba(255,255,255,0.97)",
                 margin: 0,
                 lineHeight: 0.95,
-                textShadow: "0 2px 28px rgba(0,0,0,0.55), 0 1px 6px rgba(0,0,0,0.35)",
+                textShadow: "0 2px 36px rgba(0,0,0,0.65), 0 1px 8px rgba(0,0,0,0.40)",
               }}
             >
               {dest.label}
@@ -329,80 +329,115 @@ export default async function ReadyPage({ params }: Props) {
             </p>
           </div>
 
-          {/* ── Signal strip: the 3 most important signals before scrolling ──
-              Visa status, budget floor, and best season answer
-              "can I go / what will it cost / when?" without scrolling.    */}
+          {/* ── Editorial caption band: 3-column fact strip ──
+              Visa / Budget floor / Best season — answers "can I go / cost / when"
+              in a horizontal editorial register, not frosted pills.        */}
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "0.5rem",
-              marginTop: "1.375rem",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr",
+              marginTop: "1.75rem",
+              paddingTop: "0.875rem",
+              borderTop: "1px solid rgba(255,255,255,0.18)",
             }}
           >
-            <span
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.35rem",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.92)",
-                background: "rgba(0,0,0,0.32)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                border: "1px solid rgba(255,255,255,0.18)",
-                padding: "0.32rem 0.78rem",
-                borderRadius: "9999px",
-              }}
-            >
-              <span aria-hidden style={{ color: "rgba(217,119,6,0.82)", fontSize: "0.8rem", lineHeight: 1 }}>◎</span>
-              {heroVisaLabel(data.visa)}
-            </span>
-
-            <span
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.92)",
-                background: "rgba(0,0,0,0.32)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                border: "1px solid rgba(255,255,255,0.18)",
-                padding: "0.32rem 0.78rem",
-                borderRadius: "9999px",
-              }}
-            >
-              from {formatTierAmount(data.budget.tiers.budget, data.budget.currency_symbol)}
-            </span>
-
-            {data.best_season.overall_best_months.length > 0 && (
-              <span
+            {/* Visa */}
+            <div style={{ paddingRight: "1rem" }}>
+              <p
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  fontSize: "0.72rem",
+                  fontSize: "0.6rem",
                   fontWeight: 700,
-                  letterSpacing: "0.06em",
+                  letterSpacing: "0.09em",
                   textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.92)",
-                  background: "rgba(0,0,0,0.32)",
-                  backdropFilter: "blur(8px)",
-                  WebkitBackdropFilter: "blur(8px)",
-                  border: "1px solid rgba(255,255,255,0.18)",
-                  padding: "0.32rem 0.78rem",
-                  borderRadius: "9999px",
+                  color: "rgba(217,119,6,0.80)",
+                  margin: "0 0 0.3rem",
                 }}
               >
-                {formatMonthRange(data.best_season.overall_best_months)}
-              </span>
-            )}
+                Visa
+              </p>
+              <p
+                style={{
+                  fontSize: "0.8125rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.01em",
+                  color: "rgba(255,255,255,0.94)",
+                  margin: 0,
+                  lineHeight: 1.3,
+                  textShadow: "0 1px 6px rgba(0,0,0,0.4)",
+                }}
+              >
+                {heroVisaLabel(data.visa)}
+              </p>
+            </div>
+
+            {/* Budget */}
+            <div
+              style={{
+                borderLeft: "1px solid rgba(255,255,255,0.14)",
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "0.6rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.09em",
+                  textTransform: "uppercase",
+                  color: "rgba(217,119,6,0.80)",
+                  margin: "0 0 0.3rem",
+                }}
+              >
+                Budget from
+              </p>
+              <p
+                style={{
+                  fontSize: "0.8125rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.01em",
+                  color: "rgba(255,255,255,0.94)",
+                  margin: 0,
+                  lineHeight: 1.3,
+                  textShadow: "0 1px 6px rgba(0,0,0,0.4)",
+                }}
+              >
+                {formatTierAmount(data.budget.tiers.budget, data.budget.currency_symbol)}
+              </p>
+            </div>
+
+            {/* Best season */}
+            <div
+              style={{
+                borderLeft: "1px solid rgba(255,255,255,0.14)",
+                paddingLeft: "1rem",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "0.6rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.09em",
+                  textTransform: "uppercase",
+                  color: "rgba(217,119,6,0.80)",
+                  margin: "0 0 0.3rem",
+                }}
+              >
+                Best season
+              </p>
+              <p
+                style={{
+                  fontSize: "0.8125rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.01em",
+                  color: "rgba(255,255,255,0.94)",
+                  margin: 0,
+                  lineHeight: 1.3,
+                  textShadow: "0 1px 6px rgba(0,0,0,0.4)",
+                }}
+              >
+                {formatMonthRange(data.best_season.overall_best_months) || "—"}
+              </p>
+            </div>
           </div>
 
           {/* ── Bottom meta: region + reviewed date ── */}
@@ -454,19 +489,22 @@ export default async function ReadyPage({ params }: Props) {
         hasCityMap={zonesGuide !== null}
       />
 
-      {/* ── All 10 sections ───────────────────────────────────── */}
+      {/* ── Primary editorial zone — wider container (Score, Visa, Budget) ── */}
       <div
-        className="page-container page-container--reading"
+        className="page-container"
         style={{
-          flex: 1,
           display: "flex",
           flexDirection: "column",
           gap: "1rem",
-          paddingTop: "1.25rem",
-          paddingBottom: "3.5rem",
+          paddingTop: "1.5rem",
+          paddingBottom: "0.5rem",
         }}
       >
-        {dest.travel_score && <TravelScoreSection score={dest.travel_score} />}
+        {dest.travel_score && (
+          <div id="score" style={SECTION_OFFSET}>
+            <TravelScoreSection score={dest.travel_score} />
+          </div>
+        )}
         <ProfileSummaryCard
           travelScore={dest.travel_score ?? null}
           budgetLow={formatTierAmount(data.budget.tiers.budget, data.budget.currency_symbol)}
@@ -474,10 +512,24 @@ export default async function ReadyPage({ params }: Props) {
           bestMonths={formatMonthRange(data.best_season.overall_best_months)}
           hasLocalGems={gems !== null}
         />
-        <div id="visa"       style={SECTION_OFFSET}><VisaSection       visa={data.visa} /></div>
+        <div id="visa"   style={SECTION_OFFSET}><VisaSection   visa={data.visa} /></div>
+        <div id="budget" style={SECTION_OFFSET}><BudgetSection budget={data.budget} passportCurrency={pass.currency} /></div>
+      </div>
+
+      {/* ── Reading zone — field-guide width for long-form content ── */}
+      <div
+        className="page-container page-container--reading"
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          paddingTop: "1rem",
+          paddingBottom: "3.5rem",
+        }}
+      >
         <div id="insurance"  style={SECTION_OFFSET}><InsuranceSection  insurance={data.insurance} /></div>
         <div id="season"     style={SECTION_OFFSET}><BestSeasonSection bestSeason={data.best_season} /></div>
-        <div id="budget"     style={SECTION_OFFSET}><BudgetSection     budget={data.budget} passportCurrency={pass.currency} /></div>
         <div id="apps"       style={SECTION_OFFSET}><AppsSection       apps={data.useful_apps} /></div>
         <div id="transport"  style={SECTION_OFFSET}><TransportSection  transport={data.transport} /></div>
         <div id="scams"      style={SECTION_OFFSET}><ScamsSection      scams={data.scams} /></div>

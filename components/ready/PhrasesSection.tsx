@@ -3,7 +3,7 @@ import type { Phrase } from "@/lib/types";
 export function PhrasesSection({ phrases }: { phrases: Phrase[] }) {
   return (
     <div className="card">
-      <p className="section-heading">🗣️ Local Phrases</p>
+      <p className="section-heading">Local Phrases</p>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {phrases.map((p, i) => (
           <div

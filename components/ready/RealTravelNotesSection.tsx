@@ -24,7 +24,7 @@ export function RealTravelNotesSection({ notes }: { notes: RealTravelNote[] }) {
 
   return (
     <div className="card card--warm">
-      <p className="section-heading">📌 Things Nobody Tells You</p>
+      <p className="section-heading">Things Nobody Tells You</p>
       <p
         style={{
           fontSize: "0.8125rem",

@@ -52,7 +52,7 @@ export function RemoteWorkSection({ remoteWork }: { remoteWork: RemoteWork }) {
       >
         <div>
           <p className="section-heading" style={{ marginBottom: "0.2rem" }}>
-            💻 Remote Work Readiness
+            Remote Work Readiness
           </p>
           <p style={{ fontSize: "0.8125rem", color: "var(--text-muted)", margin: 0, lineHeight: 1.4 }}>
             For nomads, online teachers &amp; long stays

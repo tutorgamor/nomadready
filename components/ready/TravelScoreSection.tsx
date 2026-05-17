@@ -3,192 +3,221 @@
 import type { TravelScore } from "@/lib/types";
 import { useProfileContext } from "@/lib/profile";
 
-function scoreStyle(score: number): { color: string; track: string } {
-  if (score >= 85) return { color: "#15803d", track: "#bbf7d0" };
-  if (score >= 70) return { color: "#92400e", track: "#fde68a" };
-  return { color: "#b91c1c", track: "#fecaca" };
-}
-
-function overallBadgeStyle(score: number): { bg: string; border: string; color: string } {
-  if (score >= 85) return { bg: "#f0fdf4", border: "#86efac", color: "#15803d" };
-  if (score >= 70) return { bg: "#fffbeb", border: "#fcd34d", color: "#92400e" };
-  return { bg: "#fef2f2", border: "#fca5a5", color: "#b91c1c" };
-}
-
-const CATEGORIES = [
-  { key: "visa_ease"      as const, label: "Visa ease",   icon: "🛂" },
-  { key: "budget"         as const, label: "Budget",       icon: "💸" },
-  { key: "safety"         as const, label: "Safety",       icon: "🔒" },
-  { key: "internet"       as const, label: "Internet",     icon: "📶" },
-  { key: "transport"      as const, label: "Transport",    icon: "🚌" },
-  { key: "nomad_friendly" as const, label: "Nomad scene",  icon: "💻" },
+const CATEGORIES: { key: keyof Omit<TravelScore, "overall">; label: string }[] = [
+  { key: "visa_ease",       label: "Visa"     },
+  { key: "budget",          label: "Budget"   },
+  { key: "safety",          label: "Safety"   },
+  { key: "internet",        label: "Internet" },
+  { key: "transport",       label: "Transit"  },
+  { key: "nomad_friendly",  label: "Nomad"    },
 ];
+
+function scoreColor(v: number): string {
+  if (v >= 85) return "#16a34a";
+  if (v >= 70) return "#d97706";
+  return "#dc2626";
+}
 
 export function TravelScoreSection({ score }: { score: TravelScore }) {
   const { profile } = useProfileContext();
-  const badge = overallBadgeStyle(score.overall);
+  const color = scoreColor(score.overall);
 
   return (
-    <div className="card">
-      {/* Title row */}
+    <div
+      className="card"
+      style={{ padding: 0, overflow: "hidden" }}
+    >
+      {/* ── Header ── */}
       <div
         style={{
           display: "flex",
-          alignItems: "flex-start",
+          alignItems: "baseline",
           justifyContent: "space-between",
           gap: "1rem",
-          marginBottom: "0.5rem",
+          padding: "0.875rem 1.375rem 0.75rem",
+          borderBottom: "1px solid var(--border)",
+          flexWrap: "wrap",
         }}
       >
-        <div>
-          <p className="section-heading" style={{ marginBottom: "0.2rem" }}>
-            ✈️ Travel Readiness
-          </p>
-          <p style={{ fontSize: "0.8125rem", color: "var(--text-muted)", margin: 0, lineHeight: 1.4 }}>
-            Destination at a glance
-          </p>
-        </div>
+        <p
+          style={{
+            fontSize: "0.7rem",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "var(--text-muted)",
+            margin: 0,
+          }}
+        >
+          Travel Readiness
+        </p>
+        <p
+          style={{
+            fontSize: "0.8rem",
+            color: "var(--text-muted)",
+            margin: 0,
+            fontStyle: "italic",
+            lineHeight: 1.4,
+          }}
+        >
+          {profile.scoreBlurb}
+        </p>
+      </div>
 
-        {/* Overall score badge */}
+      {/* ── Instrument body: dial + sub-score grid ── */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "auto 1fr",
+          gap: "1.5rem",
+          padding: "1.25rem 1.375rem 1.125rem",
+          alignItems: "center",
+        }}
+      >
+        {/* Central field-score dial */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            background: badge.bg,
-            border: `2px solid ${badge.border}`,
-            borderRadius: "0.75rem",
-            padding: "0.45rem 0.875rem 0.35rem",
+            gap: "0.375rem",
             flexShrink: 0,
           }}
         >
-          <span
+          <div
             style={{
-              fontSize: "1.875rem",
-              fontWeight: 800,
-              lineHeight: 1,
-              color: badge.color,
-              letterSpacing: "-0.04em",
+              width: "92px",
+              height: "92px",
+              borderRadius: "50%",
+              border: `1.5px solid ${color}50`,
+              boxShadow: `0 0 0 5px ${color}0e, var(--shadow-card)`,
+              background: "linear-gradient(160deg, #ffffff 0%, #fef9f3 100%)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            {score.overall}
-          </span>
-          <span
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "2.375rem",
+                fontWeight: 600,
+                letterSpacing: "-0.04em",
+                color,
+                lineHeight: 1,
+              }}
+            >
+              {score.overall}
+            </span>
+            <span
+              style={{
+                fontSize: "0.55rem",
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "var(--text-muted)",
+                marginTop: "0.1rem",
+              }}
+            >
+              /100
+            </span>
+          </div>
+          <p
             style={{
-              fontSize: "0.625rem",
-              fontWeight: 600,
+              fontSize: "0.6rem",
+              fontWeight: 700,
               letterSpacing: "0.07em",
               textTransform: "uppercase",
-              color: badge.color,
-              opacity: 0.65,
+              color: "var(--text-muted)",
+              margin: 0,
             }}
           >
-            /100
-          </span>
+            Field score
+          </p>
         </div>
-      </div>
 
-      {/* Profile blurb */}
-      <p
-        style={{
-          fontSize: "0.8rem",
-          color: "var(--accent-dark, #7c4b2a)",
-          margin: "0 0 1rem",
-          fontStyle: "italic",
-          opacity: 0.8,
-          lineHeight: 1.5,
-        }}
-      >
-        {profile.scoreBlurb}
-      </p>
-
-      {/* Category rows */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        {CATEGORIES.map(({ key, label, icon }) => {
-          const val = score[key];
-          const s = scoreStyle(val);
-          const isHighlighted = profile.scoreHighlight.includes(key);
-          return (
-            <div
-              key={key}
-              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-            >
-              <span
-                aria-hidden="true"
-                style={{ fontSize: "0.875rem", flexShrink: 0, width: "1.125rem", textAlign: "center" }}
-              >
-                {icon}
-              </span>
-              <span
+        {/* 3 × 2 sub-score cell grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            borderTop: "1px solid var(--border)",
+            borderLeft: "1px solid var(--border)",
+          }}
+        >
+          {CATEGORIES.map(({ key, label }) => {
+            const val = score[key] as number;
+            const c = scoreColor(val);
+            const highlighted = profile.scoreHighlight.includes(key);
+            return (
+              <div
+                key={key}
                 style={{
-                  fontSize: "0.8rem",
-                  fontWeight: isHighlighted ? 700 : 500,
-                  color: isHighlighted ? "var(--text-primary)" : "var(--text-secondary)",
-                  flexShrink: 0,
-                  width: "5.25rem",
+                  position: "relative",
+                  padding: "0.625rem 0.75rem 0.5rem",
+                  borderRight: "1px solid var(--border)",
+                  borderBottom: "1px solid var(--border)",
+                  background: highlighted
+                    ? "rgba(254,243,199,0.42)"
+                    : "transparent",
                 }}
               >
-                {label}
-                {isHighlighted && (
-                  <span
+                {highlighted && (
+                  <div
                     aria-hidden="true"
                     style={{
-                      display: "inline-block",
-                      marginLeft: "0.3rem",
-                      width: "0.35rem",
-                      height: "0.35rem",
-                      borderRadius: "50%",
-                      background: "var(--accent, #c17b3a)",
-                      verticalAlign: "middle",
-                      marginBottom: "0.1rem",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: "2px",
+                      background: "var(--accent)",
                     }}
                   />
                 )}
-              </span>
-              {/* Bar track */}
-              <div
-                style={{
-                  flex: 1,
-                  height: "0.25rem",
-                  background: "var(--border)",
-                  borderRadius: "9999px",
-                  overflow: "hidden",
-                }}
-              >
-                <div
+                <p
                   style={{
-                    height: "100%",
-                    width: `${val}%`,
-                    background: s.color,
-                    borderRadius: "9999px",
+                    fontFamily: "var(--font-geist-mono), monospace",
+                    fontSize: "1.25rem",
+                    fontWeight: 700,
+                    letterSpacing: "-0.03em",
+                    color: c,
+                    margin: 0,
+                    lineHeight: 1,
                   }}
-                />
+                >
+                  {val}
+                </p>
+                <p
+                  style={{
+                    fontSize: "0.55rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.07em",
+                    textTransform: "uppercase",
+                    color: highlighted ? "var(--text-secondary)" : "var(--text-muted)",
+                    margin: "0.2rem 0 0",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {label}
+                </p>
               </div>
-              <span
-                style={{
-                  fontSize: "0.8rem",
-                  fontWeight: 700,
-                  color: s.color,
-                  width: "1.875rem",
-                  textAlign: "right",
-                  flexShrink: 0,
-                }}
-              >
-                {val}
-              </span>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
-      {/* Disclaimer */}
+      {/* ── Footer ── */}
       <p
         style={{
           fontSize: "0.6875rem",
           color: "var(--text-muted)",
-          margin: "1rem 0 0",
-          lineHeight: 1.5,
           fontStyle: "italic",
+          lineHeight: 1.5,
+          margin: 0,
+          padding: "0.625rem 1.375rem 0.875rem",
+          borderTop: "1px solid var(--border)",
         }}
       >
         Editorial travel scores — approximate and subjective.

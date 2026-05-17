@@ -1,5 +1,5 @@
-import { SectionHeading } from './SectionHeading';
 "use client";
+import { SectionHeading } from './SectionHeading';
 
 import type { LocalGem, GemGroup } from "@/lib/types";
 import { useProfileContext } from "@/lib/profile";

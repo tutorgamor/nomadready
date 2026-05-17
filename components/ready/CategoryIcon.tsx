@@ -237,16 +237,25 @@ const ICON_MAP: Record<CategoryType, () => React.ReactElement> = {
 
 interface CategoryIconProps {
   type: CategoryType;
-  size?: number;
+  /** Override the category color — e.g. "white" for active nav pills */
+  color?: string;
+  /** Scale factor relative to the base 18px size (default 1) */
+  scale?: number;
 }
 
-export function CategoryIcon({ type }: CategoryIconProps) {
-  const Icon = ICON_MAP[type];
-  const color = CATEGORY_COLOR[type];
+export function CategoryIcon({ type, color, scale = 1 }: CategoryIconProps) {
+  const Icon  = ICON_MAP[type];
+  const c     = color ?? CATEGORY_COLOR[type];
   return (
     <span
-      style={{ color, display: "inline-flex", flexShrink: 0 }}
       aria-hidden="true"
+      style={{
+        color: c,
+        display: "inline-flex",
+        flexShrink: 0,
+        transform: scale !== 1 ? `scale(${scale})` : undefined,
+        transformOrigin: "center",
+      }}
     >
       <Icon />
     </span>

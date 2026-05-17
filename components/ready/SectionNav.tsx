@@ -2,27 +2,28 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Magnetic } from "@/components/motion-primitives/magnetic";
+import { CategoryIcon, type CategoryType } from "@/components/ready/CategoryIcon";
 
 const SPRING = { stiffness: 26.7, damping: 4.1, mass: 0.2 };
 
 const BASE_SECTIONS = [
-  { id: "visa",       label: "Visa"       },
-  { id: "insurance",  label: "Insurance"  },
-  { id: "season",     label: "Season"     },
-  { id: "budget",     label: "Budget"     },
-  { id: "apps",       label: "Apps"       },
-  { id: "transport",  label: "Transport"  },
-  { id: "scams",      label: "Scams"      },
-  { id: "phrases",    label: "Phrases"    },
-  { id: "emergency",  label: "Emergency"  },
-  { id: "checklist",  label: "Checklist"  },
+  { id: "visa",       label: "Visa",       category: "visa"       as CategoryType },
+  { id: "insurance",  label: "Insurance",  category: "insurance"  as CategoryType },
+  { id: "season",     label: "Season",     category: "season"     as CategoryType },
+  { id: "budget",     label: "Budget",     category: "budget"     as CategoryType },
+  { id: "apps",       label: "Apps",       category: "apps"       as CategoryType },
+  { id: "transport",  label: "Transport",  category: "transport"  as CategoryType },
+  { id: "scams",      label: "Scams",      category: "scams"      as CategoryType },
+  { id: "phrases",    label: "Phrases",    category: "phrases"    as CategoryType },
+  { id: "emergency",  label: "Emergency",  category: "emergency"  as CategoryType },
+  { id: "checklist",  label: "Checklist",  category: "checklist"  as CategoryType },
 ] as const;
 
-const NOTES_SECTION   = { id: "notes",    label: "Notes"    } as const;
-const GEMS_SECTION    = { id: "gems",     label: "Gems"     } as const;
-const REMOTE_SECTION  = { id: "remote",   label: "Remote"   } as const;
-const REALITY_SECTION = { id: "reality",  label: "Reality"  } as const;
-const MAP_SECTION     = { id: "city-map", label: "Map"      } as const;
+const NOTES_SECTION   = { id: "notes",    label: "Notes",   category: "notes"     as CategoryType } as const;
+const GEMS_SECTION    = { id: "gems",     label: "Gems",    category: "gems"      as CategoryType } as const;
+const REMOTE_SECTION  = { id: "remote",   label: "Remote",  category: "remote"    as CategoryType } as const;
+const REALITY_SECTION = { id: "reality",  label: "Reality", category: "reality"   as CategoryType } as const;
+const MAP_SECTION     = { id: "city-map", label: "Map",     category: "map"       as CategoryType } as const;
 
 type SectionId = (typeof BASE_SECTIONS)[number]["id"] | "notes" | "gems" | "remote" | "reality" | "city-map";
 
@@ -97,7 +98,7 @@ export function SectionNav({ hasGems = false, hasNotes = false, hasRemoteWork = 
         borderBottom: "1px solid var(--border)",
       }}
     >
-      {sections.map(({ id, label }) => {
+      {sections.map(({ id, label, category }) => {
         const isActive = active === id;
         return (
           <Magnetic key={id} intensity={0.2} range={80} actionArea="self" springOptions={SPRING}>
@@ -108,12 +109,13 @@ export function SectionNav({ hasGems = false, hasNotes = false, hasRemoteWork = 
               style={{
                 display: "inline-flex",
                 alignItems: "center",
+                gap: "0.35rem",
                 whiteSpace: "nowrap",
                 flexShrink: 0,
                 fontSize: "0.75rem",
                 fontWeight: isActive ? 600 : 500,
                 letterSpacing: isActive ? "0.01em" : "0.005em",
-                padding: "0.3rem 0.875rem",
+                padding: "0.3rem 0.75rem 0.3rem 0.55rem",
                 borderRadius: "9999px",
                 border: "1.5px solid",
                 borderColor: isActive ? "var(--accent)" : "var(--border-strong)",
@@ -123,6 +125,11 @@ export function SectionNav({ hasGems = false, hasNotes = false, hasRemoteWork = 
                 transition: "background 150ms ease, color 150ms ease, border-color 150ms ease",
               }}
             >
+              <CategoryIcon
+                type={category}
+                scale={0.72}
+                color={isActive ? "rgba(255,255,255,0.92)" : undefined}
+              />
               {label}
             </a>
           </Magnetic>

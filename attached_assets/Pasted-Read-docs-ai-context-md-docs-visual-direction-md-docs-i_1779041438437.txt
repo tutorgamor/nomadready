@@ -1,0 +1,139 @@
+Read:
+- docs/ai-context.md
+- docs/visual-direction.md
+- docs/implementation-rules.md
+
+Then analyze the current NomadReady homepage and dashboard experience.
+
+Mission:
+Continue evolving NomadReady into a premium cinematic editorial travel platform.
+
+NomadReady must feel like:
+“a cinematic travel field guide rendered in software.”
+
+The experience should feel:
+- atmospheric
+- tactile
+- editorial
+- warm
+- immersive
+- calm
+- emotionally intelligent
+- desktop-native
+
+Never:
+- startup SaaS
+- fintech dashboard
+- generic travel app
+- Awwwards gimmick site
+- over-animated experience
+
+Use only assets from:
+public/assets/editorial/
+
+This folder is the official visual source of truth.
+
+It contains:
+- stamps
+- tickets
+- postcards
+- atlas fragments
+- passport imagery
+- textures
+- destination panels
+
+Do not introduce random decorative elements or unrelated motifs.
+
+Study premium editorial and luxury digital experiences for interaction inspiration only.
+
+References:
+- Apple product storytelling
+- Monocle editorial layouts
+- Rimowa digital experience
+- Aman hospitality atmosphere
+- Linear motion refinement
+
+Extract only:
+- cinematic pacing
+- restrained text reveal
+- subtle atmospheric motion
+- editorial spacing rhythm
+- premium hover behavior
+- calm scroll transitions
+- immersive section composition
+
+Do NOT copy:
+- branding
+- layouts
+- color systems
+- visual identity
+
+Do NOT introduce:
+- heavy parallax
+- WebGL overload
+- scroll hijacking
+- flashy transitions
+- gaming aesthetics
+- exaggerated motion
+- cyberpunk visuals
+
+Current priority:
+Add a new editorial “Field Note” section focused only on Bangkok.
+
+This is NOT a blog post.
+It should feel like a fragment discovered inside a luxury travel field guide.
+
+Emotional direction:
+
+Bangkok initially felt:
+- overwhelming
+- noisy
+- chaotic
+- dense
+- exhausting
+
+But after staying longer, the city became:
+- strangely comforting
+- emotionally alive
+- rhythmic
+- familiar
+
+The emotional transformation is important:
+chaos → rhythm → attachment.
+
+Add:
+- one short editorial reflection
+- one subtle emotional travel observation
+- one atmospheric memory fragment
+
+Example tone inspiration:
+“Bangkok feels loud for the first few days.
+Then suddenly, the chaos becomes rhythm.”
+
+Do not copy this text directly.
+
+Visual direction for the section:
+- warm editorial spacing
+- cinematic typography
+- tactile atmosphere
+- subtle motion
+- restrained luxury
+- quiet composition
+- field-guide feeling
+
+The section should feel:
+personal, premium, cinematic, and emotionally real.
+
+Avoid:
+- influencer storytelling
+- social-media energy
+- generic blog cards
+- content-heavy layouts
+- startup UX patterns
+
+Workflow:
+1. Audit the best location for this new section
+2. Explain briefly why
+3. Implement only this section
+4. Preserve performance and responsiveness
+5. Summarize changes after implementation

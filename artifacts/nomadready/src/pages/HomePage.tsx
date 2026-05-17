@@ -14,6 +14,7 @@ import { HeroCrossfade } from "@/components/home/HeroCrossfade";
 import { HeroReel } from "@/components/home/HeroReel";
 import { DestinationPicker, type DestSummary } from "@/components/home/DestinationPicker";
 import { GlobeMap } from "@/components/motion/GlobeMap";
+import { FieldNote } from "@/components/home/FieldNote";
 import { getT } from "@/lib/i18n";
 import { InView } from "@/components/motion-primitives/in-view";
 import type { UseInViewOptions } from "motion/react";
@@ -247,6 +248,15 @@ export default function HomePage() {
               summaries={summaries}
               passportId={activePassportId}
             />
+          </div>
+        </InView>
+      </section>
+
+      {/* ── Field Note — editorial pause between grid and globe ── */}
+      <section style={{ paddingTop: "1rem", paddingBottom: "3.5rem" }}>
+        <InView variants={REVEAL} transition={{ ...REVEAL_TX, delay: 0.05 }} viewOptions={REVEAL_OPTS}>
+          <div className="page-container">
+            <FieldNote />
           </div>
         </InView>
       </section>

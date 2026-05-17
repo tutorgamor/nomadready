@@ -219,15 +219,26 @@ function BackLink({ to, className, style, children }: {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function DestinationPage() {
-  const params        = useParams<{ passport: string; destination: string }>();
+  const params = useParams<{ passport: string; destination?: string; country?: string; city?: string }>();
   const passportId    = params.passport    ?? "fr";
-  const destinationId = params.destination ?? "";
+  const countryId     = params.country     ?? params.destination ?? "";
+  const cityId        = params.city        ?? "";
+  const destinationId = countryId;
   const t             = getT(passportId);
+
+  // When accessed from a city route (/ready/:passport/:country/:city), back goes to CountryPage.
+  // Otherwise back goes to the atlas home.
+  const backTo = cityId
+    ? `/ready/${passportId}/${countryId}`
+    : `/?passport=${passportId}&skip_gateway=1`;
 
   const dest = destinations.find((d) => d.id === destinationId);
   const pass = passports.find((p)    => p.id === passportId);
 
-  const readyKey   = Object.keys(readyFiles).find((k)   => k.endsWith(`/${passportId}-${destinationId}.json`));
+  // Try city-specific file first (fr-thailand-bangkok.json), fall back to country file (fr-thailand.json)
+  const cityFileKey    = cityId ? Object.keys(readyFiles).find(k => k.endsWith(`/${passportId}-${countryId}-${cityId}.json`)) : undefined;
+  const countryFileKey = Object.keys(readyFiles).find((k)   => k.endsWith(`/${passportId}-${destinationId}.json`));
+  const readyKey       = cityFileKey ?? countryFileKey;
   const notesKey   = Object.keys(notesFiles).find((k)   => k.endsWith(`/${destinationId}.json`));
   const realityKey = Object.keys(realityFiles).find((k) => k.endsWith(`/${destinationId}.json`));
   const gemsKey    = Object.keys(placeFiles).find((k)   => k.endsWith(`/${destinationId}.json`));
@@ -244,7 +255,7 @@ export default function DestinationPage() {
       <main className="page-container flex-1 flex flex-col items-center justify-center gap-6 py-24 text-center" style={{ minHeight: "100dvh" }}>
         <p style={{ fontSize: "3rem" }}>🗺️</p>
         <h1 style={{ fontSize: "1.5rem", fontWeight: 700 }}>Destination not found</h1>
-        <BackLink to={`/?passport=${passportId}&skip_gateway=1`} style={{ display: "inline-flex", background: "var(--accent)", color: "#fff", borderRadius: "9999px", padding: "0.5rem 1.25rem", textDecoration: "none", fontWeight: 600 }}>
+        <BackLink to={backTo} style={{ display: "inline-flex", background: "var(--accent)", color: "#fff", borderRadius: "9999px", padding: "0.5rem 1.25rem", textDecoration: "none", fontWeight: 600 }}>
           {t.backToAtlas}
         </BackLink>
       </main>
@@ -294,7 +305,7 @@ export default function DestinationPage() {
         </div>
 
         <div className="th-hero-topbar">
-          <BackLink to={`/?passport=${passportId}&skip_gateway=1`} className="th-back-link">
+          <BackLink to={backTo} className="th-back-link">
             {t.backToAtlas}
           </BackLink>
           <span className="th-hero-tag">
@@ -686,7 +697,7 @@ export default function DestinationPage() {
           </Reveal>
           <Reveal delay={0.12}>
             <div className="th-cta-actions">
-              <BackLink to={`/?passport=${passportId}&skip_gateway=1`} className="th-cta-primary">
+              <BackLink to={backTo} className="th-cta-primary">
                 {t.backToAtlas.replace("← ", "")} →
               </BackLink>
               {destinationId !== "thailand" && (

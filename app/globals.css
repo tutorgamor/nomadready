@@ -486,6 +486,30 @@ a:hover {
   }
 }
 
+/* Wordmark — absolute cinematic position on desktop */
+.home-hero-wordmark {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .home-hero-wordmark {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    position: absolute;
+    top: 2rem;
+    left: var(--page-gutter);
+    z-index: 5;
+  }
+}
+
+/* Inline wordmark — mobile only, hidden on desktop */
+@media (min-width: 768px) {
+  .home-wordmark-inline {
+    display: none;
+  }
+}
+
 /* ─── Desktop Responsive ─────────────────────────────────── */
 
 @media (min-width: 768px) {
@@ -528,7 +552,7 @@ a:hover {
   padding-bottom: 3rem;
 }
 
-/* Homepage header — more generous padding on desktop */
+/* Homepage header — cinematic full-viewport on desktop */
 .home-header {
   padding-top: 3.5rem;
   padding-bottom: 3.25rem; /* extra bottom room for terrain wave */
@@ -536,8 +560,11 @@ a:hover {
 
 @media (min-width: 768px) {
   .home-header {
-    padding-top: 6.75rem;
-    padding-bottom: 5.5rem;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
@@ -559,6 +586,8 @@ a:hover {
     align-items: flex-end;
     justify-content: space-between;
     gap: 3rem;
+    padding-top: 5rem;   /* internal breathing from top edge */
+    padding-bottom: 4rem; /* space above terrain wave */
   }
 
   .home-hero-aside {
@@ -618,13 +647,9 @@ a:hover {
     display: block;
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      108deg,
-      rgba(8,5,2,0.68) 0%,
-      rgba(8,5,2,0.40) 44%,
-      rgba(4,2,0,0.12) 64%,
-      rgba(0,0,0,0.01) 100%
-    );
+    background:
+      linear-gradient(to top, rgba(8,5,2,0.78) 0%, rgba(8,5,2,0.38) 22%, transparent 48%),
+      linear-gradient(108deg, rgba(8,5,2,0.52) 0%, rgba(8,5,2,0.28) 44%, rgba(4,2,0,0.06) 64%, transparent 100%);
     z-index: 1;
     pointer-events: none;
   }
@@ -637,10 +662,10 @@ a:hover {
   }
   .home-header .hero-heading-light {
     color: rgba(255,255,255,0.97);
-    text-shadow: 0 2px 28px rgba(0,0,0,0.60), 0 1px 6px rgba(0,0,0,0.32);
+    text-shadow: 0 2px 40px rgba(0,0,0,0.72), 0 1px 10px rgba(0,0,0,0.44), 0 4px 80px rgba(0,0,0,0.30);
   }
   .home-header .hero-text-light-sub {
-    color: rgba(247,243,238,0.78);
+    color: rgba(247,243,238,0.84);
   }
 }
 

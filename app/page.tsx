@@ -58,15 +58,11 @@ function heroAsset(filename: string, fallback: string): string {
 
 const HERO_IMGS = {
   // Slot: hero-main-bg.webp — main cinematic scene (full-bleed scenic photo)
-  main:   heroAsset("hero-main-bg.webp",       "https://images.unsplash.com/photo-1464822759844-d150ad6a8c1d?w=640&q=82&auto=format&fit=crop"),
-  // Slot: polaroid-thailand.webp — tropical/beach polaroid snap (top-left)
-  tropic: heroAsset("polaroid-thailand.webp",  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop"),
-  // Slot: polaroid-community.webp — nomad workspace stamp card (top-right floating)
-  nomad:  heroAsset("polaroid-community.webp", "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=320&q=75&auto=format&fit=crop"),
-  // Slot: polaroid-japan.webp — Japan street mood polaroid (bottom-left)
-  japan:  heroAsset("polaroid-japan.webp",     "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&q=78&auto=format&fit=crop"),
-  // Slot: passport-stamps.png — worn atlas / map background texture (behind composition)
-  map:    heroAsset("passport-stamps.png",     "https://images.unsplash.com/photo-1526178618343-7f6c6c99a1d7?w=480&q=75&auto=format&fit=crop"),
+  main:   heroAsset("hero-main-bg.webp",      "https://images.unsplash.com/photo-1464822759844-d150ad6a8c1d?w=640&q=82&auto=format&fit=crop"),
+  // Slot: polaroid-thailand.webp — tropical/beach snap, mobile scene only
+  tropic: heroAsset("polaroid-thailand.webp", "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop"),
+  // Slot: polaroid-japan.webp — Japan street mood, mobile scene only
+  japan:  heroAsset("polaroid-japan.webp",    "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&q=78&auto=format&fit=crop"),
 };
 
 // Shared reveal config for below-fold sections
@@ -195,14 +191,21 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             />
           </svg>
         </div>
-        <div className="page-container" style={{ position: "relative", zIndex: 4 }}>
+        {/* Brand wordmark — absolute top-left anchor on desktop */}
+        <div className="home-hero-wordmark anim-fade-down">
+          <span style={{ fontSize: "0.9rem", color: "var(--accent)", lineHeight: 1, marginTop: "1px" }} aria-hidden="true">✦</span>
+          <span className="hero-text-light" style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Nomad</span>
+          <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--accent)" }}>Ready</span>
+        </div>
+
+        <div className="page-container" style={{ position: "relative", zIndex: 4, flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
           <div className="home-hero-layout">
 
             {/* ── Left: text + selector ── */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
 
-              {/* Brand wordmark */}
-              <div className="anim-fade-down" style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+              {/* Brand wordmark — mobile only; desktop uses absolute .home-hero-wordmark */}
+              <div className="home-wordmark-inline anim-fade-down" style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                 <span style={{ fontSize: "0.9rem", color: "var(--accent)", lineHeight: 1, marginTop: "1px" }} aria-hidden="true">✦</span>
                 <span className="hero-text-light" style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Nomad</span>
                 <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--accent)" }}>Ready</span>
@@ -210,14 +213,14 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
               {/* Headline */}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-                <p className="anim-fade-up anim-delay-1" style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent)", margin: 0, opacity: 0.85 }}>
+                <p className="anim-fade-up anim-delay-1" style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent)", margin: 0 }}>
                   Travel field guide
                 </p>
                 <h1 className="hero-heading-light anim-reveal" style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(2.75rem, 8.5vw, 4.75rem)",
-                  fontWeight: 300,
-                  letterSpacing: "-0.02em",
+                  fontSize: "clamp(3rem, 6vw, 5.5rem)",
+                  fontWeight: 600,
+                  letterSpacing: "-0.03em",
                   lineHeight: 1.05,
                   margin: 0,
                 }}>
@@ -241,153 +244,116 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
             </div>
 
-            {/* ── Right: Cinematic photo composition (desktop only) ── */}
+            {/* ── Right: Editorial destination panel (desktop only) ── */}
             <div className="home-hero-aside anim-fade-up anim-delay-2" aria-hidden="true">
 
-              {/* Layered editorial photo collage */}
-              <div style={{ position: "relative", width: "400px", height: "340px" }}>
+              {/* Single column — fixes width for all children */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", width: "min(42vw, 520px)" }}>
 
-                {/* Narrative route arcs — dashed travel itinerary connecting photo landmarks */}
-                <svg
-                  viewBox="0 0 400 340"
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 8, pointerEvents: "none", display: "block" }}
-                >
-                  {/* Arc: Japan polaroid → Tropical polaroid */}
-                  <path d="M 168 252 C 185 208 155 185 90 140" stroke="rgba(217,119,6,0.52)" strokeWidth="1.5" strokeDasharray="4 7" fill="none" />
-                  {/* Arc: Tropical polaroid top-right → Nomad stamp */}
-                  <path d="M 154 14 C 218 2 268 24 302 49" stroke="rgba(217,119,6,0.42)" strokeWidth="1" strokeDasharray="3 6" fill="none" />
-                  {/* Pin marker — Tropical polaroid anchor */}
-                  <circle cx="90" cy="140" r="3" fill="none" stroke="rgba(217,119,6,0.72)" strokeWidth="1.5" />
-                  <circle cx="90" cy="140" r="1.5" fill="rgba(217,119,6,0.88)" />
-                  {/* Pin marker — Japan polaroid anchor */}
-                  <circle cx="168" cy="252" r="2.5" fill="none" stroke="rgba(217,119,6,0.65)" strokeWidth="1.5" />
-                  <circle cx="168" cy="252" r="1.5" fill="rgba(217,119,6,0.78)" />
-                </svg>
+                {/* Composition wrapper — provides relative context for passport artifact overflow */}
+                <div style={{ position: "relative", paddingTop: "48px" }}>
 
-                {/* Polaroid snap — Thailand (top-left, primary scatter card) */}
-                <div className="anim-float-gentle" style={{ position: "absolute", top: "10px", left: "10px", zIndex: 10 }}>
-                <div
-                  style={{
-                    position: "relative",
-                    transform: "rotate(-4.5deg)",
-                    background: "#ffffff",
-                    padding: "8px 8px 28px",
-                    borderRadius: "3px",
-                    width: "158px",
-                    boxShadow: "0 20px 52px rgba(0,0,0,0.40), 0 4px 14px rgba(0,0,0,0.22)",
-                  }}
-                >
-                  {/* Tape strip — travel journal adhesive detail */}
-                  <div style={{ position: "absolute", top: "-5px", left: "50%", transform: "translateX(-50%) rotate(1deg)", width: "38px", height: "11px", background: "rgba(217,119,6,0.26)", borderRadius: "1px", zIndex: 11 }} />
-                  <img
-                    src={HERO_IMGS.tropic}
-                    alt=""
-                    style={{ width: "100%", height: "106px", objectFit: "cover", display: "block" }}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  {/* Postmark stamp — explorer journal detail */}
-                  <div style={{ position: "absolute", top: "10px", right: "8px" }}>
-                    <svg width="30" height="30" viewBox="0 0 30 30">
-                      <circle cx="15" cy="15" r="12.5" fill="none" stroke="rgba(217,119,6,0.42)" strokeWidth="1.5" strokeDasharray="2 2.5" />
-                      <text x="15" y="13" textAnchor="middle" fontSize="4.5" fontWeight="700" letterSpacing="0.8" fill="rgba(217,119,6,0.52)" fontFamily="system-ui,sans-serif">NOMAD</text>
-                      <text x="15" y="19" textAnchor="middle" fontSize="4.5" fontWeight="700" letterSpacing="0.8" fill="rgba(217,119,6,0.52)" fontFamily="system-ui,sans-serif">READY</text>
-                    </svg>
+                  {/* Passport artifact — outer holds position + rotation, inner carries float animation */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: "-16px",
+                      zIndex: 10,
+                      transform: "rotate(5deg)",
+                    }}
+                  >
+                    <div className="anim-float-gentle">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src="/assets/editorial/old%20passport/old-passport.png"
+                        alt=""
+                        style={{
+                          width: "108px",
+                          height: "auto",
+                          borderRadius: "4px",
+                          boxShadow: "var(--shadow-float)",
+                          display: "block",
+                        }}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
                   </div>
-                  <p style={{ margin: "6px 0 0", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", textAlign: "center" }}>
-                    ✦ Into the wild
-                  </p>
-                </div>
+
+                  {/* Primary editorial panel — Indonesia golden hour */}
+                  <div
+                    style={{
+                      position: "relative",
+                      borderRadius: "var(--radius-2xl)",
+                      overflow: "hidden",
+                      isolation: "isolate",
+                      transform: "rotate(-2.5deg)",
+                      boxShadow: "var(--shadow-cinematic)",
+                      border: "1px solid rgba(180,130,65,0.22)",
+                      aspectRatio: "16 / 10",
+                    }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/assets/editorial/panels/panel-indonesia.png"
+                      alt=""
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: "center 45%",
+                        display: "block",
+                      }}
+                      fetchPriority="high"
+                      decoding="async"
+                    />
+                    {/* Paper grain */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "url('/assets/ui/editorial-paper-texture.webp') center / cover",
+                        opacity: 0.05,
+                        mixBlendMode: "multiply",
+                        pointerEvents: "none",
+                      }}
+                    />
+                    {/* Compass accent — atlas instrument watermark, multiply blend */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/assets/editorial/compass/compass.jpg"
+                      alt=""
+                      style={{
+                        position: "absolute",
+                        bottom: "10px",
+                        right: "12px",
+                        width: "54px",
+                        height: "auto",
+                        opacity: 0.28,
+                        mixBlendMode: "multiply",
+                        pointerEvents: "none",
+                        display: "block",
+                      }}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+
                 </div>
 
-                {/* Polaroid snap — Japan Street (bottom-left, slight angle) */}
-                <div className="anim-float-gentle" style={{ position: "absolute", bottom: "18px", left: "16px", zIndex: 9, animationDelay: "1.4s" }}>
-                <div
-                  style={{
-                    position: "relative",
-                    transform: "rotate(4.5deg)",
-                    background: "#ffffff",
-                    padding: "7px 7px 24px",
-                    borderRadius: "3px",
-                    width: "136px",
-                    boxShadow: "0 16px 44px rgba(0,0,0,0.36), 0 4px 12px rgba(0,0,0,0.18)",
-                  }}
-                >
-                  <img
-                    src={HERO_IMGS.japan}
-                    alt=""
-                    style={{ width: "100%", height: "94px", objectFit: "cover", display: "block" }}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  {/* Page-corner fold — paper memory detail */}
-                  <div style={{ position: "absolute", bottom: 0, right: 0, width: "14px", height: "14px", background: "linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.07) 50%)", borderRadius: "0 0 3px 0" }} />
-                  <p style={{ margin: "5px 0 0", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", textAlign: "center" }}>
-                    ✦ Golden hour
-                  </p>
-                </div>
-                </div>
-
-                {/* Stamp card — Community / nomad workspace (pinned upper-right) */}
-                <div
-                  className="anim-scale-in anim-delay-4"
-                  style={{
-                    position: "absolute",
-                    top: "20px",
-                    right: "16px",
-                    transform: "rotate(2deg)",
-                    width: "92px",
-                    height: "70px",
-                    borderRadius: "0.5rem",
-                    overflow: "hidden",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.38), 0 0 0 3px rgba(255,255,255,0.88)",
-                    zIndex: 12,
-                  }}
-                >
-                  <img
-                    src={HERO_IMGS.nomad}
-                    alt=""
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-
-                {/* Field notes card — fills the bottom-right void, anchors the composition */}
-                <div
-                  className="anim-fade-up anim-delay-5"
-                  style={{
-                    position: "absolute",
-                    bottom: "14px",
-                    right: "12px",
-                    transform: "rotate(-1deg)",
-                    background: "#fffef9",
-                    borderLeft: "2.5px solid var(--accent)",
-                    borderRadius: "0 4px 4px 0",
-                    padding: "0.35rem 0.7rem 0.35rem 0.55rem",
-                    width: "148px",
-                    boxShadow: "0 4px 18px rgba(0,0,0,0.22), 0 1px 4px rgba(0,0,0,0.12)",
-                    zIndex: 11,
-                  }}
-                >
-                  <p style={{ margin: 0, fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)" }}>✦ trip notes</p>
-                  <p style={{ margin: "2px 0 0", fontSize: "0.6rem", fontWeight: 600, color: "var(--text-secondary)", lineHeight: 1.3 }}>
-                    {availableDestinations.length} destinations mapped
-                  </p>
-                </div>
+                {/* Route decoration + destination count */}
+                <svg viewBox="0 0 520 14" fill="none" style={{ width: "100%", height: "14px", display: "block" }}>
+                  <line x1="10" y1="7" x2="510" y2="7" stroke="rgba(255,255,255,0.28)" strokeWidth="1" strokeDasharray="4 6" />
+                  <circle cx="10"  cy="7" r="3.5" fill="var(--accent)" opacity="0.6" />
+                  <circle cx="260" cy="7" r="2.5" fill="var(--accent)" opacity="0.42" />
+                  <circle cx="510" cy="7" r="3.5" fill="var(--accent)" opacity="0.6" />
+                </svg>
+                <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", margin: 0 }}>
+                  {availableDestinations.length} destinations
+                </p>
 
               </div>
-
-              {/* Route decoration + destination count */}
-              <svg width="218" height="14" viewBox="0 0 218 14" fill="none">
-                <line x1="10" y1="7" x2="208" y2="7" stroke="rgba(255,255,255,0.28)" strokeWidth="1" strokeDasharray="4 6" />
-                <circle cx="10"  cy="7" r="3.5" fill="var(--accent)" opacity="0.6" />
-                <circle cx="109" cy="7" r="2.5" fill="var(--accent)" opacity="0.42" />
-                <circle cx="208" cy="7" r="3.5" fill="var(--accent)" opacity="0.6" />
-              </svg>
-              <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", margin: 0 }}>
-                {availableDestinations.length} destinations
-              </p>
 
             </div>
 
@@ -489,7 +455,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           flex: 1,
           position: "relative",
           overflow: "hidden",
-          paddingTop: "2.5rem",
+          paddingTop: "4.5rem",
           paddingBottom: "3.5rem",
         }}
         aria-labelledby="destinations-heading"
@@ -505,7 +471,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
             <h2 id="destinations-heading" className="section-label-editorial">
               <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
-              {availableDestinations.length} destination{availableDestinations.length !== 1 ? "s" : ""} available
+              {availableDestinations.length} destinations mapped for your passport
             </h2>
           </InView>
 
@@ -516,7 +482,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       </section>
 
       {/* ── Comparison strip ─────────────────────────────────── */}
-      <section style={{ paddingBottom: "3rem" }}>
+      <section style={{ paddingTop: "3rem", paddingBottom: "3rem" }}>
         <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
           <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
@@ -532,7 +498,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       </section>
 
       {/* ── Trip planner ─────────────────────────────────────── */}
-      <section style={{ paddingBottom: "3rem" }}>
+      <section style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
         <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
           <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             <h2 className="section-label-editorial">
@@ -551,23 +517,31 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       {/* ── Footer ────────────────────────────────────────────── */}
       <footer
         style={{
-          borderTop: "1px solid var(--border)",
-          padding: "1.25rem var(--page-gutter)",
+          borderTop: "1px solid rgba(180,130,65,0.22)",
+          paddingBlock: "1.5rem",
         }}
       >
-        <p
-          style={{
-            fontSize: "0.75rem",
-            color: "var(--text-muted)",
-            margin: 0,
-            textAlign: "center",
-            maxWidth: "50ch",
-            marginInline: "auto",
-          }}
+        <div
+          className="page-container"
+          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1.5rem" }}
         >
-          Always verify visa and entry rules with official sources before booking.
-          NomadReady is a research aid, not legal advice.
-        </p>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flexShrink: 0 }}>
+            <span style={{ fontSize: "0.7rem", color: "var(--accent)" }} aria-hidden="true">✦</span>
+            <span style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text-muted)" }}>NomadReady</span>
+          </div>
+          <p
+            style={{
+              fontSize: "0.75rem",
+              color: "var(--text-muted)",
+              margin: 0,
+              textAlign: "right",
+              lineHeight: 1.5,
+            }}
+          >
+            Always verify visa and entry rules with official sources before booking.
+            NomadReady is a research aid, not legal advice.
+          </p>
+        </div>
       </footer>
 
     </main>

@@ -37,7 +37,7 @@ export function DestinationGrid({ destinations, passportId, summaries }: Destina
 
         <CarouselNavigation
           className='absolute -bottom-11 left-auto top-auto w-full justify-end gap-2 pr-1'
-          classNameButton='bg-white border border-stone-200 shadow-sm text-stone-500 hover:border-amber-300 hover:text-amber-600 transition-colors'
+          classNameButton='bg-white border border-[var(--border)] shadow-sm text-[var(--text-secondary)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors'
           alwaysShow
         />
 

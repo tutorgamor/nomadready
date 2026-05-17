@@ -94,8 +94,8 @@ export function AtlasMapSection({ destinationCount: _d }: AtlasMapSectionProps) 
           />
 
           {/* Edge fades — dissolve map into page background */}
-          <div aria-hidden="true" style={{ position: "absolute", top: 0,    left: 0, right:  0, height: "27%", background: "linear-gradient(to bottom, var(--bg-base), transparent)", pointerEvents: "none", zIndex: 8 }} />
-          <div aria-hidden="true" style={{ position: "absolute", bottom: 0, left: 0, right:  0, height: "27%", background: "linear-gradient(to top,    var(--bg-base), transparent)", pointerEvents: "none", zIndex: 8 }} />
+          <div aria-hidden="true" style={{ position: "absolute", top: 0,    left: 0, right:  0, height: "18%", background: "linear-gradient(to bottom, var(--bg-base), transparent)", pointerEvents: "none", zIndex: 8 }} />
+          <div aria-hidden="true" style={{ position: "absolute", bottom: 0, left: 0, right:  0, height: "18%", background: "linear-gradient(to top,    var(--bg-base), transparent)", pointerEvents: "none", zIndex: 8 }} />
           <div aria-hidden="true" style={{ position: "absolute", top: 0, bottom: 0, left:  0, width: "12%",  background: "linear-gradient(to right,  var(--bg-base), transparent)", pointerEvents: "none", zIndex: 8 }} />
           <div aria-hidden="true" style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: "12%",  background: "linear-gradient(to left,   var(--bg-base), transparent)", pointerEvents: "none", zIndex: 8 }} />
         </div>

@@ -20,8 +20,8 @@ export function CustomCursor() {
     const tick = () => {
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
-      smoothRef.current.x = lerp(smoothRef.current.x, mx, 0.13);
-      smoothRef.current.y = lerp(smoothRef.current.y, my, 0.13);
+      smoothRef.current.x = lerp(smoothRef.current.x, mx, 0.08);
+      smoothRef.current.y = lerp(smoothRef.current.y, my, 0.08);
 
       const ring = ringRef.current;
       const dot  = dotRef.current;

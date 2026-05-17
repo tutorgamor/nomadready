@@ -3463,25 +3463,25 @@ body:has(.cursor-ring) * {
   position: fixed;
   top: 0;
   left: 0;
-  width: 32px;
-  height: 32px;
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
   will-change: transform;
   mix-blend-mode: difference;
   transition:
-    width 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-    height 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
     border-color 0.22s ease,
-    opacity 0.3s ease;
+    opacity 0.28s ease;
 }
 
 .cursor-ring[data-state="hover"] {
-  width: 50px;
-  height: 50px;
-  border-color: rgba(217, 119, 6, 0.85);
+  width: 38px;
+  height: 38px;
+  border-color: rgba(217, 119, 6, 0.82);
 }
 
 .cursor-ring[data-state="hidden"] {
@@ -3493,19 +3493,19 @@ body:has(.cursor-ring) * {
   position: fixed;
   top: 0;
   left: 0;
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.92);
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.65);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
   will-change: transform;
   mix-blend-mode: difference;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.28s ease, background 0.2s ease;
 }
 
 .cursor-dot[data-state="hover"] {
-  background: rgba(217, 119, 6, 0.95);
+  background: rgba(217, 119, 6, 0.9);
 }
 
 .cursor-dot[data-state="hidden"] {

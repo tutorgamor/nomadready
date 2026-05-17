@@ -7,41 +7,60 @@ import type { ReadyData } from "@/lib/types";
 
 const readyFiles = import.meta.glob<ReadyData>("../data/ready/*.json", { eager: true, import: "default" });
 
-// ─── Precise Thailand SVG path ────────────────────────────────────────────────
-// ViewBox: 0 0 480 820 — hand-traced from silhouette JPEG
-// NW corner → Northern border → NE → East/Laos border → SE main body →
-// Gulf coast → Peninsula Gulf (east) side → Southern tip →
-// Peninsula Andaman (west) side → Main body west coast → close
+// ─── Thailand SVG path — geographically accurate ──────────────────────────────
+// ViewBox: 0 0 480 820
+// Projection: x = (lon − 97.5) / 8.2 × 480   y = (20.5 − lat) / 14.9 × 820
+// Clockwise from topmost point (Chiang Rai/20.5°N)
+// → NE (Golden Triangle) → Laos/Mekong border → Isaan east bulge
+// → Cambodia border → Gulf NE coast (going W) → Peninsula Gulf side (going S)
+// → Southern tip (Malaysia) → Andaman coast (going N) → Myanmar border (going N)
+// → NW corner → top border (going E back to start)
 const TH_PATH = [
-  "M 82,40",
-  "C 112,22 148,12 186,18 C 222,10 258,14 292,20",
-  "C 322,12 354,22 382,18 C 406,27 430,50 450,78",
-  "C 460,99 462,123 453,149",
-  "C 456,174 468,198 464,226",
-  "C 466,255 450,283 430,308",
-  "C 410,334 393,360 370,383",
-  "C 347,400 320,413 293,424",
-  "C 270,434 252,442 241,454",
-  "C 229,468 217,487 208,509",
-  "C 198,533 188,558 180,583",
-  "C 170,608 161,631 152,652",
-  "C 143,671 135,689 128,707",
-  "C 121,723 116,737 112,751",
-  "C 109,763 112,774 124,782",
-  "C 138,788 158,788 176,782",
-  "C 191,776 203,763 208,749",
-  "C 212,733 211,717 210,700",
-  "C 208,682 204,665 200,647",
-  "C 196,629 192,611 188,593",
-  "C 183,574 178,555 174,536",
-  "C 170,517 165,498 160,479",
-  "C 155,460 148,442 140,426",
-  "C 130,409 116,397 100,386",
-  "C 82,373 66,355 52,333",
-  "C 40,309 33,283 34,256",
-  "C 35,230 44,205 57,182",
-  "C 70,159 82,136 88,112",
-  "C 93,89 94,66 93,48 Z",
+  "M 100,0",
+  // Top border (NW → NE / Golden Triangle)
+  "C 122,0 138,4 153,9",
+  // Laos / Mekong border sweeping south-east
+  "C 168,20 184,62 206,106",
+  "C 222,148 248,168 286,178",
+  "C 322,186 364,202 408,220",
+  // Isaan NE — max east bulge (~105.6°E → x ≈ 476)
+  "C 444,238 468,266 476,294",
+  // Cambodia border, turns SW
+  "C 478,308 468,328 452,344",
+  "C 432,360 408,372 384,380",
+  // Gulf NE shore — goes WEST toward Bangkok
+  "C 352,390 312,406 274,420",
+  "C 240,432 210,442 186,454",
+  // Peninsula — Gulf (east) side going SOUTH
+  "C 162,464 144,478 132,498",
+  "C 118,518 106,540 100,558",
+  // Kra Isthmus narrowest (~10.5°N)
+  "C 96,574 100,594 118,616",
+  // Lower peninsula Gulf coast (curves right/east as it goes south)
+  "C 136,638 150,660 162,682",
+  "C 172,702 186,720 196,742",
+  "C 204,760 210,778 212,792",
+  "C 212,804 212,814 214,820",
+  // SE tip — Malaysia border going WEST
+  "C 204,820 186,818 168,814",
+  "C 158,810 154,804 153,798",
+  // Andaman (west) coast going NORTH — x decreases toward Phuket/Krabi
+  "C 142,786 126,772 110,750",
+  "C 94,728 78,706 60,680",
+  // Leftward jog at Krabi/Phuket (~8°N), then curves right going north
+  "C 48,660 44,634 54,610",
+  "C 62,586 72,560 82,534",
+  "C 90,510 100,488 108,462",
+  // Joins Myanmar (main body west) border — going north
+  "C 116,440 120,416 118,390",
+  "C 116,364 108,336 96,310",
+  "C 80,284 62,256 46,228",
+  // Mae Hong Son westernmost dip (~18.5°N, 97.7°E → x ≈ 12)
+  "C 32,202 16,176 12,150",
+  "C 8,124 10,98 16,74",
+  // NW Myanmar border going east back to top
+  "C 22,54 34,32 50,18",
+  "C 64,8 80,2 100,0 Z",
 ].join(" ");
 
 // ─── City data (4 cities only) ────────────────────────────────────────────────
@@ -55,17 +74,18 @@ interface City {
 }
 
 const CITIES: City[] = [
-  { id: "mae-hong-son", label: "Mae Hong Son", x: 110, y: 82,  active: false, tagline: "Au bout du monde vert."      },
-  { id: "chiang-mai",   label: "Chiang Mai",   x: 153, y: 110, active: false, tagline: "Temples et brumes du nord."  },
-  { id: "ayutthaya",    label: "Ayutthaya",    x: 226, y: 342, active: false, tagline: "L'ancienne capitale royale." },
-  { id: "bangkok",      label: "Bangkok",      x: 232, y: 368, active: true,  tagline: "Le chaos devient musique."   },
+  // Positions from same projection: x=(lon−97.5)/8.2×480, y=(20.5−lat)/14.9×820
+  { id: "mae-hong-son", label: "Mae Hong Son", x: 28,  y: 66,  active: false, tagline: "Au bout du monde vert."      },
+  { id: "chiang-mai",   label: "Chiang Mai",   x: 87,  y: 94,  active: false, tagline: "Temples et brumes du nord."  },
+  { id: "ayutthaya",    label: "Ayutthaya",    x: 180, y: 338, active: false, tagline: "L'ancienne capitale royale." },
+  { id: "bangkok",      label: "Bangkok",      x: 176, y: 372, active: true,  tagline: "Le chaos devient musique."   },
 ];
 
-// ─── Mountain peaks (decorative, northern zone) ───────────────────────────────
-// [cx, cy, size]
+// ─── Mountain peaks (decorative, NW highlands zone) ───────────────────────────
+// [cx, cy, size] — positioned in NW highlands (Mae Hong Son / Doi Inthanon area)
 const PEAKS: [number, number, number][] = [
-  [118, 75, 11], [140, 64, 15], [162, 57, 13], [182, 51, 11], [202, 47, 10],
-  [128, 87, 9],  [152, 79, 12], [174, 71, 10],
+  [36, 48, 10], [52, 40, 14], [68, 34, 12], [86, 28, 10], [104, 22, 9],
+  [44, 62, 8],  [62, 55, 11], [80, 46, 9],
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -290,10 +310,10 @@ export default function CountryPage() {
               <stop offset="100%" stopColor="#193828" stopOpacity="0"    />
             </linearGradient>
 
-            {/* Gulf teal coastal glow */}
-            <radialGradient id="th-gulf" cx="85%" cy="55%" r="40%">
-              <stop offset="0%"   stopColor="#0e4a5a" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#0e4a5a" stopOpacity="0"   />
+            {/* Gulf teal coastal glow — radiates from Isaan/SE corner (east side) */}
+            <radialGradient id="th-gulf" cx="92%" cy="48%" r="50%">
+              <stop offset="0%"   stopColor="#0e4a5a" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="#0e4a5a" stopOpacity="0"    />
             </radialGradient>
 
             {/* Ocean bg gradient */}
@@ -345,25 +365,29 @@ export default function CountryPage() {
           {/* ── Terrain dot texture ── */}
           <path d={TH_PATH} fill="url(#th-terrain-dots)" />
 
-          {/* ── Northern highlands overlay (top 28% of land) ── */}
-          <rect clipPath="url(#th-land-clip)" x="30" y="30" width="420" height="240"
+          {/* ── Northern highlands overlay (NW high terrain) ── */}
+          <rect clipPath="url(#th-land-clip)" x="0" y="0" width="200" height="220"
             fill="url(#th-north-fade)" />
 
-          {/* ── Northern highland hatch (forest density) ── */}
-          <rect clipPath="url(#th-land-clip)" x="30" y="30" width="230" height="200"
+          {/* ── Northern highland hatch (forest density, NW only) ── */}
+          <rect clipPath="url(#th-land-clip)" x="0" y="0" width="160" height="195"
             fill="url(#th-hatch)" />
+
+          {/* ── Isaan plateau — subtle dry/warm differentiation ── */}
+          <rect clipPath="url(#th-land-clip)" x="155" y="0" width="330" height="420"
+            fill="rgba(160,185,100,0.045)" />
 
           {/* ── Gulf coast teal hint ── */}
           <path d={TH_PATH} fill="url(#th-gulf)" />
 
-          {/* ── Central plains warm ellipse ── */}
+          {/* ── Central plains warm ellipse (Chao Phraya basin) ── */}
           <ellipse clipPath="url(#th-land-clip)"
-            cx="225" cy="340" rx="185" ry="95"
-            fill="rgba(100,140,65,0.09)" />
+            cx="170" cy="350" rx="140" ry="88"
+            fill="rgba(100,140,65,0.08)" />
 
           {/* ── Peninsula subtle differentiation ── */}
-          <rect clipPath="url(#th-land-clip)" x="80" y="410" width="280" height="420"
-            fill="rgba(20,55,40,0.12)" />
+          <rect clipPath="url(#th-land-clip)" x="0" y="440" width="300" height="400"
+            fill="rgba(20,55,40,0.10)" />
 
           {/* ── Mountain peaks (decorative) ── */}
           {PEAKS.map(([mx, my, sz], i) => (
@@ -388,31 +412,31 @@ export default function CountryPage() {
             </g>
           ))}
 
-          {/* ── Road: Mae Hong Son → Chiang Mai ── */}
+          {/* ── Road: Mae Hong Son → Chiang Mai (mountain road, dashed) ── */}
           <path className="th-road"
-            d="M 110,82 C 124,87 138,97 153,110"
+            d="M 28,66 C 48,74 68,84 87,94"
             fill="none" stroke="rgba(195,175,125,0.38)" strokeWidth="1.3"
             strokeLinecap="round" strokeDasharray="3,6"
           />
 
-          {/* ── Road: Chiang Mai → Ayutthaya / Bangkok (Hwy 1) ── */}
+          {/* ── Road: Chiang Mai → Bangkok via Hwy 1 (through Lampang, Nakhon Sawan) ── */}
           <path className="th-road"
-            d="M 153,110 C 172,172 196,258 224,335 C 227,347 230,358 232,368"
+            d="M 87,94 C 104,148 130,230 158,300 C 166,320 172,334 176,372"
             fill="none" stroke="rgba(195,175,125,0.32)" strokeWidth="1.5"
             strokeLinecap="round"
           />
 
-          {/* ── Road: Ayutthaya loop ── */}
+          {/* ── Road: Ayutthaya spur ── */}
           <path className="th-road"
-            d="M 226,342 C 228,352 230,360 232,368"
+            d="M 180,338 C 179,351 178,362 176,372"
             fill="none" stroke="rgba(195,175,125,0.4)" strokeWidth="1.2"
             strokeLinecap="round"
           />
 
           {/* ── Chao Phraya River (animates after roads) ── */}
           <path id="th-river"
-            d="M 192,290 C 206,318 218,348 228,382 C 232,398 235,415 238,435"
-            fill="none" stroke="rgba(90,175,215,0.4)" strokeWidth="1.8"
+            d="M 148,255 C 155,285 162,318 170,352 C 173,362 174,368 176,372"
+            fill="none" stroke="rgba(90,175,215,0.42)" strokeWidth="1.8"
             strokeLinecap="round"
           />
 
@@ -440,16 +464,16 @@ export default function CountryPage() {
           ))}
 
           {/* ── Sea labels ── */}
-          {/* Gulf of Thailand — east of peninsula, rotated */}
-          <g transform="translate(415,530) rotate(90)" opacity="0.28">
+          {/* Gulf of Thailand — right of peninsula (ocean area x>220, y~580) */}
+          <g transform="translate(388,585) rotate(90)" opacity="0.27">
             <text textAnchor="middle" fontSize="7.5" fontWeight="600"
               fill="rgba(140,210,240,1)" letterSpacing="0.22em"
               style={{ textTransform: "uppercase" } as React.CSSProperties}>
               GULF OF THAILAND
             </text>
           </g>
-          {/* Andaman Sea — west of peninsula */}
-          <g transform="translate(22,610) rotate(90)" opacity="0.25">
+          {/* Andaman Sea — left of peninsula (ocean area x<40, y~640) */}
+          <g transform="translate(14,634) rotate(90)" opacity="0.24">
             <text textAnchor="middle" fontSize="7.5" fontWeight="600"
               fill="rgba(140,210,240,1)" letterSpacing="0.22em"
               style={{ textTransform: "uppercase" } as React.CSSProperties}>
@@ -467,8 +491,8 @@ export default function CountryPage() {
           <rect x="-60" y="-40" width="600" height="920"
             fill="none" stroke="rgba(40,100,130,0.12)" strokeWidth="1" />
 
-          {/* ── Compass rose ── */}
-          <g transform="translate(428,58)" opacity="0.52">
+          {/* ── Compass rose — top-right ocean area (east of Isaan) ── */}
+          <g transform="translate(452,42)" opacity="0.52">
             <circle cx="0" cy="0" r="15" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="0.8" />
             <circle cx="0" cy="0" r="2.5" fill="rgba(255,255,255,0.3)" />
             <polygon points="0,-13 -3,-4 3,-4"  fill="rgba(255,255,255,0.72)" />

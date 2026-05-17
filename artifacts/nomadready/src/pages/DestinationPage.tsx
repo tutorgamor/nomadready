@@ -192,7 +192,7 @@ export default function DestinationPage() {
       <main className="page-container flex-1 flex flex-col items-center justify-center gap-6 py-24 text-center" style={{ minHeight: "100dvh" }}>
         <p style={{ fontSize: "3rem" }}>🗺️</p>
         <h1 style={{ fontSize: "1.5rem", fontWeight: 700 }}>Destination not found</h1>
-        <Link to={`/?passport=${passportId}`} style={{ display: "inline-flex", background: "var(--accent)", color: "#fff", borderRadius: "9999px", padding: "0.5rem 1.25rem", textDecoration: "none", fontWeight: 600 }}>
+        <Link to={`/?passport=${passportId}&skip_gateway=1`} style={{ display: "inline-flex", background: "var(--accent)", color: "#fff", borderRadius: "9999px", padding: "0.5rem 1.25rem", textDecoration: "none", fontWeight: 600 }}>
           {t.backToAtlas}
         </Link>
       </main>
@@ -242,7 +242,7 @@ export default function DestinationPage() {
         </div>
 
         <div className="th-hero-topbar">
-          <Link to={`/?passport=${passportId}`} className="th-back-link">
+          <Link to={`/?passport=${passportId}&skip_gateway=1`} className="th-back-link">
             {t.backToAtlas}
           </Link>
           <span className="th-hero-tag">
@@ -634,7 +634,7 @@ export default function DestinationPage() {
           </Reveal>
           <Reveal delay={0.12}>
             <div className="th-cta-actions">
-              <Link to={`/?passport=${passportId}`} className="th-cta-primary">
+              <Link to={`/?passport=${passportId}&skip_gateway=1`} className="th-cta-primary">
                 {t.backToAtlas.replace("← ", "")} →
               </Link>
               {destinationId !== "thailand" && (

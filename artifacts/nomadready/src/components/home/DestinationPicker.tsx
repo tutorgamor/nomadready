@@ -21,7 +21,7 @@ const DEST_IMAGES: Record<string, string> = {
   indonesia:    "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80&auto=format&fit=crop", // Bali rice terraces
   turkey:       "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&q=80&auto=format&fit=crop", // Istanbul Blue Mosque
   philippines:  "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800&q=80&auto=format&fit=crop", // El Nido / Palawan
-  georgia:      "https://images.unsplash.com/photo-1561049933-c8fbef47b329?w=800&q=80&auto=format&fit=crop", // Tbilisi old town
+  georgia:      "/images/georgia-hero.jpg", // Tbilisi Metekhi Church + Narikala (local)
   thailand:     "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80&auto=format&fit=crop", // Wat Arun, Bangkok
   malaysia:     "/images/malaysia-hero.jpg", // Petronas towers at night (local)
   vietnam:      "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=800&q=80&auto=format&fit=crop", // Hoi An lanterns

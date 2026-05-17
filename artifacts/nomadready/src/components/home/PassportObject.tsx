@@ -24,32 +24,195 @@ import { motion, useReducedMotion } from "motion/react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type EmblemType = "eu" | "crown" | "eagle" | "maple" | "southern-cross";
-
 interface PassportTheme {
   cover: string;
   coverHighlight: string;
   line1: string;
   line2: string;
   accent: string;
-  emblem: EmblemType;
   spineColor: string;
 }
 
 // ─── Country Themes ───────────────────────────────────────────────────────────
 
 const THEMES: Record<string, PassportTheme> = {
-  fr: { cover: "#192450", coverHighlight: "#1e2d64", line1: "UNION EUROPÉENNE",     line2: "FRANCE",                   accent: "#C8A428", emblem: "eu",             spineColor: "#111830" },
-  uk: { cover: "#4A0E1B", coverHighlight: "#5d1222", line1: "GREAT BRITAIN",         line2: "UNITED KINGDOM",           accent: "#C8A428", emblem: "crown",          spineColor: "#320910" },
-  de: { cover: "#1A1A1C", coverHighlight: "#272728", line1: "BUNDESREPUBLIK",         line2: "DEUTSCHLAND",              accent: "#C8A428", emblem: "eagle",          spineColor: "#111112" },
-  nl: { cover: "#13276B", coverHighlight: "#1a3285", line1: "KONINKRIJK DER",         line2: "NEDERLAND",                accent: "#C8A428", emblem: "eu",             spineColor: "#0c1a49" },
-  es: { cover: "#8A1823", coverHighlight: "#a51e2b", line1: "REINO DE ESPAÑA",        line2: "ESPAÑA",                   accent: "#C8A428", emblem: "eu",             spineColor: "#5c1017" },
-  it: { cover: "#193B19", coverHighlight: "#1f491f", line1: "REPUBBLICA ITALIANA",    line2: "ITALIA",                   accent: "#C8A428", emblem: "eu",             spineColor: "#102710" },
-  be: { cover: "#0E1F5C", coverHighlight: "#132872", line1: "ROYAUME DE BELGIQUE",    line2: "BELGIQUE",                 accent: "#C8A428", emblem: "eu",             spineColor: "#09143d" },
-  us: { cover: "#1A2A58", coverHighlight: "#20336c", line1: "DEPARTMENT OF STATE",    line2: "UNITED STATES OF AMERICA", accent: "#C8A428", emblem: "eagle",          spineColor: "#101a3a" },
-  ca: { cover: "#1C2C4A", coverHighlight: "#22365a", line1: "GOUVERNEMENT DU CANADA", line2: "CANADA",                   accent: "#C8A428", emblem: "maple",          spineColor: "#111c30" },
-  au: { cover: "#0A2948", coverHighlight: "#0e3358", line1: "COMMONWEALTH OF",        line2: "AUSTRALIA",                accent: "#C8A428", emblem: "southern-cross", spineColor: "#061a2e" },
+  fr: { cover: "#192450", coverHighlight: "#1e2d64", line1: "UNION EUROPÉENNE",     line2: "FRANCE",                   accent: "#C8A428", spineColor: "#111830" },
+  uk: { cover: "#4A0E1B", coverHighlight: "#5d1222", line1: "GREAT BRITAIN",         line2: "UNITED KINGDOM",           accent: "#C8A428", spineColor: "#320910" },
+  de: { cover: "#1A1A1C", coverHighlight: "#272728", line1: "BUNDESREPUBLIK",         line2: "DEUTSCHLAND",              accent: "#C8A428", spineColor: "#111112" },
+  nl: { cover: "#13276B", coverHighlight: "#1a3285", line1: "KONINKRIJK DER",         line2: "NEDERLAND",                accent: "#C8A428", spineColor: "#0c1a49" },
+  es: { cover: "#8A1823", coverHighlight: "#a51e2b", line1: "REINO DE ESPAÑA",        line2: "ESPAÑA",                   accent: "#C8A428", spineColor: "#5c1017" },
+  it: { cover: "#193B19", coverHighlight: "#1f491f", line1: "REPUBBLICA ITALIANA",    line2: "ITALIA",                   accent: "#C8A428", spineColor: "#102710" },
+  be: { cover: "#0E1F5C", coverHighlight: "#132872", line1: "ROYAUME DE BELGIQUE",    line2: "BELGIQUE",                 accent: "#C8A428", spineColor: "#09143d" },
+  us: { cover: "#1A2A58", coverHighlight: "#20336c", line1: "DEPARTMENT OF STATE",    line2: "UNITED STATES OF AMERICA", accent: "#C8A428", spineColor: "#101a3a" },
+  ca: { cover: "#1C2C4A", coverHighlight: "#22365a", line1: "GOUVERNEMENT DU CANADA", line2: "CANADA",                   accent: "#C8A428", spineColor: "#111c30" },
+  au: { cover: "#0A2948", coverHighlight: "#0e3358", line1: "COMMONWEALTH OF",        line2: "AUSTRALIA",                accent: "#C8A428", spineColor: "#061a2e" },
 };
+
+// ─── Flag SVG Components ─────────────────────────────────────────────────────
+// One accurate flag SVG per passport country (viewBox 0 0 90 60, 3:2 ratio).
+
+function FlagFR() {
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      <rect width="30"  height="60" fill="#002395"/>
+      <rect x="30" width="30" height="60" fill="#FFFFFF"/>
+      <rect x="60" width="30" height="60" fill="#ED2939"/>
+    </svg>
+  );
+}
+
+function FlagUK() {
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      <rect width="90" height="60" fill="#012169"/>
+      <line x1="0" y1="0" x2="90" y2="60" stroke="white" strokeWidth="12"/>
+      <line x1="90" y1="0" x2="0" y2="60" stroke="white" strokeWidth="12"/>
+      {/* St Patrick's red saltire (counterchange simplified) */}
+      <polygon points="0,0 12,0 45,22 45,27 0,5"    fill="#C8102E"/>
+      <polygon points="90,0 78,0 45,22 45,27 90,5"  fill="#C8102E"/>
+      <polygon points="0,60 12,60 45,38 45,33 0,55" fill="#C8102E"/>
+      <polygon points="90,60 78,60 45,38 45,33 90,55" fill="#C8102E"/>
+      <rect x="33"   y="0"  width="24" height="60" fill="white"/>
+      <rect x="0"    y="21" width="90" height="18" fill="white"/>
+      <rect x="37.5" y="0"  width="15" height="60" fill="#C8102E"/>
+      <rect x="0"    y="25.5" width="90" height="9" fill="#C8102E"/>
+    </svg>
+  );
+}
+
+function FlagDE() {
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      <rect y="0"  width="90" height="20" fill="#000000"/>
+      <rect y="20" width="90" height="20" fill="#DD0000"/>
+      <rect y="40" width="90" height="20" fill="#FFCE00"/>
+    </svg>
+  );
+}
+
+function FlagNL() {
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      <rect y="0"  width="90" height="20" fill="#AE1C28"/>
+      <rect y="20" width="90" height="20" fill="#FFFFFF"/>
+      <rect y="40" width="90" height="20" fill="#21468B"/>
+    </svg>
+  );
+}
+
+function FlagES() {
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      <rect y="0"  width="90" height="15" fill="#AA151B"/>
+      <rect y="15" width="90" height="30" fill="#F1BF00"/>
+      <rect y="45" width="90" height="15" fill="#AA151B"/>
+    </svg>
+  );
+}
+
+function FlagIT() {
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      <rect width="30"  height="60" fill="#009246"/>
+      <rect x="30" width="30" height="60" fill="#FFFFFF"/>
+      <rect x="60" width="30" height="60" fill="#CE2B37"/>
+    </svg>
+  );
+}
+
+function FlagBE() {
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      <rect width="30"  height="60" fill="#000000"/>
+      <rect x="30" width="30" height="60" fill="#FAE042"/>
+      <rect x="60" width="30" height="60" fill="#EF3340"/>
+    </svg>
+  );
+}
+
+function FlagUS() {
+  const sh = 60 / 13;
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      {Array.from({ length: 13 }, (_, i) => (
+        <rect key={i} x="0" y={i * sh} width="90" height={sh} fill={i % 2 === 0 ? "#B22234" : "#FFFFFF"}/>
+      ))}
+      <rect width="36" height={sh * 7} fill="#3C3B6E"/>
+      {Array.from({ length: 5 }, (_, r) =>
+        Array.from({ length: 6 }, (_, c) => (
+          <circle key={`${r}-${c}`}
+            cx={3 + c * 6} cy={2.3 + r * (sh * 7 / 5)} r="1.5"
+            fill="white" opacity="0.92"/>
+        ))
+      )}
+    </svg>
+  );
+}
+
+function FlagCA() {
+  const leaf = "M45,13 L46.8,20 L52.5,17.5 L50,24 L57,22.5 L53,29 L63,30 L57,35.5 L59.5,43 L51,40 L48,46 L46,46 L46,51 L44,51 L44,46 L42,46 L39,40 L30.5,43 L33,35.5 L27,30 L37,29 L33,22.5 L40,24 L37.5,17.5 L43.2,20 Z";
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      <rect width="22.5" height="60" fill="#FF0000"/>
+      <rect x="22.5" width="45" height="60" fill="#FFFFFF"/>
+      <rect x="67.5" width="22.5" height="60" fill="#FF0000"/>
+      <path d={leaf} fill="#FF0000"/>
+    </svg>
+  );
+}
+
+function starPts(cx: number, cy: number, outer: number, inner: number, points: number): string {
+  return Array.from({ length: points * 2 }, (_, i) => {
+    const angle = (i * (360 / (points * 2)) - 90) * (Math.PI / 180);
+    const r = i % 2 === 0 ? outer : inner;
+    return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
+  }).join(" ");
+}
+
+function FlagAU() {
+  const uj = { x: 0, y: 0, w: 45, h: 30 };
+  const { x, y, w, h } = uj;
+  const cjx = x + w / 2, cjy = y + h / 2;
+  return (
+    <svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: "100%" }}>
+      <rect width="90" height="60" fill="#00008B"/>
+      {/* Mini Union Jack top-left */}
+      <rect x={x} y={y} width={w} height={h} fill="#012169"/>
+      <line x1={x} y1={y} x2={x+w} y2={y+h} stroke="white" strokeWidth={h*0.18}/>
+      <line x1={x+w} y1={y} x2={x} y2={y+h} stroke="white" strokeWidth={h*0.18}/>
+      <line x1={x} y1={y} x2={x+w} y2={y+h} stroke="#C8102E" strokeWidth={h*0.06}/>
+      <line x1={x+w} y1={y} x2={x} y2={y+h} stroke="#C8102E" strokeWidth={h*0.06}/>
+      <rect x={cjx-w*0.22} y={y} width={w*0.44} height={h} fill="white"/>
+      <rect x={x} y={cjy-h*0.22} width={w} height={h*0.44} fill="white"/>
+      <rect x={cjx-w*0.14} y={y} width={w*0.28} height={h} fill="#C8102E"/>
+      <rect x={x} y={cjy-h*0.14} width={w} height={h*0.28} fill="#C8102E"/>
+      {/* Commonwealth Star (7-pointed) */}
+      <polygon points={starPts(22, 47, 8, 3.5, 7)} fill="white"/>
+      {/* Southern Cross */}
+      <polygon points={starPts(70, 49, 7,   3,   7)} fill="white"/>
+      <polygon points={starPts(58, 34, 5.5, 2.4, 7)} fill="white"/>
+      <polygon points={starPts(63, 13, 5.5, 2.4, 7)} fill="white"/>
+      <polygon points={starPts(79, 27, 5.5, 2.4, 7)} fill="white"/>
+      <polygon points={starPts(70, 30, 3,   1.2, 5)} fill="white"/>
+    </svg>
+  );
+}
+
+function FlagSVG({ id }: { id: string }) {
+  switch (id) {
+    case "fr": return <FlagFR />;
+    case "uk": return <FlagUK />;
+    case "de": return <FlagDE />;
+    case "nl": return <FlagNL />;
+    case "es": return <FlagES />;
+    case "it": return <FlagIT />;
+    case "be": return <FlagBE />;
+    case "us": return <FlagUS />;
+    case "ca": return <FlagCA />;
+    case "au": return <FlagAU />;
+    default:   return <FlagFR />;
+  }
+}
 
 // ─── Gold System ──────────────────────────────────────────────────────────────
 
@@ -64,147 +227,6 @@ const GOLD_TEXT = {
   WebkitTextFillColor: "transparent" as const,
   color: "transparent" as const,
 };
-
-/**
- * Shared gradient defs injected into each emblem SVG.
- * "gld" = primary gold (vertical)
- * "gld-h" = gold horizontal (for strokes/feathers)
- * Since only one emblem is in the DOM at a time, id="gld" is safe.
- */
-function GoldDefs() {
-  return (
-    <defs>
-      <linearGradient id="gld" x1="15%" y1="0%" x2="55%" y2="100%">
-        <stop offset="0%"   stopColor="#f8e890" />
-        <stop offset="28%"  stopColor="#d4a820" />
-        <stop offset="58%"  stopColor="#8a5e0a" />
-        <stop offset="82%"  stopColor="#b88820" />
-        <stop offset="100%" stopColor="#e4ca50" />
-      </linearGradient>
-      <linearGradient id="gld-h" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%"   stopColor="#f8e890" />
-        <stop offset="45%"  stopColor="#c8a428" />
-        <stop offset="100%" stopColor="#8a5e0a" />
-      </linearGradient>
-      <filter id="emb-sh">
-        <feDropShadow dx="0" dy="1.5" stdDeviation="1.8" floodColor="rgba(0,0,0,0.55)" />
-        <feDropShadow dx="0" dy="-0.5" stdDeviation="0.5" floodColor="rgba(240,210,80,0.08)" />
-      </filter>
-    </defs>
-  );
-}
-
-// ─── Emblem Components ────────────────────────────────────────────────────────
-// Each takes no color prop — gold gradient is always applied via url(#gld).
-
-function EuEmblem() {
-  const stars = Array.from({ length: 12 }, (_, i) => {
-    const angle = (i * 30 - 90) * (Math.PI / 180);
-    return { x: 44 + 30 * Math.cos(angle), y: 44 + 30 * Math.sin(angle) };
-  });
-  return (
-    <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <GoldDefs />
-      <g filter="url(#emb-sh)">
-        {stars.map((s, i) => (
-          <polygon key={i} points={starPoints(s.x, s.y, 5, 2.5)} fill="url(#gld)" opacity="0.93" />
-        ))}
-      </g>
-    </svg>
-  );
-}
-
-function CrownEmblem() {
-  return (
-    <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <GoldDefs />
-      <g filter="url(#emb-sh)">
-        <rect x="18" y="56" width="52" height="9"  rx="2" fill="url(#gld)" opacity="0.93" />
-        <rect x="22" y="38" width="9"  height="21" rx="2" fill="url(#gld)" opacity="0.93" />
-        <rect x="39" y="28" width="10" height="31" rx="2" fill="url(#gld)" opacity="0.93" />
-        <rect x="57" y="38" width="9"  height="21" rx="2" fill="url(#gld)" opacity="0.93" />
-        <circle cx="26.5" cy="35" r="5.5" fill="url(#gld)" opacity="0.93" />
-        <circle cx="44"   cy="24" r="6.5" fill="url(#gld)" opacity="0.93" />
-        <circle cx="61.5" cy="35" r="5.5" fill="url(#gld)" opacity="0.93" />
-        <circle cx="44"   cy="24" r="2.5" fill="url(#gld)" opacity="0.35" />
-      </g>
-    </svg>
-  );
-}
-
-function EagleEmblem() {
-  return (
-    <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <GoldDefs />
-      <g filter="url(#emb-sh)">
-        <circle cx="44" cy="22" r="8.5"  fill="url(#gld)" opacity="0.93" />
-        <path d="M50 25 L58 23 L52 29 Z"              fill="url(#gld)" opacity="0.93" />
-        <ellipse cx="44" cy="48" rx="10" ry="14"       fill="url(#gld)" opacity="0.93" />
-        <path d="M34 42 Q18 32 8 40 Q14 50 32 48 Z"   fill="url(#gld)" opacity="0.88" />
-        <path d="M54 42 Q70 32 80 40 Q74 50 56 48 Z"  fill="url(#gld)" opacity="0.88" />
-        <path d="M10 38 Q6 44 9 50"  stroke="url(#gld-h)" strokeWidth="1.5" strokeLinecap="round" opacity="0.65" />
-        <path d="M8  43 Q4 48 7 54"  stroke="url(#gld-h)" strokeWidth="1.5" strokeLinecap="round" opacity="0.65" />
-        <path d="M78 38 Q82 44 79 50" stroke="url(#gld-h)" strokeWidth="1.5" strokeLinecap="round" opacity="0.65" />
-        <path d="M80 43 Q84 48 81 54" stroke="url(#gld-h)" strokeWidth="1.5" strokeLinecap="round" opacity="0.65" />
-        <path d="M36 60 Q38 70 44 68 Q50 70 52 60"    fill="url(#gld)" opacity="0.88" />
-        <path d="M39 62 L36 72 M44 63 L44 73 M49 62 L52 72" stroke="url(#gld-h)" strokeWidth="1.5" strokeLinecap="round" opacity="0.72" />
-      </g>
-    </svg>
-  );
-}
-
-function MapleEmblem() {
-  return (
-    <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <GoldDefs />
-      <g filter="url(#emb-sh)">
-        <path
-          d="M44 8 L47 20 L54 14 L50 24 L62 20 L56 30 L68 30 L60 38 L70 42 L58 42 L62 54 L44 46 L26 54 L30 42 L18 42 L28 38 L20 30 L32 30 L26 20 L38 24 L34 14 L41 20 Z"
-          fill="url(#gld)" opacity="0.93"
-        />
-        <rect x="42" y="54" width="4" height="16" rx="1.5" fill="url(#gld)" opacity="0.93" />
-      </g>
-    </svg>
-  );
-}
-
-function SouthernCrossEmblem() {
-  const stars = [
-    { x: 44, y: 16, r: 7 },
-    { x: 22, y: 40, r: 6 },
-    { x: 66, y: 40, r: 6 },
-    { x: 32, y: 64, r: 6 },
-    { x: 56, y: 62, r: 5 },
-  ];
-  return (
-    <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <GoldDefs />
-      <g filter="url(#emb-sh)">
-        {stars.map((s, i) => (
-          <polygon key={i} points={starPoints(s.x, s.y, s.r, s.r * 0.42)} fill="url(#gld)" opacity="0.93" />
-        ))}
-      </g>
-    </svg>
-  );
-}
-
-function starPoints(cx: number, cy: number, outerR: number, innerR: number): string {
-  return Array.from({ length: 10 }, (_, i) => {
-    const angle = (i * 36 - 90) * (Math.PI / 180);
-    const r = i % 2 === 0 ? outerR : innerR;
-    return `${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`;
-  }).join(" ");
-}
-
-function Emblem({ type }: { type: EmblemType }) {
-  switch (type) {
-    case "eu":             return <EuEmblem />;
-    case "crown":          return <CrownEmblem />;
-    case "eagle":          return <EagleEmblem />;
-    case "maple":          return <MapleEmblem />;
-    case "southern-cross": return <SouthernCrossEmblem />;
-  }
-}
 
 // ─── PassportObject ───────────────────────────────────────────────────────────
 
@@ -565,17 +587,20 @@ export function PassportObject({ passportId, isEntering, isOpening = false, onEn
               {theme.line1}
             </p>
 
-            {/* Emblem — gold-gradient seal with emboss shadow */}
+            {/* Flag — accurate national flag with gold frame */}
             <div
               style={{
-                width: 78,
-                height: 78,
+                width: 84,
+                height: 56,
                 marginBottom: 14,
                 flexShrink: 0,
-                filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.52)) drop-shadow(0 -0.5px 1px rgba(248,232,144,0.10))",
+                borderRadius: 2,
+                overflow: "hidden",
+                border: "1.5px solid rgba(200,164,40,0.42)",
+                boxShadow: "0 3px 10px rgba(0,0,0,0.52), 0 1px 3px rgba(0,0,0,0.30), inset 0 0 0 0.5px rgba(255,255,255,0.05)",
               }}
             >
-              <Emblem type={theme.emblem} />
+              <FlagSVG id={passportId} />
             </div>
 
             {/* Country name */}

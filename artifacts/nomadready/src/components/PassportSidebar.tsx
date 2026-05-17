@@ -35,40 +35,57 @@ export function PassportSidebar({ passports, activeId }: PassportSidebarProps) {
             whileTap={{ scale: 0.88 }}
             transition={SPRING}
             style={{
+              position: "relative",
               width: "32px",
               height: "32px",
               borderRadius: "50%",
               border: isActive
                 ? "2px solid rgba(217,119,6,0.92)"
                 : "1px solid rgba(255,255,255,0.10)",
-              background: isActive
-                ? "rgba(217,119,6,0.22)"
-                : "rgba(255,255,255,0.05)",
+              background: "rgba(0,0,0,0.28)",
               boxShadow: isActive
                 ? "0 0 12px rgba(217,119,6,0.40), 0 2px 8px rgba(0,0,0,0.30)"
                 : "0 1px 4px rgba(0,0,0,0.18)",
               cursor: "pointer",
               padding: 0,
+              overflow: "hidden",
               display: "flex",
-              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              gap: 0,
               flexShrink: 0,
             }}
           >
-            <span style={{ fontSize: "0.875rem", lineHeight: 1 }} aria-hidden="true">
+            {/* Flag — fills the button */}
+            <span
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "1.35rem",
+                lineHeight: 1,
+                opacity: isActive ? 0.92 : 0.55,
+                transition: "opacity 0.2s",
+              }}
+            >
               {p.emoji}
             </span>
+
+            {/* Country code — overlaid on top */}
             <span
               style={{
-                fontSize: "0.44rem",
-                fontWeight: 700,
+                position: "relative",
+                zIndex: 1,
+                fontSize: "0.48rem",
+                fontWeight: 900,
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",
-                color: isActive ? "rgba(255,200,80,0.95)" : "rgba(255,255,255,0.28)",
+                color: isActive ? "rgba(255,230,100,1)" : "rgba(255,255,255,0.90)",
+                textShadow: "0 1px 4px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.70)",
                 lineHeight: 1,
-                marginTop: "1px",
+                userSelect: "none",
               }}
             >
               {p.id.toUpperCase()}

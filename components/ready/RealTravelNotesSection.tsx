@@ -1,3 +1,4 @@
+import { SectionHeading } from './SectionHeading';
 import type { RealTravelNote } from "@/lib/types";
 
 const TYPE_ICON: Record<string, string> = {
@@ -24,7 +25,7 @@ export function RealTravelNotesSection({ notes }: { notes: RealTravelNote[] }) {
 
   return (
     <div className="card card--warm">
-      <p className="section-heading">Things Nobody Tells You</p>
+      <SectionHeading category="notes" style={{ marginBottom: "0.875rem" }}>Things Nobody Tells You</SectionHeading>
       <p
         style={{
           fontSize: "0.8125rem",

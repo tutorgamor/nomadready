@@ -1,9 +1,10 @@
+import { SectionHeading } from './SectionHeading';
 import type { Scam } from "@/lib/types";
 
 export function ScamsSection({ scams }: { scams: Scam[] }) {
   return (
     <div className="card">
-      <p className="section-heading">Common Scams</p>
+      <SectionHeading category="scams" style={{ marginBottom: "0.875rem" }}>Common Scams</SectionHeading>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {scams.map((scam, i) => (
           <div

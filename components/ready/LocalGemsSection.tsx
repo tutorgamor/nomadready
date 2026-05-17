@@ -1,3 +1,4 @@
+import { SectionHeading } from './SectionHeading';
 "use client";
 
 import type { LocalGem, GemGroup } from "@/lib/types";
@@ -141,9 +142,9 @@ export function LocalGemsSection({ gems }: { gems: LocalGem[] }) {
           background: "linear-gradient(160deg, #fffdf8 0%, #fdf6ee 100%)",
         }}
       >
-        <p className="section-heading" style={{ margin: "0 0 0.125rem" }}>
+        <SectionHeading category="gems" style={{ margin: "0 0 0.125rem" }}>
           Local Gems
-        </p>
+        </SectionHeading>
         <p
           style={{
             fontSize: "0.8125rem",

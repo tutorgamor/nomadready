@@ -23,6 +23,7 @@ import { RealTravelNotesSection }    from "@/components/ready/RealTravelNotesSec
 import { ProfileSummaryCard }        from "@/components/ready/ProfileSummaryCard";
 import { RemoteWorkZonesGuide }      from "@/components/ready/RemoteWorkZonesGuide";
 import { NomadRealitySection }       from "@/components/ready/NomadRealitySection";
+import { ScrollReveal }              from "@/components/motion/ScrollReveal";
 import type { LocalGem, BudgetTier, RealTravelNote, NomadRealityNote, RemoteWorkZonesData } from "@/lib/types";
 
 const destinations = destinationsData as Destination[];
@@ -528,32 +529,32 @@ export default async function ReadyPage({ params }: Props) {
           paddingBottom: "3.5rem",
         }}
       >
-        <div id="insurance"  style={SECTION_OFFSET}><InsuranceSection  insurance={data.insurance} /></div>
-        <div id="season"     style={SECTION_OFFSET}><BestSeasonSection bestSeason={data.best_season} /></div>
-        <div id="apps"       style={SECTION_OFFSET}><AppsSection       apps={data.useful_apps} /></div>
-        <div id="transport"  style={SECTION_OFFSET}><TransportSection  transport={data.transport} /></div>
-        <div id="scams"      style={SECTION_OFFSET}><ScamsSection      scams={data.scams} /></div>
-        <div id="phrases"    style={SECTION_OFFSET}><PhrasesSection    phrases={data.phrases} /></div>
-        <div id="emergency"  style={SECTION_OFFSET}><EmergencySection  emergency={data.emergency} /></div>
-        <div id="checklist"  style={SECTION_OFFSET}><ChecklistSection  checklist={data.checklist} /></div>
+        <div id="insurance"  style={SECTION_OFFSET}><ScrollReveal delay={0}><InsuranceSection  insurance={data.insurance} /></ScrollReveal></div>
+        <div id="season"     style={SECTION_OFFSET}><ScrollReveal delay={0}><BestSeasonSection bestSeason={data.best_season} /></ScrollReveal></div>
+        <div id="apps"       style={SECTION_OFFSET}><ScrollReveal delay={0}><AppsSection       apps={data.useful_apps} /></ScrollReveal></div>
+        <div id="transport"  style={SECTION_OFFSET}><ScrollReveal delay={0}><TransportSection  transport={data.transport} /></ScrollReveal></div>
+        <div id="scams"      style={SECTION_OFFSET}><ScrollReveal delay={0}><ScamsSection      scams={data.scams} /></ScrollReveal></div>
+        <div id="phrases"    style={SECTION_OFFSET}><ScrollReveal delay={0}><PhrasesSection    phrases={data.phrases} /></ScrollReveal></div>
+        <div id="emergency"  style={SECTION_OFFSET}><ScrollReveal delay={0}><EmergencySection  emergency={data.emergency} /></ScrollReveal></div>
+        <div id="checklist"  style={SECTION_OFFSET}><ScrollReveal delay={0}><ChecklistSection  checklist={data.checklist} /></ScrollReveal></div>
         {zonesGuide && (
           <div id="city-map" style={SECTION_OFFSET}>
-            <RemoteWorkZonesGuide data={zonesGuide} />
+            <ScrollReveal delay={0}><RemoteWorkZonesGuide data={zonesGuide} /></ScrollReveal>
           </div>
         )}
         {nomadReality && nomadReality.length > 0 && (
           <div id="reality" style={SECTION_OFFSET}>
-            <NomadRealitySection notes={nomadReality} />
+            <ScrollReveal delay={0}><NomadRealitySection notes={nomadReality} /></ScrollReveal>
           </div>
         )}
         {notes && notes.length > 0 && (
           <div id="notes" style={SECTION_OFFSET}>
-            <RealTravelNotesSection notes={notes} />
+            <ScrollReveal delay={0}><RealTravelNotesSection notes={notes} /></ScrollReveal>
           </div>
         )}
         {gems && (
           <div id="gems" style={SECTION_OFFSET}>
-            <LocalGemsSection gems={gems} />
+            <ScrollReveal delay={0}><LocalGemsSection gems={gems} /></ScrollReveal>
           </div>
         )}
       </div>

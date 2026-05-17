@@ -1,3 +1,4 @@
+import { SectionHeading } from './SectionHeading';
 import type { EmergencyInfo, EmbassyInfo } from "@/lib/types";
 
 type EmbassyKey =
@@ -39,7 +40,7 @@ export function EmergencySection({ emergency }: { emergency: EmergencyInfo }) {
 
   return (
     <div className="card">
-      <p className="section-heading">Emergency Contacts</p>
+      <SectionHeading category="emergency" style={{ marginBottom: "0.875rem" }}>Emergency Contacts</SectionHeading>
 
       {/* Numbers grid */}
       <div

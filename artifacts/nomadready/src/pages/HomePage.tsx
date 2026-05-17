@@ -1,22 +1,21 @@
-import { useState, useEffect, useMemo } from "react";
-import { useLocation } from "wouter";
+import { useMemo } from "react";
+import { useSearch } from "wouter";
 import passportsDataRaw from "@/data/passports.json";
 import destinationsDataRaw from "@/data/destinations.json";
 import type { Passport, Destination, ReadyData } from "@/lib/types";
-import type { DestinationSummary } from "@/components/DestinationCard";
 import { PassportSelector } from "@/components/PassportSelector";
 import { ProfileSelector } from "@/components/ProfileSelector";
 import { ProfileNote } from "@/components/ProfileNote";
-import { DestinationGrid } from "@/components/DestinationGrid";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { TripPlanner } from "@/components/TripPlanner";
 import { AmbientLayer } from "@/components/home/AmbientLayer";
 import { PassportGatewayHero } from "@/components/home/PassportGatewayHero";
 import { OpenGatewayLink } from "@/components/home/OpenGatewayLink";
+import { HeroCrossfade } from "@/components/home/HeroCrossfade";
+import { HeroReel } from "@/components/home/HeroReel";
+import { DestinationPicker, type DestSummary } from "@/components/home/DestinationPicker";
 import { TravelNetwork } from "@/components/motion/TravelNetwork";
-import { Link } from "wouter";
 import { InView } from "@/components/motion-primitives/in-view";
-import { CoverPatternSVG } from "@/components/DestinationCoverPattern";
 import type { UseInViewOptions } from "motion/react";
 
 const passports = passportsDataRaw as Passport[];
@@ -64,11 +63,11 @@ const REVEAL_TX   = { duration: 0.55, ease: [0.25, 1, 0.5, 1] };
 const REVEAL_OPTS: UseInViewOptions = { once: true, amount: 0.2 };
 
 function getReadyData(passportId: string): {
-  summaries: Map<string, DestinationSummary>;
+  summaries: Map<string, DestSummary>;
   budgetRecord: Record<string, ReadyData["budget"]>;
   availableDestinations: Destination[];
 } {
-  const summaries = new Map<string, DestinationSummary>();
+  const summaries = new Map<string, DestSummary>();
   const budgetRecord: Record<string, ReadyData["budget"]> = {};
   const availableIds = new Set<string>();
 
@@ -94,8 +93,8 @@ function getReadyData(passportId: string): {
 }
 
 export default function HomePage() {
-  const [location] = useLocation();
-  const params = new URLSearchParams(location.includes("?") ? location.split("?")[1] : "");
+  const search = useSearch();
+  const params = new URLSearchParams(search ?? "");
   const passportParam = params.get("passport");
   const activePassportId = passports.some((p) => p.id === passportParam)
     ? passportParam!
@@ -121,17 +120,7 @@ export default function HomePage() {
           overflow: "hidden",
         }}
       >
-        <video
-          className="home-hero-bg"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/assets/hero/hero-cinematic.jpg"
-          aria-hidden="true"
-        >
-          <source src="/assets/hero/hero-loop.mp4" type="video/mp4" />
-        </video>
+        <HeroCrossfade />
         <div className="home-hero-overlay" aria-hidden="true" />
         <div
           aria-hidden="true"
@@ -224,71 +213,7 @@ export default function HomePage() {
             </div>
 
             <div className="home-hero-aside anim-fade-up anim-delay-2" aria-hidden="true">
-              {/* ── Editorial panel — portrait composition, no rotation ── */}
-              <div className="hero-editorial-panel">
-                {/* Main image frame */}
-                <div className="hero-editorial-frame" style={{ position: "relative" }}>
-                  <img
-                    src="/assets/editorial/panels/panel-indonesia.png"
-                    alt=""
-                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block", position: "absolute", inset: 0 }}
-                    fetchPriority="high"
-                    decoding="async"
-                  />
-
-                  {/* Warm cinematic vignette */}
-                  <div className="hero-editorial-frame-vignette" />
-
-                  {/* Thin top rule — editorial header line */}
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(217,119,6,0.45) 30%, rgba(217,119,6,0.45) 70%, transparent)", zIndex: 4 }} />
-
-                  {/* Bottom label zone */}
-                  <div className="hero-editorial-frame-label">
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
-                      <span style={{ fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(217,119,6,0.85)", lineHeight: 1 }}>
-                        Indonesia
-                      </span>
-                      <span style={{ fontSize: "0.8125rem", fontWeight: 600, letterSpacing: "-0.02em", color: "rgba(255,255,255,0.92)", lineHeight: 1.1 }}>
-                        Southeast Asia
-                      </span>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.15rem" }}>
-                      <span style={{ fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(217,119,6,0.70)", lineHeight: 1 }}>
-                        Field Score
-                      </span>
-                      <span style={{ fontSize: "1.125rem", fontWeight: 700, color: "rgba(255,255,255,0.94)", letterSpacing: "-0.03em", lineHeight: 1 }}>
-                        77
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Passport — tucked bottom-left, partially overlapping the frame */}
-                  <div className="hero-editorial-passport">
-                    <div className="anim-float-gentle">
-                      <img
-                        src="/assets/editorial/old%20passport/old-passport.png"
-                        alt=""
-                        style={{ width: "88px", height: "auto", borderRadius: "3px", boxShadow: "0 8px 28px rgba(0,0,0,0.50), 0 2px 6px rgba(0,0,0,0.30)", display: "block" }}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Metadata row below frame */}
-                <div className="hero-editorial-meta">
-                  <svg viewBox="0 0 320 10" fill="none" style={{ flex: 1, height: "10px", display: "block" }}>
-                    <line x1="6" y1="5" x2="314" y2="5" stroke="rgba(255,255,255,0.22)" strokeWidth="1" strokeDasharray="3 5" />
-                    <circle cx="6"  cy="5" r="2.5" fill="var(--accent)" opacity="0.55" />
-                    <circle cx="160" cy="5" r="1.8" fill="var(--accent)" opacity="0.35" />
-                    <circle cx="314" cy="5" r="2.5" fill="var(--accent)" opacity="0.55" />
-                  </svg>
-                  <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", flexShrink: 0 }}>
-                    {availableDestinations.length} destinations
-                  </span>
-                </div>
-              </div>
+              <HeroReel destCount={availableDestinations.length} />
             </div>
           </div>
 
@@ -313,107 +238,21 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* ── Step 3: Featured Destination Panel ──────────────── */}
-      {(() => {
-        const indonesia   = destinations.find(d => d.id === "indonesia");
-        const turkey      = destinations.find(d => d.id === "turkey");
-        const philippines = destinations.find(d => d.id === "philippines");
-        const georgia     = destinations.find(d => d.id === "georgia");
-        const picks = [indonesia, turkey, philippines, georgia].filter(Boolean) as typeof destinations;
-        const pickImages: Record<string, string> = {
-          indonesia:   "/assets/editorial/panels/panel-indonesia.png",
-          turkey:      "/assets/destinations/turkey.jpg",
-          philippines: "/assets/destinations/philippines.jpg",
-          georgia:     "/assets/destinations/georgia.jpg",
-        };
-        if (picks.length === 0) return null;
-        const featured = picks.map(dest => ({ dest, imgSrc: pickImages[dest.id] ?? null }));
-        return (
-          <InView variants={REVEAL} transition={{ ...REVEAL_TX, delay: 0.08 }} viewOptions={REVEAL_OPTS}>
-            <section style={{ paddingTop: "3.5rem", paddingBottom: "0" }} aria-label="Featured destinations">
-              <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.125rem" }}>
-                <h2 className="section-label-editorial">
-                  <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
-                  Field picks
-                </h2>
-                <div className="feat-dest-grid">
-                  {featured.map(({ dest, imgSrc }) => (
-                    <Link
-                      key={dest.id}
-                      to={`/ready/${activePassportId}/${dest.id}`}
-                      className="feat-dest-card"
-                      aria-label={`Field guide for ${dest.label}`}
-                    >
-                      {/* Background — photo or color+pattern */}
-                      {imgSrc ? (
-                        <img src={imgSrc} alt="" className="feat-dest-card-bg" fetchPriority="low" decoding="async" />
-                      ) : (
-                        <>
-                          <div style={{ position: "absolute", inset: 0, backgroundColor: dest.cover_color, zIndex: 0 }} />
-                          <svg viewBox="0 0 560 360" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 1 }} aria-hidden="true">
-                            <CoverPatternSVG id={dest.id} region={dest.region} />
-                          </svg>
-                          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.30) 100%)", zIndex: 1 }} />
-                        </>
-                      )}
-
-                      {/* Vignette */}
-                      <div className="feat-dest-card-vignette" />
-
-                      {/* Region stamp */}
-                      <div className="feat-dest-card-region">{dest.region}</div>
-
-                      {/* Score pill */}
-                      {dest.travel_score && (
-                        <div className="feat-dest-card-score">
-                          <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "rgba(255,255,255,0.96)", letterSpacing: "-0.02em", lineHeight: 1 }}>
-                            {dest.travel_score.overall}
-                          </span>
-                          <span style={{ fontSize: "0.5rem", fontWeight: 500, color: "rgba(255,255,255,0.72)", lineHeight: 1 }}>/100</span>
-                        </div>
-                      )}
-
-                      {/* Content — bottom zone */}
-                      <div className="feat-dest-card-content">
-                        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "0.75rem" }}>
-                          <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-                            <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(217,119,6,0.90)", margin: 0, lineHeight: 1 }}>
-                              {dest.emoji} {dest.region}
-                            </p>
-                            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3.5vw, 2.125rem)", fontWeight: 700, letterSpacing: "-0.04em", color: "rgba(255,255,255,0.97)", margin: 0, lineHeight: 1.0 }}>
-                              {dest.label}
-                            </h3>
-                            <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.68)", margin: 0, lineHeight: 1.35, letterSpacing: "-0.01em" }}>
-                              {dest.hero_tag}
-                            </p>
-                          </div>
-                          <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: "0.35rem", background: "rgba(217,119,6,0.18)", border: "1px solid rgba(217,119,6,0.40)", borderRadius: "var(--radius-full)", padding: "0.35rem 0.875rem", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
-                            <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "rgba(255,255,255,0.92)", letterSpacing: "-0.01em", lineHeight: 1 }}>Read guide</span>
-                            <span style={{ fontSize: "0.8rem", color: "var(--accent)", lineHeight: 1 }} aria-hidden="true">→</span>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </section>
-          </InView>
-        );
-      })()}
-
-      <section style={{ flex: 1, paddingTop: "4.5rem", paddingBottom: "3.5rem" }} aria-labelledby="destinations-heading">
-        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
-          <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
-            <h2 id="destinations-heading" className="section-label-editorial">
+      {/* ── Destination picker — all destinations ───────────── */}
+      <section style={{ paddingTop: "3.5rem", paddingBottom: "0.5rem" }} aria-label="Destinations">
+        <InView variants={REVEAL} transition={{ ...REVEAL_TX, delay: 0.08 }} viewOptions={REVEAL_OPTS}>
+          <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.125rem" }}>
+            <h2 className="section-label-editorial">
               <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
-              {availableDestinations.length} destinations mapped for your passport
+              {availableDestinations.length} destinations — explore the map
             </h2>
-          </InView>
-          <InView variants={REVEAL} transition={{ ...REVEAL_TX, delay: 0.1 }} viewOptions={REVEAL_OPTS}>
-            <DestinationGrid destinations={availableDestinations} passportId={activePassportId} summaries={summaries} />
-          </InView>
-        </div>
+            <DestinationPicker
+              destinations={availableDestinations}
+              summaries={summaries}
+              passportId={activePassportId}
+            />
+          </div>
+        </InView>
       </section>
 
       <section style={{ paddingTop: "2rem", paddingBottom: "5rem" }}>

@@ -764,6 +764,34 @@ a:hover {
   user-select: none;
 }
 
+/* ─── Destination picker smaller cards ──────────────────── */
+.dest-picker-card {
+  height: 196px !important;
+}
+
+@media (min-width: 768px) {
+  .dest-picker-card {
+    height: 220px !important;
+  }
+}
+
+/* 3-column picker grid → collapses on small screens */
+.dest-picker-grid {
+  grid-template-columns: 1fr !important;
+}
+
+@media (min-width: 540px) {
+  .dest-picker-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 800px) {
+  .dest-picker-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
 /* ─── Feat dest grid responsive ─────────────────────────── */
 @media (min-width: 560px) {
   .feat-dest-grid {

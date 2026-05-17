@@ -51,9 +51,9 @@ function formatMonths(months: ReadyData["best_season"]["overall_best_months"]): 
 }
 
 const HERO_IMGS = {
-  main:   "https://images.unsplash.com/photo-1464822759844-d150ad6a8c1d?w=640&q=82&auto=format&fit=crop",
+  main:   "/assets/hero/hero-main-bg.webp",
   tropic: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop",
-  japan:  "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&q=78&auto=format&fit=crop",
+  japan:  "/assets/hero/polaroid-japan.webp",
 };
 
 const REVEAL = {

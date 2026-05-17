@@ -51,7 +51,7 @@ const zonesFiles = import.meta.glob<RemoteWorkZonesData>("../data/remote-work-zo
 const DEST_HERO_PHOTOS: Record<string, string> = {
   thailand:      "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=1400&q=85&auto=format&fit=crop",
   malaysia:      "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1400&q=85&auto=format&fit=crop",
-  indonesia:     "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1400&q=85&auto=format&fit=crop",
+  indonesia:     "/assets/editorial/panels/panel-indonesia.png",
   georgia:       "https://images.unsplash.com/photo-1565008887274-377b4a6c4e03?w=1400&q=85&auto=format&fit=crop",
   turkey:        "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=1400&q=85&auto=format&fit=crop",
   vietnam:       "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1400&q=85&auto=format&fit=crop",

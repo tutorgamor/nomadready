@@ -1,6 +1,7 @@
-import { useParams } from "wouter";
+import { useState, useCallback } from "react";
+import { useParams, useLocation } from "wouter";
 import { Link } from "wouter";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import destinationsDataRaw from "@/data/destinations.json";
 import passportsDataRaw     from "@/data/passports.json";
 import type { ReadyData, Destination, Passport, LocalGem, RealTravelNote, NomadRealityNote, TravelScore } from "@/lib/types";
@@ -164,6 +165,57 @@ function Reveal({ children, delay = 0, className }: { children: React.ReactNode;
   );
 }
 
+// ── Cinematic back-navigation link ────────────────────────────────────────────
+
+function BackLink({ to, className, style, children }: {
+  to: string;
+  className?: string;
+  style?: React.CSSProperties;
+  children: React.ReactNode;
+}) {
+  const [, navigate]  = useLocation();
+  const [exiting, setExiting] = useState(false);
+
+  const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (exiting) return;
+    setExiting(true);
+    setTimeout(() => navigate(to), 620);
+  }, [exiting, navigate, to]);
+
+  return (
+    <>
+      <AnimatePresence>
+        {exiting && (
+          <motion.div
+            key="back-curtain"
+            initial={{ y: "-100%" }}
+            animate={{ y: "0%" }}
+            transition={{ duration: 0.58, ease: [0.76, 0, 0.24, 1] }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "linear-gradient(180deg, #0a0800 0%, #1a0e02 55%, #0d0900 100%)",
+              zIndex: 9999,
+              pointerEvents: "none",
+            }}
+          />
+        )}
+      </AnimatePresence>
+      <motion.a
+        href={to}
+        className={className}
+        style={style}
+        onClick={handleClick}
+        animate={exiting ? { opacity: 0, y: -10, filter: "blur(4px)" } : {}}
+        transition={{ duration: 0.22 }}
+      >
+        {children}
+      </motion.a>
+    </>
+  );
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function DestinationPage() {
@@ -192,9 +244,9 @@ export default function DestinationPage() {
       <main className="page-container flex-1 flex flex-col items-center justify-center gap-6 py-24 text-center" style={{ minHeight: "100dvh" }}>
         <p style={{ fontSize: "3rem" }}>🗺️</p>
         <h1 style={{ fontSize: "1.5rem", fontWeight: 700 }}>Destination not found</h1>
-        <Link to={`/?passport=${passportId}&skip_gateway=1`} style={{ display: "inline-flex", background: "var(--accent)", color: "#fff", borderRadius: "9999px", padding: "0.5rem 1.25rem", textDecoration: "none", fontWeight: 600 }}>
+        <BackLink to={`/?passport=${passportId}&skip_gateway=1`} style={{ display: "inline-flex", background: "var(--accent)", color: "#fff", borderRadius: "9999px", padding: "0.5rem 1.25rem", textDecoration: "none", fontWeight: 600 }}>
           {t.backToAtlas}
-        </Link>
+        </BackLink>
       </main>
     );
   }
@@ -242,9 +294,9 @@ export default function DestinationPage() {
         </div>
 
         <div className="th-hero-topbar">
-          <Link to={`/?passport=${passportId}&skip_gateway=1`} className="th-back-link">
+          <BackLink to={`/?passport=${passportId}&skip_gateway=1`} className="th-back-link">
             {t.backToAtlas}
-          </Link>
+          </BackLink>
           <span className="th-hero-tag">
             {dest.label.toUpperCase()} · {dest.region.toUpperCase()}
           </span>
@@ -634,9 +686,9 @@ export default function DestinationPage() {
           </Reveal>
           <Reveal delay={0.12}>
             <div className="th-cta-actions">
-              <Link to={`/?passport=${passportId}&skip_gateway=1`} className="th-cta-primary">
+              <BackLink to={`/?passport=${passportId}&skip_gateway=1`} className="th-cta-primary">
                 {t.backToAtlas.replace("← ", "")} →
-              </Link>
+              </BackLink>
               {destinationId !== "thailand" && (
                 <Link to={`/ready/${passportId}/thailand`} className="th-cta-secondary">
                   Comparer avec la Thaïlande →

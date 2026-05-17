@@ -1,9 +1,18 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { useEffect } from "react";
+import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { ProfileProvider } from "@/components/ProfileProvider";
 import HomePage from "@/pages/HomePage";
 import DestinationPage from "@/pages/DestinationPage";
 import ThailandPage from "@/pages/ThailandPage";
 import "@/globals.css";
+
+function ScrollToTop() {
+  const [location] = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+  }, [location]);
+  return null;
+}
 
 function NotFound() {
   return (
@@ -34,12 +43,15 @@ function NotFound() {
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={HomePage} />
-      <Route path="/destinations/thailand" component={ThailandPage} />
-      <Route path="/ready/:passport/:destination" component={DestinationPage} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <ScrollToTop />
+      <Switch>
+        <Route path="/" component={HomePage} />
+        <Route path="/destinations/thailand" component={ThailandPage} />
+        <Route path="/ready/:passport/:destination" component={DestinationPage} />
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 }
 

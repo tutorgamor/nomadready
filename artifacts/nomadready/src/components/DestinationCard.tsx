@@ -18,8 +18,17 @@ interface DestinationCardProps {
   summary?: DestinationSummary;
 }
 
-// Populate with real cover photos as they become available — fallback is cover_color
-const COVER_IMAGES: Record<string, string> = {};
+const COVER_IMAGES: Record<string, string> = {
+  thailand:      "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600&q=80&auto=format&fit=crop",
+  malaysia:      "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80&auto=format&fit=crop",
+  indonesia:     "/assets/editorial/panels/panel-indonesia.png",
+  georgia:       "https://images.unsplash.com/photo-1565008887274-377b4a6c4e03?w=600&q=80&auto=format&fit=crop",
+  turkey:        "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80&auto=format&fit=crop",
+  vietnam:       "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80&auto=format&fit=crop",
+  philippines:   "https://images.unsplash.com/photo-1518509562904-e7ef99cdce86?w=600&q=80&auto=format&fit=crop",
+  japan:         "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=600&q=80&auto=format&fit=crop",
+  "south-korea": "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=600&q=80&auto=format&fit=crop",
+};
 
 const STAT_LABEL: CSSProperties = {
   fontSize: "0.625rem",

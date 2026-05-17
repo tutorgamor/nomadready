@@ -10,7 +10,6 @@ import { ProfileNote } from "@/components/ProfileNote";
 import { DestinationGrid } from "@/components/DestinationGrid";
 import { ComparisonStrip } from "@/components/ComparisonStrip";
 import { TripPlanner } from "@/components/TripPlanner";
-import { AtlasMapSection } from "@/components/home/AtlasMapSection";
 import { AmbientLayer } from "@/components/home/AmbientLayer";
 import { PassportGatewayHero } from "@/components/home/PassportGatewayHero";
 import { OpenGatewayLink } from "@/components/home/OpenGatewayLink";
@@ -51,7 +50,6 @@ function formatMonths(months: ReadyData["best_season"]["overall_best_months"]): 
 }
 
 const HERO_IMGS = {
-  main:   "/assets/hero/hero-main-bg.webp",
   tropic: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop",
   japan:  "/assets/hero/polaroid-japan.webp",
 };
@@ -123,7 +121,7 @@ export default function HomePage() {
       >
         <img
           className="home-hero-bg"
-          src={HERO_IMGS.main}
+          src="/assets/hero/hero-cinematic.jpg"
           alt=""
           aria-hidden="true"
           fetchPriority="high"
@@ -235,13 +233,6 @@ export default function HomePage() {
 
                   {/* Warm cinematic vignette */}
                   <div className="hero-editorial-frame-vignette" />
-
-                  {/* Compass — upper-right, very subtle */}
-                  <img
-                    src="/assets/editorial/compass/compass.jpg"
-                    alt=""
-                    className="hero-editorial-compass"
-                  />
 
                   {/* Thin top rule — editorial header line */}
                   <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(217,119,6,0.45) 30%, rgba(217,119,6,0.45) 70%, transparent)", zIndex: 4 }} />
@@ -400,9 +391,8 @@ export default function HomePage() {
         );
       })()}
 
-      <section style={{ flex: 1, position: "relative", overflow: "hidden", paddingTop: "4.5rem", paddingBottom: "3.5rem" }} aria-labelledby="destinations-heading">
-        <AtlasMapSection destinationCount={availableDestinations.length} />
-        <div className="page-container" style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+      <section style={{ flex: 1, paddingTop: "4.5rem", paddingBottom: "3.5rem" }} aria-labelledby="destinations-heading">
+        <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
           <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
             <h2 id="destinations-heading" className="section-label-editorial">
               <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>

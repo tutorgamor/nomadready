@@ -99,7 +99,7 @@ export function DestinationPicker({ destinations, summaries, passportId }: Props
               return (
                 <Link
                   key={dest.id}
-                  to={dest.id === "thailand" ? "/destinations/thailand" : `/ready/${passportId}/${dest.id}`}
+                  to={`/ready/${passportId}/${dest.id}`}
                   className="feat-dest-card dest-picker-card"
                   aria-label={dest.label}
                 >

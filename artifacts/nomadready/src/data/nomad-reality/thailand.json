@@ -1,0 +1,32 @@
+[
+  {
+    "title": "WiFi: condo performance varies",
+    "note": "Some condos advertise fast WiFi but become unstable during video calls or evening congestion.",
+    "confidence": "medium"
+  },
+  {
+    "title": "Noise: budget stays carry sound",
+    "note": "Thin walls are common in budget condos and hostels. Verify reviews mentioning noise before booking.",
+    "confidence": "medium"
+  },
+  {
+    "title": "Transport: BTS/MRT access is quality of life",
+    "note": "Daily BTS/MRT access changes quality of life massively during long stays.",
+    "confidence": "high"
+  },
+  {
+    "title": "Cafés: mornings are calmer",
+    "note": "Many cafés look laptop-friendly but become crowded or noisy after lunch.",
+    "confidence": "medium"
+  },
+  {
+    "title": "Islands: relaxed pace, weaker backup",
+    "note": "Island life is more flexible and relaxing, but backup work options are weaker than Bangkok.",
+    "confidence": "medium"
+  },
+  {
+    "title": "Accommodation: photos can mislead",
+    "note": "Photos can hide poor desk setups, weak lighting, or uncomfortable work conditions.",
+    "confidence": "medium"
+  }
+]

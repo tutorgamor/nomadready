@@ -1,0 +1,27 @@
+[
+  {
+    "type": "navigation",
+    "title": "Google Maps is limited — use Naver Map or Kakao Map",
+    "note": "Google Maps shows routes but lacks real-time subway info, local bus data, and accurate walking paths in dense areas. Naver Map has an English mode and is what locals actually use — significantly better."
+  },
+  {
+    "type": "money",
+    "title": "Some foreign cards get declined at standalone POS terminals",
+    "note": "Large stores and restaurants accept Visa/Mastercard fine. But standalone terminals in traditional markets, small guesthouses, and some cafés may refuse foreign cards without explanation. Keep 50–100k KRW in cash."
+  },
+  {
+    "type": "wifi",
+    "title": "Cafés are the best coworking option — seriously",
+    "note": "Korean café culture means fast WiFi, abundant power outlets, and staff who expect you to stay for hours. A single coffee gets you a solid 4–6h work window — often better than a paid coworking space for a short stay."
+  },
+  {
+    "type": "transport",
+    "title": "T-money card simplifies everything in Seoul",
+    "note": "Load it at any convenience store and use it on metro, bus, and some taxis. Slightly cheaper than individual tickets and eliminates queues. If your phone supports NFC transit, add it to your wallet instead of carrying the card."
+  },
+  {
+    "type": "culture",
+    "title": "Quiet carriages on the metro are genuinely quiet",
+    "note": "Talking on the phone in Seoul metro draws real stares, not just disapproving looks. Even quiet conversations attract attention. Headphones are fine; phone calls are genuinely not done. This is consistent — not just posted signage."
+  }
+]

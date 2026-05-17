@@ -1,0 +1,157 @@
+{
+  "passport": "us",
+  "destination": "south-korea",
+  "last_reviewed": "2026-05-10",
+  "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
+
+  "visa": {
+    "type": "Visa Exemption",
+    "duration_days": 90,
+    "extendable": false,
+    "multiple_entry": false,
+    "cost_eur": 0,
+    "notes": "US passport holders receive a 90-day visa-free tourist entry to South Korea. No visa is required. Many nationalities are exempt from the K-ETA (Korea Electronic Travel Authorization) requirement, but exemption status can change — verify before booking. Passport must be valid for the duration of your stay. A return or onward ticket may be requested at immigration.",
+    "verify_required": true,
+    "verify_note": "South Korea's K-ETA rules and visa exemption terms can change. Verify current conditions at the Korea Immigration Service (immigration.go.kr) or the Korean Embassy in the United States before booking."
+  },
+
+  "insurance": {
+    "required": false,
+    "recommended": true,
+    "notes": "Not legally required but strongly recommended. Medical care in South Korea is high quality and relatively affordable compared to the US, but costs can still escalate quickly for hospitalisation or emergencies. Ensure your policy covers medical evacuation and inpatient care. Hospital costs for serious incidents can reach $10,000 or more.",
+    "verify_required": false
+  },
+
+  "best_season": {
+    "overall_best_months": ["Apr", "May", "Sep", "Oct", "Nov"],
+    "regions": [
+      {
+        "area": "Seoul & Central Korea (Seoul, Gyeonggi, Chungcheong)",
+        "best": ["Apr", "May", "Sep", "Oct", "Nov"],
+        "avoid": ["Jan", "Feb", "Jul", "Aug"],
+        "notes": "Spring (Apr–May) and autumn (Sep–Nov) are ideal — pleasant temperatures, clear skies, and cherry blossoms in late March to mid-April. Summers are hot, humid, and dominated by monsoon rains (Jun–Aug). Winters are dry and very cold."
+      },
+      {
+        "area": "Jeju Island (Jeju City, Seogwipo)",
+        "best": ["Apr", "May", "Sep", "Oct"],
+        "avoid": ["Aug", "Sep"],
+        "notes": "Jeju has a milder subtropical climate than the mainland. Spring and early autumn are ideal for hiking Hallasan and exploring coastal scenery. Typhoon risk peaks Aug–Sep. Winters are cooler than Seoul but generally manageable."
+      },
+      {
+        "area": "Busan & Southeast Coast (Busan, Gyeongju, Tongyeong)",
+        "best": ["Apr", "May", "Sep", "Oct", "Nov"],
+        "avoid": ["Jul", "Aug"],
+        "notes": "Busan's coastal location brings slightly warmer winters and cooler summers than Seoul. Autumn foliage in nearby parks and temples is spectacular Oct–Nov. Summer beach season (Jul–Aug) is crowded and hot."
+      }
+    ]
+  },
+
+  "budget": {
+    "currency": "KRW",
+    "currency_symbol": "₩",
+    "exchange_rates": { "EUR": 1450, "GBP": 1700, "USD": 1350, "CAD": 980, "AUD": 900 },
+    "verify_required": true,
+    "verify_note": "Rates are approximate. Check xe.com before travel.",
+    "tiers": {
+      "budget": {
+        "label": "Backpacker",
+        "daily_krw": 50000,
+        "includes": "Guesthouse dorm or jjimjilbang, convenience store meals, T-money transport"
+      },
+      "mid": {
+        "label": "Comfort",
+        "daily_krw": 110000,
+        "includes": "Budget hotel or guesthouse, mix of restaurants and convenience stores, metro"
+      },
+      "high": {
+        "label": "Boutique",
+        "daily_krw": 240000,
+        "includes": "Boutique hotel, restaurant dining, KTX day trips, activities"
+      }
+    },
+    "cost_anchors": [
+      { "item": "Convenience store kimbap", "krw": 1500 },
+      { "item": "Bibimbap (restaurant)", "krw": 10000 },
+      { "item": "Seoul metro ride", "krw": 1400 },
+      { "item": "Can of beer (convenience store)", "krw": 2500 },
+      { "item": "Guesthouse dorm (Seoul)", "krw": 20000 },
+      { "item": "Iced Americano (café)", "krw": 4500 },
+      { "item": "KTX Seoul–Busan (standard)", "krw": 59800 }
+    ]
+  },
+
+  "useful_apps": [
+    { "name": "Naver Map", "use": "Primary navigation in South Korea — far more accurate than Google Maps for local transit", "platform": "iOS/Android" },
+    { "name": "KakaoMap", "use": "Navigation and transit routing — integrates with KakaoTaxi for seamless cab booking", "platform": "iOS/Android" },
+    { "name": "KakaoTalk", "use": "Messaging app widely used in Korea — useful for bookings and local contacts", "platform": "iOS/Android" },
+    { "name": "Papago", "use": "Naver's Korean-English translator — handles menus and signage better than Google Translate", "platform": "iOS/Android" },
+    { "name": "Google Maps", "use": "Useful for finding places but has limited public transit accuracy in South Korea", "platform": "iOS/Android" },
+    { "name": "Agoda", "use": "Accommodation — competitive rates across South Korea", "platform": "iOS/Android" },
+    { "name": "Airalo", "use": "eSIM data — buy before you land", "platform": "iOS/Android" },
+    { "name": "XE", "use": "Live exchange rates", "platform": "iOS/Android" }
+  ],
+
+  "transport": [
+    "Seoul Metro is one of the world's best urban rail systems — clean, punctual, and extensive; a T-money card covers metro, city buses, and most taxis.",
+    "Download Naver Map or KakaoMap for transit directions — Google Maps has significantly limited public transport accuracy in South Korea.",
+    "KTX high-speed rail connects Seoul to Busan in about 2.5 hours and to other major cities — book tickets on the Korail website or at station machines.",
+    "Intercity express buses (고속버스) are comfortable and well-priced for cities without direct KTX service — depart from major bus terminals.",
+    "Taxis are affordable and readily available — use KakaoTaxi to hail a cab in-app and enter your destination without needing to speak Korean.",
+    "T-money cards can be bought and loaded at any convenience store (CU, GS25, 7-Eleven) — they also work at many vending machines and some smaller restaurants."
+  ],
+
+  "scams": [
+    {
+      "name": "Foreign card acceptance gaps",
+      "description": "Many convenience stores and larger restaurants accept international Visa/Mastercard, but some street markets, older machines, and local services may not. Carry KRW cash for smaller purchases and markets."
+    },
+    {
+      "name": "Google Maps transit gaps",
+      "description": "Google Maps has limited and sometimes inaccurate public transit data for South Korea. Download Naver Map or KakaoMap before arriving — they are the standard navigation tools used locally."
+    },
+    {
+      "name": "Taxi communication difficulties",
+      "description": "Taxi drivers outside tourist areas often speak little to no English. Use KakaoTaxi which allows in-app destination entry, or show your destination written in Korean (copy from Naver Map) to the driver."
+    },
+    {
+      "name": "Tourist area premium pricing",
+      "description": "Areas like Myeongdong, Itaewon, and Insadong cater heavily to tourists and price accordingly. Walk a few streets away from the main drag to find the same food and goods at local prices."
+    }
+  ],
+
+  "phrases": [
+    { "phrase": "Annyeonghaseyo", "pronunciation": "ahn-nyeong-ha-seh-yo", "meaning": "Hello" },
+    { "phrase": "Gamsahamnida", "pronunciation": "gahm-sah-hahm-nee-dah", "meaning": "Thank you (formal)" },
+    { "phrase": "Eolmayeyo?", "pronunciation": "eol-mah-yeh-yo", "meaning": "How much is it?" },
+    { "phrase": "Aniyo", "pronunciation": "ah-nee-yo", "meaning": "No" },
+    { "phrase": "Yeogi", "pronunciation": "yeo-gee", "meaning": "Here / This place" }
+  ],
+
+  "emergency": {
+    "police": "112",
+    "ambulance": "119",
+    "fire": "119",
+    "tourist_hotline": "1330",
+    "embassy_label": "US Embassy in Seoul / Consular assistance",
+    "embassy": {
+      "phone": "Verify official embassy contact before travel",
+      "address": "Verify official embassy contact before travel",
+      "verify_required": true
+    },
+    "notes": "Dial 112 for police and 119 for ambulance or fire in South Korea. The Korea Tourism Organization helpline (1330) provides multilingual support. For emergencies involving US nationals, contact the US Embassy in Seoul — verify contact details before travel."
+  },
+
+  "checklist": [
+    { "item": "Passport valid for the duration of your stay — a buffer of 6 months beyond your return date is advisable", "priority": "critical" },
+    { "item": "Verify current 90-day visa-free entry terms and K-ETA exemption status at the Korea Immigration Service or the Korean Embassy in the United States", "priority": "critical" },
+    { "item": "Purchase travel insurance — medical and emergency costs can escalate quickly even in South Korea", "priority": "critical" },
+    { "item": "Print or save a return or onward ticket — may be requested at immigration", "priority": "high" },
+    { "item": "Notify your bank of travel dates to avoid card blocks on international purchases", "priority": "high" },
+    { "item": "Download Naver Map and KakaoMap before arriving — Google Maps has limited transit accuracy in South Korea", "priority": "high" },
+    { "item": "Buy Airalo eSIM before travel or purchase a local SIM at Incheon Airport on arrival", "priority": "high" },
+    { "item": "Get a T-money card at the airport or any convenience store — accepted on metro, buses, and taxis", "priority": "medium" },
+    { "item": "Bring USD cash or a travel card — some smaller vendors and markets do not accept foreign cards", "priority": "medium" },
+    { "item": "Save South Korea emergency numbers: 112 for police, 119 for ambulance and fire, 1330 for tourist helpline", "priority": "medium" },
+    { "item": "Pack layers appropriate to the season — temperatures vary significantly, especially in winter and summer", "priority": "low" }
+  ]
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "type": "transport",
+    "title": "Sleeper bus quality varies wildly — research the specific operator",
+    "note": "The difference between a good and bad sleeper bus is enormous. Loud all-night stops, poorly maintained bunks, and unscheduled detours are common on budget operators. Futa Bus and Phuong Trang have better track records."
+  },
+  {
+    "type": "weather",
+    "title": "Vietnam's climate runs north to south on a delay",
+    "note": "When the north is cool and dry (Oct–Dec), central Vietnam may be flooded, and the south is warm and sunny. Check weather for your specific cities — not 'Vietnam' as a whole. The difference can be 25°C and entirely opposite conditions."
+  },
+  {
+    "type": "transport",
+    "title": "City traffic is a skill — you learn it in one morning",
+    "note": "Ho Chi Minh City traffic is genuinely intense but follows logic. Walk steadily into the flow and bikes route around you. Stopping suddenly or rushing is what causes near-misses. One slow morning crossing is enough to get the rhythm."
+  },
+  {
+    "type": "money",
+    "title": "Always agree on a price before getting in an unlicensed taxi",
+    "note": "Grab is the reliable option in cities. For xe ôm or unmarked cabs, settle the fare before departure — the post-ride ask is often 3–5× the reasonable fare even when you showed them a map. No negotiating after."
+  },
+  {
+    "type": "wifi",
+    "title": "Install your VPN before landing",
+    "note": "Some services and platforms face intermittent access issues in Vietnam depending on the provider and the day. Setting up a VPN on a local SIM after arrival is more complicated than doing it at home on your regular connection."
+  }
+]

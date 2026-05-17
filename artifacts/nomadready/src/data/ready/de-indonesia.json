@@ -1,0 +1,123 @@
+{
+  "passport": "de",
+  "destination": "indonesia",
+  "last_reviewed": "2026-05-08",
+  "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
+
+  "visa": {
+    "type": "Visitor Visa on Arrival (e-VOA / VOA)",
+    "duration_days": 30,
+    "extendable": true,
+    "extension_days": 30,
+    "cost_idr": 500000,
+    "multiple_entry": false,
+    "notes": "German passport holders can obtain a Visitor Visa on Arrival (VOA) or e-VOA at major international airports and seaports including Bali (DPS), Jakarta (CGK) and Lombok. Fee is IDR 500,000 (approx. USD 30 / €29), payable by card or cash. Extendable once at a local immigration office for 30 additional days. Use only the official Indonesian immigration site to avoid scam visa services.",
+    "verify_required": true,
+    "verify_note": "Indonesia's visa rules and fees can change. Check molina.imigrasi.go.id or the Indonesian embassy before travel."
+  },
+
+  "insurance": {
+    "required": false,
+    "recommended": true,
+    "notes": "Strongly recommended. Medical facilities outside Bali and Jakarta are limited. Surfing, scooter riding and volcano trekking are high-risk — ensure your policy covers these explicitly. Medical evacuation from remote islands can be very costly.",
+    "verify_required": false
+  },
+
+  "best_season": {
+    "overall_best_months": ["May", "Jun", "Jul", "Aug", "Sep"],
+    "regions": [
+      { "area": "Bali & Lombok", "best": ["May", "Jun", "Jul", "Aug", "Sep"], "avoid": ["Jan", "Feb"], "notes": "Dry season May–Oct. Peak tourist season Jul–Aug. Shoulder May–Jun and Sep–Oct is ideal. Rainy season Nov–Apr." },
+      { "area": "Java (Yogyakarta, Bromo)", "best": ["May", "Jun", "Jul", "Aug", "Sep", "Oct"], "avoid": ["Dec", "Jan", "Feb"], "notes": "Sunrise at Mt Bromo is best in dry season when skies are clear." },
+      { "area": "Sulawesi & Komodo", "best": ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"], "avoid": ["Dec", "Jan", "Feb", "Mar"], "notes": "Komodo diving is best Apr–Nov. Rough seas in wet season can cancel boat trips." },
+      { "area": "Raja Ampat (Papua)", "best": ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"], "avoid": ["Jul", "Aug"], "notes": "Unusual pattern — heavy swells Jul–Aug. Diving is world-class Oct–Apr." }
+    ]
+  },
+
+  "budget": {
+    "currency": "IDR",
+    "currency_symbol": "Rp",
+    "exchange_rates": { "EUR": 17500, "GBP": 20500, "USD": 16500, "CAD": 12000, "AUD": 10700 },
+    "verify_required": true,
+    "verify_note": "IDR rate can fluctuate. Check xe.com before travel. Always use official money changers in Bali — counterfeit deals exist.",
+    "tiers": {
+      "budget": { "label": "Backpacker", "daily_idr": 250000,  "includes": "Dorm bed or cheap guesthouse, warungs 3x, local transport, 1 Bintang" },
+      "mid":    { "label": "Comfort",    "daily_idr": 600000,  "includes": "Private guesthouse or mid hotel, restaurants, scooter rental, activities" },
+      "high":   { "label": "Boutique",   "daily_idr": 1500000, "includes": "Boutique villa (Bali), meals out, tours" }
+    },
+    "cost_anchors": [
+      { "item": "Nasi goreng at warung",                    "idr": 20000  },
+      { "item": "Restaurant meal",                           "idr": 80000  },
+      { "item": "Bintang beer (shop)",                       "idr": 25000  },
+      { "item": "Scooter rental per day (Bali)",             "idr": 70000  },
+      { "item": "Dorm bed (Canggu/Seminyak)",               "idr": 120000 },
+      { "item": "Grab ojek (5km, Jakarta)",                  "idr": 18000  },
+      { "item": "Lombok ferry from Bali (Padang Bai–Lembar)", "idr": 60000 }
+    ]
+  },
+
+  "useful_apps": [
+    { "name": "Gojek",      "use": "Ride-hailing, food delivery — dominant on Java. Also covers Bali.", "platform": "iOS/Android" },
+    { "name": "Grab",       "use": "Ride-hailing — works in major cities and Bali",                     "platform": "iOS/Android" },
+    { "name": "Google Maps","use": "Navigation — download offline maps, especially outside cities",      "platform": "iOS/Android" },
+    { "name": "Airalo",     "use": "eSIM data — buy before landing",                                    "platform": "iOS/Android" },
+    { "name": "Traveloka",  "use": "Flights, hotels and ferries — local platform with best prices",     "platform": "iOS/Android" },
+    { "name": "XE Currency","use": "Live IDR exchange rates",                                            "platform": "iOS/Android" }
+  ],
+
+  "transport": [
+    "In Bali, renting a scooter (Rp 70,000–100,000/day) is the most practical way to get around — always wear a helmet and carry your international driving licence.",
+    "Gojek and Grab ojek (motorbike taxis) are cheap and fast for short distances in cities.",
+    "For Java: intercity trains are comfortable and affordable — book at kai.id well in advance for popular routes (Jakarta–Yogyakarta).",
+    "Island hopping: use Traveloka or 12Go Asia to compare Pelni ferries, fast boats and domestic flights.",
+    "Fast boats between Bali–Gili Islands–Lombok are popular but safety standards vary — choose reputable operators.",
+    "Avoid driving a car in Jakarta unless necessary — traffic is extreme."
+  ],
+
+  "scams": [
+    { "name": "Money changer short-change (Bali)", "description": "Some private changers in Kuta/Seminyak use sleight of hand to short-change tourists. Use ATMs or the reputable PT Central Kuta changers (no commission, honest rates)." },
+    { "name": "Fake police at temples",            "description": "Individuals posing as officials claim you need a 'special permit' or that your clothing is wrong, then demand payment. Ignore them." },
+    { "name": "Taxi at Ngurah Rai airport (Bali)", "description": "Official taxis outside arrivals charge fixed high rates. Use Grab or pre-booked transfer — Grab is now permitted at many Bali pickup zones." },
+    { "name": "Broken scooter claim",             "description": "Rental shops sometimes claim pre-existing damage when you return the bike. Photograph every scratch before leaving the shop." },
+    { "name": "Ubud 'free tour' to workshops",    "description": "Well-meaning guides offer free walks that inevitably end at silver or batik workshops with pressure to buy." }
+  ],
+
+  "phrases": [
+    { "phrase": "Terima kasih",    "pronunciation": "teh-ree-ma kah-sih",  "meaning": "Thank you"                   },
+    { "phrase": "Sama-sama",       "pronunciation": "sah-ma sah-ma",       "meaning": "You're welcome"              },
+    { "phrase": "Berapa harganya?","pronunciation": "beh-ra-pa har-ga-nya","meaning": "How much is it?"             },
+    { "phrase": "Mahal sekali",    "pronunciation": "ma-hal seh-ka-lee",   "meaning": "Very expensive"              },
+    { "phrase": "Tidak mau",       "pronunciation": "tee-dak mau",         "meaning": "I don't want it"             },
+    { "phrase": "Di mana toilet?", "pronunciation": "dee mana toilet",     "meaning": "Where is the toilet?"        },
+    { "phrase": "Enak banget!",    "pronunciation": "eh-nak ba-nget",      "meaning": "So delicious!"               },
+    { "phrase": "Tolong",          "pronunciation": "toh-long",             "meaning": "Help / please"               }
+  ],
+
+  "emergency": {
+    "police": "110",
+    "ambulance": "118",
+    "fire": "113",
+    "search_and_rescue": "115",
+    "embassy_label": "Germany Embassy / Consular assistance",
+    "embassy": {
+      "phone": "Verify official embassy contact before travel",
+      "address": "Verify official embassy contact before travel",
+      "verify_required": true
+    },
+    "notes": "In Bali, BIMC Hospital (Kuta) is the recommended international hospital for tourists. Search and rescue: 115."
+  },
+
+  "checklist": [
+    { "item": "Passport valid 6+ months beyond intended departure date",                                                        "priority": "critical" },
+    { "item": "Check current VOA status and fee at molina.imigrasi.go.id",                                                     "priority": "critical" },
+    { "item": "Prepare approx. USD 30 cash as backup for Visa on Arrival payment",                                             "priority": "critical" },
+    { "item": "Purchase travel insurance covering scooter riding and water activities",                                         "priority": "critical" },
+    { "item": "Book onward/return ticket — immigration may request proof",                                                     "priority": "high"     },
+    { "item": "Download Gojek and Grab apps before arriving",                                                                  "priority": "high"     },
+    { "item": "Notify bank of travel and carry a backup card",                                                                 "priority": "high"     },
+    { "item": "Buy Airalo eSIM or get a Telkomsel/XL SIM on arrival",                                                         "priority": "high"     },
+    { "item": "Book accommodation in Ubud and Gili Islands early — fills up fast in Jul–Aug",                            "priority": "medium"   },
+    { "item": "Download offline maps for Bali, Lombok and target islands",                                                     "priority": "medium"   },
+    { "item": "Respect dress codes at temples — shoulders and knees must be covered",                                          "priority": "medium"   },
+    { "item": "Check if target volcanoes (Bromo, Rinjani) require permits or guides",                                          "priority": "medium"   }
+  ]
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "name": "The Work Loft Silom",
+    "area": "Silom",
+    "budget": "$$",
+    "type": "cowork",
+    "group": "Work-Friendly",
+    "field_highlight": "Reliable backup option for online teachers and calls.",
+    "micro_watch_out": "More business-oriented than social.",
+    "confidence": "medium"
+  },
+  {
+    "name": "The Hive Thonglor",
+    "area": "Thonglor",
+    "budget": "$$",
+    "type": "cowork",
+    "group": "Work-Friendly",
+    "field_highlight": "Strong WiFi and ergonomic seating — holds focus well.",
+    "micro_watch_out": "Day pass rates add up over a full week.",
+    "confidence": "medium"
+  },
+  {
+    "name": "Sarnies Bangkok",
+    "area": "Silom",
+    "budget": "$$",
+    "type": "cafe",
+    "group": "Coffee & Bakery",
+    "field_highlight": "Usually calmer for focused work before lunch.",
+    "micro_watch_out": "Can become busy in peak brunch hours.",
+    "confidence": "medium"
+  },
+  {
+    "name": "Artis Coffee",
+    "area": "Phrom Phong",
+    "budget": "$$",
+    "type": "cafe",
+    "group": "Coffee & Bakery",
+    "field_highlight": "Multiple roasters on rotation — serious coffee without the attitude.",
+    "micro_watch_out": "Small space, not suited for marathon sessions.",
+    "confidence": "medium"
+  },
+  {
+    "name": "Holey Artisan Bakery",
+    "area": "Sukhumvit",
+    "budget": "$$",
+    "type": "bakery",
+    "group": "Coffee & Bakery",
+    "field_highlight": "Bangkok's best bagels — solid working breakfast spot.",
+    "micro_watch_out": "Pastries sell out by mid-morning on weekends.",
+    "confidence": "medium"
+  },
+  {
+    "name": "Kajohn",
+    "area": "Bang Rak",
+    "budget": "$",
+    "type": "restaurant",
+    "group": "Local Food",
+    "field_highlight": "Pad see ew at prices that make tourist restaurants feel absurd.",
+    "micro_watch_out": "Cash only. Very busy at lunch.",
+    "confidence": "medium"
+  },
+  {
+    "name": "GO Laundry PX",
+    "area": "Phrom Phong",
+    "budget": "$",
+    "type": "laundry",
+    "group": "Practical",
+    "field_highlight": "Convenient pickup service — reliable for long stays.",
+    "micro_watch_out": "Premium pricing compared to local laundries.",
+    "confidence": "medium"
+  },
+  {
+    "name": "Wat Arun Viewing Point",
+    "area": "Thonburi riverside",
+    "budget": "$",
+    "type": "viewpoint",
+    "group": "Explore",
+    "field_highlight": "Excellent quick sunset reset after a work day.",
+    "micro_watch_out": "Can get crowded near golden hour.",
+    "confidence": "medium"
+  },
+  {
+    "name": "Mahanakhon Skywalk",
+    "area": "Silom / Sathon",
+    "budget": "$$$",
+    "type": "viewpoint",
+    "group": "Explore",
+    "field_highlight": "Unobstructed 360° views — worth doing once at sunset.",
+    "micro_watch_out": "Skip on cloudy days. Entry is pricey at ~฿875.",
+    "confidence": "medium"
+  }
+]

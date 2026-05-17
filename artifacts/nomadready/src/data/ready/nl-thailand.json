@@ -1,0 +1,124 @@
+{
+  "passport": "nl",
+  "destination": "thailand",
+  "last_reviewed": "2026-05-08",
+  "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
+
+  "visa": {
+    "type": "Visa Exemption",
+    "duration_days": 60,
+    "extendable": true,
+    "extension_days": 30,
+    "extension_fee_thb": 1900,
+    "cost_eur": 0,
+    "multiple_entry": false,
+    "notes": "Dutch passport holders receive a 60-day visa exemption on arrival. Extendable once at any immigration office for 30 additional days. Passport must be valid for at least 6 months beyond entry date.",
+    "verify_required": true,
+    "verify_note": "Thailand has revised exemption durations multiple times. Confirm current policy at the Royal Thai Embassy or official Thai immigration site before travel."
+  },
+
+  "insurance": {
+    "required": false,
+    "recommended": true,
+    "notes": "Not legally required but strongly recommended. Ensure your policy covers: motorbike riding (often excluded by default), medical evacuation, adventure activities. Hospital costs for serious incidents can reach €20,000+.",
+    "verify_required": false
+  },
+
+  "best_season": {
+    "overall_best_months": ["Nov", "Dec", "Jan", "Feb", "Mar"],
+    "regions": [
+      { "area": "Bangkok & Central", "best": ["Nov", "Dec", "Jan", "Feb", "Mar"], "avoid": ["May", "Jun", "Jul", "Aug", "Sep", "Oct"], "notes": "Hot season Mar–May. Rainy season Jun–Oct." },
+      { "area": "North (Chiang Mai)", "best": ["Nov", "Dec", "Jan", "Feb"], "avoid": ["Mar", "Apr"], "notes": "Smoke season Mar–Apr due to burning. Best weather Nov–Feb." },
+      { "area": "Gulf Coast (Koh Samui, Koh Phangan)", "best": ["Jan", "Feb", "Mar", "Sep", "Oct"], "avoid": ["Nov", "Dec"], "notes": "Opposite rainy season to the rest of the country." },
+      { "area": "Andaman Coast (Phuket, Krabi)", "best": ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"], "avoid": ["May", "Jun", "Jul", "Aug", "Sep", "Oct"], "notes": "Monsoon May–Oct can make seas rough and beaches closed." }
+    ]
+  },
+
+  "budget": {
+    "currency": "THB",
+    "currency_symbol": "฿",
+    "exchange_rates": { "EUR": 38, "GBP": 45, "USD": 36, "CAD": 26, "AUD": 23 },
+    "verify_required": true,
+    "verify_note": "Rates are approximate. Check xe.com before travel.",
+    "tiers": {
+      "budget": { "label": "Backpacker", "daily_thb": 900,  "includes": "Dorm bed, street food 3x, local transport, 1 beer" },
+      "mid":    { "label": "Comfort",    "daily_thb": 2000, "includes": "Private guesthouse, mix of restaurants, Grab rides, activities" },
+      "high":   { "label": "Boutique",   "daily_thb": 5000, "includes": "Boutique hotel, restaurants, tours, massages" }
+    },
+    "cost_anchors": [
+      { "item": "Street food meal",              "thb": 60  },
+      { "item": "Restaurant meal",               "thb": 200 },
+      { "item": "Chang beer (7-Eleven)",          "thb": 55  },
+      { "item": "Grab taxi (5km, Bangkok)",       "thb": 80  },
+      { "item": "Dorm bed (Bangkok)",             "thb": 350 },
+      { "item": "Thai massage (1h)",              "thb": 250 },
+      { "item": "Domestic flight (BKK–CNX)", "thb": 900 }
+    ]
+  },
+
+  "useful_apps": [
+    { "name": "Grab",        "use": "Taxi, motorbike taxi & food delivery",                       "platform": "iOS/Android"     },
+    { "name": "Google Maps", "use": "Navigation — download offline maps before arriving",    "platform": "iOS/Android"     },
+    { "name": "Airalo",      "use": "eSIM data — buy before you land",                       "platform": "iOS/Android"     },
+    { "name": "XE Currency", "use": "Live exchange rates",                                        "platform": "iOS/Android"     },
+    { "name": "12Go Asia",   "use": "Bus, ferry & train booking",                                 "platform": "Web/iOS/Android" },
+    { "name": "Agoda",       "use": "Accommodation — often cheapest for Thailand",           "platform": "iOS/Android"     },
+    { "name": "LINE",        "use": "Main local messaging app — useful for guesthouses & tours", "platform": "iOS/Android" }
+  ],
+
+  "transport": [
+    "Use Grab for all city rides — always cheaper and safer than hailing tuk-tuks or taxis without a meter.",
+    "Bangkok has excellent BTS Skytrain and MRT metro — buy a Rabbit Card for convenience.",
+    "Overnight trains (State Railway of Thailand) are cheap and scenic — book at railway.co.th.",
+    "For island hopping, use 12Go Asia to compare ferry + bus combo tickets.",
+    "Domestic flights are affordable: AirAsia and Thai Lion Air cover most routes under ฿1,000 if booked early.",
+    "Motorbike rental is common outside cities but carry your international driving licence (motorbike category) and always wear a helmet."
+  ],
+
+  "scams": [
+    { "name": "Tuk-tuk 'temple tour'",       "description": "A friendly driver offers to take you to temples for almost free, then diverts to gem shops, tailor shops or travel agencies where they earn commission. Refuse politely and use Grab." },
+    { "name": "Airport taxi 'hotel is closed'", "description": "Taxi drivers at Suvarnabhumi claim your hotel is closed or flooded and offer to take you to a 'better' one. Ignore — call your hotel directly." },
+    { "name": "Gem scam",                     "description": "A well-dressed stranger says today is a special government sale and invites you to a jewellery shop. The gems are worthless. This is a classic, persistent Bangkok scam." },
+    { "name": "Jet ski damage claim",         "description": "Phuket and Pattaya: rental operators claim pre-existing damage on returned jet skis. Always photograph the vehicle thoroughly before riding." },
+    { "name": "Ping-pong show tout",          "description": "Touted 'free entry' shows end with a ฿2,000+ bill. Avoid entirely." }
+  ],
+
+  "phrases": [
+    { "phrase": "Sawasdee krap / ka",    "pronunciation": "sa-wà-dee kráp / kâ",       "meaning": "Hello (krap = male speaker, ka = female speaker)" },
+    { "phrase": "Khob khun krap / ka",   "pronunciation": "kòp-kun kráp / kâ",        "meaning": "Thank you" },
+    { "phrase": "Tao rai?",              "pronunciation": "tâo rài",                         "meaning": "How much?" },
+    { "phrase": "Phaeng mak",            "pronunciation": "pɛɛng mâak",               "meaning": "Too expensive" },
+    { "phrase": "Mai ao",                "pronunciation": "mâi ao",                               "meaning": "I don't want it (politely declines touts)" },
+    { "phrase": "Hong nam yuu tee nai?", "pronunciation": "hɔŋ náam yùu tînǎn", "meaning": "Where is the toilet?" },
+    { "phrase": "Aroy mak",              "pronunciation": "à-ròi mâak",               "meaning": "Very delicious" },
+    { "phrase": "Mai pen rai",           "pronunciation": "mâi pen rai",                          "meaning": "No worries / it's fine" }
+  ],
+
+  "emergency": {
+    "police": "191",
+    "ambulance": "1669",
+    "tourist_police": "1155",
+    "fire": "199",
+    "embassy_label": "Netherlands Embassy / Consular assistance",
+    "embassy": {
+      "phone": "Verify official embassy contact before travel",
+      "address": "Verify official embassy contact before travel",
+      "verify_required": true
+    },
+    "notes": "Tourist Police (1155) have English-speaking officers and handle tourist-related incidents. Use before regular police for theft, scams, etc."
+  },
+
+  "checklist": [
+    { "item": "Passport valid 6+ months beyond your intended departure date",                                                 "priority": "critical" },
+    { "item": "Check current visa exemption duration at the Royal Thai Embassy or official Thai immigration site",            "priority": "critical" },
+    { "item": "Purchase travel insurance (check motorbike coverage)",                                                         "priority": "critical" },
+    { "item": "Print or save a return/onward ticket — may be checked at immigration",                                   "priority": "high"     },
+    { "item": "Notify your bank of travel dates to avoid card blocks",                                                        "priority": "high"     },
+    { "item": "Download Google Maps offline for Bangkok and target regions",                                                   "priority": "high"     },
+    { "item": "Buy Airalo eSIM or arrange SIM before / on arrival",                                                           "priority": "high"     },
+    { "item": "Bring some EUR to exchange on arrival (airports have fair rates at SuperRich booths)",                          "priority": "medium"   },
+    { "item": "Save Thai emergency numbers in your phone",                                                                    "priority": "medium"   },
+    { "item": "Check baggage rules for domestic flights if island hopping",                                                   "priority": "medium"   },
+    { "item": "Pack light — 35L backpack is sufficient for most itineraries",                                            "priority": "low"      }
+  ]
+}

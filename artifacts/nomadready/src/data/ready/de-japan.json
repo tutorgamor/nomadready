@@ -1,0 +1,156 @@
+{
+  "passport": "de",
+  "destination": "japan",
+  "last_reviewed": "2026-05-09",
+  "disclaimer": "Entry rules can change. Always verify with official immigration or embassy sources before booking.",
+
+  "visa": {
+    "type": "Visa Exemption",
+    "duration_days": 90,
+    "extendable": false,
+    "multiple_entry": false,
+    "cost_eur": 0,
+    "notes": "German passport holders receive a 90-day visa-free tourist entry to Japan. No visa is required. Passport must be valid for the duration of your stay. A return or onward ticket may be requested at immigration.",
+    "verify_required": true,
+    "verify_note": "Japan periodically reviews visa exemption terms. Verify current conditions at the Japan Immigration Services Agency or the Japanese Embassy in Germany before booking."
+  },
+
+  "insurance": {
+    "required": false,
+    "recommended": true,
+    "notes": "Not legally required but strongly recommended. Medical costs in Japan are high — even a minor hospital visit can cost several hundred euros. Ensure your policy covers: medical evacuation, hospitalisation, and adventure activities. Hospital costs for serious incidents can reach €15,000 or more.",
+    "verify_required": false
+  },
+
+  "best_season": {
+    "overall_best_months": ["Mar", "Apr", "May", "Oct", "Nov"],
+    "regions": [
+      {
+        "area": "Hokkaido (Sapporo, Furano, Hakodate)",
+        "best": ["Jun", "Jul", "Aug"],
+        "avoid": ["Nov", "Dec", "Jan", "Feb", "Mar"],
+        "notes": "Summer is the ideal season — mild temperatures and lavender fields in Furano (July). Winters are extreme with heavy snowfall; popular for skiing but challenging for general sightseeing. Cherry blossoms arrive late, usually late April to early May."
+      },
+      {
+        "area": "Honshu (Tokyo, Kyoto, Osaka, Hiroshima)",
+        "best": ["Mar", "Apr", "May", "Oct", "Nov"],
+        "avoid": ["Jul", "Aug"],
+        "notes": "Spring (Mar–Apr) brings cherry blossoms and pleasant temperatures — the most popular travel window. Autumn (Oct–Nov) offers stunning foliage. Summer is hot, humid, and crowded; June marks the rainy season (tsuyu). Winters are cold but manageable."
+      },
+      {
+        "area": "Kyushu & Okinawa (Fukuoka, Nagasaki, Naha)",
+        "best": ["Mar", "Apr", "May", "Oct", "Nov"],
+        "avoid": ["Aug", "Sep"],
+        "notes": "Kyushu follows Honshu seasonal patterns with cherry blossoms arriving slightly earlier. Okinawa is subtropical — beaches are best May–Jul, but typhoon risk peaks Aug–Sep. Winters in Okinawa are mild and pleasant."
+      }
+    ]
+  },
+
+  "budget": {
+    "currency": "JPY",
+    "currency_symbol": "¥",
+    "exchange_rates": { "EUR": 165, "GBP": 195, "USD": 150, "CAD": 110, "AUD": 100 },
+    "verify_required": true,
+    "verify_note": "Rates are approximate. Check xe.com before travel.",
+    "tiers": {
+      "budget": {
+        "label": "Backpacker",
+        "daily_jpy": 7000,
+        "includes": "Capsule hotel or hostel dorm, convenience store meals, IC card transport"
+      },
+      "mid": {
+        "label": "Comfort",
+        "daily_jpy": 15000,
+        "includes": "Budget hotel or guesthouse, mix of restaurants and convenience stores, local rail"
+      },
+      "high": {
+        "label": "Boutique",
+        "daily_jpy": 32000,
+        "includes": "Boutique hotel, restaurant dining, day trips, activities, Shinkansen segments"
+      }
+    },
+    "cost_anchors": [
+      { "item": "Convenience store onigiri", "jpy": 150 },
+      { "item": "Ramen bowl (restaurant)", "jpy": 1000 },
+      { "item": "Tokyo subway ride (flat)", "jpy": 200 },
+      { "item": "Can of beer (convenience store)", "jpy": 220 },
+      { "item": "Capsule hotel (Tokyo, per night)", "jpy": 3500 },
+      { "item": "Matcha latte (café)", "jpy": 650 },
+      { "item": "Shinkansen Tokyo–Osaka (reserved)", "jpy": 13500 }
+    ]
+  },
+
+  "useful_apps": [
+    { "name": "Google Maps", "use": "Navigation and transit routing — download offline maps before arriving", "platform": "iOS/Android" },
+    { "name": "Suica / IC Card", "use": "Load and manage your IC card via Apple Wallet, Google Pay, or the Suica app", "platform": "iOS/Android" },
+    { "name": "Navitime", "use": "Japan-specific transit routing including regional trains and buses", "platform": "iOS/Android" },
+    { "name": "Japan Travel by JNTO", "use": "Official tourism guide with offline-friendly content and travel tips", "platform": "iOS/Android" },
+    { "name": "Agoda", "use": "Accommodation — competitive rates across Japan", "platform": "iOS/Android" },
+    { "name": "Airalo", "use": "eSIM data — buy before you land", "platform": "iOS/Android" },
+    { "name": "XE", "use": "Live exchange rates", "platform": "iOS/Android" },
+    { "name": "Uber", "use": "Available in some cities but limited — regular taxis are metered and reliable", "platform": "iOS/Android" }
+  ],
+
+  "transport": [
+    "Japan Rail (JR) and private rail networks are extensive and highly punctual — the Shinkansen is the fastest intercity option; consider a JR Pass if covering multiple long-distance routes.",
+    "IC cards (Suica, PASMO, or regional equivalents) work on most urban rail, buses, and even at convenience stores — set one up via Apple Wallet or Google Pay before arriving.",
+    "Highway buses (夜行バス) are significantly cheaper than bullet trains for longer distances — book on Willer Express or similar services, especially for overnight routes.",
+    "Taxis are reliable and metered but expensive — use them for short late-night trips or when trains have stopped, not as a primary transport mode.",
+    "Rural areas and smaller towns often have limited or infrequent public transport — plan ahead and consider renting a car for exploring the countryside.",
+    "Convenience stores (7-Eleven, FamilyMart, Lawson) are essential: cash withdrawals with international cards, cheap food, IC card reloads, and buying or printing tickets."
+  ],
+
+  "scams": [
+    {
+      "name": "Missing the last train",
+      "description": "Most city train services stop around midnight. Missing the last train means an expensive taxi ride or waiting until the first morning service around 5am. Always check last train times before heading out at night."
+    },
+    {
+      "name": "Strict hotel check-in windows",
+      "description": "Many smaller guesthouses, ryokan, and budget hotels have narrow check-in hours and may be unstaffed for late arrivals. Confirm check-in times in advance and notify staff of any delays — preferably via the booking platform."
+    },
+    {
+      "name": "No public trash bins",
+      "description": "Public trash bins are extremely scarce in Japan. Carry a small bag for your rubbish throughout the day — convenience stores have bins and are usually the easiest disposal point."
+    },
+    {
+      "name": "Premium pricing near major tourist sites",
+      "description": "Japan has minimal tourist scams overall, but food stalls, souvenir shops, and some restaurants near very popular sites (Senso-ji, Arashiyama, Dotonbori) charge noticeably more than elsewhere. Check reviews for typical prices before buying."
+    }
+  ],
+
+  "phrases": [
+    { "phrase": "Arigatou gozaimasu", "pronunciation": "ah-ree-gah-toh goh-zah-ee-mah-soo", "meaning": "Thank you (formal)" },
+    { "phrase": "Sumimasen", "pronunciation": "soo-mee-mah-sen", "meaning": "Excuse me / Sorry" },
+    { "phrase": "Konnichiwa", "pronunciation": "kon-nee-chee-wah", "meaning": "Hello (daytime)" },
+    { "phrase": "Ikura desu ka?", "pronunciation": "ee-koo-rah des kah", "meaning": "How much is it?" },
+    { "phrase": "Daijoubu", "pronunciation": "dah-ee-joh-boo", "meaning": "It's okay / I'm fine" }
+  ],
+
+  "emergency": {
+    "police": "110",
+    "ambulance": "119",
+    "fire": "119",
+    "embassy_label": "German Embassy in Tokyo / Consular assistance",
+    "embassy": {
+      "phone": "Verify official embassy contact before travel",
+      "address": "Verify official embassy contact before travel",
+      "verify_required": true
+    },
+    "notes": "Dial 110 for police and 119 for ambulance or fire in Japan. For emergencies involving German nationals, contact the German Embassy in Tokyo — verify contact details before travel."
+  },
+
+  "checklist": [
+    { "item": "Passport valid for the duration of your stay — a buffer of 6 months beyond your return date is advisable", "priority": "critical" },
+    { "item": "Verify current 90-day visa exemption terms at the Japan Immigration Services Agency or the Japanese Embassy in Germany", "priority": "critical" },
+    { "item": "Purchase travel insurance — medical and hospital costs in Japan are high even for minor incidents", "priority": "critical" },
+    { "item": "Print or save a return or onward ticket — may be requested at immigration", "priority": "high" },
+    { "item": "Notify your bank of travel dates to avoid card blocks on international purchases", "priority": "high" },
+    { "item": "Download Google Maps and Navitime offline for transit routing — set up Suica IC card in Apple Wallet or Google Pay before arriving", "priority": "high" },
+    { "item": "Buy Airalo eSIM before travel or rent a pocket WiFi router at the airport on arrival", "priority": "high" },
+    { "item": "Get an IC card (Suica or PASMO) at the airport on arrival — works on trains, buses, and at convenience stores", "priority": "medium" },
+    { "item": "Bring EUR cash or a travel card — Japan remains largely cash-based; 7-Eleven and Japan Post ATMs reliably accept international cards for JPY withdrawals", "priority": "medium" },
+    { "item": "Save Japan emergency numbers in your phone: 110 for police, 119 for ambulance and fire", "priority": "medium" },
+    { "item": "Pack layers appropriate to the season — Japan's climate varies significantly by region and time of year", "priority": "low" }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "overall": 86,
+  "wifi_reliability": 78,
+  "mobile_data": 92,
+  "quiet_for_calls": 70,
+  "cowork_availability": 88,
+  "cafe_work_friendly": 82,
+  "night_work_friendly": 75,
+  "long_stay_suitability": 90,
+  "best_for": [
+    "digital nomads",
+    "café workers",
+    "long stays",
+    "budget remote workers"
+  ],
+  "watch_out": [
+    "accommodation WiFi can be unstable even when speed tests look good",
+    "islands can be more expensive and less reliable for calls",
+    "quiet rooms are not guaranteed in hostels or thin-walled condos"
+  ],
+  "field_notes": [
+    "Good mobile data backup is essential.",
+    "For online teaching or calls, prefer private rooms, cowork booths, or verified quiet apartments.",
+    "Bangkok and Chiang Mai are easier than smaller islands for backup work options."
+  ],
+  "confidence": "medium",
+  "source_type": [
+    "personal experience",
+    "public reviews needed",
+    "cowork/café verification needed"
+  ],
+  "last_reviewed": "2026-05-12"
+}

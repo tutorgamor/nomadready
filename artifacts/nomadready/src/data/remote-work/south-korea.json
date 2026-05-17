@@ -1,0 +1,33 @@
+{
+  "overall": 89,
+  "wifi_reliability": 94,
+  "mobile_data": 95,
+  "quiet_for_calls": 78,
+  "cowork_availability": 86,
+  "cafe_work_friendly": 90,
+  "night_work_friendly": 82,
+  "long_stay_suitability": 80,
+  "best_for": [
+    "café workers",
+    "fast internet",
+    "urban nomads",
+    "short-to-medium stays"
+  ],
+  "watch_out": [
+    "Google Maps is limited for navigation",
+    "foreign cards/payment systems can sometimes be confusing",
+    "accommodation can be compact and not always call-friendly"
+  ],
+  "field_notes": [
+    "Internet and cafés are excellent in major cities.",
+    "Seoul is strong for remote work, but private call-friendly spaces need checking.",
+    "Naver Map/KakaoMap are more useful than Google Maps."
+  ],
+  "confidence": "medium",
+  "source_type": [
+    "personal experience",
+    "public reviews needed",
+    "local app/payment verification needed"
+  ],
+  "last_reviewed": "2026-05-12"
+}

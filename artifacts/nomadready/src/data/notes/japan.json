@@ -1,0 +1,27 @@
+[
+  {
+    "type": "transport",
+    "title": "Trains are excellent — but expensive if you move around often",
+    "note": "A JR Pass only pays off if you're doing multiple city hops in a short window. For a single-city stay, IC card day trips add up faster than expected. Price your specific routes before buying anything."
+  },
+  {
+    "type": "accommodation",
+    "title": "Rooms are genuinely small — even at mid-range rates",
+    "note": "Standard business hotel rooms run 12–16 sqm. This isn't a budget problem — mid-range hotels are the same. Pack light and accept that you'll live out of your bag. Storage is minimal by design."
+  },
+  {
+    "type": "culture",
+    "title": "Trash cans are almost nowhere — you carry your waste",
+    "note": "There are no public bins except near convenience stores. You'll carry your coffee cup and wrapper for blocks. Convenience store bins are technically for store purchases only, but most staff look the other way."
+  },
+  {
+    "type": "money",
+    "title": "Cash is still essential outside Tokyo and Osaka",
+    "note": "Many temples, small restaurants, and anything rural are cash-only. IC cards work on transit and convenience stores, but don't assume your card works everywhere — especially in Kyoto's smaller neighbourhoods."
+  },
+  {
+    "type": "wifi",
+    "title": "Mobile signal drops in subways, underground malls, and old buildings",
+    "note": "A pocket WiFi rented at the airport maintains more consistent service in those dead zones than a standard eSIM. Worth it if you need reliable connectivity throughout the day, not just outdoors."
+  }
+]

@@ -1,36 +1,56 @@
-# [Project name]
+# NomadReady
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A travel readiness field guide for backpackers — shows visa rules, budget tiers, best season, local tips, and more for any passport + destination combination.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/nomadready run dev` — run the NomadReady frontend (Vite, auto-port)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React 19 + Vite 7, TailwindCSS v4
+- Routing: wouter (replaced Next.js `useRouter` / `Link`)
+- Animation: motion/react, gsap
+- Fonts: Geist (system UI), Cormorant Garamond (display — loaded via Google Fonts in index.html)
+- Data: static JSON files loaded at build time via `import.meta.glob`
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+```
+artifacts/nomadready/
+  src/
+    pages/          ← new React page components (HomePage, DestinationPage)
+    components/     ← all UI components (ready/, home/, motion/, ui/, motion-primitives/)
+    data/           ← static JSON data files
+      ready/        ← 90 passport-destination pair files (e.g. fr-thailand.json)
+      places/       ← local gems per destination
+      notes/        ← real travel notes per destination
+      nomad-reality/ ← nomad reality notes per destination
+      remote-work-zones/ ← city remote-work zone guides per destination
+    lib/            ← types.ts, profile.ts, budget.ts, utils.ts
+    globals.css     ← design tokens (CSS variables), editorial styles
+    index.css       ← TailwindCSS v4 entry + font variable declarations
+    App.tsx         ← router + ProfileProvider
+    main.tsx        ← React DOM entry
+  src/app/          ← legacy Next.js pages (NOT used, excluded from tsconfig)
+```
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- **No server** — entirely frontend-only. All JSON data is bundled via Vite `import.meta.glob` with `{ eager: true }`. No API routes needed.
+- **Passport gateway** — cinematic full-screen overlay (PassportGatewayHero) shown once per session via `sessionStorage`. In dev it always shows on fresh load.
+- **Routing** — wouter replaces Next.js router. Two routes: `/` (home) and `/ready/:passport/:destination`.
+- **`src/app/` excluded** — legacy Next.js page files remain for reference but are excluded from tsconfig (`src/app/**`) to prevent type errors.
+- **`cn()` uses clsx** — updated to support object-style conditional class names used by shadcn/recharts components.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Passport gateway entry screen with cinematic animation, passport selector across 10 nationalities
+- Home page: destination grid with visa label, budget estimate, and best months; comparison strip; trip planner
+- Destination detail page: full scrollable field guide with visa, budget calculator, insurance, best season, apps, transport, scams, phrases, emergency contacts, checklist, nomad reality notes, local gems, and remote work zone maps
 
 ## User preferences
 
@@ -38,7 +58,9 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The `src/app/` directory contains the original Next.js pages — they are intentionally NOT wired up. New pages live in `src/pages/`.
+- Passport gateway always shows in dev (sessionStorage check only skips it if `nr_gateway_passed` is set). This is by design.
+- Ready data files are named `{passportId}-{destinationId}.json` (e.g. `fr-thailand.json`). Both IDs must exist in `passports.json` / `destinations.json` for the destination to appear.
 
 ## Pointers
 

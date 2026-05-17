@@ -1,0 +1,33 @@
+{
+  "overall": 68,
+  "wifi_reliability": 55,
+  "mobile_data": 70,
+  "quiet_for_calls": 58,
+  "cowork_availability": 62,
+  "cafe_work_friendly": 60,
+  "night_work_friendly": 55,
+  "long_stay_suitability": 74,
+  "best_for": [
+    "flexible workers",
+    "island lifestyle",
+    "slow travelers",
+    "divers/snorkeling-focused nomads"
+  ],
+  "watch_out": [
+    "island internet can vary massively",
+    "ferries and transfers can consume entire days",
+    "accommodation WiFi should be verified before booking"
+  ],
+  "field_notes": [
+    "Better for flexible remote work than strict daily video calls.",
+    "Always check recent reviews mentioning WiFi and power stability.",
+    "Bigger hubs are safer for work reliability than small islands."
+  ],
+  "confidence": "medium",
+  "source_type": [
+    "personal experience",
+    "public reviews needed",
+    "accommodation review verification needed"
+  ],
+  "last_reviewed": "2026-05-12"
+}

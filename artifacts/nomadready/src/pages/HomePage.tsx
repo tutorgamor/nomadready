@@ -14,7 +14,9 @@ import { AtlasMapSection } from "@/components/home/AtlasMapSection";
 import { AmbientLayer } from "@/components/home/AmbientLayer";
 import { PassportGatewayHero } from "@/components/home/PassportGatewayHero";
 import { OpenGatewayLink } from "@/components/home/OpenGatewayLink";
+import { Link } from "wouter";
 import { InView } from "@/components/motion-primitives/in-view";
+import { CoverPatternSVG } from "@/components/DestinationCoverPattern";
 import type { UseInViewOptions } from "motion/react";
 
 const passports = passportsDataRaw as Passport[];
@@ -159,16 +161,31 @@ export default function HomePage() {
           </svg>
         </div>
 
-        <div className="home-hero-wordmark anim-fade-down">
-          <span style={{ fontSize: "0.9rem", color: "var(--accent)", lineHeight: 1, marginTop: "1px" }} aria-hidden="true">✦</span>
-          <span className="hero-text-light" style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Nomad</span>
-          <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--accent)" }}>Ready</span>
+        {/* ── Editorial masthead — desktop only, pub-style top bar ── */}
+        <div className="home-hero-wordmark anim-fade-down" aria-label="NomadReady">
+          <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+              <span aria-hidden="true" style={{ fontSize: "0.75rem", color: "var(--accent)", lineHeight: 1 }}>✦</span>
+              <span style={{ fontSize: "0.9375rem", fontWeight: 700, letterSpacing: "-0.03em", color: "rgba(255,255,255,0.96)" }}>
+                Nomad<span style={{ color: "var(--accent)" }}>Ready</span>
+              </span>
+            </div>
+            <span aria-hidden="true" style={{ width: "1px", height: "14px", background: "rgba(255,255,255,0.18)", display: "block", flexShrink: 0 }} />
+            <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.40)" }}>
+              Travel Field Guide
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+            <span style={{ fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.09em", textTransform: "uppercase", color: "rgba(255,255,255,0.30)" }}>
+              Vol. I · 2026
+            </span>
+          </div>
         </div>
 
         <div className="page-container" style={{ position: "relative", zIndex: 4, flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
           <div className="home-hero-layout">
             <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-              <div className="home-wordmark-inline anim-fade-down" style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+              <div className="home-wordmark-inline anim-fade-down" style={{ alignItems: "center", gap: "0.4rem" }}>
                 <span style={{ fontSize: "0.9rem", color: "var(--accent)", lineHeight: 1, marginTop: "1px" }} aria-hidden="true">✦</span>
                 <span className="hero-text-light" style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em" }}>Nomad</span>
                 <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.03em", color: "var(--accent)" }}>Ready</span>
@@ -180,10 +197,10 @@ export default function HomePage() {
                 </p>
                 <h1 className="hero-heading-light anim-reveal" style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(3rem, 6vw, 5.5rem)",
+                  fontSize: "clamp(3rem, 6.5vw, 6.5rem)",
                   fontWeight: 600,
-                  letterSpacing: "-0.03em",
-                  lineHeight: 1.05,
+                  letterSpacing: "-0.04em",
+                  lineHeight: 1.0,
                   margin: 0,
                 }}>
                   Where are you<br />heading next?
@@ -204,46 +221,77 @@ export default function HomePage() {
             </div>
 
             <div className="home-hero-aside anim-fade-up anim-delay-2" aria-hidden="true">
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", width: "min(42vw, 520px)" }}>
-                <div style={{ position: "relative", paddingTop: "48px" }}>
-                  <div style={{ position: "absolute", top: 0, left: "-16px", zIndex: 10, transform: "rotate(5deg)" }}>
+              {/* ── Editorial panel — portrait composition, no rotation ── */}
+              <div className="hero-editorial-panel">
+                {/* Main image frame */}
+                <div className="hero-editorial-frame" style={{ position: "relative" }}>
+                  <img
+                    src="/assets/editorial/panels/panel-indonesia.png"
+                    alt=""
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block", position: "absolute", inset: 0 }}
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+
+                  {/* Warm cinematic vignette */}
+                  <div className="hero-editorial-frame-vignette" />
+
+                  {/* Compass — upper-right, very subtle */}
+                  <img
+                    src="/assets/editorial/compass/compass.jpg"
+                    alt=""
+                    className="hero-editorial-compass"
+                  />
+
+                  {/* Thin top rule — editorial header line */}
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(217,119,6,0.45) 30%, rgba(217,119,6,0.45) 70%, transparent)", zIndex: 4 }} />
+
+                  {/* Bottom label zone */}
+                  <div className="hero-editorial-frame-label">
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
+                      <span style={{ fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(217,119,6,0.85)", lineHeight: 1 }}>
+                        Indonesia
+                      </span>
+                      <span style={{ fontSize: "0.8125rem", fontWeight: 600, letterSpacing: "-0.02em", color: "rgba(255,255,255,0.92)", lineHeight: 1.1 }}>
+                        Southeast Asia
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.15rem" }}>
+                      <span style={{ fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(217,119,6,0.70)", lineHeight: 1 }}>
+                        Field Score
+                      </span>
+                      <span style={{ fontSize: "1.125rem", fontWeight: 700, color: "rgba(255,255,255,0.94)", letterSpacing: "-0.03em", lineHeight: 1 }}>
+                        77
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Passport — tucked bottom-left, partially overlapping the frame */}
+                  <div className="hero-editorial-passport">
                     <div className="anim-float-gentle">
                       <img
                         src="/assets/editorial/old%20passport/old-passport.png"
                         alt=""
-                        style={{ width: "108px", height: "auto", borderRadius: "4px", boxShadow: "var(--shadow-float)", display: "block" }}
+                        style={{ width: "88px", height: "auto", borderRadius: "3px", boxShadow: "0 8px 28px rgba(0,0,0,0.50), 0 2px 6px rgba(0,0,0,0.30)", display: "block" }}
                         loading="lazy"
                         decoding="async"
                       />
                     </div>
                   </div>
-                  <div style={{ position: "relative", borderRadius: "var(--radius-2xl)", overflow: "hidden", isolation: "isolate", transform: "rotate(-2.5deg)", boxShadow: "var(--shadow-cinematic)", border: "1px solid rgba(180,130,65,0.22)", aspectRatio: "16 / 10" }}>
-                    <img
-                      src="/assets/editorial/panels/panel-indonesia.png"
-                      alt=""
-                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 45%", display: "block" }}
-                      fetchPriority="high"
-                      decoding="async"
-                    />
-                    <div style={{ position: "absolute", inset: 0, background: "url('/assets/ui/editorial-paper-texture.webp') center / cover", opacity: 0.05, mixBlendMode: "multiply", pointerEvents: "none" }} />
-                    <img
-                      src="/assets/editorial/compass/compass.jpg"
-                      alt=""
-                      style={{ position: "absolute", bottom: "10px", right: "12px", width: "54px", height: "auto", opacity: 0.28, mixBlendMode: "multiply", pointerEvents: "none", display: "block" }}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
                 </div>
-                <svg viewBox="0 0 520 14" fill="none" style={{ width: "100%", height: "14px", display: "block" }}>
-                  <line x1="10" y1="7" x2="510" y2="7" stroke="rgba(255,255,255,0.28)" strokeWidth="1" strokeDasharray="4 6" />
-                  <circle cx="10"  cy="7" r="3.5" fill="var(--accent)" opacity="0.6" />
-                  <circle cx="260" cy="7" r="2.5" fill="var(--accent)" opacity="0.42" />
-                  <circle cx="510" cy="7" r="3.5" fill="var(--accent)" opacity="0.6" />
-                </svg>
-                <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.52)", margin: 0 }}>
-                  {availableDestinations.length} destinations
-                </p>
+
+                {/* Metadata row below frame */}
+                <div className="hero-editorial-meta">
+                  <svg viewBox="0 0 320 10" fill="none" style={{ flex: 1, height: "10px", display: "block" }}>
+                    <line x1="6" y1="5" x2="314" y2="5" stroke="rgba(255,255,255,0.22)" strokeWidth="1" strokeDasharray="3 5" />
+                    <circle cx="6"  cy="5" r="2.5" fill="var(--accent)" opacity="0.55" />
+                    <circle cx="160" cy="5" r="1.8" fill="var(--accent)" opacity="0.35" />
+                    <circle cx="314" cy="5" r="2.5" fill="var(--accent)" opacity="0.55" />
+                  </svg>
+                  <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", flexShrink: 0 }}>
+                    {availableDestinations.length} destinations
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -268,6 +316,89 @@ export default function HomePage() {
           </div>
         </div>
       </header>
+
+      {/* ── Step 3: Featured Destination Panel ──────────────── */}
+      {(() => {
+        const indonesia = destinations.find(d => d.id === "indonesia");
+        const turkey = destinations.find(d => d.id === "turkey");
+        if (!indonesia || !turkey) return null;
+        const featured = [
+          { dest: indonesia, imgSrc: "/assets/editorial/panels/panel-indonesia.png" },
+          { dest: turkey,    imgSrc: null },
+        ] as const;
+        return (
+          <InView variants={REVEAL} transition={{ ...REVEAL_TX, delay: 0.08 }} viewOptions={REVEAL_OPTS}>
+            <section style={{ paddingTop: "3.5rem", paddingBottom: "0" }} aria-label="Featured destinations">
+              <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.125rem" }}>
+                <h2 className="section-label-editorial">
+                  <span style={{ color: "var(--accent)", opacity: 0.6 }} aria-hidden="true">✦</span>
+                  Field picks
+                </h2>
+                <div className="feat-dest-grid">
+                  {featured.map(({ dest, imgSrc }) => (
+                    <Link
+                      key={dest.id}
+                      to={`/ready/${activePassportId}/${dest.id}`}
+                      className="feat-dest-card"
+                      aria-label={`Field guide for ${dest.label}`}
+                    >
+                      {/* Background — photo or color+pattern */}
+                      {imgSrc ? (
+                        <img src={imgSrc} alt="" className="feat-dest-card-bg" fetchPriority="low" decoding="async" />
+                      ) : (
+                        <>
+                          <div style={{ position: "absolute", inset: 0, backgroundColor: dest.cover_color, zIndex: 0 }} />
+                          <svg viewBox="0 0 560 360" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 1 }} aria-hidden="true">
+                            <CoverPatternSVG id={dest.id} region={dest.region} />
+                          </svg>
+                          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.30) 100%)", zIndex: 1 }} />
+                        </>
+                      )}
+
+                      {/* Vignette */}
+                      <div className="feat-dest-card-vignette" />
+
+                      {/* Region stamp */}
+                      <div className="feat-dest-card-region">{dest.region}</div>
+
+                      {/* Score pill */}
+                      {dest.travel_score && (
+                        <div className="feat-dest-card-score">
+                          <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "rgba(255,255,255,0.96)", letterSpacing: "-0.02em", lineHeight: 1 }}>
+                            {dest.travel_score.overall}
+                          </span>
+                          <span style={{ fontSize: "0.5rem", fontWeight: 500, color: "rgba(255,255,255,0.72)", lineHeight: 1 }}>/100</span>
+                        </div>
+                      )}
+
+                      {/* Content — bottom zone */}
+                      <div className="feat-dest-card-content">
+                        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "0.75rem" }}>
+                          <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+                            <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(217,119,6,0.90)", margin: 0, lineHeight: 1 }}>
+                              {dest.emoji} {dest.region}
+                            </p>
+                            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3.5vw, 2.125rem)", fontWeight: 700, letterSpacing: "-0.04em", color: "rgba(255,255,255,0.97)", margin: 0, lineHeight: 1.0 }}>
+                              {dest.label}
+                            </h3>
+                            <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.68)", margin: 0, lineHeight: 1.35, letterSpacing: "-0.01em" }}>
+                              {dest.hero_tag}
+                            </p>
+                          </div>
+                          <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: "0.35rem", background: "rgba(217,119,6,0.18)", border: "1px solid rgba(217,119,6,0.40)", borderRadius: "var(--radius-full)", padding: "0.35rem 0.875rem", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
+                            <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "rgba(255,255,255,0.92)", letterSpacing: "-0.01em", lineHeight: 1 }}>Read guide</span>
+                            <span style={{ fontSize: "0.8rem", color: "var(--accent)", lineHeight: 1 }} aria-hidden="true">→</span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </section>
+          </InView>
+        );
+      })()}
 
       <section style={{ flex: 1, position: "relative", overflow: "hidden", paddingTop: "4.5rem", paddingBottom: "3.5rem" }} aria-labelledby="destinations-heading">
         <AtlasMapSection destinationCount={availableDestinations.length} />

@@ -50,7 +50,7 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
         className="dest-card-cover"
         style={{
           backgroundColor: cover_color,
-          height: "168px",
+          height: "188px",
           display: "flex",
           alignItems: "flex-end",
           position: "relative",
@@ -205,12 +205,13 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
         >
           <h2
             style={{
-              fontSize: "1.25rem",
-              fontWeight: 800,
-              letterSpacing: "-0.04em",
+              fontFamily: "var(--font-display)",
+              fontSize: "1.375rem",
+              fontWeight: 700,
+              letterSpacing: "-0.03em",
               color: "var(--text-primary)",
               margin: 0,
-              lineHeight: 1.1,
+              lineHeight: 1.05,
             }}
           >
             {label}
@@ -231,10 +232,13 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
           </span>
         </div>
 
+        {/* Thin amber rule — editorial divider */}
+        <div aria-hidden="true" style={{ height: "1px", background: "linear-gradient(90deg, rgba(217,119,6,0.30) 0%, rgba(217,119,6,0.06) 60%, transparent 100%)", margin: "0.25rem 0" }} />
+
         {/* Hero tag — editorial subtitle */}
         <p
           style={{
-            fontSize: "0.8rem",
+            fontSize: "0.8125rem",
             color: "var(--text-secondary)",
             margin: 0,
             lineHeight: 1.45,

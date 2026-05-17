@@ -1,0 +1,56 @@
+# Product
+
+## Register
+
+brand
+
+## Users
+
+Two overlapping traveler types, served by the same platform:
+
+**Long-term backpacker / nomad** — budget-conscious, 2–12 month trips, SE Asia / Eastern Europe corridors. Cares most about visa windows, daily cost floors, scam awareness. Passport is a logistics tool.
+
+**Remote worker going nomad** — needs internet reliability, coworking availability, safety scores. Passport is a professional identity, not just a travel document. Budget tier is Comfort or Digital Nomad, not Backpacker.
+
+Both share a common emotional state: they're planning a leap, not a holiday. They want to *feel* the destination before they commit to researching it.
+
+## Product Purpose
+
+NomadReady is a cinematic travel readiness platform — one scroll, one page: visa rules, budget tiers, common scams, local phrases, and field notes, all filtered through your passport and travel style.
+
+It exists because travel prep is fragmented, dry, and anxiety-inducing. NomadReady makes it feel like reading a well-edited field guide instead of filling out a spreadsheet.
+
+Success looks like: a traveler lands on the site, selects their passport, and immediately feels pulled into a specific destination — before they've read a single data point.
+
+## Brand Personality
+
+**Cinematic. Editorial. Tactile.**
+
+The voice is calm and authoritative — like a well-travelled friend who's done the research so you don't have to. Never breathless, never corporate. The emotional register sits between a luxury travel magazine (Monocle, Condé Nast Traveller) and a worn field guide with coffee stains.
+
+## Anti-references
+
+- Generic travel SaaS (Kayak, TripAdvisor, any widget-heavy interface)
+- Fintech / crypto dashboards — no glassmorphism, no neon, no "AI gimmick" aesthetics
+- Childish travel apps — no confetti, no gamification badges, no pastel blob illustrations
+- Flat corporate UI — no sterile white-on-white, no Notion-clone layouts
+- Over-animated startup motion — no bouncing loaders, no staggered everything, no motion for its own sake
+
+## Design Principles
+
+1. **Feel before read.** The interface makes travelers sense a destination before they process its logistics. Atmosphere, imagery, and motion do the emotional work first. Data appears only after desire is established.
+
+2. **Artifact, not app.** NomadReady should feel like a beautifully crafted physical object rendered in software — a field guide, an atlas, a passport. Never a dashboard. Every screen should be printable in your mind.
+
+3. **Restrained premium.** Every visual effect earns its place. One perfect cinematic detail beats five clever micro-interactions. Calm over noise; quality over quantity. If removing an effect doesn't hurt the feeling, remove it.
+
+4. **Identity as compass.** The passport is the user's point of view, not a filter. The entire experience orients around where you're from, not just where you're going. Nationality shapes tone, framing, and emphasis throughout.
+
+5. **Editorial pacing.** Information appears with intention — revealed on scroll, never dumped. The traveler discovers; they don't consume. Section transitions should feel like turning a page.
+
+## Accessibility & Inclusion
+
+- WCAG AA compliance: minimum 4.5:1 contrast for body text, 3:1 for large text and UI components
+- `prefers-reduced-motion` respected throughout — all CSS keyframe animations and JS motion collapse to near-instant (already partially implemented via `globals.css`)
+- Cinematic overlays on hero sections must not compromise text legibility at AA — test dark text alternatives where needed
+- Keyboard navigation supported for passport selector, destination cards, and all interactive controls

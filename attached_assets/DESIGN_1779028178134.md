@@ -1,0 +1,275 @@
+---
+name: NomadReady
+description: Cinematic travel readiness platform — visa rules, budget tiers, and field notes, tailored to your passport.
+colors:
+  parchment-mist: "#f7f3ee"
+  parchment-card: "#ffffff"
+  parchment-100: "#f9f3e8"
+  parchment-200: "#f3e8d0"
+  ember-gold: "#d97706"
+  ember-light: "#fef3c7"
+  ember-dark: "#92400e"
+  field-guide-black: "#1c1917"
+  warm-ink: "#57534e"
+  ink-muted: "#a8a29e"
+  warm-border: "#e7e0d6"
+  warm-border-strong: "#c7bdb2"
+  forest-green: "#16a34a"
+  danger-red: "#dc2626"
+  cinematic-night: "#0c1020"
+typography:
+  display:
+    fontFamily: "Geist Sans, system-ui, sans-serif"
+    fontSize: "clamp(2rem, 5vw, 3.5rem)"
+    fontWeight: 600
+    lineHeight: 1.1
+    letterSpacing: "-0.04em"
+  headline:
+    fontFamily: "Geist Sans, system-ui, sans-serif"
+    fontSize: "1.5rem"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "-0.03em"
+  title:
+    fontFamily: "Geist Sans, system-ui, sans-serif"
+    fontSize: "1.125rem"
+    fontWeight: 600
+    lineHeight: 1.3
+    letterSpacing: "-0.02em"
+  body:
+    fontFamily: "Geist Sans, system-ui, sans-serif"
+    fontSize: "0.9375rem"
+    fontWeight: 400
+    lineHeight: 1.6
+    letterSpacing: "normal"
+  label:
+    fontFamily: "Geist Sans, system-ui, sans-serif"
+    fontSize: "0.7rem"
+    fontWeight: 700
+    lineHeight: 1.2
+    letterSpacing: "0.08em"
+rounded:
+  xs: "4px"
+  sm: "6px"
+  md: "8px"
+  lg: "12px"
+  xl: "16px"
+  2xl: "20px"
+  3xl: "24px"
+  full: "9999px"
+spacing:
+  xs: "8px"
+  sm: "12px"
+  md: "16px"
+  lg: "24px"
+  xl: "32px"
+  2xl: "48px"
+  3xl: "64px"
+components:
+  button-primary:
+    backgroundColor: "{colors.ember-gold}"
+    textColor: "{colors.parchment-card}"
+    rounded: "{rounded.full}"
+    padding: "10px 20px"
+  button-primary-hover:
+    backgroundColor: "{colors.ember-dark}"
+    textColor: "{colors.parchment-card}"
+    rounded: "{rounded.full}"
+    padding: "10px 20px"
+  button-ghost:
+    backgroundColor: "transparent"
+    textColor: "{colors.ember-gold}"
+    rounded: "{rounded.full}"
+    padding: "8px 16px"
+  destination-card:
+    backgroundColor: "{colors.parchment-card}"
+    rounded: "{rounded.2xl}"
+    padding: "20px"
+  passport-chip:
+    backgroundColor: "{colors.parchment-card}"
+    textColor: "{colors.field-guide-black}"
+    rounded: "{rounded.full}"
+    padding: "8px 18px"
+  profile-chip-active:
+    backgroundColor: "{colors.ember-gold}"
+    textColor: "{colors.parchment-card}"
+    rounded: "{rounded.full}"
+    padding: "8px 18px"
+  badge:
+    backgroundColor: "{colors.ember-light}"
+    textColor: "{colors.ember-dark}"
+    rounded: "{rounded.full}"
+    padding: "3px 10px"
+---
+
+# Design System: NomadReady
+
+## 1. Overview
+
+**Creative North Star: "The Worn Atlas"**
+
+NomadReady's visual system is built around a single unifying metaphor: a physical travel artifact rendered in software. Think of a leather-bound atlas that has been carried through a dozen countries — embossed covers, gold ink worn smooth, paper grain warmed by the sun, edges soft from use. Every surface, every shadow, every typographic choice should feel like it could exist as a printed object you'd find at the bottom of a well-traveled bag.
+
+The system lives in a warm, atmospheric light register — not the sterile white of a SaaS dashboard, not the dark drama of a fintech product, but something closer to afternoon light in a field guide. The dominant palette is Parchment Mist and warm ink tones, punctuated by a single amber accent (Ember Gold) that appears sparingly — used the way a cartographer would use red ink: to mark what matters. A fixed ambient layer of cursor-reactive glows and paper grain runs behind the entire experience, giving the interface physical weight and warmth.
+
+This system explicitly rejects: generic travel SaaS aesthetics (Kayak, TripAdvisor), fintech/crypto UI (glassmorphism, neon, dark-mode-with-purple-gradients), childish app design (pastel blobs, confetti, bouncy motion), flat corporate UI (Notion-clone whitespace, sterile typography), and startup motion language (staggered-everything entrances, bouncing loaders).
+
+**Key Characteristics:**
+- Single warm typeface family (Geist Sans) throughout — no serif display, no decorative pairing
+- Amber accent used at ≤15% surface coverage; its scarcity is intentional
+- Paper grain texture at 3–7% opacity on all card surfaces via multiply blend
+- Shadow system has five named tiers; cards lift on hover with warm-tinted shadows
+- Motion is restrained: state changes at 150–260ms, reveals at 700ms cinematic ease
+- Hero sections use full-bleed photography with directional dark overlays — text always reads at WCAG AA
+- Passport gateway experience: cinematic dark (`#0c1020`) with amber atmospheric glows
+
+## 2. Colors: The Parchment & Ember Palette
+
+A warm, editorial two-register palette: light pages (Parchment Mist family) for content, deep night (Cinematic Night) for immersive hero moments. Ember Gold is the single accent — one voice, used sparingly.
+
+### Primary
+- **Ember Gold** (`#d97706`): The cartographer's red ink. Used for the active passport selector, interactive accents, section heading left borders, active profile chips, and any moment that requires the user's eye to land precisely. Never decorative — only functional or emotionally significant. Full tonal scale available: `#451a03` (darkest) through `#fef3c7` (lightest).
+
+### Secondary
+- **Forest Green** (`#16a34a`): Status OK — visa-free confirmations, positive budget signals, availability. Appears only in data-driven contexts (travel score highlights, visa type badges).
+
+### Tertiary
+- **Danger Red** (`#dc2626`): Status alerts — visa required, warning states, error conditions. Appears only in data contexts; never as decoration.
+
+### Neutral
+- **Parchment Mist** (`#f7f3ee`): The page. The canvas. Every content surface not in a hero section. Warm off-white — not pure white, never cool gray.
+- **Parchment Card** (`#ffffff`): Slightly lifted card surfaces. Used for destination cards, selector dropdowns, and glass overlays.
+- **Parchment 100** (`#f9f3e8`): Warm sunken zone — gently recessed sections, card-body backgrounds.
+- **Field Guide Black** (`#1c1917`): Primary text. Warm near-black, not neutral gray. All headings and key labels.
+- **Warm Ink** (`#57534e`): Secondary text, supporting copy, metadata. Never used for primary headings.
+- **Ink Muted** (`#a8a29e`): Placeholder text, disabled states, tertiary labels.
+- **Warm Border** (`#e7e0d6`): Default dividers and card outlines. Low-contrast, just enough to separate.
+- **Warm Border Strong** (`#c7bdb2`): Inputs, passport chip outlines, emphasized dividers.
+- **Cinematic Night** (`#0c1020`): Full-immersion surfaces — the Passport Gateway background, destination hero overlays. Deep navy-black, not pure black.
+
+### Named Rules
+
+**The One Voice Rule.** Ember Gold appears on ≤15% of any given screen. Every additional use must earn its place. If you're wondering whether to use it, the answer is probably no.
+
+**The No-Cool-Gray Rule.** Every neutral must be warm — nudged toward red/amber. `#57534e` not `#6b7280`. If a gray looks bluish or neutral in context, replace it.
+
+**The Night Register Rule.** `#0c1020` (Cinematic Night) is reserved exclusively for full-immersion surfaces: the passport gateway, full-bleed hero overlays, modal backdrops. It never appears as a card background, sidebar, or utility surface.
+
+## 3. Typography
+
+**Display Font:** Geist Sans (variable weight, `var(--font-geist-sans)`) with `system-ui, sans-serif` fallback
+**Body Font:** Same — Geist Sans throughout. NomadReady is a single-family system.
+**Mono Font:** Geist Mono (`var(--font-geist-mono)`) for data labels, currency values, coordinates, and any content with a "field notes" quality.
+
+**Character:** Geist Sans is a modern geometric sans with warm optical corrections — it sets tightly at display size (−0.04em tracking) and reads cleanly at body size without feeling cold. The system exploits its weight range: 600 for structure, 400 for flow, 700 for uppercase label callouts. The absence of a serif display face is intentional — the atlas feeling comes from texture, motion, and color, not from ornate type.
+
+### Hierarchy
+
+- **Display** (600, `clamp(2rem, 5vw, 3.5rem)`, line-height 1.1, tracking −0.04em): Hero headlines only. "Where are you heading next?" Lives on cinematic photo backgrounds with `text-shadow` for legibility. Never used inside cards or body sections.
+- **Headline** (600, `1.5rem`, line-height 1.2, tracking −0.03em): Section titles, destination names on cards, page-level anchors.
+- **Title** (600, `1.125rem`, line-height 1.3, tracking −0.02em): Card headings, subsection titles, modal headers.
+- **Body** (400, `0.9375rem`, line-height 1.6, tracking normal): All running copy. Keep line lengths to 65–75ch maximum for reading comfort.
+- **Label** (700, `0.7rem`, line-height 1.2, tracking +0.08em, ALL CAPS): Section eyebrows, category tags, data field names (VISA, SCORE, BUDGET FROM). The atlas chapter-marker voice.
+
+### Named Rules
+
+**The Tight Display Rule.** Display-size text always sets at −0.04em or tighter. Loose tracking on large headings reads as amateur. The atlas is authoritative.
+
+**The Label Uppercase Rule.** Labels above data fields are always ALL CAPS, 0.7rem, 700 weight, tracking +0.08em, color `ink-muted`. This pattern — used consistently for "VISA", "SCORE", "BUDGET FROM" — trains the eye to find data quickly. Breaking it anywhere breaks it everywhere.
+
+## 4. Elevation
+
+NomadReady uses a **warm-tinted layered shadow system** — not flat, not Material-dramatic, but something closer to soft natural light falling across stacked paper. Shadows are always composited against warm ink (`rgb(28,25,23)`) or amber (`rgb(120,75,15)`), never neutral gray or pure black. The effect is that depth reads as warmth, not weight.
+
+The system has five named tiers, used strictly by context:
+
+### Shadow Vocabulary
+
+- **Flush** (`0 1px 2px rgba(28,25,23,0.05)`): Barely-there separation — selector chips at rest, subtle dividers.
+- **Subtle** (`0 1px 3px rgba(28,25,23,0.07), 0 2px 8px -2px rgba(28,25,23,0.06)`): Resting cards, inputs, passport chip.
+- **Card** (`0 1px 3px rgba(28,25,23,0.07), 0 4px 16px -4px rgba(28,25,23,0.07)`): Standard destination card at rest.
+- **Elevated** (`0 4px 12px rgba(28,25,23,0.10), 0 12px 32px -6px rgba(28,25,23,0.13), 0 20px 48px -12px rgba(120,75,15,0.10)`): Hovered or focused card state. The warm amber tint in the diffuse layer is intentional — it makes the lift feel warm rather than mechanical.
+- **Float** (`0 8px 24px rgba(28,25,23,0.12), 0 24px 56px -8px rgba(28,25,23,0.18), 0 2px 6px rgba(0,0,0,0.04)`): Modals, drawers, dropdowns — maximum separation from the page.
+- **Cinematic** (`0 20px 56px -8px rgba(28,25,23,0.22), 0 4px 14px -2px rgba(120,75,15,0.13), 0 0 0 1.5px rgba(217,119,6,0.16)`): Featured hero moments, the Ember Gold ring makes the subject glow.
+- **Amber Glow** (`0 0 24px -4px rgba(217,119,6,0.22), 0 0 64px -8px rgba(217,119,6,0.10)`): Atmospheric bloom for accent-colored elements — used on active passport gateway, active chips, critical CTA hover.
+
+### Named Rules
+
+**The Warm Shadow Rule.** No neutral or cool shadows, ever. Every shadow uses `rgba(28,25,23,...)` (warm ink) or `rgba(120,75,15,...)` (amber ink) as its base. If a shadow looks gray in context, it is wrong.
+
+**The Lift Rule.** Cards at rest use Card shadow. On hover, they transition to Elevated shadow + `translateY(-4px)` over 180ms. The vertical lift and shadow change happen together — never one without the other.
+
+## 5. Components
+
+Components in this system are tactile and confident. Cards have weight and lift on hover. Buttons feel pressed. Nothing is provisional or floaty — each component behaves like a well-made physical object.
+
+### Buttons
+
+The primary action button is a capsule — no sharp corners anywhere. Ember Gold as a fill makes it impossible to miss; its rarity on the page (The One Voice Rule) gives it authority.
+
+- **Shape:** Full pill (9999px radius)
+- **Primary:** Ember Gold fill (`#d97706`), white text, 10px 20px padding, 500 weight, 0.01em tracking. Box shadow: Amber Glow on hover.
+- **Hover:** `background: #b45309` (ember-600), `translateY(-1px)`, amber glow bloom, transition 150ms ease-out-expo.
+- **Focus-visible:** 2px outline in `#d97706`, 2px offset.
+- **Profile chips (active):** Same amber fill. Unselected chips are white fill with strong border, warm text — the active state "fills in" like pressing a stamp.
+- **Ghost/text variant:** Transparent background, ember-gold text, same pill radius. Used in glass-card contexts (passport gateway Enter button).
+
+### Chips
+
+Used for: travel style profile selector, passport gateway country pills, badge labels.
+
+- **Unselected:** White/parchment fill, 1.5px warm-border-strong outline, `field-guide-black` text, pill radius. Box shadow: Flush.
+- **Active/selected:** Ember Gold fill, white text, same pill. No border needed — the fill communicates selection completely.
+- **Transition:** `background`, `color`, `border-color` all at 180ms ease. No scale change.
+
+### Cards / Containers
+
+- **Corner Style:** Gently curved (20px radius — `var(--radius-2xl)`) for destination cards; standard (16px) for content cards; tight (8px) for inner data cells.
+- **Background:** Warm gradient — `linear-gradient(160deg, #ffffff 0%, #fef9f3 60%, #fdfaf6 100%)`. Never flat white.
+- **Paper Grain:** Mandatory. Every card surface carries editorial-paper-texture.webp at 3.8–6.8% opacity, multiply blend. This is what separates NomadReady from a generic SaaS product.
+- **Shadow Strategy:** Card shadow at rest → Elevated + `translateY(-4px)` on hover. See Elevation section.
+- **Border:** 1px `rgba(180,130,65,0.20)` — a warm amber-tinged outline, almost invisible at rest. On hover, transitions to `rgba(217,119,6,0.38)` — the card gains an amber ring.
+- **Internal Padding:** 20px standard (`--card-pad-md`), 16px compact, 32px large panels.
+
+### Inputs / Fields
+
+- **Style:** White fill, 1.5px `warm-border-strong` outline, 12px radius. Pill-shaped for passport selector trigger (9999px).
+- **Focus:** Amber outline (`#d97706`) 2px, 2px offset. No glow bloom on inputs — focus ring only.
+- **Passport Selector Trigger:** Pill shape, white fill, 1.5px strong border, inline flag emoji + country name + muted "passport" suffix + chevron. Behaves like a tactile selector chip, not a form input.
+- **Dropdown:** White card, float shadow, 8px radius, 2px amber left border on active option, checkmark icon.
+
+### Navigation
+
+No persistent navigation bar in the current system. Section-to-section movement is scroll-based. The brand wordmark (✦ NomadReady) appears as a small editorial label in the hero — `ember-gold` accent mark, warm text, 700 weight, tight tracking.
+
+### Signature Components
+
+**Destination Card:** The primary content unit. Cover zone (top 35–40% of card) uses a colored abstract SVG gradient — destination-specific hue. Country code in large display type in bottom-left of cover. Below: destination name (headline weight), description (body), region/budget chips, then a 2×2 data grid showing Score / Visa / Budget From / Best Time with ALL-CAPS labels above each value. Cinematic shadow on hover + amber ring border. Connects to the full Ready page.
+
+**Passport Object (Gateway):** 240×336px stylized 2.5D passport cover. Country-specific deep-color cover (navy for France, burgundy for UK, etc.). Gold-ink emblem (EU stars, eagle, maple leaf, crown, southern cross), gold region text, gold PASSPORT label. Leather dot-matrix texture via CSS. Inner emboss frame. CSS perspective tilt via mouse-tracking RAF loop. Zooms to 6× scale on "enter" to transition into the main experience.
+
+**Atlas Map Background:** World map SVG with CSS emboss filter (`feGaussianBlur` + `feOffset` highlight/shadow), warm parchment tint via CSS filter chain (`invert → sepia → brightness → saturate → contrast → url(#atl-relief)`). Drifting atmospheric overlays, breathing opacity animation. Edge-faded into the page surface. Appears behind the destination section.
+
+## 6. Do's and Don'ts
+
+### Do:
+- **Do** use Ember Gold only for the active/primary state of one control per screen section. Its rarity is its authority.
+- **Do** add paper grain (editorial-paper-texture.webp, multiply blend, 3–7% opacity) to every card surface. It's what makes this feel like an artifact, not an app.
+- **Do** use the warm shadow tiers in order: Card at rest → Elevated on hover. Never skip tiers.
+- **Do** tighten heading tracking to −0.03em or lower at display/headline sizes. Loose headlines read as unfinished.
+- **Do** keep label text ALL CAPS, 0.7rem, +0.08em, `ink-muted`. Consistency here trains the eye faster than any icon would.
+- **Do** use cinematic photography full-bleed in hero sections with a directional warm dark overlay, ensuring text contrast ≥ 4.5:1 (WCAG AA).
+- **Do** keep motion at 150–260ms for state changes, 700ms for scroll reveals. Cinematic doesn't mean slow — it means purposeful.
+- **Do** collapse all `--duration-*` tokens to 1ms when `prefers-reduced-motion: reduce` is active. This is already wired — never bypass it.
+- **Do** keep card borders as warm amber-tinted outlines (`rgba(180,130,65,0.2)` at rest). They should barely exist at rest and deepen on hover.
+
+### Don't:
+- **Don't** use glassmorphism. The semi-transparent frosted glass on the hero controls card is a deliberate, isolated exception — it exists only because it sits over a full-bleed photo. In any other context, use a solid warm card surface.
+- **Don't** use neon, cyberpunk, or saturated blue/purple/green gradients. NomadReady's atmosphere is amber and parchment. A blue gradient is a different product.
+- **Don't** build generic SaaS UI — no Kayak-style filter bars, no TripAdvisor star ratings, no Notion-clone whitespace layouts. The product brief explicitly names these as anti-references.
+- **Don't** use cool or neutral grays. Every gray must be warm — nudged toward `#57534e` (warm ink), never toward `#6b7280` (Tailwind cool gray). This applies to shadows too.
+- **Don't** add motion for its own sake. No bouncing loaders, no staggered-everything entrances, no scroll-triggered decorative animations. Motion is reserved for state changes and editorial scroll reveals.
+- **Don't** use pure black (`#000000`) anywhere. The warmest dark is `#1c1917` (Field Guide Black) for text. The cinematic dark is `#0c1020` (Cinematic Night) for immersive overlays. Nothing colder.
+- **Don't** place text over a hero image without the directional overlay. Full-bleed photos are never used as direct backgrounds for text — always mediated by the dark gradient veil.
+- **Don't** put Ember Gold on more than 15% of any screen surface. If it starts looking like a primary brand color filling backgrounds, reduce. It should read as ink, not paint.
+- **Don't** use childish design patterns — no confetti, no gamification badges, no pastel blob illustrations, no playful icon sets. NomadReady's user has done this trip before or is serious about the next one.

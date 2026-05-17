@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Switch, Route, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { ProfileProvider } from "@/components/ProfileProvider";
+import { CustomCursor } from "@/components/CustomCursor";
 import HomePage from "@/pages/HomePage";
 import DestinationPage from "@/pages/DestinationPage";
 import CountryPage from "@/pages/CountryPage";
@@ -68,6 +69,7 @@ function Router() {
 function App() {
   return (
     <ProfileProvider>
+      <CustomCursor />
       <div className="min-h-dvh flex flex-col">
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <Router />

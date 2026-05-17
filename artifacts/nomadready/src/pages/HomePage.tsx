@@ -13,6 +13,7 @@ import { TripPlanner } from "@/components/TripPlanner";
 import { AmbientLayer } from "@/components/home/AmbientLayer";
 import { PassportGatewayHero } from "@/components/home/PassportGatewayHero";
 import { OpenGatewayLink } from "@/components/home/OpenGatewayLink";
+import { TravelNetwork } from "@/components/motion/TravelNetwork";
 import { Link } from "wouter";
 import { InView } from "@/components/motion-primitives/in-view";
 import { CoverPatternSVG } from "@/components/DestinationCoverPattern";
@@ -50,6 +51,7 @@ function formatMonths(months: ReadyData["best_season"]["overall_best_months"]): 
 }
 
 const HERO_IMGS = {
+  main:   "/assets/hero/hero-cinematic.jpg",
   tropic: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop",
   japan:  "/assets/hero/polaroid-japan.webp",
 };
@@ -119,14 +121,17 @@ export default function HomePage() {
           overflow: "hidden",
         }}
       >
-        <img
+        <video
           className="home-hero-bg"
-          src="/assets/hero/hero-cinematic.jpg"
-          alt=""
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/assets/hero/hero-cinematic.jpg"
           aria-hidden="true"
-          fetchPriority="high"
-          decoding="async"
-        />
+        >
+          <source src="/assets/hero/hero-loop.mp4" type="video/mp4" />
+        </video>
         <div className="home-hero-overlay" aria-hidden="true" />
         <div
           aria-hidden="true"
@@ -310,13 +315,19 @@ export default function HomePage() {
 
       {/* ── Step 3: Featured Destination Panel ──────────────── */}
       {(() => {
-        const indonesia = destinations.find(d => d.id === "indonesia");
-        const turkey = destinations.find(d => d.id === "turkey");
-        if (!indonesia || !turkey) return null;
-        const featured = [
-          { dest: indonesia, imgSrc: "/assets/editorial/panels/panel-indonesia.png" },
-          { dest: turkey,    imgSrc: null },
-        ] as const;
+        const indonesia   = destinations.find(d => d.id === "indonesia");
+        const turkey      = destinations.find(d => d.id === "turkey");
+        const philippines = destinations.find(d => d.id === "philippines");
+        const georgia     = destinations.find(d => d.id === "georgia");
+        const picks = [indonesia, turkey, philippines, georgia].filter(Boolean) as typeof destinations;
+        const pickImages: Record<string, string> = {
+          indonesia:   "/assets/editorial/panels/panel-indonesia.png",
+          turkey:      "/assets/destinations/turkey.jpg",
+          philippines: "/assets/destinations/philippines.jpg",
+          georgia:     "/assets/destinations/georgia.jpg",
+        };
+        if (picks.length === 0) return null;
+        const featured = picks.map(dest => ({ dest, imgSrc: pickImages[dest.id] ?? null }));
         return (
           <InView variants={REVEAL} transition={{ ...REVEAL_TX, delay: 0.08 }} viewOptions={REVEAL_OPTS}>
             <section style={{ paddingTop: "3.5rem", paddingBottom: "0" }} aria-label="Featured destinations">
@@ -405,33 +416,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section style={{ paddingTop: "3rem", paddingBottom: "3rem" }}>
+      <section style={{ paddingTop: "2rem", paddingBottom: "5rem" }}>
         <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
           <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
               <h2 className="section-label-editorial">
                 <span aria-hidden="true" style={{ color: "var(--accent)", opacity: 0.5 }}>⊞</span>
-                Quick comparison
+                Quick comparison · Plan by trip length
               </h2>
               <ProfileNote field="comparisonNote" />
             </div>
-            <ComparisonStrip destinations={availableDestinations} summaries={summaries} />
-          </div>
-        </InView>
-      </section>
 
-      <section style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
-        <InView variants={REVEAL} transition={REVEAL_TX} viewOptions={REVEAL_OPTS}>
-          <div className="page-container" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-            <h2 className="section-label-editorial">
-              <span aria-hidden="true" style={{ color: "var(--accent)", opacity: 0.5 }}>◷</span>
-              Plan by trip length
-            </h2>
-            <TripPlanner
-              destinations={availableDestinations}
-              budgets={budgetRecord}
-              passportCurrency={passportCurrency}
-            />
+            <TravelNetwork />
+
+            <div className="plan-compare-grid">
+              <ComparisonStrip destinations={availableDestinations} summaries={summaries} />
+              <TripPlanner
+                destinations={availableDestinations}
+                budgets={budgetRecord}
+                passportCurrency={passportCurrency}
+              />
+            </div>
           </div>
         </InView>
       </section>

@@ -1,0 +1,20 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "WLlr5_Z6jnwyfmPG_jgAj"
+uri = "file://attached_assets/stock_images/turkey_field_pick.jpg"
+type = "image"
+title = "Istanbul Turkey Hagia Sophia Blue Mosque sunset golden hour cinematic travel"
+
+[[outputs]]
+id = "2ENEW3y25b23yFoRrcZUI"
+uri = "file://attached_assets/stock_images/philippines_field_pick.jpg"
+type = "image"
+title = "Palawan Philippines tropical island crystal clear turquoise water limestone cliffs cinematic"
+
+[[outputs]]
+id = "Eyu4q3J9jQPG-CqHGgtvJ"
+uri = "file://attached_assets/stock_images/georgia_field_pick.jpg"
+type = "image"
+title = "Georgia Caucasus mountains medieval tower village autumn golden travel"

@@ -14,7 +14,8 @@ import { OpenGatewayLink } from "@/components/home/OpenGatewayLink";
 import { HeroCrossfade } from "@/components/home/HeroCrossfade";
 import { HeroReel } from "@/components/home/HeroReel";
 import { DestinationPicker, type DestSummary } from "@/components/home/DestinationPicker";
-import { TravelNetwork } from "@/components/motion/TravelNetwork";
+import { GlobeMap } from "@/components/motion/GlobeMap";
+import { getT } from "@/lib/i18n";
 import { InView } from "@/components/motion-primitives/in-view";
 import type { UseInViewOptions } from "motion/react";
 
@@ -100,6 +101,7 @@ export default function HomePage() {
     ? passportParam!
     : "fr";
   const passportCurrency = passports.find((p) => p.id === activePassportId)?.currency ?? "EUR";
+  const t = getT(activePassportId);
 
   const { summaries, budgetRecord, availableDestinations } = useMemo(
     () => getReadyData(activePassportId),
@@ -195,10 +197,10 @@ export default function HomePage() {
                   lineHeight: 1.0,
                   margin: 0,
                 }}>
-                  Where are you<br />heading next?
+                  {t.headlineLine1}<br />{t.headlineLine2}
                 </h1>
                 <p className="hero-text-light-sub anim-fade-up anim-delay-3" style={{ fontSize: "0.9375rem", margin: 0, maxWidth: "34ch", lineHeight: 1.55 }}>
-                  Choose your passport, pick a destination — visa rules, budget tiers, and field notes in one scroll.
+                  {t.subtitle}
                 </p>
               </div>
 
@@ -261,12 +263,12 @@ export default function HomePage() {
             <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
               <h2 className="section-label-editorial">
                 <span aria-hidden="true" style={{ color: "var(--accent)", opacity: 0.5 }}>⊞</span>
-                Quick comparison · Plan by trip length
+                {t.quickComparison}
               </h2>
               <ProfileNote field="comparisonNote" />
             </div>
 
-            <TravelNetwork />
+            <GlobeMap />
 
             <div className="plan-compare-grid">
               <ComparisonStrip destinations={availableDestinations} summaries={summaries} />

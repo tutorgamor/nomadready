@@ -211,12 +211,14 @@ function Emblem({ type }: { type: EmblemType }) {
 interface PassportObjectProps {
   passportId: string;
   isEntering: boolean;
+  /** True while the passport-opening pre-animation plays (before full zoom-in) */
+  isOpening?: boolean;
   onEnter: () => void;
   /** Optional class forwarded to the outer container — used by gateway mobile CSS */
   className?: string;
 }
 
-export function PassportObject({ passportId, isEntering, onEnter, className }: PassportObjectProps) {
+export function PassportObject({ passportId, isEntering, isOpening = false, onEnter, className }: PassportObjectProps) {
   const theme = THEMES[passportId] ?? THEMES.fr;
   const prefersReduced = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -307,6 +309,11 @@ export function PassportObject({ passportId, isEntering, onEnter, className }: P
     ? { scale: 1, opacity: 0 }
     : { scale: 8, opacity: 0 };
 
+  // Opening phase — cover appears to lift (rotateY slight tilt + gentle scale)
+  const openingAnimation = prefersReduced
+    ? {}
+    : { scale: 1.04, rotateY: -16 };
+
   // Gradient cover: coverHighlight (top-left lit corner) → cover (body) → spineColor (shadowed edge)
   const coverBg = `linear-gradient(
     148deg,
@@ -375,10 +382,16 @@ export function PassportObject({ passportId, isEntering, onEnter, className }: P
           position: "relative",
           zIndex: 1,
         }}
-        animate={isEntering ? enterAnimation : { scale: 1, opacity: 1 }}
+        animate={
+          isEntering  ? enterAnimation   :
+          isOpening   ? openingAnimation :
+          { scale: 1, opacity: 1, rotateY: 0 }
+        }
         transition={
           isEntering
             ? { duration: prefersReduced ? 0.01 : 0.92, ease: [0.16, 1, 0.3, 1] }
+            : isOpening
+            ? { duration: 0.40, ease: [0.25, 0.46, 0.45, 0.94] }
             : { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
         }
       >
@@ -640,6 +653,25 @@ export function PassportObject({ passportId, isEntering, onEnter, className }: P
               <line x1="0"  y1="10" x2="22" y2="10" stroke="rgba(200,164,40,0.22)" strokeWidth="0.5" />
             </svg>
           </div>
+
+          {/* ── Amber opening flash — glows from inside when cover lifts ── */}
+          {(isOpening || isEntering) && !prefersReduced && (
+            <motion.div
+              aria-hidden
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isOpening && !isEntering ? [0, 0.78, 0.55] : [0.55, 0] }}
+              transition={{ duration: isOpening && !isEntering ? 0.38 : 0.45, ease: "easeOut" }}
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "radial-gradient(ellipse 60% 80% at 18% 50%, rgba(217,119,6,0.72) 0%, rgba(251,191,36,0.22) 45%, transparent 70%)",
+                borderRadius: 10,
+                zIndex: 20,
+                pointerEvents: "none",
+                mixBlendMode: "screen",
+              }}
+            />
+          )}
 
           {/* ── Light shimmer — gold-tinted specular, cursor-tracking ── */}
           <div

@@ -37,6 +37,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useLocation } from "wouter";
 import { motion, useReducedMotion } from "motion/react";
 import { PassportObject } from "./PassportObject";
+import { getT } from "@/lib/i18n";
 
 // ─── Passport roster ──────────────────────────────────────────────────────────
 
@@ -62,6 +63,7 @@ interface PassportGatewayHeroProps {
 export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewayHeroProps) {
   const [visible,       setVisible]       = useState(false);
   const [activeId,      setActiveId]      = useState(defaultPassportId);
+  const [isOpening,     setIsOpening]     = useState(false);
   const [isEntering,    setIsEntering]    = useState(false);
   const [overlayFading, setOverlayFading] = useState(false);
 
@@ -150,6 +152,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
         setActiveId(validIds.has(urlPassport) ? urlPassport : "fr");
       } catch { /* no URL API — keep current */ }
 
+      setIsOpening(false);
       setIsEntering(false);
       setOverlayFading(false);
       setVisible(true);
@@ -160,27 +163,37 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
   }, []); // stable — setters and PASSPORTS never change
 
   // ── Enter handler ─────────────────────────────────────────────────────────
+  // Phase 1 (0 → 400ms):  passport "opens" — isOpening=true  (cover lifts + amber flash)
+  // Phase 2 (400 → 1320ms): passport zooms to 8× — isEntering=true (camera push-in)
+  // Phase 3 (650ms):        overlay starts fading (passport eclipses it)
+  // Phase 4 (1320ms):       gateway unmounts
   const handleEnter = useCallback(() => {
-    if (isEntering) return;
-    setIsEntering(true);
+    if (isEntering || isOpening) return;
 
-    // Navigate to the selected passport — triggers server re-render of page
-    // content while the cinematic exit animation plays (920ms total).
+    const openDuration  = prefersReduced ? 0   : 400;
+    const fadDelay      = prefersReduced ? 0   : openDuration + 250;
+    const removeDelay   = prefersReduced ? 50  : openDuration + 920;
+
+    setIsOpening(true);
+
+    // Navigate immediately so page content loads behind the animation
     setLocation(`/?passport=${activeId}`);
 
-    // Overlay starts fading 250ms after passport begins zooming
-    // so the passport eclipses the background mid-transition.
-    const fadDelay    = prefersReduced ? 0  : 250;
-    const removeDelay = prefersReduced ? 50 : 920;
+    setTimeout(() => {
+      setIsEntering(true);
+    }, openDuration);
 
     setTimeout(() => setOverlayFading(true), fadDelay);
     setTimeout(() => {
       setVisible(false);
       try { sessionStorage.setItem("nr_gateway_passed", "1"); } catch { /* ignore */ }
     }, removeDelay);
-  }, [isEntering, prefersReduced, activeId, setLocation]);
+  }, [isEntering, isOpening, prefersReduced, activeId, setLocation]);
 
   if (!visible) return null;
+
+  // ── Translations — reactive to activeId ─────────────────────────────────
+  const t = getT(activeId);
 
   // ── Animation durations ───────────────────────────────────────────────────
   const fadeDuration     = prefersReduced ? 0.01 : 0.55;
@@ -305,7 +318,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
               margin: 0,
             }}
           >
-            ✦ Travel Field Guide
+            ✦ {t.travelFieldGuide}
           </motion.p>
 
           {/* Passport — descends from above, "lands" on the surface */}
@@ -321,6 +334,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
           >
             <PassportObject
               passportId={activeId}
+              isOpening={isOpening}
               isEntering={isEntering}
               onEnter={handleEnter}
               className="gateway-passport"
@@ -336,7 +350,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
 
           {/* Visible label — displayed only on mobile via CSS */}
           <p className="gateway-selector-label" aria-hidden>
-            Your Passport
+            {t.yourPassport}
           </p>
 
           {/* Passport selector — radiogroup for a11y */}
@@ -356,7 +370,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
                   key={p.id}
                   role="radio"
                   aria-checked={isActive}
-                  onClick={() => !isEntering && setActiveId(p.id)}
+                  onClick={() => !isEntering && !isOpening && setActiveId(p.id)}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -403,7 +417,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: entranceDuration, delay: prefersReduced ? 0 : 0.66, ease: [0.25, 1, 0.5, 1] }}
             onClick={handleEnter}
-            disabled={isEntering}
+            disabled={isEntering || isOpening}
             style={{
               display: "flex",
               alignItems: "center",
@@ -417,22 +431,22 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
               fontSize: 13,
               fontWeight: 500,
               letterSpacing: "0.07em",
-              cursor: isEntering ? "default" : "pointer",
+              cursor: isEntering || isOpening ? "default" : "pointer",
               fontFamily: "var(--font-geist-sans)",
-              opacity: isEntering ? 0.4 : 1,
+              opacity: isEntering || isOpening ? 0.4 : 1,
               transition: "opacity 0.2s ease, background 0.2s ease, box-shadow 0.2s ease",
               textTransform: "uppercase",
               outline: "none",
             }}
-            whileHover={!isEntering ? {
+            whileHover={!isEntering && !isOpening ? {
               background: "rgba(200,164,40,0.15)",
               boxShadow: "0 0 28px -6px rgba(200,164,40,0.30)",
             } : {}}
-            whileTap={!isEntering ? { scale: 0.97 } : {}}
+            whileTap={!isEntering && !isOpening ? { scale: 0.97 } : {}}
             onFocus={(e)  => { e.currentTarget.style.boxShadow = "0 0 0 2px rgba(200,164,40,0.55)"; }}
             onBlur={(e)   => { e.currentTarget.style.boxShadow = "none"; }}
           >
-            Enter the Guide
+            {t.enterGuide}
             <span style={{ fontSize: 11, opacity: 0.65, letterSpacing: 0 }} aria-hidden>→</span>
           </motion.button>
 
@@ -450,7 +464,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
               margin: 0,
             }}
           >
-            or click the passport
+            {t.orClickPassport}
           </motion.p>
 
         </div>{/* /gateway-bottom */}

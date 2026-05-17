@@ -3,8 +3,8 @@ import { useSearch } from "wouter";
 import passportsDataRaw from "@/data/passports.json";
 import destinationsDataRaw from "@/data/destinations.json";
 import type { Passport, Destination, ReadyData } from "@/lib/types";
-import { PassportSelector } from "@/components/PassportSelector";
-import { ProfileSelector } from "@/components/ProfileSelector";
+import { PassportSidebar } from "@/components/PassportSidebar";
+import { ProfileDropdown } from "@/components/ProfileDropdown";
 import { ProfileNote } from "@/components/ProfileNote";
 import { InsightsPanel } from "@/components/InsightsPanel";
 import { AmbientLayer } from "@/components/home/AmbientLayer";
@@ -122,6 +122,7 @@ export default function HomePage() {
         }}
       >
         <HeroCrossfade />
+        <PassportSidebar passports={passports} activeId={activePassportId} />
         <div className="home-hero-overlay" aria-hidden="true" />
         <div
           aria-hidden="true"
@@ -202,12 +203,9 @@ export default function HomePage() {
               </div>
 
               <div className="hero-controls-glass anim-fade-up anim-delay-5">
-                <div>
-                  <PassportSelector passports={passports} activeId={activePassportId} />
-                  <OpenGatewayLink />
-                </div>
-                <ProfileSelector />
+                <ProfileDropdown />
                 <ProfileNote field="insightLine" />
+                <OpenGatewayLink />
               </div>
             </div>
 

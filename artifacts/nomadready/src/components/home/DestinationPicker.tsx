@@ -16,16 +16,17 @@ interface Props {
   passportId:   string;
 }
 
+// Curated landmark photos — one clearly-recognisable shot per destination
 const DEST_IMAGES: Record<string, string> = {
-  indonesia:    "/assets/editorial/panels/panel-indonesia.png",
-  turkey:       "/assets/destinations/turkey.jpg",
-  philippines:  "/assets/destinations/philippines.jpg",
-  georgia:      "/assets/destinations/georgia.jpg",
-  thailand:     "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80&auto=format&fit=crop",
-  malaysia:     "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&q=80&auto=format&fit=crop",
-  vietnam:      "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=800&q=80&auto=format&fit=crop",
-  japan:        "https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=800&q=80&auto=format&fit=crop",
-  "south-korea":"https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=800&q=80&auto=format&fit=crop",
+  indonesia:    "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80&auto=format&fit=crop", // Bali rice terraces
+  turkey:       "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&q=80&auto=format&fit=crop", // Istanbul Blue Mosque
+  philippines:  "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800&q=80&auto=format&fit=crop", // El Nido / Palawan
+  georgia:      "https://images.unsplash.com/photo-1561049933-c8fbef47b329?w=800&q=80&auto=format&fit=crop", // Tbilisi old town
+  thailand:     "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80&auto=format&fit=crop", // Wat Arun, Bangkok
+  malaysia:     "https://images.unsplash.com/photo-1596422846543-986a7c5feacc?w=800&q=80&auto=format&fit=crop", // Petronas towers
+  vietnam:      "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=800&q=80&auto=format&fit=crop", // Hoi An lanterns
+  japan:        "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&q=80&auto=format&fit=crop", // Mt Fuji + cherry blossom
+  "south-korea":"https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=800&q=80&auto=format&fit=crop", // Gyeongbokgung Palace
 };
 
 const PAGE_SIZE   = 3;
@@ -103,7 +104,14 @@ export function DestinationPicker({ destinations, summaries, passportId }: Props
                   aria-label={dest.label}
                 >
                   {img ? (
-                    <img src={img} alt="" className="feat-dest-card-bg" fetchPriority="low" decoding="async" />
+                    <img
+                      src={img}
+                      alt=""
+                      className="feat-dest-card-bg"
+                      fetchPriority="low"
+                      decoding="async"
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                    />
                   ) : (
                     <>
                       <div style={{ position: "absolute", inset: 0, backgroundColor: dest.cover_color, zIndex: 0 }} />

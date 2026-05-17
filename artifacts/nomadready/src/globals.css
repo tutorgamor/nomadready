@@ -991,6 +991,37 @@ video.home-hero-bg {
 }
 
 /* Hero controls — frosted glass card on desktop, plain flex on mobile */
+/* ── Passport sidebar — left edge of the hero video ── */
+.passport-sidebar {
+  display: none; /* hidden on mobile */
+}
+
+@media (min-width: 768px) {
+  .passport-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 46px;
+    z-index: 10;
+    padding: 1rem 0;
+    background: rgba(4, 8, 20, 0.32);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Shift hero content right to clear the sidebar */
+  .home-hero-layout {
+    padding-left: 52px;
+  }
+}
+
 .hero-controls-glass {
   display: flex;
   flex-direction: column;

@@ -40,19 +40,18 @@ function bezierPt(
   };
 }
 
-// ── Plane animation timing ──────────────────────────────────
-const PLANE_TRAVEL = 1.9;  // HUB → destination (seconds)
-const PLANE_PAUSE  = 0.25; // dwell at destination
-const PLANE_RETURN = 0.35; // destination → HUB
-const PLANE_ARC    = PLANE_TRAVEL + PLANE_PAUSE + PLANE_RETURN; // 2.5s per hop
-const PLANE_CYCLE  = NODES.length * PLANE_ARC; // 22.5s full lap
+// ── Timing — outbound and return at equal speeds ────────────
+const PLANE_TRAVEL = 1.9;  // HUB → destination (s)
+const PLANE_PAUSE  = 0.2;  // dwell at destination (s)
+const PLANE_RETURN = 1.8;  // destination → HUB — same pace as outbound (s)
+const PLANE_ARC    = PLANE_TRAVEL + PLANE_PAUSE + PLANE_RETURN; // 3.9s per hop
+const PLANE_CYCLE  = NODES.length * PLANE_ARC; // 35.1s full lap
 
-// Arc drawing sync
 const ARC_DURATION     = 2.0;
 const ARC_STAGGER      = PLANE_ARC;
 const ARC_REPEAT_DELAY = PLANE_CYCLE - ARC_DURATION;
 
-// Pre-compute plane keyframes (module-level — runs once)
+// Pre-compute plane keyframes (runs once at module load)
 const { PLANE_XS, PLANE_YS, PLANE_TS } = (() => {
   const xs: number[] = [];
   const ys: number[] = [];
@@ -69,22 +68,22 @@ const { PLANE_XS, PLANE_YS, PLANE_TS } = (() => {
     const cp   = getCP(node, i);
     const base = i * PLANE_ARC;
 
-    // Outbound: HUB → dest (skip t=0 after first arc — return already put plane at HUB)
+    // Outbound: HUB → dest (skip t=0 after first arc — return already set HUB)
     const outTs = i === 0 ? [0, 0.25, 0.5, 0.75, 1.0] : [0.25, 0.5, 0.75, 1.0];
     for (const t of outTs) {
       add(bezierPt(HUB, cp, node, t), base + t * PLANE_TRAVEL);
     }
 
-    // Pause at destination
+    // Dwell at destination
     add({ x: node.x, y: node.y }, base + PLANE_TRAVEL + PLANE_PAUSE);
 
-    // Return: dest → HUB
-    for (const t of [0.33, 0.67, 1.0]) {
+    // Return: dest → HUB — same speed, 4 sample points for smooth curve
+    for (const t of [0.25, 0.5, 0.75, 1.0]) {
       add(bezierPt(node, cp, HUB, t), base + PLANE_TRAVEL + PLANE_PAUSE + t * PLANE_RETURN);
     }
   }
 
-  // Final anchor at cycle end (same as start = HUB)
+  // Close loop at cycle end (= HUB)
   add(HUB, PLANE_CYCLE);
 
   return { PLANE_XS: xs, PLANE_YS: ys, PLANE_TS: ts };
@@ -126,10 +125,7 @@ export function GlobeMap() {
           </pattern>
         </defs>
 
-        {/* Latitude grid fill */}
         <rect x="0" y="0" width="520" height="86" fill="url(#gridPat)" />
-
-        {/* Reference lines */}
         {[20, 43, 66].map((y) => (
           <line key={y} x1="20" y1={y} x2="500" y2={y}
             stroke="rgba(217,119,6,0.07)" strokeWidth="0.8" strokeDasharray="2 6" />
@@ -139,7 +135,7 @@ export function GlobeMap() {
             stroke="rgba(217,119,6,0.05)" strokeWidth="0.6" strokeDasharray="2 8" />
         ))}
 
-        {/* Animated arcs — synced with plane travel */}
+        {/* Animated arcs synced with plane */}
         {NODES.map((node, i) => (
           <motion.path
             key={node.id}
@@ -187,18 +183,13 @@ export function GlobeMap() {
               strokeWidth={0.8}
               filter="url(#nodeGlow)"
             />
-            <text
-              x={node.x} y={node.y - 8}
-              textAnchor="middle"
-              fontSize="9"
-              style={{ userSelect: "none" }}
-            >
+            <text x={node.x} y={node.y - 8} textAnchor="middle" fontSize="9" style={{ userSelect: "none" }}>
               {node.emoji}
             </text>
           </g>
         ))}
 
-        {/* Hub — Europe */}
+        {/* Hub */}
         <g filter="url(#hubGlow)">
           <motion.circle
             cx={HUB.x} cy={HUB.y} r={14}
@@ -209,38 +200,23 @@ export function GlobeMap() {
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           />
           <circle cx={HUB.x} cy={HUB.y} r={9} fill="rgba(217,119,6,0.95)" />
-          <text
-            x={HUB.x} y={HUB.y + 3.5}
-            textAnchor="middle"
-            fontSize="9"
-            style={{ userSelect: "none" }}
-          >
-            🌍
-          </text>
+          <text x={HUB.x} y={HUB.y + 3.5} textAnchor="middle" fontSize="9" style={{ userSelect: "none" }}>🌍</text>
         </g>
 
-        {/* ── Flying plane ───────────────────────────────── */}
+        {/* ── Flying plane — outbound and return at equal speed ── */}
         <motion.g
           initial={{ x: HUB.x, y: HUB.y }}
           animate={{ x: PLANE_XS, y: PLANE_YS }}
           transition={{
-            duration:    PLANE_CYCLE,
-            repeat:      Infinity,
-            ease:        "linear",
-            times:       PLANE_TS,
+            duration: PLANE_CYCLE,
+            repeat:   Infinity,
+            ease:     "linear",
+            times:    PLANE_TS,
           }}
           filter="url(#planeGlow)"
         >
           <circle r={5} fill="rgba(251,191,36,0.18)" stroke="rgba(251,191,36,0.50)" strokeWidth={0.8} />
-          <text
-            x={0} y={0}
-            textAnchor="middle"
-            dominantBaseline="central"
-            fontSize="7"
-            style={{ userSelect: "none" }}
-          >
-            ✈
-          </text>
+          <text x={0} y={0} textAnchor="middle" dominantBaseline="central" fontSize="7" style={{ userSelect: "none" }}>✈</text>
         </motion.g>
 
       </svg>

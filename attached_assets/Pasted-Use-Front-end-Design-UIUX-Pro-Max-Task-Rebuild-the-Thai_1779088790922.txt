@@ -1,0 +1,94 @@
+Use Front-end Design + UIUX Pro Max.
+
+Task:
+Rebuild the Thailand interactive map component.
+
+Critical rule:
+Use the provided Thailand SVG outline as the exact geographic base.
+Do NOT redraw Thailand.
+Do NOT simplify the shape.
+Do NOT replace it with an abstract blob.
+Do NOT use a green organic shape.
+
+The current result is wrong because:
+- the country shape is too abstract
+- Thailand is too small and distant
+- the map feels like a decorative blob
+- the style is too game-like
+- the geography is not recognizable enough
+
+Desired result:
+A premium 2.5D editorial atlas map of Thailand.
+
+The Thailand shape must:
+- occupy 80–90% of the map panel height
+- be centered and zoomed in
+- preserve the real coastline and silhouette
+- use the uploaded SVG path as the base layer
+- feel accurate, not illustrative
+
+Visual style:
+- dark cinematic atlas
+- warm black ocean/background
+- muted parchment/amber outlines
+- subtle topographic relief
+- soft 2.5D shadow offset
+- Monocle editorial travel map feeling
+- luxury field-guide interface
+
+Colors:
+- background: deep warm black / dark atlas ink
+- land: dark parchment/olive-brown, not green
+- coastline: muted amber/parchment stroke
+- nodes: restrained ember gold
+- labels: ivory uppercase small caps
+
+Do NOT use:
+- bright green
+- flat infographic colors
+- cartoon map styling
+- Google Maps style
+- strategy-game UI
+- fantasy terrain
+- abstract organic blob
+- excessive route lines
+- oversized pins
+
+Required locations:
+- Bangkok
+- Ayutthaya
+- Chiang Mai
+- Kanchanaburi
+- Koh Chang
+- Koh Kut
+- Koh Tao
+
+Interaction:
+- hover node = subtle amber glow + small lift
+- click node = open side editorial panel
+- map itself remains calm
+- no flashy animation
+
+Implementation rules:
+1. Import/use the Thailand SVG as a React component or inline SVG.
+2. Wrap it in a responsive map container.
+3. Add 2.5D depth with CSS filters, duplicated layers, shadows, gradients, and subtle texture.
+4. Position city nodes using percentage coordinates relative to the SVG viewBox.
+5. Keep the map reusable and data-driven.
+6. Do not use external map APIs.
+7. Do not use canvas/WebGL unless absolutely necessary.
+
+Layout:
+- left side: editorial country intro
+- right side: large map panel
+- map panel should feel zoomed, not distant
+- Thailand must visually dominate the panel
+
+Before coding:
+Explain exactly how you will:
+- preserve the SVG geography
+- create 2.5D depth
+- place the city nodes
+- avoid the previous abstract green blob result
+
+Then implement only the map component.

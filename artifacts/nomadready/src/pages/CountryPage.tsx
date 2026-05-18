@@ -10,146 +10,150 @@ const readyFiles = import.meta.glob<ReadyData>("../data/ready/*.json", { eager: 
 // ─── Thailand SVG path — geographically accurate ──────────────────────────────
 // ViewBox: 0 0 480 820
 // Projection: x = (lon − 97.5) / 8.2 × 480   y = (20.5 − lat) / 14.9 × 820
-// Clockwise from topmost point (Chiang Rai/20.5°N)
-// → NE (Golden Triangle) → Laos/Mekong border → Isaan east bulge
-// → Cambodia border → Gulf NE coast (going W) → Peninsula Gulf side (going S)
-// → Southern tip (Malaysia) → Andaman coast (going N) → Myanmar border (going N)
-// → NW corner → top border (going E back to start)
 const TH_PATH = [
   "M 100,0",
-  // Top border (NW → NE / Golden Triangle)
   "C 122,0 138,4 153,9",
-  // Laos / Mekong border sweeping south-east
   "C 168,20 184,62 206,106",
   "C 222,148 248,168 286,178",
   "C 322,186 364,202 408,220",
-  // Isaan NE — max east bulge (~105.6°E → x ≈ 476)
   "C 444,238 468,266 476,294",
-  // Cambodia border, turns SW
   "C 478,308 468,328 452,344",
   "C 432,360 408,372 384,380",
-  // Gulf NE shore — goes WEST toward Bangkok
   "C 352,390 312,406 274,420",
   "C 240,432 210,442 186,454",
-  // Peninsula — Gulf (east) side going SOUTH
   "C 162,464 144,478 132,498",
   "C 118,518 106,540 100,558",
-  // Kra Isthmus narrowest (~10.5°N)
   "C 96,574 100,594 118,616",
-  // Lower peninsula Gulf coast (curves right/east as it goes south)
   "C 136,638 150,660 162,682",
   "C 172,702 186,720 196,742",
   "C 204,760 210,778 212,792",
   "C 212,804 212,814 214,820",
-  // SE tip — Malaysia border going WEST
   "C 204,820 186,818 168,814",
   "C 158,810 154,804 153,798",
-  // Andaman (west) coast going NORTH — x decreases toward Phuket/Krabi
   "C 142,786 126,772 110,750",
   "C 94,728 78,706 60,680",
-  // Leftward jog at Krabi/Phuket (~8°N), then curves right going north
   "C 48,660 44,634 54,610",
   "C 62,586 72,560 82,534",
   "C 90,510 100,488 108,462",
-  // Joins Myanmar (main body west) border — going north
   "C 116,440 120,416 118,390",
   "C 116,364 108,336 96,310",
   "C 80,284 62,256 46,228",
-  // Mae Hong Son westernmost dip (~18.5°N, 97.7°E → x ≈ 12)
   "C 32,202 16,176 12,150",
   "C 8,124 10,98 16,74",
-  // NW Myanmar border going east back to top
   "C 22,54 34,32 50,18",
   "C 64,8 80,2 100,0 Z",
 ].join(" ");
 
-// ─── City data (4 cities only) ────────────────────────────────────────────────
 interface City {
   id: string;
   label: string;
   x: number;
   y: number;
+  kind: "city" | "island";
   active: boolean;
   tagline: string;
+  region: string;
+  desc: string;
+  hasGuide?: boolean;
 }
 
+// x=(lon−97.5)/8.2×480  y=(20.5−lat)/14.9×820
 const CITIES: City[] = [
-  // Positions from same projection: x=(lon−97.5)/8.2×480, y=(20.5−lat)/14.9×820
-  { id: "mae-hong-son", label: "Mae Hong Son", x: 28,  y: 66,  active: false, tagline: "Au bout du monde vert."      },
-  { id: "chiang-mai",   label: "Chiang Mai",   x: 87,  y: 94,  active: false, tagline: "Temples et brumes du nord."  },
-  { id: "ayutthaya",    label: "Ayutthaya",    x: 180, y: 338, active: false, tagline: "L'ancienne capitale royale." },
-  { id: "bangkok",      label: "Bangkok",      x: 176, y: 372, active: true,  tagline: "Le chaos devient musique."   },
+  {
+    id: "chiang-mai", label: "Chiang Mai", x: 87, y: 94, kind: "city",
+    active: true, region: "Nord", tagline: "Temples et brumes du Nord.",
+    desc: "Capitale culturelle du Nord. Marchés de nuit animés, temples dorés dans la jungle, trekking vers les villages montagnards. Base idéale pour le Triangle d'Or et les rizières en terrasses de Chiang Rai.",
+  },
+  {
+    id: "kanchanaburi", label: "Kanchanaburi", x: 119, y: 357, kind: "city",
+    active: true, region: "Centre-Ouest", tagline: "Rivières et mémoire.",
+    desc: "Le Pont de la Rivière Kwaï, les chutes de l'Erawan aux sept bassins émeraude, forêts denses et temples perchés. Cimetières de guerre poignants — histoire de la Ligne de Chemin de Fer de la Mort.",
+  },
+  {
+    id: "ayutthaya", label: "Ayutthaya", x: 179, y: 338, kind: "city",
+    active: true, region: "Centre", tagline: "L'ancienne capitale royale.",
+    desc: "Ancienne capitale du royaume de Siam, classée au Patrimoine Mondial de l'UNESCO. Têtes de Bouddha enchâssées dans les racines de figuiers banians, stupas de briques rouges. À 80 km de Bangkok.",
+  },
+  {
+    id: "bangkok", label: "Bangkok", x: 176, y: 372, kind: "city",
+    active: true, hasGuide: true, region: "Centre", tagline: "Le chaos devient musique.",
+    desc: "Mégapole en perpétuel mouvement. Street food d'exception, temples dorés, marchés flottants, rooftops vertigineux. Hub incontournable du voyage en Asie du Sud-Est — le point de départ de tout.",
+  },
+  {
+    id: "koh-chang", label: "Koh Chang", x: 282, y: 463, kind: "island",
+    active: true, region: "Golfe de Thaïlande", tagline: "La grande île sauvage.",
+    desc: "Deuxième plus grande île de Thaïlande. Jungle quasi-impénétrable descendant jusqu'aux plages larges, cascades cachées, eaux calmes du Golfe. Bien moins touristique que les îles du Sud.",
+  },
+  {
+    id: "koh-kut", label: "Koh Kut", x: 310, y: 490, kind: "island",
+    active: true, region: "Golfe de Thaïlande", tagline: "L'île la plus vierge.",
+    desc: "Île la plus reculée de l'archipel de Koh Chang. Plages absolument immaculées, forêts primaires intactes, eaux turquoise d'une limpidité rare. Tourisme ultra-confidentiel, luxe naturel sans hôtels de chaîne.",
+  },
+  {
+    id: "koh-tao", label: "Koh Tao", x: 137, y: 573, kind: "island",
+    active: true, region: "Golfe de Thaïlande", tagline: "Paradis mondial de la plongée.",
+    desc: "L'un des sites de plongée les plus accessibles d'Asie. Certifications PADI parmi les moins chères au monde, récifs coralliens vivants, requins baleines saisonniers. Snorkeling en accès direct depuis la plage.",
+  },
 ];
 
-// ─── Mountain peaks (decorative, NW highlands zone) ───────────────────────────
-// [cx, cy, size] — positioned in NW highlands (Mae Hong Son / Doi Inthanon area)
 const PEAKS: [number, number, number][] = [
   [36, 48, 10], [52, 40, 14], [68, 34, 12], [86, 28, 10], [104, 22, 9],
   [44, 62, 8],  [62, 55, 11], [80, 46, 9],
 ];
 
-// ─── Component ────────────────────────────────────────────────────────────────
 export default function CountryPage() {
   const { passport } = useParams<{ passport: string }>();
-  const [, navigate]  = useLocation();
-  const passportId    = passport ?? "fr";
-  const t             = getT(passportId);
-  const svgRef        = useRef<SVGSVGElement>(null);
-  const [hovered,   setHovered]  = useState<string | null>(null);
-  const [exiting,   setExiting]  = useState(false);
-  const [exitBack,  setExitBack] = useState(false);
+  const [, navigate]    = useLocation();
+  const passportId      = passport ?? "fr";
+  const t               = getT(passportId);
+  const svgRef          = useRef<SVGSVGElement>(null);
+  const [hovered,     setHovered]     = useState<string | null>(null);
+  const [activeCity,  setActiveCity]  = useState<City | null>(null);
+  const [exiting,     setExiting]     = useState(false);
+  const [exitBack,    setExitBack]    = useState(false);
 
-  const dataKey = Object.keys(readyFiles).find(k => k.endsWith(`/${passportId}-thailand.json`));
-  const data    = dataKey ? readyFiles[dataKey] : null;
-
+  const dataKey  = Object.keys(readyFiles).find(k => k.endsWith(`/${passportId}-thailand.json`));
+  const data     = dataKey ? readyFiles[dataKey] : null;
   const visaLabel = data?.visa?.type === "Visa Exemption" || data?.visa?.type === "Visa Free"
     ? `Exempt · ${data.visa.duration_days ?? 30}j`
     : data?.visa?.type ?? "Voir conditions";
 
-  // ── Anime.js draw-on animations ──────────────────────────────────────────────
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
 
-    const scheduleRaf = (fn: () => void, delay: number) => {
-      const t = setTimeout(fn, delay);
-      return () => clearTimeout(t);
-    };
-
-    // 1. Country outline draw-on
     const outline = svg.querySelector<SVGPathElement>("#th-outline");
     if (outline) {
       const len = outline.getTotalLength();
       outline.style.strokeDasharray  = `${len}`;
       outline.style.strokeDashoffset = `${len}`;
-      animate(outline, { strokeDashoffset: 0, duration: 2800, ease: "inOutQuart", delay: 300 });
+      animate(outline, { strokeDashoffset: 0, duration: 3200, ease: "inOutQuart", delay: 300 });
     }
-
-    // 2. Roads stagger reveal
     const roads = svg.querySelectorAll<SVGPathElement>(".th-road");
     roads.forEach((road, i) => {
       const len = road.getTotalLength();
       road.style.strokeDasharray  = `${len}`;
       road.style.strokeDashoffset = `${len}`;
-      animate(road, { strokeDashoffset: 0, duration: 900, ease: "inOutCubic", delay: 2100 + i * 220 });
+      animate(road, { strokeDashoffset: 0, duration: 900, ease: "inOutCubic", delay: 2200 + i * 200 });
     });
-
-    // 3. River draw-in
     const river = svg.querySelector<SVGPathElement>("#th-river");
     if (river) {
       const len = river.getTotalLength();
       river.style.strokeDasharray  = `${len}`;
       river.style.strokeDashoffset = `${len}`;
-      animate(river, { strokeDashoffset: 0, duration: 1100, ease: "inOutCubic", delay: 2400 });
+      animate(river, { strokeDashoffset: 0, duration: 1100, ease: "inOutCubic", delay: 2500 });
     }
-
-    return () => {};
   }, []);
 
-  const goToCity = useCallback((city: City) => {
-    if (!city.active || exiting || exitBack) return;
+  const handleCityClick = useCallback((city: City) => {
+    if (exiting || exitBack) return;
+    setActiveCity(prev => prev?.id === city.id ? null : city);
+  }, [exiting, exitBack]);
+
+  const openBangkokGuide = useCallback(() => {
+    if (exiting || exitBack) return;
     setExiting(true);
-    setTimeout(() => navigate(`/ready/${passportId}/thailand/${city.id}`), 560);
+    setTimeout(() => navigate(`/ready/${passportId}/thailand/bangkok`), 560);
   }, [exiting, exitBack, navigate, passportId]);
 
   const goBack = useCallback((e: React.MouseEvent) => {
@@ -159,12 +163,13 @@ export default function CountryPage() {
     setTimeout(() => navigate(`/?passport=${passportId}&skip_gateway=1`), 600);
   }, [exiting, exitBack, navigate, passportId]);
 
-  const hoveredCity = CITIES.find(c => c.id === hovered) ?? null;
-
   return (
-    <main style={{ position: "relative", width: "100vw", height: "100dvh", overflow: "hidden", background: "#030c07" }}>
+    <main
+      style={{ position: "relative", width: "100vw", height: "100dvh", overflow: "hidden", background: "#080609" }}
+      onClick={() => setActiveCity(null)}
+    >
 
-      {/* ── Transition overlays ────────────────────────────────────────────────── */}
+      {/* ── Transition overlays ──────────────────────────────────────────────────── */}
       <AnimatePresence>
         {exitBack && (
           <motion.div key="cp-back"
@@ -177,34 +182,34 @@ export default function CountryPage() {
           <motion.div key="cp-fwd"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ duration: 0.42 }}
-            style={{ position: "fixed", inset: 0, background: "#030c07", zIndex: 9999, pointerEvents: "none" }}
+            style={{ position: "fixed", inset: 0, background: "#080609", zIndex: 9999, pointerEvents: "none" }}
           />
         )}
       </AnimatePresence>
 
-      {/* ── Tactical grid ────────────────────────────────────────────────────────── */}
-      <svg aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.028, pointerEvents: "none" }}>
+      {/* ── Tactical grid — warm amber ──────────────────────────────────────────── */}
+      <svg aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.02, pointerEvents: "none" }}>
         <defs>
-          <pattern id="cp-grid" width="48" height="48" patternUnits="userSpaceOnUse">
-            <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#4af098" strokeWidth="0.5" />
+          <pattern id="cp-grid" width="52" height="52" patternUnits="userSpaceOnUse">
+            <path d="M 52 0 L 0 0 0 52" fill="none" stroke="#c49a40" strokeWidth="0.5" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#cp-grid)" />
       </svg>
 
-      {/* ── Atmospheric radial glow (center-right where map sits) ─────────────── */}
+      {/* ── Atmospheric glow — warm amber ────────────────────────────────────────── */}
       <div aria-hidden="true" style={{
         position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
-        background: "radial-gradient(ellipse 55% 70% at 68% 52%, rgba(30,80,50,0.18) 0%, transparent 70%)",
+        background: "radial-gradient(ellipse 55% 72% at 65% 48%, rgba(90,62,18,0.16) 0%, transparent 70%)",
       }} />
 
-      {/* ── Vignette ──────────────────────────────────────────────────────────── */}
+      {/* ── Vignette ──────────────────────────────────────────────────────────────── */}
       <div aria-hidden="true" style={{
         position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
-        background: "radial-gradient(ellipse 85% 85% at 62% 50%, transparent 22%, rgba(0,0,0,0.72) 100%)",
+        background: "radial-gradient(ellipse 85% 85% at 62% 50%, transparent 22%, rgba(0,0,0,0.80) 100%)",
       }} />
 
-      {/* ── Header ────────────────────────────────────────────────────────────── */}
+      {/* ── Header ──────────────────────────────────────────────────────────────── */}
       <motion.header
         initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.28, duration: 0.5 }}
@@ -212,8 +217,8 @@ export default function CountryPage() {
           position: "absolute", top: 0, left: 0, right: 0, height: 56,
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "0 1.5rem", zIndex: 20,
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
-          background: "linear-gradient(to bottom, rgba(3,12,7,0.96) 0%, transparent 100%)",
+          borderBottom: "1px solid rgba(255,255,255,0.04)",
+          background: "linear-gradient(to bottom, rgba(8,6,9,0.97) 0%, transparent 100%)",
         }}
       >
         <motion.a
@@ -225,17 +230,18 @@ export default function CountryPage() {
         >
           ← {t.backToAtlas}
         </motion.a>
-        <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(217,119,6,0.7)", textTransform: "uppercase" }}>
+        <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(196,154,62,0.62)", textTransform: "uppercase" }}>
           THAILAND · SOUTHEAST ASIA
         </span>
       </motion.header>
 
-      {/* ── Left info panel ───────────────────────────────────────────────────── */}
+      {/* ── Left info panel ─────────────────────────────────────────────────────── */}
       <motion.div
         className="cp-sidebar"
         initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.6, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
         style={{ position: "absolute", left: "3.5rem", top: "50%", transform: "translateY(-52%)", zIndex: 10, maxWidth: 240 }}
+        onClick={e => e.stopPropagation()}
       >
         <p className="th-eyebrow th-eyebrow--amber" style={{ marginBottom: "0.55rem" }}>FIELD GUIDE</p>
         <h1 style={{
@@ -244,7 +250,7 @@ export default function CountryPage() {
         }}>
           La&nbsp;Thaïlande<br />se&nbsp;mérite.
         </h1>
-        <p style={{ fontSize: "0.76rem", color: "rgba(255,255,255,0.42)", lineHeight: 1.72, marginBottom: "1.35rem" }}>
+        <p style={{ fontSize: "0.76rem", color: "rgba(255,255,255,0.36)", lineHeight: 1.72, marginBottom: "1.35rem" }}>
           Du chaos de Bangkok<br />aux brumes du Nord.
         </p>
 
@@ -255,298 +261,445 @@ export default function CountryPage() {
             { label: "FUSEAU", value: "UTC +7"  },
           ].map(s => (
             <div key={s.label} style={{ display: "flex", gap: "0.7rem", alignItems: "baseline" }}>
-              <span style={{ fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.15em", color: "rgba(217,119,6,0.58)", textTransform: "uppercase", width: 42, flexShrink: 0 }}>
+              <span style={{ fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.15em", color: "rgba(196,154,62,0.5)", textTransform: "uppercase", width: 42, flexShrink: 0 }}>
                 {s.label}
               </span>
-              <span style={{ fontSize: "0.74rem", fontWeight: 500, color: "rgba(255,255,255,0.80)" }}>
+              <span style={{ fontSize: "0.74rem", fontWeight: 500, color: "rgba(255,255,255,0.76)" }}>
                 {s.value}
               </span>
             </div>
           ))}
         </div>
 
-        <div style={{ marginTop: "1.15rem", paddingTop: "0.85rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-          <p style={{ fontSize: "0.54rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-            1 guide disponible · 3 à venir
+        <div style={{ marginTop: "1.15rem", paddingTop: "0.85rem", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <p style={{ fontSize: "0.54rem", color: "rgba(255,255,255,0.26)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+            1 guide disponible · 6 à venir
           </p>
         </div>
 
-        {/* Scroll hint — click a city */}
         <motion.p
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ delay: 3.2, duration: 0.8 }}
-          style={{ marginTop: "2rem", fontSize: "0.58rem", color: "rgba(255,255,255,0.22)", letterSpacing: "0.08em" }}
+          transition={{ delay: 3.4, duration: 0.8 }}
+          style={{ marginTop: "2rem", fontSize: "0.58rem", color: "rgba(255,255,255,0.18)", letterSpacing: "0.08em" }}
         >
           Cliquer une ville pour explorer →
         </motion.p>
       </motion.div>
 
-      {/* ── Map ───────────────────────────────────────────────────────────────── */}
+      {/* ── Map ─────────────────────────────────────────────────────────────────── */}
       <div
         className="cp-map-wrap"
-        style={{ position: "absolute", inset: 0, paddingTop: 56, display: "flex", alignItems: "center", justifyContent: "center", paddingLeft: "28%", zIndex: 5 }}
+        style={{ position: "absolute", inset: 0, paddingTop: 56, display: "flex", alignItems: "center", justifyContent: "center", paddingLeft: "22%", zIndex: 5 }}
+        onClick={e => e.stopPropagation()}
       >
         <motion.svg
           ref={svgRef}
           viewBox="0 0 480 820"
           aria-label="Carte interactive de la Thaïlande"
-          style={{ height: "88vh", maxHeight: 720, width: "auto", overflow: "visible", filter: "drop-shadow(0 28px 56px rgba(0,0,0,0.88))" }}
+          style={{
+            height: "94vh", width: "auto", overflow: "visible",
+            filter: "drop-shadow(0 40px 80px rgba(0,0,0,0.96)) drop-shadow(12px 18px 36px rgba(0,0,0,0.75))",
+          }}
           initial={{ scale: 0.88, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
         >
           <defs>
-            {/* Land vertical gradient — deep forest green */}
-            <linearGradient id="th-land" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%"   stopColor="#2e5c3f" />
-              <stop offset="30%"  stopColor="#244e36" />
-              <stop offset="65%"  stopColor="#1f4530" />
-              <stop offset="100%" stopColor="#1b3d2b" />
+            {/* Land — dark warm parchment / amber-brown atlas tones (no green) */}
+            <linearGradient id="th-land" x1="15%" y1="0%" x2="85%" y2="100%">
+              <stop offset="0%"   stopColor="#1e1912" />
+              <stop offset="25%"  stopColor="#28200e" />
+              <stop offset="55%"  stopColor="#342a18" />
+              <stop offset="100%" stopColor="#2e2517" />
             </linearGradient>
 
-            {/* Northern highlands darker overlay */}
-            <linearGradient id="th-north-fade" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%"   stopColor="#193828" stopOpacity="0.75" />
-              <stop offset="100%" stopColor="#193828" stopOpacity="0"    />
-            </linearGradient>
-
-            {/* Gulf teal coastal glow — radiates from Isaan/SE corner (east side) */}
-            <radialGradient id="th-gulf" cx="92%" cy="48%" r="50%">
-              <stop offset="0%"   stopColor="#0e4a5a" stopOpacity="0.28" />
-              <stop offset="100%" stopColor="#0e4a5a" stopOpacity="0"    />
+            {/* NW light source — warm illumination from top-left */}
+            <radialGradient id="th-light-nw" cx="10%" cy="5%" r="70%">
+              <stop offset="0%"   stopColor="rgba(215,178,108,0.14)" />
+              <stop offset="60%"  stopColor="rgba(180,145,80,0.04)"  />
+              <stop offset="100%" stopColor="rgba(0,0,0,0)"           />
             </radialGradient>
 
-            {/* Ocean bg gradient */}
-            <linearGradient id="th-ocean" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%"   stopColor="#04141e" />
-              <stop offset="100%" stopColor="#020e0a" />
+            {/* SE inner shadow — depth shelf effect */}
+            <radialGradient id="th-shadow-es" cx="88%" cy="82%" r="58%">
+              <stop offset="0%"   stopColor="rgba(0,0,0,0.42)" />
+              <stop offset="100%" stopColor="rgba(0,0,0,0)"    />
+            </radialGradient>
+
+            {/* Peninsula lower darkening */}
+            <linearGradient id="th-peninsula-fade" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stopColor="rgba(8,5,3,0)"    />
+              <stop offset="100%" stopColor="rgba(8,5,3,0.24)" />
             </linearGradient>
 
-            {/* Pin glow filter (small) */}
-            <filter id="f-glow-sm" x="-150%" y="-150%" width="400%" height="400%">
-              <feGaussianBlur stdDeviation="4" />
-            </filter>
-            {/* Pin glow filter (large / hovered) */}
-            <filter id="f-glow-lg" x="-150%" y="-150%" width="400%" height="400%">
-              <feGaussianBlur stdDeviation="8" />
-            </filter>
+            {/* Ocean background */}
+            <linearGradient id="th-ocean" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stopColor="#08060a" />
+              <stop offset="100%" stopColor="#060408" />
+            </linearGradient>
 
-            {/* Clip to Thailand land */}
+            {/* Clip to land */}
             <clipPath id="th-land-clip">
               <path d={TH_PATH} />
             </clipPath>
 
-            {/* Dot texture for terrain feeling */}
-            <pattern id="th-terrain-dots" width="9" height="9" patternUnits="userSpaceOnUse">
-              <circle cx="4.5" cy="4.5" r="0.55" fill="rgba(255,255,255,0.055)" />
+            {/* Parchment dot texture */}
+            <pattern id="th-parchment" width="7" height="7" patternUnits="userSpaceOnUse">
+              <circle cx="3.5" cy="3.5" r="0.45" fill="rgba(195,155,72,0.09)" />
             </pattern>
 
-            {/* Northern hatch pattern */}
-            <pattern id="th-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-              <line x1="0" y1="0" x2="0" y2="7" stroke="rgba(60,100,70,0.18)" strokeWidth="1" />
+            {/* Highland cross-hatch (NW mountains) */}
+            <pattern id="th-highland-hatch" width="5.5" height="5.5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+              <line x1="0" y1="0" x2="0" y2="5.5" stroke="rgba(160,125,60,0.16)" strokeWidth="0.7" />
             </pattern>
+
+            {/* Blur filters for 2.5D shadows */}
+            <filter id="f-blur-outer" x="-60%" y="-40%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="16" />
+            </filter>
+            <filter id="f-blur-inner" x="-35%" y="-25%" width="170%" height="170%">
+              <feGaussianBlur stdDeviation="6" />
+            </filter>
+
+            {/* Pin glow filters */}
+            <filter id="f-glow-pin-sm" x="-250%" y="-250%" width="600%" height="600%">
+              <feGaussianBlur stdDeviation="3" />
+            </filter>
+            <filter id="f-glow-pin-lg" x="-250%" y="-250%" width="600%" height="600%">
+              <feGaussianBlur stdDeviation="7" />
+            </filter>
           </defs>
 
-          {/* ── Ocean / sea background ── */}
-          <rect x="-60" y="-40" width="600" height="920" fill="url(#th-ocean)" />
+          {/* ── Ocean background ── */}
+          <rect x="-80" y="-60" width="640" height="960" fill="url(#th-ocean)" />
 
-          {/* Subtle sea shimmer lines */}
-          {[120, 200, 310, 440, 560, 680].map((y, i) => (
-            <line key={i} x1="-60" y1={y} x2="540" y2={y}
-              stroke="rgba(30,80,100,0.07)" strokeWidth="0.8" />
+          {/* Subtle ocean shimmer lines */}
+          {[95, 195, 305, 430, 545, 665, 765].map((y, i) => (
+            <line key={i} x1="-80" y1={y} x2="560" y2={y}
+              stroke="rgba(55,40,75,0.055)" strokeWidth="0.65" />
           ))}
 
-          {/* ── Land depth shadow ── */}
-          <path d={TH_PATH} transform="translate(11,15)" fill="rgba(0,0,0,0.5)" />
+          {/* ── 2.5D depth — outer soft shadow ── */}
+          <path d={TH_PATH} transform="translate(16,24)"
+            fill="rgba(0,0,0,0.52)"
+            filter="url(#f-blur-outer)"
+          />
+
+          {/* ── 2.5D depth — inner tight shadow ── */}
+          <path d={TH_PATH} transform="translate(6,10)"
+            fill="rgba(0,0,0,0.45)"
+            filter="url(#f-blur-inner)"
+          />
 
           {/* ── Land base fill ── */}
           <path d={TH_PATH} fill="url(#th-land)" />
 
-          {/* ── Terrain dot texture ── */}
-          <path d={TH_PATH} fill="url(#th-terrain-dots)" />
+          {/* ── Parchment dot texture ── */}
+          <path d={TH_PATH} fill="url(#th-parchment)" />
 
-          {/* ── Northern highlands overlay (NW high terrain) ── */}
-          <rect clipPath="url(#th-land-clip)" x="0" y="0" width="200" height="220"
-            fill="url(#th-north-fade)" />
+          {/* ── Topographic contour lines (horizontal, very subtle) ── */}
+          <g clipPath="url(#th-land-clip)" opacity="0.12">
+            {Array.from({ length: 20 }, (_, i) => (
+              <line key={`topo-${i}`}
+                x1="-80" y1={28 + i * 40} x2="560" y2={28 + i * 40}
+                stroke="#c09542" strokeWidth="0.3"
+              />
+            ))}
+          </g>
 
-          {/* ── Northern highland hatch (forest density, NW only) ── */}
-          <rect clipPath="url(#th-land-clip)" x="0" y="0" width="160" height="195"
-            fill="url(#th-hatch)" />
+          {/* ── Highland hatch (NW highlands zone) ── */}
+          <rect clipPath="url(#th-land-clip)" x="0" y="0" width="168" height="205"
+            fill="url(#th-highland-hatch)" />
 
-          {/* ── Isaan plateau — subtle dry/warm differentiation ── */}
-          <rect clipPath="url(#th-land-clip)" x="155" y="0" width="330" height="420"
-            fill="rgba(160,185,100,0.045)" />
+          {/* ── NW light source (illumination from top-left) ── */}
+          <path d={TH_PATH} fill="url(#th-light-nw)" />
 
-          {/* ── Gulf coast teal hint ── */}
-          <path d={TH_PATH} fill="url(#th-gulf)" />
+          {/* ── SE inner shadow (2.5D depth) ── */}
+          <path d={TH_PATH} fill="url(#th-shadow-es)" />
 
-          {/* ── Central plains warm ellipse (Chao Phraya basin) ── */}
-          <ellipse clipPath="url(#th-land-clip)"
-            cx="170" cy="350" rx="140" ry="88"
-            fill="rgba(100,140,65,0.08)" />
+          {/* ── Peninsula lower fade ── */}
+          <rect clipPath="url(#th-land-clip)" x="0" y="445" width="280" height="400"
+            fill="url(#th-peninsula-fade)" />
 
-          {/* ── Peninsula subtle differentiation ── */}
-          <rect clipPath="url(#th-land-clip)" x="0" y="440" width="300" height="400"
-            fill="rgba(20,55,40,0.10)" />
-
-          {/* ── Mountain peaks (decorative) ── */}
+          {/* ── Mountain peaks (Doi Inthanon / NW highlands) ── */}
           {PEAKS.map(([mx, my, sz], i) => (
             <g key={i}>
-              {/* Mountain shadow */}
               <polygon
-                points={`${mx + 2},${my + sz * 1.3} ${mx - sz * 0.72 + 2},${my + sz * 2.1} ${mx + sz * 0.72 + 2},${my + sz * 2.1}`}
-                fill="rgba(0,0,0,0.22)"
+                points={`${mx + 2.5},${my + sz * 1.4} ${mx - sz * 0.68 + 2.5},${my + sz * 2.2} ${mx + sz * 0.68 + 2.5},${my + sz * 2.2}`}
+                fill="rgba(0,0,0,0.28)"
               />
-              {/* Mountain body */}
               <polygon
-                points={`${mx},${my} ${mx - sz * 0.72},${my + sz * 1.3} ${mx + sz * 0.72},${my + sz * 1.3}`}
-                fill={`rgba(35,72,50,${0.55 + i * 0.018})`}
-                stroke="rgba(110,170,130,0.22)"
-                strokeWidth="0.6"
+                points={`${mx},${my} ${mx - sz * 0.68},${my + sz * 1.35} ${mx + sz * 0.68},${my + sz * 1.35}`}
+                fill={`rgba(40,32,18,${0.78 + i * 0.012})`}
+                stroke="rgba(155,122,58,0.22)"
+                strokeWidth="0.5"
               />
-              {/* Snow cap */}
               <polygon
-                points={`${mx},${my} ${mx - sz * 0.24},${my + sz * 0.42} ${mx + sz * 0.24},${my + sz * 0.42}`}
-                fill={`rgba(220,240,225,${0.14 - i * 0.008})`}
+                points={`${mx},${my} ${mx - sz * 0.22},${my + sz * 0.4} ${mx + sz * 0.22},${my + sz * 0.4}`}
+                fill={`rgba(200,172,112,${0.11 - i * 0.005})`}
               />
             </g>
           ))}
 
-          {/* ── Road: Mae Hong Son → Chiang Mai (mountain road, dashed) ── */}
-          <path className="th-road"
-            d="M 28,66 C 48,74 68,84 87,94"
-            fill="none" stroke="rgba(195,175,125,0.38)" strokeWidth="1.3"
-            strokeLinecap="round" strokeDasharray="3,6"
+          {/* ── Chao Phraya River ── */}
+          <path id="th-river"
+            d="M 148,255 C 155,285 162,318 170,352 C 173,362 174,368 176,372"
+            fill="none" stroke="rgba(75,135,185,0.3)" strokeWidth="1.5"
+            strokeLinecap="round"
           />
 
-          {/* ── Road: Chiang Mai → Bangkok via Hwy 1 (through Lampang, Nakhon Sawan) ── */}
+          {/* ── Road: Mae Hong Son → Chiang Mai (mountain dashed) ── */}
+          <path className="th-road"
+            d="M 28,66 C 48,74 68,84 87,94"
+            fill="none" stroke="rgba(180,150,78,0.25)" strokeWidth="1.0"
+            strokeLinecap="round" strokeDasharray="2.5,5"
+          />
+
+          {/* ── Road: Chiang Mai → Bangkok via Hwy 1 ── */}
           <path className="th-road"
             d="M 87,94 C 104,148 130,230 158,300 C 166,320 172,334 176,372"
-            fill="none" stroke="rgba(195,175,125,0.32)" strokeWidth="1.5"
+            fill="none" stroke="rgba(180,150,78,0.2)" strokeWidth="1.2"
             strokeLinecap="round"
           />
 
           {/* ── Road: Ayutthaya spur ── */}
           <path className="th-road"
             d="M 180,338 C 179,351 178,362 176,372"
-            fill="none" stroke="rgba(195,175,125,0.4)" strokeWidth="1.2"
+            fill="none" stroke="rgba(180,150,78,0.28)" strokeWidth="0.95"
             strokeLinecap="round"
           />
 
-          {/* ── Chao Phraya River (animates after roads) ── */}
-          <path id="th-river"
-            d="M 148,255 C 155,285 162,318 170,352 C 173,362 174,368 176,372"
-            fill="none" stroke="rgba(90,175,215,0.42)" strokeWidth="1.8"
-            strokeLinecap="round"
-          />
-
-          {/* ── Country outline stroke (animated draw-on) ── */}
+          {/* ── Coastline outline (animated draw-on) — amber ── */}
           <path id="th-outline"
             d={TH_PATH}
             fill="none"
-            stroke="rgba(130,195,150,0.52)"
-            strokeWidth="1.3"
+            stroke="rgba(195,158,82,0.5)"
+            strokeWidth="1.05"
             strokeLinejoin="round"
             strokeLinecap="round"
           />
 
-          {/* ── City pins ── */}
-          {CITIES.map((city, i) => (
-            <CityPin
-              key={city.id}
-              city={city}
-              index={i}
-              isHovered={hovered === city.id}
-              onHover={() => setHovered(city.id)}
-              onLeave={() => setHovered(null)}
-              onClick={() => goToCity(city)}
-            />
+          {/* ── Neighbor country labels ── */}
+          {(
+            [
+              { label: "MYANMAR",  x: -60, y: 270 },
+              { label: "LAOS",     x: 438, y: 162 },
+              { label: "CAMBODIA", x: 432, y: 378 },
+              { label: "MALAYSIA", x: 128, y: 858 },
+            ] as { label: string; x: number; y: number }[]
+          ).map(({ label, x, y }) => (
+            <text key={label} x={x} y={y}
+              fontSize="5.8" fontWeight="700"
+              fill="rgba(185,155,82,0.18)" letterSpacing="0.22em"
+              style={{ textTransform: "uppercase" } as React.CSSProperties}
+              fontFamily="Georgia, 'Times New Roman', serif"
+            >{label}</text>
           ))}
 
           {/* ── Sea labels ── */}
-          {/* Gulf of Thailand — right of peninsula (ocean area x>220, y~580) */}
-          <g transform="translate(388,585) rotate(90)" opacity="0.27">
-            <text textAnchor="middle" fontSize="7.5" fontWeight="600"
-              fill="rgba(140,210,240,1)" letterSpacing="0.22em"
+          <g transform="translate(395,592) rotate(90)" opacity="0.2">
+            <text textAnchor="middle" fontSize="6.8" fontWeight="600"
+              fill="rgba(125,185,220,1)" letterSpacing="0.25em"
+              fontFamily="Georgia, 'Times New Roman', serif"
               style={{ textTransform: "uppercase" } as React.CSSProperties}>
               GULF OF THAILAND
             </text>
           </g>
-          {/* Andaman Sea — left of peninsula (ocean area x<40, y~640) */}
-          <g transform="translate(14,634) rotate(90)" opacity="0.24">
-            <text textAnchor="middle" fontSize="7.5" fontWeight="600"
-              fill="rgba(140,210,240,1)" letterSpacing="0.22em"
+          <g transform="translate(20,635) rotate(90)" opacity="0.18">
+            <text textAnchor="middle" fontSize="6.8" fontWeight="600"
+              fill="rgba(125,185,220,1)" letterSpacing="0.25em"
+              fontFamily="Georgia, 'Times New Roman', serif"
               style={{ textTransform: "uppercase" } as React.CSSProperties}>
               ANDAMAN SEA
             </text>
           </g>
 
-          {/* ── Subtle ocean depth lines (latitude hints) ── */}
-          {[160, 290, 440, 590, 710].map((y, i) => (
-            <line key={`lat-${i}`} x1="-60" y1={y} x2="540" y2={y}
-              stroke="rgba(40,90,120,0.055)" strokeWidth="0.6" />
+          {/* ── Ocean depth reference lines ── */}
+          {[185, 330, 475, 618, 740].map((y, i) => (
+            <line key={`lat-${i}`} x1="-80" y1={y} x2="560" y2={y}
+              stroke="rgba(50,38,70,0.04)" strokeWidth="0.55" />
           ))}
 
-          {/* ── Frame border on ocean bg ── */}
-          <rect x="-60" y="-40" width="600" height="920"
-            fill="none" stroke="rgba(40,100,130,0.12)" strokeWidth="1" />
+          {/* ── City + island pins ── */}
+          {CITIES.map((city, i) =>
+            city.kind === "island" ? (
+              <IslandPin
+                key={city.id}
+                city={city}
+                index={i}
+                isHovered={hovered === city.id}
+                isActive={activeCity?.id === city.id}
+                onHover={() => setHovered(city.id)}
+                onLeave={() => setHovered(null)}
+                onClick={() => handleCityClick(city)}
+              />
+            ) : (
+              <CityPin
+                key={city.id}
+                city={city}
+                index={i}
+                isHovered={hovered === city.id}
+                isActive={activeCity?.id === city.id}
+                onHover={() => setHovered(city.id)}
+                onLeave={() => setHovered(null)}
+                onClick={() => handleCityClick(city)}
+              />
+            )
+          )}
 
-          {/* ── Compass rose — top-right ocean area (east of Isaan) ── */}
-          <g transform="translate(452,42)" opacity="0.52">
-            <circle cx="0" cy="0" r="15" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="0.8" />
-            <circle cx="0" cy="0" r="2.5" fill="rgba(255,255,255,0.3)" />
-            <polygon points="0,-13 -3,-4 3,-4"  fill="rgba(255,255,255,0.72)" />
-            <polygon points="0,13 -3,4 3,4"     fill="rgba(255,255,255,0.22)" />
-            <polygon points="-13,0 -4,-3 -4,3"  fill="rgba(255,255,255,0.22)" />
-            <polygon points="13,0 4,-3 4,3"     fill="rgba(255,255,255,0.22)" />
-            <text x="0" y="-20" textAnchor="middle" fontSize="5.5" fontWeight="700"
-              fill="rgba(255,255,255,0.55)" letterSpacing="0.12em">N</text>
+          {/* ── Compass rose ── */}
+          <g transform="translate(450,44)" opacity="0.46">
+            <circle cx="0" cy="0" r="14" fill="none" stroke="rgba(195,158,82,0.2)" strokeWidth="0.7" />
+            <circle cx="0" cy="0" r="2.2" fill="rgba(195,158,82,0.35)" />
+            <polygon points="0,-12 -2.5,-4 2.5,-4"  fill="rgba(195,158,82,0.7)"  />
+            <polygon points="0,12 -2.5,4 2.5,4"     fill="rgba(195,158,82,0.22)" />
+            <polygon points="-12,0 -4,-2.5 -4,2.5"  fill="rgba(195,158,82,0.22)" />
+            <polygon points="12,0 4,-2.5 4,2.5"     fill="rgba(195,158,82,0.22)" />
+            <text x="0" y="-19" textAnchor="middle" fontSize="5" fontWeight="700"
+              fill="rgba(195,158,82,0.52)" letterSpacing="0.12em"
+              fontFamily="Georgia, serif">N</text>
           </g>
 
           {/* ── Scale bar ── */}
-          <g transform="translate(72,803)">
-            <rect x="-2" y="-8" width="102" height="16" rx="3" fill="rgba(0,0,0,0.35)" />
-            <line x1="0" y1="0" x2="84" y2="0" stroke="rgba(255,255,255,0.38)" strokeWidth="1" />
-            <line x1="0"  y1="-3.5" x2="0"  y2="3.5" stroke="rgba(255,255,255,0.38)" strokeWidth="1" />
-            <line x1="84" y1="-3.5" x2="84" y2="3.5" stroke="rgba(255,255,255,0.38)" strokeWidth="1" />
-            <text x="42" y="-6" textAnchor="middle" fontSize="5" fill="rgba(255,255,255,0.38)" letterSpacing="0.09em">500 KM</text>
+          <g transform="translate(68,807)">
+            <rect x="-2" y="-8" width="104" height="16" rx="3" fill="rgba(0,0,0,0.4)" />
+            <line x1="0" y1="0" x2="88" y2="0" stroke="rgba(195,158,82,0.3)" strokeWidth="1" />
+            <line x1="0"  y1="-3.5" x2="0"  y2="3.5" stroke="rgba(195,158,82,0.3)" strokeWidth="1" />
+            <line x1="88" y1="-3.5" x2="88" y2="3.5" stroke="rgba(195,158,82,0.3)" strokeWidth="1" />
+            <text x="44" y="-5.5" textAnchor="middle" fontSize="4.5" fill="rgba(195,158,82,0.32)"
+              fontFamily="Georgia, serif" letterSpacing="0.1em">500 KM</text>
           </g>
 
         </motion.svg>
       </div>
 
-      {/* ── Hover city card ────────────────────────────────────────────────────── */}
-      <AnimatePresence mode="wait">
-        {hoveredCity && (
-          <motion.div
-            key={hoveredCity.id}
-            initial={{ opacity: 0, y: 8, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 5, scale: 0.97 }}
-            transition={{ duration: 0.16 }}
+      {/* ── Side editorial panel ─────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {activeCity && (
+          <motion.aside
+            key={activeCity.id}
+            initial={{ x: 420, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 420, opacity: 0 }}
+            transition={{ duration: 0.44, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              position: "fixed", bottom: "2rem", right: "2.5rem", zIndex: 30,
-              background: "rgba(3,14,8,0.94)", backdropFilter: "blur(22px)", WebkitBackdropFilter: "blur(22px)",
-              border: `1px solid ${hoveredCity.active ? "rgba(217,119,6,0.32)" : "rgba(85,140,100,0.2)"}`,
-              borderRadius: 14, padding: "1.05rem 1.25rem", minWidth: 205, maxWidth: 250, pointerEvents: "none",
+              position: "fixed", top: 56, right: 0, bottom: 0, width: 368,
+              background: "rgba(9,7,8,0.97)",
+              backdropFilter: "blur(32px)", WebkitBackdropFilter: "blur(32px)",
+              borderLeft: "1px solid rgba(195,158,82,0.12)",
+              zIndex: 30, overflowY: "auto",
+              display: "flex", flexDirection: "column",
             }}
+            onClick={e => e.stopPropagation()}
           >
-            <p style={{ fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.2em", color: "rgba(217,119,6,0.72)", textTransform: "uppercase", marginBottom: "0.22rem" }}>
-              VILLE · THAÏLANDE
-            </p>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", fontStyle: "italic", color: "#fff", lineHeight: 1.15, marginBottom: "0.3rem" }}>
-              {hoveredCity.label}
-            </h3>
-            <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.48)", lineHeight: 1.6, marginBottom: "0.7rem" }}>
-              {hoveredCity.tagline}
-            </p>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
-              <div style={{ width: 6, height: 6, borderRadius: "50%", background: hoveredCity.active ? "rgba(217,119,6,1)" : "rgba(80,130,90,0.6)" }} />
-              <span style={{ fontSize: "0.57rem", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: hoveredCity.active ? "rgba(217,119,6,0.88)" : "rgba(255,255,255,0.32)" }}>
-                {hoveredCity.active ? "Guide disponible — cliquer" : "Bientôt disponible"}
-              </span>
+            {/* Panel header */}
+            <div style={{ padding: "1.8rem 1.8rem 1.4rem", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "0.65rem" }}>
+                <span style={{
+                  fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.2em",
+                  color: "rgba(196,154,62,0.6)", textTransform: "uppercase",
+                }}>
+                  THAÏLANDE · {activeCity.region.toUpperCase()}
+                </span>
+                <button
+                  onClick={() => setActiveCity(null)}
+                  style={{
+                    background: "none", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer",
+                    color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", lineHeight: 1,
+                    padding: "0.25rem 0.5rem", borderRadius: 4,
+                    transition: "border-color 0.18s, color 0.18s",
+                    flexShrink: 0, marginLeft: "1rem",
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.28)";
+                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.72)";
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.1)";
+                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.4)";
+                  }}
+                  aria-label="Fermer"
+                >×</button>
+              </div>
+              <h2 style={{
+                fontFamily: "var(--font-display)", fontSize: "2.15rem",
+                fontStyle: "italic", color: "#fff", lineHeight: 1.08, marginBottom: "0.42rem",
+              }}>
+                {activeCity.label}
+              </h2>
+              <p style={{ fontSize: "0.72rem", color: "rgba(196,154,62,0.7)", fontStyle: "italic", lineHeight: 1.4 }}>
+                {activeCity.tagline}
+              </p>
             </div>
-          </motion.div>
+
+            {/* Panel body */}
+            <div style={{ padding: "1.4rem 1.8rem", flex: 1 }}>
+              <div style={{ marginBottom: "1.15rem" }}>
+                <span style={{
+                  display: "inline-block",
+                  padding: "0.2rem 0.6rem", borderRadius: 3,
+                  background: activeCity.kind === "island"
+                    ? "rgba(60,115,175,0.16)"
+                    : "rgba(196,154,62,0.1)",
+                  border: `1px solid ${activeCity.kind === "island"
+                    ? "rgba(85,145,205,0.22)"
+                    : "rgba(196,154,62,0.2)"}`,
+                  fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.16em",
+                  color: activeCity.kind === "island"
+                    ? "rgba(115,178,225,0.75)"
+                    : "rgba(196,154,62,0.75)",
+                  textTransform: "uppercase",
+                }}>
+                  {activeCity.kind === "island" ? "ÎLE" : "VILLE"}
+                </span>
+              </div>
+
+              <p style={{
+                fontSize: "0.77rem", color: "rgba(255,255,255,0.52)",
+                lineHeight: 1.78, marginBottom: "1.8rem",
+              }}>
+                {activeCity.desc}
+              </p>
+
+              <div style={{ borderTop: "1px solid rgba(255,255,255,0.055)", marginBottom: "1.4rem" }} />
+
+              {/* Bangkok full guide CTA */}
+              {activeCity.hasGuide && (
+                <button
+                  onClick={openBangkokGuide}
+                  style={{
+                    width: "100%", padding: "0.9rem 1.2rem",
+                    background: "rgba(196,154,62,0.1)",
+                    border: "1px solid rgba(196,154,62,0.32)",
+                    borderRadius: 7, cursor: "pointer",
+                    color: "rgba(225,188,95,0.92)", fontSize: "0.7rem",
+                    fontWeight: 600, letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    transition: "background 0.2s, border-color 0.2s",
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(196,154,62,0.18)";
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(196,154,62,0.5)";
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(196,154,62,0.1)";
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(196,154,62,0.32)";
+                  }}
+                >
+                  <span>Ouvrir le guide complet</span>
+                  <span style={{ opacity: 0.6, fontSize: "0.85rem" }}>→</span>
+                </button>
+              )}
+            </div>
+
+            {/* Panel footer */}
+            <div style={{ padding: "1rem 1.8rem 1.8rem", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+              <p style={{ fontSize: "0.5rem", color: "rgba(255,255,255,0.18)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                NomadReady · Atlas Thaïlande
+              </p>
+            </div>
+          </motion.aside>
         )}
       </AnimatePresence>
 
@@ -554,103 +707,179 @@ export default function CountryPage() {
   );
 }
 
-// ─── City pin subcomponent ────────────────────────────────────────────────────
+// ─── City pin ─────────────────────────────────────────────────────────────────
 
-function CityPin({ city, index, isHovered, onHover, onLeave, onClick }: {
-  city: City;
-  index: number;
-  isHovered: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-  onClick: () => void;
+function CityPin({ city, index, isHovered, isActive, onHover, onLeave, onClick }: {
+  city: City; index: number; isHovered: boolean; isActive: boolean;
+  onHover: () => void; onLeave: () => void; onClick: () => void;
 }) {
-  const poleH  = 22;
+  const poleH  = 20;
   const dotY   = city.y - poleH;
-  const amber  = "#D97706";
-  const muted  = "rgba(105,165,120,0.82)";
-  const hot    = "#FFD24B";
-  const dotFill = isHovered ? hot : (city.active ? amber : muted);
-  const pulseDelay = `${index * 0.42}s`;
+  const lit    = isHovered || isActive;
+  const col    = lit ? "rgba(232,192,104,1)" : "rgba(196,154,62,0.9)";
+  const pulseDelay = `${index * 0.38}s`;
 
   return (
     <g
-      style={{ cursor: city.active ? "pointer" : "default" }}
+      style={{ cursor: "pointer" }}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onClick={onClick}
-      role={city.active ? "button" : "presentation"}
+      role="button"
       aria-label={city.label}
     >
-      {/* Enlarged invisible hit area */}
-      <circle cx={city.x} cy={city.y - poleH / 2} r={22} fill="transparent" />
+      {/* Hit area */}
+      <circle cx={city.x} cy={city.y - poleH / 2} r={24} fill="transparent" />
 
       {/* Ground shadow */}
-      <ellipse cx={city.x + 2.5} cy={city.y + 3} rx={6.5} ry={2.5} fill="rgba(0,0,0,0.4)" />
+      <ellipse cx={city.x + 2} cy={city.y + 2.5} rx={5} ry={1.8} fill="rgba(0,0,0,0.35)" />
 
       {/* Pole */}
       <line
         x1={city.x} y1={city.y}
         x2={city.x} y2={dotY + 2.5}
-        stroke={isHovered
-          ? "rgba(255,200,75,0.92)"
-          : (city.active ? "rgba(217,119,6,0.72)" : "rgba(105,165,120,0.52)")}
-        strokeWidth={isHovered ? 2 : 1.5}
+        stroke={lit ? "rgba(232,192,104,0.88)" : "rgba(196,154,62,0.6)"}
+        strokeWidth={lit ? 1.8 : 1.3}
         strokeLinecap="round"
       />
 
-      {/* Glow halo (blurred circle below core dot) */}
+      {/* Glow halo */}
       <circle
         cx={city.x} cy={dotY}
-        r={isHovered ? 11 : 7}
-        fill={isHovered
-          ? "rgba(255,180,35,0.38)"
-          : (city.active ? "rgba(217,119,6,0.26)" : "rgba(105,165,120,0.18)")}
-        filter={isHovered ? "url(#f-glow-lg)" : "url(#f-glow-sm)"}
+        r={lit ? 10 : 6}
+        fill={lit ? "rgba(232,192,104,0.28)" : "rgba(196,154,62,0.18)"}
+        filter={lit ? "url(#f-glow-pin-lg)" : "url(#f-glow-pin-sm)"}
       />
 
-      {/* Animated pulse ring — SMIL (reliable in SVG, no delay issue) */}
-      {city.active && (
-        <circle cx={city.x} cy={dotY} r={6} fill="none"
-          stroke={isHovered ? "rgba(255,200,75,0.68)" : "rgba(217,119,6,0.48)"}
-          strokeWidth={1.2}
-        >
-          <animate attributeName="r"       values="6;17;6"    dur="2.9s" begin={pulseDelay} repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0.75;0;0.75" dur="2.9s" begin={pulseDelay} repeatCount="indefinite" />
-        </circle>
-      )}
+      {/* Pulse ring */}
+      <circle cx={city.x} cy={dotY} r={5.5} fill="none"
+        stroke={lit ? "rgba(232,192,104,0.58)" : "rgba(196,154,62,0.38)"}
+        strokeWidth={1.0}
+      >
+        <animate attributeName="r"       values="5.5;16;5.5"   dur="3.1s" begin={pulseDelay} repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.7;0;0.7"     dur="3.1s" begin={pulseDelay} repeatCount="indefinite" />
+      </circle>
 
       {/* Core dot */}
       <circle
         cx={city.x} cy={dotY}
-        r={isHovered ? 6.2 : 4.6}
-        fill={dotFill}
-        stroke={isHovered ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.22)"}
-        strokeWidth={isHovered ? 1.6 : 0.9}
+        r={lit ? 5.6 : 4.0}
+        fill={col}
+        stroke={lit ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.18)"}
+        strokeWidth={lit ? 1.4 : 0.7}
       />
 
-      {/* City label */}
+      {/* Label */}
       <text
-        x={city.x + 11}
-        y={dotY + 2.5}
-        fontSize={isHovered ? 8.2 : 7.2}
+        x={city.x + 10}
+        y={dotY + 2.8}
+        fontSize={lit ? 7.8 : 7.0}
         fontWeight="600"
-        fill={isHovered ? "rgba(255,222,95,1)" : "rgba(255,255,255,0.78)"}
-        letterSpacing="0.06em"
-        style={{ textTransform: "uppercase", userSelect: "none", pointerEvents: "none" }}
-      >
-        {city.label}
-      </text>
+        fill={lit ? "rgba(235,196,112,1)" : "rgba(255,248,225,0.78)"}
+        letterSpacing="0.07em"
+        fontFamily="Georgia, 'Times New Roman', serif"
+        style={{ textTransform: "uppercase", userSelect: "none", pointerEvents: "none" } as React.CSSProperties}
+      >{city.label}</text>
 
-      {/* GUIDE badge pill (Bangkok only) */}
-      {city.active && (
-        <g transform={`translate(${city.x + 9},${dotY - 9})`}>
-          <rect x={0} y={-6} width={22} height={8.5} rx={4.2}
-            fill={isHovered ? "rgba(255,180,35,0.96)" : "rgba(217,119,6,0.9)"} />
-          <text x={11} y={0.5} textAnchor="middle" fontSize={4} fontWeight="700"
-            fill="rgba(0,0,0,0.76)" letterSpacing="0.07em">
+      {/* Active indicator (selected city underline) */}
+      {isActive && (
+        <line
+          x1={city.x + 10} y1={dotY + 5.5}
+          x2={city.x + 10 + city.label.length * 4.4} y2={dotY + 5.5}
+          stroke="rgba(232,192,104,0.42)" strokeWidth="0.6"
+        />
+      )}
+
+      {/* Bangkok GUIDE badge */}
+      {city.hasGuide && (
+        <g transform={`translate(${city.x + 10},${dotY - 9.5})`}>
+          <rect x={0} y={-6} width={27} height={8.5} rx={4}
+            fill={lit ? "rgba(232,192,104,0.95)" : "rgba(196,154,62,0.88)"} />
+          <text x={13.5} y={0.5} textAnchor="middle" fontSize={3.8} fontWeight="700"
+            fill="rgba(0,0,0,0.72)" letterSpacing="0.08em"
+            fontFamily="Georgia, serif">
             GUIDE
           </text>
         </g>
+      )}
+    </g>
+  );
+}
+
+// ─── Island pin ───────────────────────────────────────────────────────────────
+
+function IslandPin({ city, index, isHovered, isActive, onHover, onLeave, onClick }: {
+  city: City; index: number; isHovered: boolean; isActive: boolean;
+  onHover: () => void; onLeave: () => void; onClick: () => void;
+}) {
+  const lit     = isHovered || isActive;
+  const gold    = "rgba(196,154,62,0.78)";
+  const goldLit = "rgba(232,192,104,0.96)";
+  const pulseDelay = `${index * 0.45}s`;
+
+  return (
+    <g
+      style={{ cursor: "pointer" }}
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      onClick={onClick}
+      role="button"
+      aria-label={city.label}
+    >
+      <circle cx={city.x} cy={city.y} r={22} fill="transparent" />
+
+      {/* Glow */}
+      <circle
+        cx={city.x} cy={city.y}
+        r={lit ? 9 : 5.5}
+        fill={lit ? "rgba(100,158,218,0.16)" : "rgba(75,130,190,0.09)"}
+        filter={lit ? "url(#f-glow-pin-lg)" : "url(#f-glow-pin-sm)"}
+      />
+
+      {/* Pulse ring */}
+      <circle cx={city.x} cy={city.y} r={5.5} fill="none"
+        stroke={lit ? "rgba(232,192,104,0.52)" : "rgba(196,154,62,0.32)"}
+        strokeWidth={0.8}
+      >
+        <animate attributeName="r"       values="5.5;18;5.5"   dur="3.6s" begin={pulseDelay} repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.65;0;0.65"   dur="3.6s" begin={pulseDelay} repeatCount="indefinite" />
+      </circle>
+
+      {/* Outer ring */}
+      <circle
+        cx={city.x} cy={city.y}
+        r={lit ? 8 : 6}
+        fill="none"
+        stroke={lit ? goldLit : gold}
+        strokeWidth={lit ? 1.3 : 0.9}
+      />
+
+      {/* Core dot */}
+      <circle
+        cx={city.x} cy={city.y}
+        r={lit ? 3.2 : 2.4}
+        fill={lit ? goldLit : gold}
+      />
+
+      {/* Label */}
+      <text
+        x={city.x + 12}
+        y={city.y + 3.5}
+        fontSize={lit ? 7.5 : 6.5}
+        fontWeight="600"
+        fill={lit ? "rgba(235,196,112,1)" : "rgba(255,248,225,0.7)"}
+        letterSpacing="0.07em"
+        fontFamily="Georgia, 'Times New Roman', serif"
+        style={{ textTransform: "uppercase", userSelect: "none", pointerEvents: "none" } as React.CSSProperties}
+      >{city.label}</text>
+
+      {/* Active indicator */}
+      {isActive && (
+        <line
+          x1={city.x + 12} y1={city.y + 6.5}
+          x2={city.x + 12 + city.label.length * 3.8} y2={city.y + 6.5}
+          stroke="rgba(232,192,104,0.38)" strokeWidth="0.5"
+        />
       )}
     </g>
   );

@@ -92,7 +92,7 @@ export function SectionNav({ hasGems = false, hasNotes = false, hasRemoteWork = 
         gap: "0.375rem",
         overflowX: "auto",
         padding: "0.5rem var(--page-gutter)",
-        background: "rgba(247, 243, 238, 0.92)",
+        background: "color-mix(in srgb, var(--bg-base) 92%, transparent)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
         borderBottom: "1px solid var(--border)",

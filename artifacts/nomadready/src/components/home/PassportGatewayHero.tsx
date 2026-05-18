@@ -388,7 +388,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
                     fontSize: 11.5,
                     fontWeight: isActive ? 500 : 400,
                     cursor: "pointer",
-                    transition: "all 0.18s ease",
+                    transition: "background 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease",
                     fontFamily: "var(--font-geist-sans)",
                     letterSpacing: "0.01em",
                     outline: "none",

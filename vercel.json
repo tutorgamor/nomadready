@@ -1,6 +1,6 @@
 {
   "buildCommand": "pnpm --filter @workspace/nomadready run build",
-  "outputDirectory": "artifacts/nomadready/dist",
+  "outputDirectory": "artifacts/nomadready/dist/public",
   "installCommand": "pnpm install --frozen-lockfile",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }

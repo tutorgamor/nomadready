@@ -45,14 +45,6 @@ export function DestinationPicker({ destinations, summaries, passportId }: Props
   const [paused, setPaused] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Preload every image in DEST_IMAGES on mount so off-screen pages don't blank
-  useEffect(() => {
-    Object.values(DEST_IMAGES).forEach(src => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
-
   const goTo = (p: number, d: number) => {
     setDir(d);
     setPage(p);
@@ -84,6 +76,15 @@ export function DestinationPicker({ destinations, summaries, passportId }: Props
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
+      {/* Hidden DOM preloaders — actual img elements hold a strong reference so the browser
+          fetches every carousel image on first render, before the carousel reaches that page.
+          new Image() in useEffect gets GC'd mid-fetch; DOM nodes do not. */}
+      <div aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", visibility: "hidden" }}>
+        {Object.values(DEST_IMAGES).map((src, i) => (
+          <img key={i} src={src} alt="" fetchPriority="high" decoding="async" />
+        ))}
+      </div>
+
       {/* Cards grid */}
       <div style={{ position: "relative", overflow: "hidden" }}>
         <AnimatePresence custom={dir} mode="wait">

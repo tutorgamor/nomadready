@@ -130,10 +130,6 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
   // ── Visibility gating — initial show ────────────────────────────────────
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get("skip_gateway") === "1") return;
-    if (process.env.NODE_ENV !== "production") {
-      setVisible(true);
-      return;
-    }
     try {
       if (sessionStorage.getItem("nr_gateway_passed") === "1") return;
     } catch { /* private browsing — always show */ }

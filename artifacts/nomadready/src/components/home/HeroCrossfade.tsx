@@ -53,8 +53,10 @@ export function HeroCrossfade() {
     <>
       {/*
         Static fallback — always rendered behind the video.
-        On mobile this IS the LCP element: fetchPriority="high" + decoding="sync"
-        tells the browser to decode it before painting, eliminating first-frame blank.
+        On mobile this IS the LCP element: fetchPriority="high" prioritises the network
+        fetch; decoding="async" keeps the main thread free during decode (sync decode
+        blocked the main thread ~20-50ms on mid-range phones for no visible first-frame
+        benefit, since fetchPriority alone brings the image in early enough).
         Ken Burns (desktop) / ambient-pulse (mobile) are CSS-only, no JS.
       */}
       <img
@@ -62,7 +64,7 @@ export function HeroCrossfade() {
         alt=""
         aria-hidden="true"
         fetchPriority={isMobile ? "high" : "low"}
-        decoding={isMobile ? "sync" : "async"}
+        decoding="async"
         className="home-hero-bg"
       />
 

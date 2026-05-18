@@ -102,7 +102,9 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
       }
 
       const diff = Math.abs(p.tx - p.cx) + Math.abs(p.ty - p.cy);
-      if (diff > 0.001) {
+      // 0.05 stops the loop ~1s sooner than 0.001 with zero perceptible visual difference
+      // (remaining glow offset is ≤1.8px at this threshold, sub-pixel on HiDPI)
+      if (diff > 0.05) {
         parallaxRafRef.current = requestAnimationFrame(loop);
       } else {
         parallaxRafRef.current = null;
@@ -205,7 +207,7 @@ export function PassportGatewayHero({ defaultPassportId = "fr" }: PassportGatewa
       initial={{ opacity: 0 }}
       animate={{ opacity: overlayFading ? 0 : 1 }}
       transition={overlayFading
-        ? { duration: fadeDuration, ease: "easeInOut" }
+        ? { duration: fadeDuration, ease: "easeOut" }
         : { duration: fadeDuration, ease: "easeOut" }
       }
       style={{

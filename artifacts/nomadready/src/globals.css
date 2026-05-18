@@ -1234,8 +1234,8 @@ video.home-hero-bg {
 @media (min-width: 768px) {
   .hero-controls-glass {
     background: rgba(6, 10, 22, 0.52);
-    backdrop-filter: blur(22px) saturate(160%);
-    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border: 1px solid rgba(217, 119, 6, 0.22);
     border-radius: 1rem;
     padding: 1.25rem 1.375rem;
@@ -2132,49 +2132,45 @@ video.home-hero-bg {
   100% { transform: translate(  0px,  0px); opacity: 0.80; }
 }
 
-/* ── Bloom zone 1 — focused SE Asia warm glow ────────────── */
-.amb-bloom-1 {
+/* ── Bloom zone — merged amber upper-right + parchment lower-left ─
+   Two separate positioned divs became one inset:0 element with
+   two radial gradients. Gradient centers are the viewport-relative
+   equivalents of the original container-relative positions:
+     amber:    right:2%/top:18%/55%×65%  → center ≈ (75%, 50%)
+     parchment: left:8%/bot:3%/42%×48%  → center ≈ (26%, 77%)
+   Blur consolidated to 24 px (average of original 22/28 px).
+   Single compositor layer instead of two.                       */
+.amb-bloom {
   position: absolute;
-  width: 55%;
-  height: 65%;
-  right: 2%;
-  top: 18%;
-  background: radial-gradient(
-    ellipse 70% 70% at 58% 50%,
-    rgba(217, 119, 6, 0.016) 0%,
-    transparent 58%
-  );
-  filter: blur(22px);
-  animation: amb-bloom 22s ease-in-out infinite;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 38% 45% at 75% 50%,
+      rgba(217, 119, 6, 0.016) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 29% 34% at 26% 77%,
+      rgba(210, 180, 140, 0.022) 0%,
+      transparent 62%
+    );
+  filter: blur(24px);
+  animation: amb-bloom 25s ease-in-out infinite;
   pointer-events: none;
 }
-
-/* ── Bloom zone 2 — lower parchment warmth ───────────────── */
-.amb-bloom-2 {
-  position: absolute;
-  width: 42%;
-  height: 48%;
-  left: 8%;
-  bottom: 3%;
-  background: radial-gradient(
-    ellipse 70% 70% at 42% 58%,
-    rgba(210, 180, 140, 0.022) 0%,
-    transparent 62%
-  );
-  filter: blur(28px);
-  animation: amb-bloom 28s ease-in-out infinite reverse;
-  pointer-events: none;
-}
-/* scale() on blurred elements forces repaint — opacity only. */
+/* opacity only — no scale or translate on blurred element. */
 @keyframes amb-bloom {
-  0%, 100% { opacity: 0.68; }
+  0%, 100% { opacity: 0.72; }
   50%       { opacity: 1.00; }
 }
 
 /* ── Far fog — deeper atmospheric plane ──────────────────── */
-/* Static — 62 px blur on a 160%-wide animated element was the
-   single most expensive render operation. Depth separation is
-   still perceptible via the blur amount vs the near fog (28 px). */
+/* filter:blur(62px) removed — on a 160%-wide element this was
+   the largest single GPU texture in the layer stack. A 5-stop
+   gradient with exponentially decaying alpha replicates the
+   blur's edge-softening at effectively zero GPU cost. The near
+   fog (.amb-fog, blur:28px, animated) still provides perceptible
+   depth separation between the two fog planes.                 */
 .amb-fog-far {
   position: absolute;
   width: 160%;
@@ -2184,10 +2180,11 @@ video.home-hero-bg {
   background: radial-gradient(
     ellipse 52% 62% at 45% 56%,
     rgba(238, 224, 202, 0.034) 0%,
-    rgba(230, 216, 192, 0.012) 48%,
-    transparent 72%
+    rgba(235, 220, 198, 0.024) 28%,
+    rgba(231, 217, 194, 0.014) 52%,
+    rgba(227, 213, 189, 0.006) 70%,
+    transparent 88%
   );
-  filter: blur(62px);
   opacity: 0.85;
   pointer-events: none;
 }
@@ -2248,13 +2245,18 @@ video.home-hero-bg {
 }
 
 /* ── Paper grain ─────────────────────────────────────────── */
+/* mix-blend-mode changed multiply → screen. On the dark hero
+   background, multiply darkened the video subtly (contributing
+   to the "noisy" video perception); screen adds a barely
+   perceptible light grain — consistent with the gateway grain
+   which already uses screen.                                  */
 .amb-grain {
   position: absolute;
   inset: 0;
   background-image: url('/assets/ui/editorial-paper-texture.webp');
   background-size: 520px 520px;
   opacity: 0.042;
-  mix-blend-mode: multiply;
+  mix-blend-mode: screen;
   pointer-events: none;
 }
 
@@ -2277,9 +2279,10 @@ video.home-hero-bg {
 }
 
 /* ── Atmospheric ceiling — warm diffuse overhead light ───── */
-/* Static — scaleX+translateY animation on a blurred element
-   forces repaint each frame. Static gradient achieves the
-   same atmospheric quality at zero animation cost.           */
+/* Static radial gradient. filter:blur(22px) was removed — the
+   three-stop falloff (0.048 → 0.016 → transparent at 68%)
+   achieves a naturally soft edge at these opacity levels without
+   requiring a GPU blur texture.                               */
 .amb-ceiling {
   position: absolute;
   width: 100%;
@@ -2292,7 +2295,6 @@ video.home-hero-bg {
     rgba(252, 241, 214, 0.016) 46%,
     transparent 68%
   );
-  filter: blur(22px);
   opacity: 0.88;
   pointer-events: none;
 }
@@ -2331,8 +2333,7 @@ video.home-hero-bg {
   .amb-drift-a,
   .amb-drift-b,
   .amb-fog,
-  .amb-bloom-1,
-  .amb-bloom-2,
+  .amb-bloom,
   .atlas-light-drift {
     animation: none;
   }

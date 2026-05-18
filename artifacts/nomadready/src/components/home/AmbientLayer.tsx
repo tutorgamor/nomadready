@@ -118,9 +118,8 @@ export function AmbientLayer() {
       {/* 6 — far fog: deeper depth plane, 85 s / −42 s phase */}
       <div className="amb-fog-far" />
 
-      {/* 7 — bloom zones: focused warm glows, 22 / 28 s */}
-      <div className="amb-bloom-1" />
-      <div className="amb-bloom-2" />
+      {/* 7 — bloom zone: amber upper-right + parchment lower-left, merged, 25 s */}
+      <div className="amb-bloom" />
 
       {/* 8 — dark cinematic vignette */}
       <div className="amb-vignette" />

@@ -18,14 +18,16 @@ interface DestinationCardProps {
   summary?: DestinationSummary;
 }
 
+// Local assets load from same origin — zero CDN latency, no external requests.
+// Unsplash URLs kept only for destinations without a local file yet.
 const COVER_IMAGES: Record<string, string> = {
-  thailand:      "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600&q=80&auto=format&fit=crop",
-  malaysia:      "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80&auto=format&fit=crop",
+  thailand:      "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80&auto=format&fit=crop",
+  malaysia:      "/assets/destinations/malaysia.jpg",
   indonesia:     "/assets/editorial/panels/panel-indonesia.png",
-  georgia:       "https://images.unsplash.com/photo-1565008887274-377b4a6c4e03?w=600&q=80&auto=format&fit=crop",
-  turkey:        "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80&auto=format&fit=crop",
-  vietnam:       "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80&auto=format&fit=crop",
-  philippines:   "https://images.unsplash.com/photo-1518509562904-e7ef99cdce86?w=600&q=80&auto=format&fit=crop",
+  georgia:       "/assets/destinations/georgia.jpg",
+  turkey:        "/assets/destinations/turkey.jpg",
+  vietnam:       "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=600&q=80&auto=format&fit=crop",
+  philippines:   "/assets/destinations/philippines.jpg",
   japan:         "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=600&q=80&auto=format&fit=crop",
   "south-korea": "https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=600&q=80&auto=format&fit=crop",
 };
@@ -67,9 +69,15 @@ export function DestinationCard({ destination, passportId, summary }: Destinatio
         }}
         aria-hidden="true"
       >
-        {/* Real photo when available */}
+        {/* Real photo when available — eager + high priority so cards never blank */}
         {coverImage && (
-          <img src={coverImage} alt="" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
+          <img
+            src={coverImage}
+            alt=""
+            fetchPriority="high"
+            decoding="async"
+            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }}
+          />
         )}
 
         {/* Diagonal tonal depth — warm light from top-left */}

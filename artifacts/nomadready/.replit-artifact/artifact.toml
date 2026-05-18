@@ -15,7 +15,7 @@ paths = [ "/" ]
 localPort = 20546
 
 [services.development]
-run = "pnpm --filter @workspace/nomadready run dev"
+run = "fuser -k $PORT/tcp 2>/dev/null || true; pnpm --filter @workspace/nomadready run dev"
 
 [services.production]
 build = [ "pnpm", "--filter", "@workspace/nomadready", "run", "build" ]

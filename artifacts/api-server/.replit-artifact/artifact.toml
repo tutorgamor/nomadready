@@ -10,7 +10,7 @@ name = "API Server"
 paths = ["/api"]
 
 [services.development]
-run = "fuser -k $PORT/tcp 2>/dev/null || true; pnpm --filter @workspace/api-server run dev"
+run = "pnpm --filter @workspace/api-server run dev"
 
 [services.production]
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, memo } from "react";
 import { useParams, useLocation } from "wouter";
 import { motion, AnimatePresence } from "motion/react";
 import { animate } from "animejs";
@@ -68,6 +68,173 @@ const CITIES: City[] = [
 ];
 
 const PEAKS = mapData.peakCoords as [number, number, number][];
+
+// ─── Static map layers — memoized so they never re-render on hover/click state ──
+// All non-interactive elements live here. pointerEvents="none" on the outer <g>
+// prevents the browser from hit-testing the 48K-char province path on every
+// mouse move, which was the primary cause of cursor lag.
+const MapLayers = memo(function MapLayers() {
+  return (
+    <g pointerEvents="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="th-land" x1="15%" y1="0%" x2="85%" y2="100%">
+          <stop offset="0%"   stopColor="#1e1912" />
+          <stop offset="25%"  stopColor="#28200e" />
+          <stop offset="55%"  stopColor="#342a18" />
+          <stop offset="100%" stopColor="#2e2517" />
+        </linearGradient>
+        <radialGradient id="th-light-nw" cx="10%" cy="5%" r="70%">
+          <stop offset="0%"   stopColor="rgba(215,178,108,0.14)" />
+          <stop offset="60%"  stopColor="rgba(180,145,80,0.04)"  />
+          <stop offset="100%" stopColor="rgba(0,0,0,0)"           />
+        </radialGradient>
+        <radialGradient id="th-shadow-es" cx="88%" cy="82%" r="58%">
+          <stop offset="0%"   stopColor="rgba(0,0,0,0.42)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0)"    />
+        </radialGradient>
+        <linearGradient id="th-peninsula-fade" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stopColor="rgba(8,5,3,0)"    />
+          <stop offset="100%" stopColor="rgba(8,5,3,0.24)" />
+        </linearGradient>
+        <linearGradient id="th-ocean" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stopColor="#08060a" />
+          <stop offset="100%" stopColor="#060408" />
+        </linearGradient>
+        <clipPath id="th-land-clip">
+          <path d={TH_PATH} fillRule="evenodd" />
+        </clipPath>
+        <pattern id="th-parchment" width="7" height="7" patternUnits="userSpaceOnUse">
+          <circle cx="3.5" cy="3.5" r="0.45" fill="rgba(195,155,72,0.09)" />
+        </pattern>
+        <pattern id="th-highland-hatch" width="5.5" height="5.5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+          <line x1="0" y1="0" x2="0" y2="5.5" stroke="rgba(160,125,60,0.16)" strokeWidth="0.7" />
+        </pattern>
+        <filter id="f-blur-outer" x="-60%" y="-40%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="16" />
+        </filter>
+        <filter id="f-blur-inner" x="-35%" y="-25%" width="170%" height="170%">
+          <feGaussianBlur stdDeviation="6" />
+        </filter>
+        <filter id="f-glow-pin-sm" x="-250%" y="-250%" width="600%" height="600%">
+          <feGaussianBlur stdDeviation="3" />
+        </filter>
+        <filter id="f-glow-pin-lg" x="-250%" y="-250%" width="600%" height="600%">
+          <feGaussianBlur stdDeviation="7" />
+        </filter>
+      </defs>
+
+      {/* Ocean */}
+      <rect x="-80" y="-60" width="640" height="960" fill="url(#th-ocean)" />
+      {[95, 195, 305, 430, 545, 665, 765].map((y, i) => (
+        <line key={i} x1="-80" y1={y} x2="560" y2={y} stroke="rgba(55,40,75,0.055)" strokeWidth="0.65" />
+      ))}
+
+      {/* 2.5D shadows */}
+      <path d={TH_PATH} transform="translate(16,24)" fill="rgba(0,0,0,0.52)" fillRule="evenodd" filter="url(#f-blur-outer)" />
+      <path d={TH_PATH} transform="translate(6,10)"  fill="rgba(0,0,0,0.45)" fillRule="evenodd" filter="url(#f-blur-inner)" />
+
+      {/* Land fill + textures */}
+      <path d={TH_PATH} fill="url(#th-land)"     fillRule="evenodd" />
+      <path d={TH_PATH} fill="url(#th-parchment)" fillRule="evenodd" />
+
+      {/* Topographic contour lines */}
+      <g clipPath="url(#th-land-clip)" opacity="0.12">
+        {Array.from({ length: 20 }, (_, i) => (
+          <line key={i} x1="-80" y1={28 + i * 40} x2="560" y2={28 + i * 40} stroke="#c09542" strokeWidth="0.3" />
+        ))}
+      </g>
+
+      {/* Highland hatch + light/shadow + peninsula fade */}
+      <rect clipPath="url(#th-land-clip)" x="55" y="20" width="130" height="200" fill="url(#th-highland-hatch)" />
+      <path d={TH_PATH} fill="url(#th-light-nw)"       fillRule="evenodd" />
+      <path d={TH_PATH} fill="url(#th-shadow-es)"      fillRule="evenodd" />
+      <rect clipPath="url(#th-land-clip)" x="30" y="555" width="185" height="280" fill="url(#th-peninsula-fade)" />
+
+      {/* Mountain peaks */}
+      {PEAKS.map(([mx, my, sz], i) => (
+        <g key={i}>
+          <polygon points={`${mx+2.5},${my+sz*1.4} ${mx-sz*0.68+2.5},${my+sz*2.2} ${mx+sz*0.68+2.5},${my+sz*2.2}`} fill="rgba(0,0,0,0.28)" />
+          <polygon points={`${mx},${my} ${mx-sz*0.68},${my+sz*1.35} ${mx+sz*0.68},${my+sz*1.35}`} fill={`rgba(40,32,18,${0.78+i*0.012})`} stroke="rgba(155,122,58,0.22)" strokeWidth="0.5" />
+          <polygon points={`${mx},${my} ${mx-sz*0.22},${my+sz*0.4} ${mx+sz*0.22},${my+sz*0.4}`}  fill={`rgba(200,172,112,${0.11-i*0.005})`} />
+        </g>
+      ))}
+
+      {/* Chao Phraya River */}
+      <path id="th-river"
+        d="M 163,246 C 170,262 171,274 173,282 C 175,298 174,312 176,330 C 180,346 186,358 190,368 C 190,372 189.5,375 189.5,378"
+        fill="none" stroke="rgba(75,135,185,0.3)" strokeWidth="1.5" strokeLinecap="round"
+      />
+
+      {/* Roads */}
+      <path className="th-road" d="M 60,71 C 76,85 93,98 112,111"
+        fill="none" stroke="rgba(180,150,78,0.25)" strokeWidth="1.0" strokeLinecap="round" strokeDasharray="2.5,5" />
+      <path className="th-road" d="M 112,111 C 128,145 154,192 165,230 C 170,252 172,268 172,282 C 175,310 180,340 189.5,378"
+        fill="none" stroke="rgba(180,150,78,0.2)" strokeWidth="1.2" strokeLinecap="round" />
+      <path className="th-road" d="M 193,347 C 192,358 191,368 189.5,378"
+        fill="none" stroke="rgba(180,150,78,0.28)" strokeWidth="0.95" strokeLinecap="round" />
+
+      {/* Province outlines — animated draw-on */}
+      <path id="th-outline" d={TH_PATH}
+        fill="none" fillRule="evenodd"
+        stroke="rgba(195,158,82,0.28)" strokeWidth="0.45"
+        strokeLinejoin="round" strokeLinecap="round"
+      />
+
+      {/* Neighbor labels */}
+      {([
+        { label: "MYANMAR",  x: -52, y: 310 },
+        { label: "LAOS",     x: 436, y: 182 },
+        { label: "CAMBODIA", x: 428, y: 398 },
+        { label: "MALAYSIA", x: 116, y: 850 },
+      ] as { label: string; x: number; y: number }[]).map(({ label, x, y }) => (
+        <text key={label} x={x} y={y} fontSize="5.8" fontWeight="700"
+          fill="rgba(185,155,82,0.18)" letterSpacing="0.22em"
+          style={{ textTransform: "uppercase" } as React.CSSProperties}
+          fontFamily="Georgia, 'Times New Roman', serif"
+        >{label}</text>
+      ))}
+
+      {/* Sea labels */}
+      <g transform="translate(388,560) rotate(90)" opacity="0.2">
+        <text textAnchor="middle" fontSize="6.8" fontWeight="600" fill="rgba(125,185,220,1)"
+          letterSpacing="0.25em" fontFamily="Georgia, 'Times New Roman', serif"
+          style={{ textTransform: "uppercase" } as React.CSSProperties}>GULF OF THAILAND</text>
+      </g>
+      <g transform="translate(18,650) rotate(90)" opacity="0.18">
+        <text textAnchor="middle" fontSize="6.8" fontWeight="600" fill="rgba(125,185,220,1)"
+          letterSpacing="0.25em" fontFamily="Georgia, 'Times New Roman', serif"
+          style={{ textTransform: "uppercase" } as React.CSSProperties}>ANDAMAN SEA</text>
+      </g>
+
+      {/* Ocean depth lines */}
+      {[185, 330, 475, 618, 740].map((y, i) => (
+        <line key={i} x1="-80" y1={y} x2="560" y2={y} stroke="rgba(50,38,70,0.04)" strokeWidth="0.55" />
+      ))}
+
+      {/* Compass rose */}
+      <g transform="translate(450,44)" opacity="0.46">
+        <circle cx="0" cy="0" r="14" fill="none" stroke="rgba(195,158,82,0.2)" strokeWidth="0.7" />
+        <circle cx="0" cy="0" r="2.2" fill="rgba(195,158,82,0.35)" />
+        <polygon points="0,-12 -2.5,-4 2.5,-4"  fill="rgba(195,158,82,0.7)"  />
+        <polygon points="0,12 -2.5,4 2.5,4"     fill="rgba(195,158,82,0.22)" />
+        <polygon points="-12,0 -4,-2.5 -4,2.5"  fill="rgba(195,158,82,0.22)" />
+        <polygon points="12,0 4,-2.5 4,2.5"     fill="rgba(195,158,82,0.22)" />
+        <text x="0" y="-19" textAnchor="middle" fontSize="5" fontWeight="700"
+          fill="rgba(195,158,82,0.52)" letterSpacing="0.12em" fontFamily="Georgia, serif">N</text>
+      </g>
+
+      {/* Scale bar */}
+      <g transform="translate(68,807)">
+        <rect x="-2" y="-8" width="104" height="16" rx="3" fill="rgba(0,0,0,0.4)" />
+        <line x1="0"  y1="0"    x2="88" y2="0"    stroke="rgba(195,158,82,0.3)" strokeWidth="1" />
+        <line x1="0"  y1="-3.5" x2="0"  y2="3.5"  stroke="rgba(195,158,82,0.3)" strokeWidth="1" />
+        <line x1="88" y1="-3.5" x2="88" y2="3.5"  stroke="rgba(195,158,82,0.3)" strokeWidth="1" />
+        <text x="44" y="-5.5" textAnchor="middle" fontSize="4.5" fill="rgba(195,158,82,0.32)"
+          fontFamily="Georgia, serif" letterSpacing="0.1em">500 KM</text>
+      </g>
+    </g>
+  );
+});
 
 export default function CountryPage() {
   const { passport } = useParams<{ passport: string }>();
@@ -272,226 +439,10 @@ export default function CountryPage() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
         >
-          <defs>
-            {/* Land — dark warm parchment / amber-brown atlas tones (no green) */}
-            <linearGradient id="th-land" x1="15%" y1="0%" x2="85%" y2="100%">
-              <stop offset="0%"   stopColor="#1e1912" />
-              <stop offset="25%"  stopColor="#28200e" />
-              <stop offset="55%"  stopColor="#342a18" />
-              <stop offset="100%" stopColor="#2e2517" />
-            </linearGradient>
+          {/* All static geometry — never re-renders on hover/click */}
+          <MapLayers />
 
-            {/* NW light source — warm illumination from top-left */}
-            <radialGradient id="th-light-nw" cx="10%" cy="5%" r="70%">
-              <stop offset="0%"   stopColor="rgba(215,178,108,0.14)" />
-              <stop offset="60%"  stopColor="rgba(180,145,80,0.04)"  />
-              <stop offset="100%" stopColor="rgba(0,0,0,0)"           />
-            </radialGradient>
-
-            {/* SE inner shadow — depth shelf effect */}
-            <radialGradient id="th-shadow-es" cx="88%" cy="82%" r="58%">
-              <stop offset="0%"   stopColor="rgba(0,0,0,0.42)" />
-              <stop offset="100%" stopColor="rgba(0,0,0,0)"    />
-            </radialGradient>
-
-            {/* Peninsula lower darkening */}
-            <linearGradient id="th-peninsula-fade" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%"   stopColor="rgba(8,5,3,0)"    />
-              <stop offset="100%" stopColor="rgba(8,5,3,0.24)" />
-            </linearGradient>
-
-            {/* Ocean background */}
-            <linearGradient id="th-ocean" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%"   stopColor="#08060a" />
-              <stop offset="100%" stopColor="#060408" />
-            </linearGradient>
-
-            {/* Clip to land — evenodd ensures GeoJSON-derived multi-ring paths clip correctly */}
-            <clipPath id="th-land-clip">
-              <path d={TH_PATH} fillRule="evenodd" />
-            </clipPath>
-
-            {/* Parchment dot texture */}
-            <pattern id="th-parchment" width="7" height="7" patternUnits="userSpaceOnUse">
-              <circle cx="3.5" cy="3.5" r="0.45" fill="rgba(195,155,72,0.09)" />
-            </pattern>
-
-            {/* Highland cross-hatch (NW mountains) */}
-            <pattern id="th-highland-hatch" width="5.5" height="5.5" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
-              <line x1="0" y1="0" x2="0" y2="5.5" stroke="rgba(160,125,60,0.16)" strokeWidth="0.7" />
-            </pattern>
-
-            {/* Blur filters for 2.5D shadows */}
-            <filter id="f-blur-outer" x="-60%" y="-40%" width="220%" height="220%">
-              <feGaussianBlur stdDeviation="16" />
-            </filter>
-            <filter id="f-blur-inner" x="-35%" y="-25%" width="170%" height="170%">
-              <feGaussianBlur stdDeviation="6" />
-            </filter>
-
-            {/* Pin glow filters */}
-            <filter id="f-glow-pin-sm" x="-250%" y="-250%" width="600%" height="600%">
-              <feGaussianBlur stdDeviation="3" />
-            </filter>
-            <filter id="f-glow-pin-lg" x="-250%" y="-250%" width="600%" height="600%">
-              <feGaussianBlur stdDeviation="7" />
-            </filter>
-          </defs>
-
-          {/* ── Ocean background ── */}
-          <rect x="-80" y="-60" width="640" height="960" fill="url(#th-ocean)" />
-
-          {/* Subtle ocean shimmer lines */}
-          {[95, 195, 305, 430, 545, 665, 765].map((y, i) => (
-            <line key={i} x1="-80" y1={y} x2="560" y2={y}
-              stroke="rgba(55,40,75,0.055)" strokeWidth="0.65" />
-          ))}
-
-          {/* ── 2.5D depth — outer soft shadow ── */}
-          <path d={TH_PATH} transform="translate(16,24)"
-            fill="rgba(0,0,0,0.52)"
-            fillRule="evenodd"
-            filter="url(#f-blur-outer)"
-          />
-
-          {/* ── 2.5D depth — inner tight shadow ── */}
-          <path d={TH_PATH} transform="translate(6,10)"
-            fill="rgba(0,0,0,0.45)"
-            fillRule="evenodd"
-            filter="url(#f-blur-inner)"
-          />
-
-          {/* ── Land base fill ── */}
-          <path d={TH_PATH} fill="url(#th-land)" fillRule="evenodd" />
-
-          {/* ── Parchment dot texture ── */}
-          <path d={TH_PATH} fill="url(#th-parchment)" fillRule="evenodd" />
-
-          {/* ── Topographic contour lines (horizontal, very subtle) ── */}
-          <g clipPath="url(#th-land-clip)" opacity="0.12">
-            {Array.from({ length: 20 }, (_, i) => (
-              <line key={`topo-${i}`}
-                x1="-80" y1={28 + i * 40} x2="560" y2={28 + i * 40}
-                stroke="#c09542" strokeWidth="0.3"
-              />
-            ))}
-          </g>
-
-          {/* ── Highland hatch (NW highlands zone — Doi Inthanon / Chiang Rai peaks) ── */}
-          <rect clipPath="url(#th-land-clip)" x="55" y="20" width="130" height="200"
-            fill="url(#th-highland-hatch)" />
-
-          {/* ── NW light source (illumination from top-left) ── */}
-          <path d={TH_PATH} fill="url(#th-light-nw)" fillRule="evenodd" />
-
-          {/* ── SE inner shadow (2.5D depth) ── */}
-          <path d={TH_PATH} fill="url(#th-shadow-es)" fillRule="evenodd" />
-
-          {/* ── Peninsula lower fade ── */}
-          <rect clipPath="url(#th-land-clip)" x="30" y="555" width="185" height="280"
-            fill="url(#th-peninsula-fade)" />
-
-          {/* ── Mountain peaks (Doi Inthanon / NW highlands) ── */}
-          {PEAKS.map(([mx, my, sz], i) => (
-            <g key={i}>
-              <polygon
-                points={`${mx + 2.5},${my + sz * 1.4} ${mx - sz * 0.68 + 2.5},${my + sz * 2.2} ${mx + sz * 0.68 + 2.5},${my + sz * 2.2}`}
-                fill="rgba(0,0,0,0.28)"
-              />
-              <polygon
-                points={`${mx},${my} ${mx - sz * 0.68},${my + sz * 1.35} ${mx + sz * 0.68},${my + sz * 1.35}`}
-                fill={`rgba(40,32,18,${0.78 + i * 0.012})`}
-                stroke="rgba(155,122,58,0.22)"
-                strokeWidth="0.5"
-              />
-              <polygon
-                points={`${mx},${my} ${mx - sz * 0.22},${my + sz * 0.4} ${mx + sz * 0.22},${my + sz * 0.4}`}
-                fill={`rgba(200,172,112,${0.11 - i * 0.005})`}
-              />
-            </g>
-          ))}
-
-          {/* ── Chao Phraya River — Mercator-projected from Nakhon Sawan → Bangkok ── */}
-          <path id="th-river"
-            d="M 163,246 C 170,262 171,274 173,282 C 175,298 174,312 176,330 C 180,346 186,358 190,368 C 190,372 189.5,375 189.5,378"
-            fill="none" stroke="rgba(75,135,185,0.3)" strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-
-          {/* ── Road: Mae Hong Son → Chiang Mai (mountain dashed) ── */}
-          <path className="th-road"
-            d="M 60,71 C 76,85 93,98 112,111"
-            fill="none" stroke="rgba(180,150,78,0.25)" strokeWidth="1.0"
-            strokeLinecap="round" strokeDasharray="2.5,5"
-          />
-
-          {/* ── Road: Chiang Mai → Bangkok via Hwy 1 ── */}
-          <path className="th-road"
-            d="M 112,111 C 128,145 154,192 165,230 C 170,252 172,268 172,282 C 175,310 180,340 189.5,378"
-            fill="none" stroke="rgba(180,150,78,0.2)" strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-
-          {/* ── Road: Ayutthaya spur ── */}
-          <path className="th-road"
-            d="M 193,347 C 192,358 191,368 189.5,378"
-            fill="none" stroke="rgba(180,150,78,0.28)" strokeWidth="0.95"
-            strokeLinecap="round"
-          />
-
-          {/* ── Province outlines (animated draw-on) — restrained amber cartographic etching ── */}
-          <path id="th-outline"
-            d={TH_PATH}
-            fill="none"
-            fillRule="evenodd"
-            stroke="rgba(195,158,82,0.28)"
-            strokeWidth="0.45"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-          />
-
-          {/* ── Neighbor country labels — repositioned for Mercator projection ── */}
-          {(
-            [
-              { label: "MYANMAR",  x: -52, y: 310 },
-              { label: "LAOS",     x: 436, y: 182 },
-              { label: "CAMBODIA", x: 428, y: 398 },
-              { label: "MALAYSIA", x: 116, y: 850 },
-            ] as { label: string; x: number; y: number }[]
-          ).map(({ label, x, y }) => (
-            <text key={label} x={x} y={y}
-              fontSize="5.8" fontWeight="700"
-              fill="rgba(185,155,82,0.18)" letterSpacing="0.22em"
-              style={{ textTransform: "uppercase" } as React.CSSProperties}
-              fontFamily="Georgia, 'Times New Roman', serif"
-            >{label}</text>
-          ))}
-
-          {/* ── Sea labels — repositioned for Mercator projection ── */}
-          <g transform="translate(388,560) rotate(90)" opacity="0.2">
-            <text textAnchor="middle" fontSize="6.8" fontWeight="600"
-              fill="rgba(125,185,220,1)" letterSpacing="0.25em"
-              fontFamily="Georgia, 'Times New Roman', serif"
-              style={{ textTransform: "uppercase" } as React.CSSProperties}>
-              GULF OF THAILAND
-            </text>
-          </g>
-          <g transform="translate(18,650) rotate(90)" opacity="0.18">
-            <text textAnchor="middle" fontSize="6.8" fontWeight="600"
-              fill="rgba(125,185,220,1)" letterSpacing="0.25em"
-              fontFamily="Georgia, 'Times New Roman', serif"
-              style={{ textTransform: "uppercase" } as React.CSSProperties}>
-              ANDAMAN SEA
-            </text>
-          </g>
-
-          {/* ── Ocean depth reference lines ── */}
-          {[185, 330, 475, 618, 740].map((y, i) => (
-            <line key={`lat-${i}`} x1="-80" y1={y} x2="560" y2={y}
-              stroke="rgba(50,38,70,0.04)" strokeWidth="0.55" />
-          ))}
-
-          {/* ── City + island pins ── */}
+          {/* City + island pins — only this re-renders on hover/click */}
           {CITIES.map((city, i) =>
             city.kind === "island" ? (
               <IslandPin
@@ -517,29 +468,6 @@ export default function CountryPage() {
               />
             )
           )}
-
-          {/* ── Compass rose ── */}
-          <g transform="translate(450,44)" opacity="0.46">
-            <circle cx="0" cy="0" r="14" fill="none" stroke="rgba(195,158,82,0.2)" strokeWidth="0.7" />
-            <circle cx="0" cy="0" r="2.2" fill="rgba(195,158,82,0.35)" />
-            <polygon points="0,-12 -2.5,-4 2.5,-4"  fill="rgba(195,158,82,0.7)"  />
-            <polygon points="0,12 -2.5,4 2.5,4"     fill="rgba(195,158,82,0.22)" />
-            <polygon points="-12,0 -4,-2.5 -4,2.5"  fill="rgba(195,158,82,0.22)" />
-            <polygon points="12,0 4,-2.5 4,2.5"     fill="rgba(195,158,82,0.22)" />
-            <text x="0" y="-19" textAnchor="middle" fontSize="5" fontWeight="700"
-              fill="rgba(195,158,82,0.52)" letterSpacing="0.12em"
-              fontFamily="Georgia, serif">N</text>
-          </g>
-
-          {/* ── Scale bar ── */}
-          <g transform="translate(68,807)">
-            <rect x="-2" y="-8" width="104" height="16" rx="3" fill="rgba(0,0,0,0.4)" />
-            <line x1="0" y1="0" x2="88" y2="0" stroke="rgba(195,158,82,0.3)" strokeWidth="1" />
-            <line x1="0"  y1="-3.5" x2="0"  y2="3.5" stroke="rgba(195,158,82,0.3)" strokeWidth="1" />
-            <line x1="88" y1="-3.5" x2="88" y2="3.5" stroke="rgba(195,158,82,0.3)" strokeWidth="1" />
-            <text x="44" y="-5.5" textAnchor="middle" fontSize="4.5" fill="rgba(195,158,82,0.32)"
-              fontFamily="Georgia, serif" letterSpacing="0.1em">500 KM</text>
-          </g>
 
         </motion.svg>
       </div>

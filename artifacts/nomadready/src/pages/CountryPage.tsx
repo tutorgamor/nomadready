@@ -431,6 +431,7 @@ export default function CountryPage() {
           ref={svgRef}
           viewBox="0 0 480 820"
           aria-label="Carte interactive de la Thaïlande"
+          className="cp-map-svg"
           style={{
             height: "94vh", width: "auto", overflow: "visible",
             filter: "drop-shadow(0 40px 80px rgba(0,0,0,0.96)) drop-shadow(12px 18px 36px rgba(0,0,0,0.75))",
@@ -477,6 +478,7 @@ export default function CountryPage() {
         {activeCity && (
           <motion.aside
             key={activeCity.id}
+            className="cp-city-panel"
             initial={{ x: 420, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 420, opacity: 0 }}

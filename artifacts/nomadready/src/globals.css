@@ -3516,6 +3516,21 @@ body:has(.cursor-ring) * {
   .cp-map-wrap {
     padding-left: 0 !important;
     padding-right: 0 !important;
+    align-items: flex-start !important;
+    padding-top: 72px !important;
+  }
+  .cp-map-svg {
+    height: 54vh !important;
+    max-height: 480px !important;
+  }
+  .cp-city-panel {
+    left: 0 !important;
+    width: 100% !important;
+    top: auto !important;
+    height: 52vh !important;
+    max-height: 420px !important;
+    border-left: none !important;
+    border-top: 1px solid rgba(195,158,82,0.16) !important;
   }
 }
 

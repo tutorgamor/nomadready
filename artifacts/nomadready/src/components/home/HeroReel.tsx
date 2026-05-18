@@ -7,8 +7,9 @@ interface ReelSlide {
   score?: number;
 }
 
-// Curated images — each clearly recognisable for its country.
-// Malaysia → Petronas (not tuk-tuks), Japan → Mount Fuji, etc.
+// Curated images — all on Unsplash CDN with explicit size params for fast delivery.
+// Every image is rendered in the DOM from mount (see below) so the browser
+// loads all 9 in parallel — no cold fetch when the carousel cycles.
 const SLIDES: ReelSlide[] = [
   {
     src:    "/assets/editorial/panels/panel-indonesia.png",
@@ -17,8 +18,8 @@ const SLIDES: ReelSlide[] = [
     score:  77,
   },
   {
-    // Doi Suthep temple, Chiang Mai — unmistakably Thai
-    src:    "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80&auto=format&fit=crop",
+    // Doi Suthep temple, Chiang Mai
+    src:    "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=75&auto=format&fit=crop",
     label:  "Thailand",
     region: "Southeast Asia",
     score:  81,
@@ -30,8 +31,8 @@ const SLIDES: ReelSlide[] = [
     score:  74,
   },
   {
-    // Mount Fuji with cherry blossoms — iconic Japan
-    src:    "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=80&auto=format&fit=crop",
+    // Mount Fuji with cherry blossoms
+    src:    "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=75&auto=format&fit=crop",
     label:  "Japan",
     region: "East Asia",
     score:  88,
@@ -43,64 +44,58 @@ const SLIDES: ReelSlide[] = [
     score:  72,
   },
   {
-    // Ha Long Bay — unmistakably Vietnam
-    src:    "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=800&q=80&auto=format&fit=crop",
+    // Ha Long Bay
+    src:    "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=800&q=75&auto=format&fit=crop",
     label:  "Vietnam",
     region: "Southeast Asia",
     score:  79,
   },
   {
-    // Tbilisi old town — Metekhi Church over the Kura River
-    src:    "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=800&q=80&auto=format&fit=crop",
+    // Tbilisi — Narikala fortress over the old town
+    src:    "https://images.unsplash.com/photo-1578996978737-6e5cc4b1de8f?w=800&q=75&auto=format&fit=crop",
     label:  "Georgia",
     region: "Caucasus",
     score:  78,
   },
   {
-    // Petronas towers at night — unmistakably Kuala Lumpur
-    src:    "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&q=80&auto=format&fit=crop",
+    // Kuala Lumpur — Petronas towers
+    src:    "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&q=75&auto=format&fit=crop",
     label:  "Malaysia",
     region: "Southeast Asia",
     score:  75,
   },
   {
-    // Seoul N-tower + cityscape — unmistakably South Korea
-    src:    "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=800&q=80&auto=format&fit=crop",
+    // Seoul N-tower cityscape
+    src:    "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=800&q=75&auto=format&fit=crop",
     label:  "South Korea",
     region: "East Asia",
     score:  83,
   },
 ];
 
-// Slower, more cinematic rhythm
 const INTERVAL_MS = 4200;
-const FADE_MS     = 1100;
+const FADE_MS     = 900;
 
 export function HeroReel({ destCount }: { destCount: number }) {
   const [idx,  setIdx]  = useState(0);
-  const [show, setShow] = useState(true);
-  const preloadedRef = useRef(false);
-
-  // Preload every slide image immediately on mount so the carousel
-  // never waits for a cold network fetch when it cycles to a new slide.
-  useEffect(() => {
-    if (preloadedRef.current) return;
-    preloadedRef.current = true;
-    SLIDES.forEach(slide => {
-      const img = new Image();
-      img.src = slide.src;
-    });
-  }, []);
+  const [prev, setPrev] = useState<number | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const id = setInterval(() => {
-      setShow(false);
-      setTimeout(() => {
-        setIdx(i => (i + 1) % SLIDES.length);
-        setShow(true);
-      }, FADE_MS);
+      setIdx(i => {
+        const next = (i + 1) % SLIDES.length;
+        setPrev(i);
+        // Clear prev after fade completes so old image stops compositing
+        if (timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => setPrev(null), FADE_MS + 100);
+        return next;
+      });
     }, INTERVAL_MS);
-    return () => clearInterval(id);
+    return () => {
+      clearInterval(id);
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, []);
 
   const slide = SLIDES[idx];
@@ -108,21 +103,30 @@ export function HeroReel({ destCount }: { destCount: number }) {
   return (
     <div className="hero-editorial-panel">
       <div className="hero-editorial-frame" style={{ position: "relative" }}>
-        <img
-          src={slide.src}
-          alt=""
-          style={{
-            width: "100%", height: "100%",
-            objectFit: "cover", objectPosition: "center 30%",
-            display: "block", position: "absolute", inset: 0,
-            opacity: show ? 1 : 0,
-            transition: `opacity ${FADE_MS}ms cubic-bezier(0.4,0,0.2,1)`,
-          }}
-          fetchPriority="high"
-          decoding="async"
-        />
 
-        <div className="hero-editorial-frame-vignette" />
+        {/* All images pre-rendered in DOM — browser loads them all in parallel
+            on mount. Transition is pure CSS opacity; no src swap, no cold fetch. */}
+        {SLIDES.map((s, i) => (
+          <img
+            key={s.src}
+            src={s.src}
+            alt=""
+            style={{
+              width: "100%", height: "100%",
+              objectFit: "cover", objectPosition: "center 30%",
+              display: "block", position: "absolute", inset: 0,
+              opacity: i === idx ? 1 : 0,
+              transition: i === idx || i === prev
+                ? `opacity ${FADE_MS}ms cubic-bezier(0.4,0,0.2,1)`
+                : "none",
+              zIndex: i === idx ? 2 : i === prev ? 1 : 0,
+            }}
+            fetchPriority={i === 0 ? "high" : "low"}
+            decoding="async"
+          />
+        ))}
+
+        <div className="hero-editorial-frame-vignette" style={{ zIndex: 3 }} />
 
         {/* Top amber accent line */}
         <div style={{
@@ -131,14 +135,8 @@ export function HeroReel({ destCount }: { destCount: number }) {
           zIndex: 4,
         }} />
 
-        {/* Country label — soft fade with the image */}
-        <div
-          className="hero-editorial-frame-label"
-          style={{
-            opacity: show ? 1 : 0,
-            transition: `opacity ${Math.round(FADE_MS * 0.5)}ms ease`,
-          }}
-        >
+        {/* Country label */}
+        <div className="hero-editorial-frame-label" style={{ zIndex: 5 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
             <span style={{
               fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.10em",
@@ -172,7 +170,7 @@ export function HeroReel({ destCount }: { destCount: number }) {
         </div>
 
         {/* Floating passport prop */}
-        <div className="hero-editorial-passport">
+        <div className="hero-editorial-passport" style={{ zIndex: 5 }}>
           <div className="anim-float-gentle">
             <img
               src="/assets/editorial/old%20passport/old-passport.png"

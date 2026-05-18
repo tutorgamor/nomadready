@@ -102,32 +102,13 @@ Defined in `src/App.tsx`:
 Each matches the `ReadyData` interface in `src/lib/types.ts`.
 Contains: `visa` · `insurance` · `best_season` · `budget` · `useful_apps` · `transport` · `scams` · `phrases` · `emergency` · `checklist`
 
-### Supplementary destination data (not passport-specific)
-
-| Folder | Interface | Destinations |
-|---|---|---|
-| `data/nomad-reality/` | `NomadRealityNote[]` | thailand |
-| `data/notes/` | `RealTravelNote[]` | japan, philippines, south-korea, thailand, vietnam |
-| `data/remote-work/` | `RemoteWork` | philippines, south-korea, thailand |
-| `data/remote-work-zones/` | `RemoteWorkZonesData` | thailand |
-| `data/places/` | `LocalGem[]` | thailand |
+> Supplementary data folders, interfaces, and per-destination coverage: `src/data/README.md`
 
 ---
 
 ## Component organisation
 
-```
-src/components/
-├── ui/              shadcn/ui primitives (42 files — regenerate via npx shadcn, do not hand-edit)
-├── ready/           Travel guide section components (rendered by DestinationPage)
-├── home/            Landing page (PassportGatewayHero, HeroCrossfade, HeroReel, AmbientLayer…)
-├── motion/          High-level animated components (GlobeMap, TravelNetwork, WordReveal…)
-├── motion-primitives/ Low-level animation wrappers (in-view, magnetic, carousel…)
-├── core/            animated-number primitive
-├── shared/          MapDecorations (SVG overlays for city maps)
-└── (root)           ProfileProvider, PassportSelector, DestinationCard,
-                     ComparisonStrip, InsightsPanel, TripPlanner, CustomCursor…
-```
+> Full folder map and directory structure: `src/components/README.md`
 
 **Key components:**
 
@@ -143,7 +124,10 @@ src/components/
 
 ## Visual identity
 
-### Colour palette
+> Full design language with tokens, surfaces, motion values, and component patterns: `docs/design/design-system.md`
+> Editorial philosophy behind the visual direction: `docs/vision/editorial-memory-system.md`
+
+### Colour palette (quick reference)
 
 | Token | Value | Use |
 |---|---|---|
@@ -153,61 +137,52 @@ src/components/
 | `--text-muted` | low-opacity warm white | secondary labels |
 | `--text-secondary` | slightly higher opacity white | body copy |
 
-The overall palette is **cinematic deep-night** — near-black background, amber warm light sources, cool blue-grey shadow tones. Think luxury travel magazine shot at golden hour, then darkroom-processed.
+### Typography (quick reference)
 
-### Typography
-
-- **Display / headlines:** `var(--font-display)` — large, tight letter-spacing (`-0.04em`), weight 600
+- **Display / headlines:** `var(--font-display)` — tight letter-spacing (`-0.04em`), weight 600
 - **UI / body:** `var(--font-geist-sans)` (Geist) — clean, neutral, minimal
-- **Mono:** `var(--font-geist-mono)` — used sparingly for data/scores
-- Letter-spacing conventions: headlines `-0.04em`, labels `+0.08–0.10em` uppercase, body `normal`
-
-### Textures & surfaces
-
-- Paper grain: `/assets/ui/paper-grain.png` — tiled 240px, `opacity: 0.022`, `mix-blend-mode: screen`. Applied on the gateway overlay.
-- Frosted glass: `backdrop-filter: blur(Xpx)` + semi-transparent background — used on hero controls card and mobile gateway bottom panel
-- Vignettes: radial gradients fading to transparent, layered on image containers
-
-### Editorial / print aesthetic
-
-This app is styled like a **premium travel field guide** — think Monocle magazine meets CIA World Factbook. Section labels are uppercase micro-type with trailing rules (`::after` line). Scores are displayed with tight numeric type. The gateway passport prop is a physical object with drop shadow and grain.
+- **Mono:** `var(--font-geist-mono)` — data/scores only
+- Section labels: uppercase, 0.55–0.65rem, `+0.08–0.10em` letter-spacing
 
 ---
 
 ## Cinematic direction
 
-### Hero video (desktop)
+> Editorial intent behind the cinematic direction: `docs/vision/editorial-memory-system.md §Motion and UX Principles`
+> Compositor architecture and rendering rules: `docs/performance/desktop-rendering.md`
 
-- File: `public/assets/hero-loop.mp4` (also at `public/assets/hero/hero-loop.mp4` — same file referenced from `HeroCrossfade`)
-- Used in `HeroCrossfade` as a full-bleed looping background behind the hero text
-- Current weight: **20MB** — no mobile variant exists
-- CSS class `home-hero-bg`: `display: none` below 768px → video **never loads on mobile**
-- Fallback: Unsplash mountain photo behind the video (always rendered, video renders on top)
-- No `poster` attribute, no `preload` attribute on the `<video>` element
+### Hero video
+
+- `HeroCrossfade` serves adaptive sources: desktop (hero-loop-desktop.mp4, 2.6MB) and mobile (hero-loop-mobile.mp4, 1.75MB)
+- Asset pipeline to reduce the 20MB source video is still open — see `docs/performance/mobile-video.md` Phase 1
+- Poster frames shown immediately while video buffers; Data Saver detection skips video entirely
+- CSS class `home-hero-bg`: visible on both mobile and desktop (updated May 2026)
 
 ### Ken Burns (still fallback)
 
-When the video is not playing, the fallback `<img>` gets the `hero-ken-burns` CSS animation (28s, scale + translate drift, infinite, ease-in-out).
+Fallback `<img>` gets `hero-ken-burns` CSS animation (28s, scale + translate drift). Applied to `img.home-hero-bg` on desktop only; video element overrides with `animation: none`. Respects `prefers-reduced-motion`.
 
 ### Gateway animation
 
-`PassportGatewayHero` uses Framer Motion for entrance/exit:
+`PassportGatewayHero` uses Framer Motion:
 - Passport descends y: -38 → 0, scale 0.95 → 1, ease `[0.16, 1, 0.3, 1]`
-- On Enter: passport scales 8×, overlay fades at 650ms, DOM removed at 1320ms
-- Parallax: cursor-driven RAF loop moves two atmospheric glow divs ± 26–36px. Stops when converged. Disabled when `prefers-reduced-motion`.
+- On Enter: passport scales 8×, overlay fades, DOM removed at 920ms
+- Parallax: cursor-driven RAF loop, stops when converged (diff > 0.05). Disabled when `prefers-reduced-motion`.
 
 ### Ambient layer
 
-`AmbientLayer` provides slow decorative background movement behind page content (below the header). Not video-dependent.
+`AmbientLayer` — fixed atmospheric layer (z-index 200) with 13 sub-layers providing slow decorative depth. All animated layers use transform + opacity only. For GPU layer budget and current architecture see `docs/performance/desktop-rendering.md`.
 
 ---
 
 ## Interaction philosophy
 
-1. **The gateway is the ritual.** Entering through the passport-selection gate is intentional friction — it frames the rest of the app as a personalised document, not a generic list.
-2. **Motion serves meaning.** Animations reveal hierarchy (stagger entrances), simulate physical objects (passport landing), or indicate state (opening, entering). No decoration-only motion.
+> Extended: `docs/vision/editorial-memory-system.md §Motion and UX Principles`
+
+1. **The gateway is the ritual.** Intentional friction frames the app as a personalised document.
+2. **Motion serves meaning.** No decoration-only motion. Animations reveal hierarchy, simulate physical objects, or indicate state.
 3. **Tactile inputs.** Passport chips use `whileHover` / `whileTap`. Focus states have warm amber glow. Touch targets ≥ 44px.
-4. **Scroll reveals content.** `InView` from `motion-primitives` gates section entrance animations — content fades up as it enters the viewport.
+4. **Scroll reveals content.** `InView` from `motion-primitives` gates section entrance animations.
 5. **Reduced motion respected.** Every timed animation checks `useReducedMotion()`. Durations collapse to 1ms; parallax loop skips entirely.
 
 ---
@@ -243,7 +218,7 @@ When the video is not playing, the fallback `<img>` gets the `hero-ken-burns` CS
 
 ### Known gap — mobile cinematic hero
 
-The mobile homepage does not render the cinematic video. The static `home-hero-mobile-scene` (hero-cinematic.jpg + polaroid overlays) is lower quality and less immersive than the desktop experience. See `docs/mobile-performance-plan.md` for the full fix strategy.
+The mobile hero code is updated (HeroCrossfade now serves mobile sources, CSS is enabled). The mobile video assets (encoded variants, poster frames) do not yet exist. Until Phase 1 assets are created, mobile falls back to the static poster image. See `docs/performance/mobile-video.md` for the full plan.
 
 ### Breakpoints
 
@@ -269,12 +244,15 @@ The mobile homepage does not render the cinematic video. The static `home-hero-m
 
 ## Performance constraints
 
+> Desktop compositor architecture, GPU layer budget, RAF patterns: `docs/performance/desktop-rendering.md`
+> Mobile video pipeline and asset targets: `docs/performance/mobile-video.md`
+
 - **No server** — everything builds to static files. No SSR, no API routes.
-- All JSON data is imported eagerly at build time via `import.meta.glob({ eager: true })` in `HomePage.tsx` — this bundles all 90 ready files into the JS bundle. Monitor bundle size if adding more destinations.
+- All JSON data is imported eagerly at build time via `import.meta.glob({ eager: true })` in `HomePage.tsx` — bundles all 90 ready files. Monitor bundle size if adding destinations.
 - Unsplash images in `HeroReel` use explicit `?w=800&q=75` params — maintain these or images balloon to multi-MB
-- `hero-loop.mp4` is **20MB** — must be reduced before enabling on any mobile path. See `docs/mobile-performance-plan.md`.
+- `hero-loop.mp4` source is 20MB — desktop variant 2.6MB, mobile 1.75MB (encoded). Asset pipeline to replace source still open.
 - `fetchPriority="high"` on the first HeroReel image (index 0) — other images use `"low"` — preserve this
-- Vite code-splitting: the app is a single SPA with no route-level code splitting currently. Large page components (CountryPage at 37KB source) may warrant splitting if bundle grows.
+- Vite code-splitting: single SPA, no route-level splitting. CountryPage at 37KB source may warrant splitting if bundle grows.
 
 ---
 
@@ -357,7 +335,7 @@ The mobile homepage does not render the cinematic video. The static `home-hero-m
 - All decorative images and SVGs: `alt=""` or `aria-hidden="true"`
 - Focus-visible rings: amber-tone glow on dark surfaces (see gateway chip `onFocus` handler)
 - Touch targets: minimum 44×44px on mobile (gateway chips: `minHeight: 36px` — can be improved to 44px)
-- `prefers-reduced-motion`: all animated durations → 1ms. Parallax loop skipped. Ken Burns animation should also stop — **current gap: Ken Burns is pure CSS, does not respect `prefers-reduced-motion`**.
+- `prefers-reduced-motion`: all animated durations → 1ms. Parallax loop skipped. Ken Burns stops via `@media (prefers-reduced-motion: reduce)` in `globals.css` (fixed May 2026).
 
 ---
 
@@ -393,7 +371,9 @@ At the start of every new session working on NomadReady:
 4. If touching the homepage or hero: re-read `src/components/home/HeroCrossfade.tsx`, `HeroReel.tsx`, `PassportGatewayHero.tsx`
 5. If touching the destination page: re-read `src/pages/DestinationPage.tsx` and `src/lib/types.ts`
 6. If touching styles: the CSS is in `src/globals.css` — search for the relevant class before adding new ones (it may already exist)
-7. Check `docs/` for any open plans or in-progress decisions
+7. If touching animations, GPU layers, or rendering: read `docs/performance/desktop-rendering.md` before making changes
+8. If making editorial, content, or UX direction decisions: read `docs/vision/editorial-memory-system.md`
+9. If making visual design decisions (colors, type, surfaces): read `docs/design/design-system.md`
 
 ---
 
@@ -401,9 +381,9 @@ At the start of every new session working on NomadReady:
 
 | Issue | Location | Severity | Plan |
 |---|---|---|---|
-| Mobile homepage no cinematic video | `HeroCrossfade`, `globals.css` | High | See `docs/mobile-performance-plan.md` |
-| `hero-loop.mp4` is 20MB | `public/assets/hero-loop.mp4` | High | Re-encode to < 5MB; create mobile variant |
-| Ken Burns ignores `prefers-reduced-motion` | `globals.css` `.home-hero-bg` | Medium | Wrap in `@media (prefers-reduced-motion: reduce)` |
+| Mobile hero assets missing | `public/assets/hero/` | High | Phase 1 of `docs/performance/mobile-video.md` — FFmpeg encode needed |
+| `hero-loop.mp4` source is 20MB | `public/assets/hero-loop.mp4` | High | Re-encode; encoded variants exist, source not yet replaced |
 | Gateway chip touch targets 36px | `PassportGatewayHero.tsx` | Low | Increase `minHeight` to 44px |
-| Duplicate `hero-loop.mp4` | `public/assets/` root + `public/assets/hero/` | Low | Consolidate; keep only `/assets/hero/hero-loop.mp4` |
+| Duplicate `hero-loop.mp4` at root | `public/assets/hero-loop.mp4` | Low | Consolidate; keep only `/assets/hero/hero-loop.mp4` |
 | All 90 JSON files bundled eagerly | `pages/HomePage.tsx` | Medium | Consider lazy import per passport if bundle grows |
+| `<meta name="description">` missing | `index.html` | Low | Add basic SEO meta |

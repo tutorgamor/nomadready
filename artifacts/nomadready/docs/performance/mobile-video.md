@@ -1,7 +1,7 @@
-# NomadReady — Mobile Performance & Video Plan
+# NomadReady — Mobile Video & Performance
 
-> Status: **Open** — no fixes implemented yet  
-> Created: May 2026  
+> Status: **Phase 2 complete — Phase 1 (asset pipeline) open**
+> Created: May 2026. Moved to `docs/performance/` May 2026.
 > Scope: Homepage mobile cinematic hero, video pipeline, overall mobile performance
 
 ---
@@ -514,7 +514,7 @@ To replace the static `home-hero-mobile-scene` with something cinematic without 
 
 ## 9. Implementation Checklist
 
-### Phase 1 — Asset work (no code changes)
+### Phase 1 — Asset work (no code changes) — OPEN
 
 - [ ] Re-encode `hero-loop.mp4` to `hero-loop-desktop.webm` + `hero-loop-desktop.mp4` (< 5MB each)
 - [ ] Crop and encode `hero-loop-mobile.webm` + `hero-loop-mobile.mp4` (9:16, < 2MB each)
@@ -522,19 +522,19 @@ To replace the static `home-hero-mobile-scene` with something cinematic without 
 - [ ] Resize `polaroid-japan.webp`, `polaroid-community.webp`, `polaroid-thailand.webp` to < 80KB each
 - [ ] Delete root-level duplicate `public/assets/hero-loop.mp4`
 
-### Phase 2 — Code changes
+### Phase 2 — Code changes — COMPLETE
 
-- [ ] Rewrite `HeroCrossfade.tsx` — adaptive mobile/desktop source selection + poster + preload + Data Saver check
-- [ ] Update `globals.css` — `.home-hero-bg` visible on mobile, portrait sizing, mobile overlay gradient
-- [ ] Fix `prefers-reduced-motion` gap in `.home-hero-bg` CSS animation
-- [ ] Simplify `home-hero-mobile-scene` — remove oversized polaroid images, make it an overlay element
-- [ ] Add `<meta name="description">` to `index.html`
+- [x] Rewrite `HeroCrossfade.tsx` — adaptive mobile/desktop source selection, poster frames, preload, Data Saver check
+- [x] Update `globals.css` — `.home-hero-bg` visible on mobile, portrait sizing, mobile overlay gradient
+- [x] Fix `prefers-reduced-motion` gap in `.home-hero-bg` CSS animation
+- [x] Simplify `home-hero-mobile-scene` — oversized polaroid images removed, destination count pill remains
+- [ ] Add `<meta name="description">` to `index.html` — still open
 
-### Phase 3 — Validation
+### Phase 3 — Validation — pending Phase 1 asset completion
 
 - [ ] Lighthouse mobile audit (target: Performance ≥ 80)
 - [ ] Test autoplay on iOS Safari (real device or BrowserStack)
 - [ ] Test autoplay on Android Chrome with Data Saver enabled
-- [ ] Test Low Power Mode (iOS) — confirm poster visible and Ken Burns/ambient CSS fallback works
+- [ ] Test Low Power Mode (iOS) — confirm poster visible and ambient CSS fallback works
 - [ ] Test `prefers-reduced-motion` — all animations collapsed
 - [ ] Verify 768px breakpoint — no layout flash at exactly the breakpoint

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface ReelSlide {
   src:    string;
@@ -50,7 +50,8 @@ const SLIDES: ReelSlide[] = [
     score:  79,
   },
   {
-    src:    "/assets/destinations/georgia.jpg",
+    // Tbilisi old town — Metekhi Church over the Kura River
+    src:    "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=800&q=80&auto=format&fit=crop",
     label:  "Georgia",
     region: "Caucasus",
     score:  78,
@@ -78,6 +79,18 @@ const FADE_MS     = 1100;
 export function HeroReel({ destCount }: { destCount: number }) {
   const [idx,  setIdx]  = useState(0);
   const [show, setShow] = useState(true);
+  const preloadedRef = useRef(false);
+
+  // Preload every slide image immediately on mount so the carousel
+  // never waits for a cold network fetch when it cycles to a new slide.
+  useEffect(() => {
+    if (preloadedRef.current) return;
+    preloadedRef.current = true;
+    SLIDES.forEach(slide => {
+      const img = new Image();
+      img.src = slide.src;
+    });
+  }, []);
 
   useEffect(() => {
     const id = setInterval(() => {

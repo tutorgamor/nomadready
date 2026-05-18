@@ -7,41 +7,96 @@ import type { ReadyData } from "@/lib/types";
 
 const readyFiles = import.meta.glob<ReadyData>("../data/ready/*.json", { eager: true, import: "default" });
 
-// ─── Thailand SVG path — geographically accurate ──────────────────────────────
+// ─── Thailand SVG path — geographic polygon, 120+ coordinate pairs ───────────
 // ViewBox: 0 0 480 820
 // Projection: x = (lon − 97.5) / 8.2 × 480   y = (20.5 − lat) / 14.9 × 820
+// Clockwise from Golden Triangle. Key features:
+//   • Mekong border angles SE (many bends, L-commands for cartographic feel)
+//   • Cambodia border SW to Gulf coast at Trat (~304,480)
+//   • Gulf coast sweeps NORTHWEST to Bangkok apex (~178,346) — the critical
+//     feature that makes Thailand recognizable — then turns south
+//   • Peninsula Gulf (E) side goes SSE; Andaman (W) side has Phuket westward jog
+//   • Myanmar border has Mae Hong Son western dip (~12,62)
 const TH_PATH = [
-  "M 100,0",
-  "C 122,0 138,4 153,9",
-  "C 168,20 184,62 206,106",
-  "C 222,148 248,168 286,178",
-  "C 322,186 364,202 408,220",
-  "C 444,238 468,266 476,294",
-  "C 478,308 468,328 452,344",
-  "C 432,360 408,372 384,380",
-  "C 352,390 312,406 274,420",
-  "C 240,432 210,442 186,454",
-  "C 162,464 144,478 132,498",
-  "C 118,518 106,540 100,558",
-  "C 96,574 100,594 118,616",
-  "C 136,638 150,660 162,682",
-  "C 172,702 186,720 196,742",
-  "C 204,760 210,778 212,792",
-  "C 212,804 212,814 214,820",
-  "C 204,820 186,818 168,814",
-  "C 158,810 154,804 153,798",
-  "C 142,786 126,772 110,750",
-  "C 94,728 78,706 60,680",
-  "C 48,660 44,634 54,610",
-  "C 62,586 72,560 82,534",
-  "C 90,510 100,488 108,462",
-  "C 116,440 120,416 118,390",
-  "C 116,364 108,336 96,310",
-  "C 80,284 62,256 46,228",
-  "C 32,202 16,176 12,150",
-  "C 8,124 10,98 16,74",
-  "C 22,54 34,32 50,18",
-  "C 64,8 80,2 100,0 Z",
+  // ── Golden Triangle start (20.46°N, 100.1°E) ─────────────────────────────
+  "M 148,3",
+
+  // ── Mekong / Laos border going SE ─────────────────────────────────────────
+  "L 164,8",   "L 182,15",  "L 206,26",  "L 232,40",
+  "L 258,56",  "L 280,74",  "L 302,92",
+  "L 318,108", "L 340,120", "L 360,132",
+  "L 378,144", "L 394,154", "L 406,164",
+  "L 416,176", "L 424,190", "L 430,206",
+  "L 436,222", "L 442,238", "L 448,256",
+  "L 452,274", "L 456,292", "L 460,310",
+  "L 462,324",               // Cambodia corner (13.0°N, 105.1°E)
+
+  // ── Cambodia border going SW ───────────────────────────────────────────────
+  "L 446,340", "L 430,356",
+  "L 414,372", "L 396,388", "L 374,402",
+  "L 350,416", "L 326,430",
+  "L 306,446", "L 304,464", "L 304,480", // Trat coast (11.7°N, 102.7°E)
+
+  // ── Gulf coast: sweeps NW to Bangkok — the shape that defines Thailand ─────
+  "L 280,474", "L 258,468",
+  "L 236,460", "L 216,450",
+  "L 196,438", "L 180,424",
+  "L 164,410", "L 150,396",
+  "L 136,382", "L 132,372",
+  "L 130,362", "L 134,354",
+  "L 144,348", "L 158,346",
+  "L 170,346", "L 180,348",  // Bangkok apex (14.1°N, 100.5°E)
+  "L 188,352", "L 194,362",
+
+  // ── Gulf coast turns south — peninsula Gulf (east) side ───────────────────
+  "L 190,374",
+  "L 178,394", "L 160,420",
+  "L 140,456", "L 122,496",
+  "L 106,538", "L 104,558",  // Kra Isthmus Gulf side (10.4°N)
+  "L 108,574", "L 116,592",
+  "L 126,612", "L 134,634",
+  "L 140,656", "L 146,678",
+  "L 154,700", "L 164,722",
+  "L 174,744", "L 188,766",
+  "L 204,788", "L 222,808",
+  "L 238,816", "L 250,820",  // Southern tip (5.7°N)
+
+  // ── Malaysia border going west ─────────────────────────────────────────────
+  "L 236,820", "L 218,818",
+  "L 200,816", "L 182,812",
+  "L 164,810", "L 150,806",  // Andaman border start (6.0°N, 100.1°E)
+
+  // ── Andaman coast going north ──────────────────────────────────────────────
+  "L 134,796", "L 118,780",  // Satun (6.6°N)
+  "L 104,762", "L 92,744",   // Trang (7.3°N)
+  "L 80,726",  "L 70,708",   // Krabi (8.0°N)
+  "L 60,692",                // Phang Nga (8.3°N)
+  // Phuket / Phang Nga westward jog (characteristic indent of Andaman coast)
+  "L 46,678",  "L 40,666",   // westernmost Andaman point (Phuket area, 98.3°E)
+  "L 42,654",  "L 50,640",   // returning NE past Khao Lak
+  "L 58,624",  "L 62,608",
+  "L 64,590",  "L 68,572",   // Ranong (9.9°N)
+  "L 72,556",                // Kra Isthmus Andaman side (10.4°N)
+
+  // ── Myanmar western border going north ────────────────────────────────────
+  "L 76,534",  "L 80,512",
+  "L 86,490",  "L 90,468",
+  "L 90,448",  "L 86,428",
+  "L 78,408",  "L 68,388",   // Three Pagoda Pass latitude (15°N)
+  "L 58,366",  "L 52,344",
+  "L 50,322",  "L 50,300",   // Mae Sot latitude
+  "L 52,278",  "L 54,256",
+  "L 56,234",  "L 56,212",
+  "L 56,190",  "L 50,168",
+  "L 44,146",  "L 36,124",
+  "L 24,102",  "L 14,80",    // Mae Hong Son area
+  "L 10,62",   "L 12,46",    // westernmost point (97.7°E)
+  "L 18,34",   "L 28,24",
+
+  // ── Northern border going east back to start ──────────────────────────────
+  "L 40,16",   "L 58,10",
+  "L 80,6",    "L 104,3",
+  "L 128,2",   "L 148,3 Z",
 ].join(" ");
 
 interface City {
@@ -75,7 +130,7 @@ const CITIES: City[] = [
     desc: "Ancienne capitale du royaume de Siam, classée au Patrimoine Mondial de l'UNESCO. Têtes de Bouddha enchâssées dans les racines de figuiers banians, stupas de briques rouges. À 80 km de Bangkok.",
   },
   {
-    id: "bangkok", label: "Bangkok", x: 176, y: 372, kind: "city",
+    id: "bangkok", label: "Bangkok", x: 162, y: 356, kind: "city",
     active: true, hasGuide: true, region: "Centre", tagline: "Le chaos devient musique.",
     desc: "Mégapole en perpétuel mouvement. Street food d'exception, temples dorés, marchés flottants, rooftops vertigineux. Hub incontournable du voyage en Asie du Sud-Est — le point de départ de tout.",
   },

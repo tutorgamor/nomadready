@@ -1,0 +1,172 @@
+Use Front-end Design + UIUX Pro Max.
+
+Critical instruction:
+Use the provided GeoJSON file as the EXACT geographic source for Thailand.
+
+File:
+thailand-provinces.geojson
+
+Do NOT redraw Thailand manually.
+Do NOT generate a new bezier path.
+Do NOT approximate the coastline.
+Do NOT simplify or smooth the geometry.
+
+The current result is still wrong because:
+- the silhouette became an abstract blob
+- the Gulf shape is inaccurate
+- the coastline was oversmoothed
+- the map lost geographic realism
+- the country shape feels decorative instead of cartographic
+
+Goal:
+Create a premium cinematic 2.5D editorial Thailand atlas using the REAL geographic data from the GeoJSON.
+
+The map must feel:
+- geographically recognizable
+- precise
+- premium
+- cinematic
+- tactile
+- editorial
+- Monocle-inspired
+- like a luxury atlas interface
+
+TECHNICAL REQUIREMENTS
+
+1. Parse the GeoJSON directly.
+2. Render the real geometry from the coordinates.
+3. Preserve the original coastline and country silhouette exactly.
+4. Do NOT reconstruct Thailand with generated paths.
+5. Use projection scaling only.
+6. Keep all major geographic features intact.
+
+Implementation suggestions:
+- d3-geo
+- geoMercator
+- geoPath
+- SVG rendering
+- React component architecture
+
+The geometry itself must remain untouched.
+
+ONLY apply styling layers on top:
+- relief shading
+- subtle contour overlays
+- cinematic gradients
+- embossed coastline
+- atmospheric depth
+- warm shadow offsets
+- terrain texture masks
+
+VISUAL DIRECTION
+
+Style references:
+- Monocle travel atlas
+- National Geographic premium cartography
+- luxury editorial map systems
+- cinematic field guide interfaces
+
+The map should feel:
+like a physical premium atlas page rendered digitally.
+
+NOT:
+- fantasy map
+- game map
+- infographic
+- Google Maps
+- cartoon terrain
+- mobile strategy UI
+
+COLOR SYSTEM
+
+Background:
+- deep warm black
+- dark atlas ink
+- subtle navy-black undertones
+
+Land:
+- dark parchment
+- muted bronze/olive
+- warm atlas gold diffusion
+
+Labels:
+- ivory
+- serif/editorial
+- restrained uppercase
+
+Nodes:
+- ember gold
+- subtle glow
+- premium tactile feel
+
+No:
+- bright green
+- neon
+- cold gray
+- saturated colors
+
+LAYOUT
+
+The Thailand map must:
+- occupy roughly 85–90% of the visible map panel height
+- feel zoomed-in and immersive
+- dominate the right panel visually
+- preserve realistic proportions
+
+The current map feels too distant and decorative.
+
+LOCATION NODES
+
+Add subtle premium markers for:
+- Bangkok
+- Ayutthaya
+- Chiang Mai
+- Kanchanaburi
+- Koh Chang
+- Koh Kut
+- Koh Tao
+
+Markers should:
+- feel editorial
+- remain small and precise
+- avoid oversized modern pins
+
+INTERACTION
+
+Allowed:
+- subtle amber hover glow
+- tiny elevation shift
+- smooth editorial panel reveal
+- restrained transitions
+
+Forbidden:
+- flashy animation
+- heavy parallax
+- game FX
+- map clutter
+- excessive route lines
+
+IMPORTANT
+
+The GeoJSON is now the source of truth.
+
+You are NOT allowed to reinterpret the country silhouette artistically.
+
+You are ONLY allowed to:
+- project
+- render
+- style
+- illuminate
+- texture
+- layer
+
+The geography itself must remain exact.
+
+Before coding:
+Explain precisely:
+1. how the GeoJSON will be projected
+2. how the SVG path will be generated from the coordinates
+3. how the 2.5D effect will be layered
+4. how the coastline precision will be preserved
+
+Then implement only the Thailand map component.

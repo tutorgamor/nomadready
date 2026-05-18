@@ -4,100 +4,16 @@ import { motion, AnimatePresence } from "motion/react";
 import { animate } from "animejs";
 import { getT } from "@/lib/i18n";
 import type { ReadyData } from "@/lib/types";
+import mapData from "../data/thailand-map.json";
 
 const readyFiles = import.meta.glob<ReadyData>("../data/ready/*.json", { eager: true, import: "default" });
 
-// ─── Thailand SVG path — geographic polygon, 120+ coordinate pairs ───────────
-// ViewBox: 0 0 480 820
-// Projection: x = (lon − 97.5) / 8.2 × 480   y = (20.5 − lat) / 14.9 × 820
-// Clockwise from Golden Triangle. Key features:
-//   • Mekong border angles SE (many bends, L-commands for cartographic feel)
-//   • Cambodia border SW to Gulf coast at Trat (~304,480)
-//   • Gulf coast sweeps NORTHWEST to Bangkok apex (~178,346) — the critical
-//     feature that makes Thailand recognizable — then turns south
-//   • Peninsula Gulf (E) side goes SSE; Andaman (W) side has Phuket westward jog
-//   • Myanmar border has Mae Hong Son western dip (~12,62)
-const TH_PATH = [
-  // ── Golden Triangle start (20.46°N, 100.1°E) ─────────────────────────────
-  "M 148,3",
-
-  // ── Mekong / Laos border going SE ─────────────────────────────────────────
-  "L 164,8",   "L 182,15",  "L 206,26",  "L 232,40",
-  "L 258,56",  "L 280,74",  "L 302,92",
-  "L 318,108", "L 340,120", "L 360,132",
-  "L 378,144", "L 394,154", "L 406,164",
-  "L 416,176", "L 424,190", "L 430,206",
-  "L 436,222", "L 442,238", "L 448,256",
-  "L 452,274", "L 456,292", "L 460,310",
-  "L 462,324",               // Cambodia corner (13.0°N, 105.1°E)
-
-  // ── Cambodia border going SW ───────────────────────────────────────────────
-  "L 446,340", "L 430,356",
-  "L 414,372", "L 396,388", "L 374,402",
-  "L 350,416", "L 326,430",
-  "L 306,446", "L 304,464", "L 304,480", // Trat coast (11.7°N, 102.7°E)
-
-  // ── Gulf coast: sweeps NW to Bangkok — the shape that defines Thailand ─────
-  "L 280,474", "L 258,468",
-  "L 236,460", "L 216,450",
-  "L 196,438", "L 180,424",
-  "L 164,410", "L 150,396",
-  "L 136,382", "L 132,372",
-  "L 130,362", "L 134,354",
-  "L 144,348", "L 158,346",
-  "L 170,346", "L 180,348",  // Bangkok apex (14.1°N, 100.5°E)
-  "L 188,352", "L 194,362",
-
-  // ── Gulf coast turns south — peninsula Gulf (east) side ───────────────────
-  "L 190,374",
-  "L 178,394", "L 160,420",
-  "L 140,456", "L 122,496",
-  "L 106,538", "L 104,558",  // Kra Isthmus Gulf side (10.4°N)
-  "L 108,574", "L 116,592",
-  "L 126,612", "L 134,634",
-  "L 140,656", "L 146,678",
-  "L 154,700", "L 164,722",
-  "L 174,744", "L 188,766",
-  "L 204,788", "L 222,808",
-  "L 238,816", "L 250,820",  // Southern tip (5.7°N)
-
-  // ── Malaysia border going west ─────────────────────────────────────────────
-  "L 236,820", "L 218,818",
-  "L 200,816", "L 182,812",
-  "L 164,810", "L 150,806",  // Andaman border start (6.0°N, 100.1°E)
-
-  // ── Andaman coast going north ──────────────────────────────────────────────
-  "L 134,796", "L 118,780",  // Satun (6.6°N)
-  "L 104,762", "L 92,744",   // Trang (7.3°N)
-  "L 80,726",  "L 70,708",   // Krabi (8.0°N)
-  "L 60,692",                // Phang Nga (8.3°N)
-  // Phuket / Phang Nga westward jog (characteristic indent of Andaman coast)
-  "L 46,678",  "L 40,666",   // westernmost Andaman point (Phuket area, 98.3°E)
-  "L 42,654",  "L 50,640",   // returning NE past Khao Lak
-  "L 58,624",  "L 62,608",
-  "L 64,590",  "L 68,572",   // Ranong (9.9°N)
-  "L 72,556",                // Kra Isthmus Andaman side (10.4°N)
-
-  // ── Myanmar western border going north ────────────────────────────────────
-  "L 76,534",  "L 80,512",
-  "L 86,490",  "L 90,468",
-  "L 90,448",  "L 86,428",
-  "L 78,408",  "L 68,388",   // Three Pagoda Pass latitude (15°N)
-  "L 58,366",  "L 52,344",
-  "L 50,322",  "L 50,300",   // Mae Sot latitude
-  "L 52,278",  "L 54,256",
-  "L 56,234",  "L 56,212",
-  "L 56,190",  "L 50,168",
-  "L 44,146",  "L 36,124",
-  "L 24,102",  "L 14,80",    // Mae Hong Son area
-  "L 10,62",   "L 12,46",    // westernmost point (97.7°E)
-  "L 18,34",   "L 28,24",
-
-  // ── Northern border going east back to start ──────────────────────────────
-  "L 40,16",   "L 58,10",
-  "L 80,6",    "L 104,3",
-  "L 128,2",   "L 148,3 Z",
-].join(" ");
+// ─── Thailand SVG paths — derived from real GeoJSON province data ─────────────
+// Source: thailand-provinces.geojson (78 provinces, Mercator projection)
+// Projection: geoMercator().fitSize([480,820]) — scale=2919.66
+// Pre-computed via Python RDP simplification (tolerance=0.018°) + Mercator
+// projection. N tip y=20.5, S tip y=799.5, W x=28.7, E x=451.3.
+const TH_PATH = mapData.combined;
 
 interface City {
   id: string;
@@ -112,49 +28,46 @@ interface City {
   hasGuide?: boolean;
 }
 
-// x=(lon−97.5)/8.2×480  y=(20.5−lat)/14.9×820
+// Coordinates derived from Mercator projection of real lat/lon (see thailand-map.json)
 const CITIES: City[] = [
   {
-    id: "chiang-mai", label: "Chiang Mai", x: 87, y: 94, kind: "city",
+    id: "chiang-mai", label: "Chiang Mai", x: 112, y: 111, kind: "city",
     active: true, region: "Nord", tagline: "Temples et brumes du Nord.",
     desc: "Capitale culturelle du Nord. Marchés de nuit animés, temples dorés dans la jungle, trekking vers les villages montagnards. Base idéale pour le Triangle d'Or et les rizières en terrasses de Chiang Rai.",
   },
   {
-    id: "kanchanaburi", label: "Kanchanaburi", x: 119, y: 357, kind: "city",
+    id: "kanchanaburi", label: "Kanchanaburi", x: 140, y: 365, kind: "city",
     active: true, region: "Centre-Ouest", tagline: "Rivières et mémoire.",
     desc: "Le Pont de la Rivière Kwaï, les chutes de l'Erawan aux sept bassins émeraude, forêts denses et temples perchés. Cimetières de guerre poignants — histoire de la Ligne de Chemin de Fer de la Mort.",
   },
   {
-    id: "ayutthaya", label: "Ayutthaya", x: 179, y: 338, kind: "city",
+    id: "ayutthaya", label: "Ayutthaya", x: 193, y: 347, kind: "city",
     active: true, region: "Centre", tagline: "L'ancienne capitale royale.",
     desc: "Ancienne capitale du royaume de Siam, classée au Patrimoine Mondial de l'UNESCO. Têtes de Bouddha enchâssées dans les racines de figuiers banians, stupas de briques rouges. À 80 km de Bangkok.",
   },
   {
-    id: "bangkok", label: "Bangkok", x: 162, y: 356, kind: "city",
+    id: "bangkok", label: "Bangkok", x: 190, y: 378, kind: "city",
     active: true, hasGuide: true, region: "Centre", tagline: "Le chaos devient musique.",
     desc: "Mégapole en perpétuel mouvement. Street food d'exception, temples dorés, marchés flottants, rooftops vertigineux. Hub incontournable du voyage en Asie du Sud-Est — le point de départ de tout.",
   },
   {
-    id: "koh-chang", label: "Koh Chang", x: 282, y: 463, kind: "island",
+    id: "koh-chang", label: "Koh Chang", x: 283, y: 465, kind: "island",
     active: true, region: "Golfe de Thaïlande", tagline: "La grande île sauvage.",
     desc: "Deuxième plus grande île de Thaïlande. Jungle quasi-impénétrable descendant jusqu'aux plages larges, cascades cachées, eaux calmes du Golfe. Bien moins touristique que les îles du Sud.",
   },
   {
-    id: "koh-kut", label: "Koh Kut", x: 310, y: 490, kind: "island",
+    id: "koh-kut", label: "Koh Kut", x: 295, y: 489, kind: "island",
     active: true, region: "Golfe de Thaïlande", tagline: "L'île la plus vierge.",
     desc: "Île la plus reculée de l'archipel de Koh Chang. Plages absolument immaculées, forêts primaires intactes, eaux turquoise d'une limpidité rare. Tourisme ultra-confidentiel, luxe naturel sans hôtels de chaîne.",
   },
   {
-    id: "koh-tao", label: "Koh Tao", x: 137, y: 573, kind: "island",
+    id: "koh-tao", label: "Koh Tao", x: 156, y: 569, kind: "island",
     active: true, region: "Golfe de Thaïlande", tagline: "Paradis mondial de la plongée.",
     desc: "L'un des sites de plongée les plus accessibles d'Asie. Certifications PADI parmi les moins chères au monde, récifs coralliens vivants, requins baleines saisonniers. Snorkeling en accès direct depuis la plage.",
   },
 ];
 
-const PEAKS: [number, number, number][] = [
-  [36, 48, 10], [52, 40, 14], [68, 34, 12], [86, 28, 10], [104, 22, 9],
-  [44, 62, 8],  [62, 55, 11], [80, 46, 9],
-];
+const PEAKS = mapData.peakCoords as [number, number, number][];
 
 export default function CountryPage() {
   const { passport } = useParams<{ passport: string }>();
@@ -393,9 +306,9 @@ export default function CountryPage() {
               <stop offset="100%" stopColor="#060408" />
             </linearGradient>
 
-            {/* Clip to land */}
+            {/* Clip to land — evenodd ensures GeoJSON-derived multi-ring paths clip correctly */}
             <clipPath id="th-land-clip">
-              <path d={TH_PATH} />
+              <path d={TH_PATH} fillRule="evenodd" />
             </clipPath>
 
             {/* Parchment dot texture */}
@@ -437,20 +350,22 @@ export default function CountryPage() {
           {/* ── 2.5D depth — outer soft shadow ── */}
           <path d={TH_PATH} transform="translate(16,24)"
             fill="rgba(0,0,0,0.52)"
+            fillRule="evenodd"
             filter="url(#f-blur-outer)"
           />
 
           {/* ── 2.5D depth — inner tight shadow ── */}
           <path d={TH_PATH} transform="translate(6,10)"
             fill="rgba(0,0,0,0.45)"
+            fillRule="evenodd"
             filter="url(#f-blur-inner)"
           />
 
           {/* ── Land base fill ── */}
-          <path d={TH_PATH} fill="url(#th-land)" />
+          <path d={TH_PATH} fill="url(#th-land)" fillRule="evenodd" />
 
           {/* ── Parchment dot texture ── */}
-          <path d={TH_PATH} fill="url(#th-parchment)" />
+          <path d={TH_PATH} fill="url(#th-parchment)" fillRule="evenodd" />
 
           {/* ── Topographic contour lines (horizontal, very subtle) ── */}
           <g clipPath="url(#th-land-clip)" opacity="0.12">
@@ -462,18 +377,18 @@ export default function CountryPage() {
             ))}
           </g>
 
-          {/* ── Highland hatch (NW highlands zone) ── */}
-          <rect clipPath="url(#th-land-clip)" x="0" y="0" width="168" height="205"
+          {/* ── Highland hatch (NW highlands zone — Doi Inthanon / Chiang Rai peaks) ── */}
+          <rect clipPath="url(#th-land-clip)" x="55" y="20" width="130" height="200"
             fill="url(#th-highland-hatch)" />
 
           {/* ── NW light source (illumination from top-left) ── */}
-          <path d={TH_PATH} fill="url(#th-light-nw)" />
+          <path d={TH_PATH} fill="url(#th-light-nw)" fillRule="evenodd" />
 
           {/* ── SE inner shadow (2.5D depth) ── */}
-          <path d={TH_PATH} fill="url(#th-shadow-es)" />
+          <path d={TH_PATH} fill="url(#th-shadow-es)" fillRule="evenodd" />
 
           {/* ── Peninsula lower fade ── */}
-          <rect clipPath="url(#th-land-clip)" x="0" y="445" width="280" height="400"
+          <rect clipPath="url(#th-land-clip)" x="30" y="555" width="185" height="280"
             fill="url(#th-peninsula-fade)" />
 
           {/* ── Mountain peaks (Doi Inthanon / NW highlands) ── */}
@@ -496,51 +411,52 @@ export default function CountryPage() {
             </g>
           ))}
 
-          {/* ── Chao Phraya River ── */}
+          {/* ── Chao Phraya River — Mercator-projected from Nakhon Sawan → Bangkok ── */}
           <path id="th-river"
-            d="M 148,255 C 155,285 162,318 170,352 C 173,362 174,368 176,372"
+            d="M 163,246 C 170,262 171,274 173,282 C 175,298 174,312 176,330 C 180,346 186,358 190,368 C 190,372 189.5,375 189.5,378"
             fill="none" stroke="rgba(75,135,185,0.3)" strokeWidth="1.5"
             strokeLinecap="round"
           />
 
           {/* ── Road: Mae Hong Son → Chiang Mai (mountain dashed) ── */}
           <path className="th-road"
-            d="M 28,66 C 48,74 68,84 87,94"
+            d="M 60,71 C 76,85 93,98 112,111"
             fill="none" stroke="rgba(180,150,78,0.25)" strokeWidth="1.0"
             strokeLinecap="round" strokeDasharray="2.5,5"
           />
 
           {/* ── Road: Chiang Mai → Bangkok via Hwy 1 ── */}
           <path className="th-road"
-            d="M 87,94 C 104,148 130,230 158,300 C 166,320 172,334 176,372"
+            d="M 112,111 C 128,145 154,192 165,230 C 170,252 172,268 172,282 C 175,310 180,340 189.5,378"
             fill="none" stroke="rgba(180,150,78,0.2)" strokeWidth="1.2"
             strokeLinecap="round"
           />
 
           {/* ── Road: Ayutthaya spur ── */}
           <path className="th-road"
-            d="M 180,338 C 179,351 178,362 176,372"
+            d="M 193,347 C 192,358 191,368 189.5,378"
             fill="none" stroke="rgba(180,150,78,0.28)" strokeWidth="0.95"
             strokeLinecap="round"
           />
 
-          {/* ── Coastline outline (animated draw-on) — amber ── */}
+          {/* ── Province outlines (animated draw-on) — restrained amber cartographic etching ── */}
           <path id="th-outline"
             d={TH_PATH}
             fill="none"
-            stroke="rgba(195,158,82,0.5)"
-            strokeWidth="1.05"
+            fillRule="evenodd"
+            stroke="rgba(195,158,82,0.28)"
+            strokeWidth="0.45"
             strokeLinejoin="round"
             strokeLinecap="round"
           />
 
-          {/* ── Neighbor country labels ── */}
+          {/* ── Neighbor country labels — repositioned for Mercator projection ── */}
           {(
             [
-              { label: "MYANMAR",  x: -60, y: 270 },
-              { label: "LAOS",     x: 438, y: 162 },
-              { label: "CAMBODIA", x: 432, y: 378 },
-              { label: "MALAYSIA", x: 128, y: 858 },
+              { label: "MYANMAR",  x: -52, y: 310 },
+              { label: "LAOS",     x: 436, y: 182 },
+              { label: "CAMBODIA", x: 428, y: 398 },
+              { label: "MALAYSIA", x: 116, y: 850 },
             ] as { label: string; x: number; y: number }[]
           ).map(({ label, x, y }) => (
             <text key={label} x={x} y={y}
@@ -551,8 +467,8 @@ export default function CountryPage() {
             >{label}</text>
           ))}
 
-          {/* ── Sea labels ── */}
-          <g transform="translate(395,592) rotate(90)" opacity="0.2">
+          {/* ── Sea labels — repositioned for Mercator projection ── */}
+          <g transform="translate(388,560) rotate(90)" opacity="0.2">
             <text textAnchor="middle" fontSize="6.8" fontWeight="600"
               fill="rgba(125,185,220,1)" letterSpacing="0.25em"
               fontFamily="Georgia, 'Times New Roman', serif"
@@ -560,7 +476,7 @@ export default function CountryPage() {
               GULF OF THAILAND
             </text>
           </g>
-          <g transform="translate(20,635) rotate(90)" opacity="0.18">
+          <g transform="translate(18,650) rotate(90)" opacity="0.18">
             <text textAnchor="middle" fontSize="6.8" fontWeight="600"
               fill="rgba(125,185,220,1)" letterSpacing="0.25em"
               fontFamily="Georgia, 'Times New Roman', serif"

@@ -28,11 +28,15 @@ export function AmbientLayer() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    let raf: number;
+    // raf = 0 means the loop is not scheduled. Restart on every mousemove when
+    // stopped — identical pattern to the gateway parallax convergence guard.
+    let raf = 0;
 
     const tick = () => {
-      current.current.x += (target.current.x - current.current.x) * 0.028;
-      current.current.y += (target.current.y - current.current.y) * 0.028;
+      // 0.055 matches the gateway lerp: converges in ~1 s after mouse idle,
+      // vs the previous 0.028 which ran for 4–6 s per stop.
+      current.current.x += (target.current.x - current.current.x) * 0.055;
+      current.current.y += (target.current.y - current.current.y) * 0.055;
 
       if (glowRef.current) {
         glowRef.current.style.background = [
@@ -45,19 +49,31 @@ export function AmbientLayer() {
         ].join("");
       }
 
-      raf = requestAnimationFrame(tick);
+      // Stop when remaining offset is sub-pixel on HiDPI (≤0.3 viewport %).
+      // Restarts automatically on the next mousemove.
+      const diff =
+        Math.abs(target.current.x - current.current.x) +
+        Math.abs(target.current.y - current.current.y);
+      if (diff > 0.3) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        raf = 0;
+      }
     };
 
     const onMove = (e: MouseEvent) => {
       target.current.x = (e.clientX / window.innerWidth)  * 100;
       target.current.y = (e.clientY / window.innerHeight) * 100;
+      // Restart the loop only when it has fully stopped.
+      if (raf === 0) {
+        raf = requestAnimationFrame(tick);
+      }
     };
 
     window.addEventListener("mousemove", onMove, { passive: true });
-    raf = requestAnimationFrame(tick);
     return () => {
       window.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf);
+      if (raf !== 0) cancelAnimationFrame(raf);
     };
   }, []);
 
@@ -78,8 +94,14 @@ export function AmbientLayer() {
       {/* 2 — atmospheric ceiling: diffuse overhead warmth, 52 s */}
       <div className="amb-ceiling" />
 
-      {/* 3 — animated section climates: ivory dawn → sandy middle → dusk parchment */}
-      <div className="amb-depth-shift" />
+      {/* 3 — section climates: three static gradients cross-fading via opacity.
+              Replaces the single animated-background div whose `background` keyframe
+              ran on the paint thread. Opacity animation is compositor-only. */}
+      <div className="amb-depth-shift">
+        <div className="amb-climate-dawn" />
+        <div className="amb-climate-peak" />
+        <div className="amb-climate-dusk" />
+      </div>
 
       {/* 4 — deep ambient field: environmental base scale, 78 s */}
       <div className="amb-deep-field" />

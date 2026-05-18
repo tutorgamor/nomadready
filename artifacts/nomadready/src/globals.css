@@ -1980,44 +1980,77 @@ video.home-hero-bg {
   100% { transform: translate(  0px,  0px) scale(1.00); opacity: 0.80; }
 }
 
-/* ── Section depth shift — animated atmospheric climates ──── */
-/* Hero: bright ivory dawn → Destinations: warm sandy →
-   Lower: dusk parchment. 65 s cycle, gradient colors
-   interpolate natively (same structure each keyframe).        */
+/* ── Section depth shift — three static climate gradients, opacity cross-fade ─
+   Previous implementation animated the `background` CSS property (linear-gradient
+   keyframes), which ran on the paint thread — not the compositor. This version
+   uses three static gradient divs whose opacity is animated, keeping all work
+   on the compositor thread. Visual output is identical: ivory dawn → sandy peak
+   → dusk parchment over a 65 s cycle.                                           */
 .amb-depth-shift {
   position: absolute;
   inset: 0;
-  animation: amb-depth-climate 65s ease-in-out infinite;
   pointer-events: none;
 }
-@keyframes amb-depth-climate {
-  0%, 100% {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 250, 242, 0.000)  0%,
-      rgba(240, 225, 200, 0.040) 35%,
-      rgba(222, 207, 178, 0.072) 68%,
-      rgba(208, 190, 162, 0.105) 100%
-    );
-  }
-  32% {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 252, 244, 0.000)  0%,
-      rgba(245, 232, 210, 0.052) 35%,
-      rgba(228, 213, 186, 0.086) 68%,
-      rgba(215, 197, 170, 0.118) 100%
-    );
-  }
-  68% {
-    background: linear-gradient(
-      180deg,
-      rgba(252, 248, 238, 0.000)  0%,
-      rgba(236, 220, 195, 0.030) 35%,
-      rgba(218, 202, 172, 0.060) 68%,
-      rgba(204, 185, 156, 0.092) 100%
-    );
-  }
+
+/* Dawn state — phase 0 % and 100 % (start/end of cycle) */
+.amb-climate-dawn {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 250, 242, 0.000)  0%,
+    rgba(240, 225, 200, 0.040) 35%,
+    rgba(222, 207, 178, 0.072) 68%,
+    rgba(208, 190, 162, 0.105) 100%
+  );
+  animation: amb-climate-dawn-fade 65s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes amb-climate-dawn-fade {
+  0%, 100% { opacity: 1; }
+  32%       { opacity: 0; }
+  68%       { opacity: 0.45; }
+}
+
+/* Peak state — maximum warmth at 32 % */
+.amb-climate-peak {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 252, 244, 0.000)  0%,
+    rgba(245, 232, 210, 0.052) 35%,
+    rgba(228, 213, 186, 0.086) 68%,
+    rgba(215, 197, 170, 0.118) 100%
+  );
+  animation: amb-climate-peak-fade 65s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes amb-climate-peak-fade {
+  0%, 100% { opacity: 0; }
+  32%       { opacity: 1; }
+  68%       { opacity: 0; }
+}
+
+/* Dusk state — cooler parchment at 68 % */
+.amb-climate-dusk {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(252, 248, 238, 0.000)  0%,
+    rgba(236, 220, 195, 0.030) 35%,
+    rgba(218, 202, 172, 0.060) 68%,
+    rgba(204, 185, 156, 0.092) 100%
+  );
+  animation: amb-climate-dusk-fade 65s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes amb-climate-dusk-fade {
+  0%        { opacity: 0; }
+  32%       { opacity: 0; }
+  68%       { opacity: 1; }
+  100%      { opacity: 0; }
 }
 
 /* ── Drifting warm light A — main SE Asia zone ───────────── */
@@ -2292,7 +2325,9 @@ video.home-hero-bg {
 @media (prefers-reduced-motion: reduce) {
   .atlas-breath,
   .amb-deep-field,
-  .amb-depth-shift,
+  .amb-climate-dawn,
+  .amb-climate-peak,
+  .amb-climate-dusk,
   .amb-drift-a,
   .amb-drift-b,
   .amb-fog,
@@ -2301,16 +2336,11 @@ video.home-hero-bg {
   .atlas-light-drift {
     animation: none;
   }
-  .atlas-breath { opacity: 0.80; }
-  .amb-depth-shift {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 250, 242, 0.000)  0%,
-      rgba(240, 225, 200, 0.040) 35%,
-      rgba(222, 207, 178, 0.072) 68%,
-      rgba(208, 190, 162, 0.105) 100%
-    );
-  }
+  .atlas-breath     { opacity: 0.80; }
+  /* Freeze the climate stack at the dawn (0 %) state — peak and dusk hidden. */
+  .amb-climate-dawn { opacity: 1; }
+  .amb-climate-peak { opacity: 0; }
+  .amb-climate-dusk { opacity: 0; }
 }
 
 /* ═══════════════════════════════════════════════════════════

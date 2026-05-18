@@ -444,15 +444,39 @@ a:hover {
   border-radius: 0;
 }
 
-/* Mobile illustrated scene — compact travel atlas below hero text */
+/* Mobile scene — pill overlay anchored below hero CTA block.
+   The cinematic background (home-hero-bg) now provides depth; this element is decorative only. */
 .home-hero-mobile-scene {
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 4;
 }
 
 @media (min-width: 768px) {
   .home-hero-mobile-scene {
     display: none;
   }
+}
+
+/* Destination count pill — floats over the cinematic background */
+.home-hero-mobile-scene-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.88);
+  background: rgba(8,4,1,0.38);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.3rem 0.875rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.10);
 }
 
 /* Editorial section label — travel-guide chapter feel */
@@ -915,7 +939,7 @@ a:hover {
   }
 }
 
-/* Ken Burns drift — slow cinematic zoom + pan on the hero photo */
+/* Ken Burns drift — slow cinematic zoom + pan on the hero photo (desktop only) */
 @keyframes hero-ken-burns {
   0%   { transform: scale(1.00) translate(0%,     0%);    }
   33%  { transform: scale(1.06) translate(-0.8%,  0.6%);  }
@@ -923,21 +947,41 @@ a:hover {
   100% { transform: scale(1.00) translate(0%,     0%);    }
 }
 
-/* Homepage hero — full-bleed cinematic background image (desktop only) */
-.home-hero-bg {
-  display: none;
+/* Ambient pulse — mobile static poster, opacity only (compositor-safe, no layout) */
+@keyframes hero-mobile-ambient {
+  0%, 100% { opacity: 0.88; }
+  50%       { opacity: 1.00; }
 }
 
+/* Homepage hero — full-bleed cinematic background (mobile + desktop) */
+.home-hero-bg {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  z-index: 0;
+}
+
+/* Mobile: gentle opacity pulse on the static poster image.
+   Scoped to img only — video provides its own motion. */
+@media (max-width: 767px) {
+  img.home-hero-bg {
+    object-position: center 35%;
+    animation: hero-mobile-ambient 8s ease-in-out infinite;
+  }
+  video.home-hero-bg {
+    object-position: center center;
+    animation: none;
+  }
+}
+
+/* Desktop: Ken Burns drift + composition-aware position */
 @media (min-width: 768px) {
   .home-hero-bg {
-    display: block;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     object-position: center 45%;
-    z-index: 0;
     transform-origin: center center;
     animation: hero-ken-burns 28s ease-in-out infinite;
     will-change: transform;
@@ -950,44 +994,53 @@ a:hover {
   }
 }
 
-/* Video element — no Ken Burns (the clip provides its own motion) */
+/* Video element — no Ken Burns regardless of breakpoint; clip provides its own motion */
 video.home-hero-bg {
   animation: none;
   object-position: center center;
 }
 
+/* Kill all hero animations when the user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-bg {
+    animation: none !important;
+  }
+}
+
 /* Homepage hero — cinematic warm overlay: strong lower-third reading zone, amber colour cast */
 .home-hero-overlay {
-  display: none;
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Mobile: two-stop gradient — heavy bottom for CTA legibility, light top vignette */
+  background:
+    linear-gradient(to top,  rgba(6,4,1,0.92) 0%, rgba(6,4,1,0.60) 25%, rgba(6,4,1,0.20) 55%, transparent 72%),
+    linear-gradient(to bottom, rgba(6,4,1,0.40) 0%, transparent 20%);
 }
 
 @media (min-width: 768px) {
+  /* Desktop: full cinematic overlay with amber cast and directional shading */
   .home-hero-overlay {
-    display: block;
-    position: absolute;
-    inset: 0;
     background:
       linear-gradient(to top,  rgba(8,4,1,0.90) 0%, rgba(8,4,1,0.54) 28%, rgba(8,4,1,0.12) 54%, transparent 70%),
       linear-gradient(105deg,  rgba(8,4,1,0.55) 0%, rgba(8,4,1,0.22) 40%, transparent 60%),
       linear-gradient(to bottom, rgba(10,5,1,0.35) 0%, transparent 22%),
       radial-gradient(ellipse 100% 70% at 68% 38%, rgba(180,100,12,0.18) 0%, transparent 60%);
-    z-index: 1;
-    pointer-events: none;
   }
 }
 
-/* Hero text — light colors when cinematic photo is active (desktop only) */
-@media (min-width: 768px) {
-  .home-header .hero-text-light {
-    color: rgba(255,255,255,0.90);
-  }
-  .home-header .hero-heading-light {
-    color: rgba(255,255,255,0.97);
-    text-shadow: 0 2px 40px rgba(0,0,0,0.72), 0 1px 10px rgba(0,0,0,0.44), 0 4px 80px rgba(0,0,0,0.30);
-  }
-  .home-header .hero-text-light-sub {
-    color: rgba(247,243,238,0.84);
-  }
+/* Hero text — light colours against the cinematic background (mobile + desktop) */
+.home-header .hero-text-light {
+  color: rgba(255,255,255,0.90);
+}
+.home-header .hero-heading-light {
+  color: rgba(255,255,255,0.97);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.72), 0 1px 10px rgba(0,0,0,0.44), 0 4px 80px rgba(0,0,0,0.30);
+}
+.home-header .hero-text-light-sub {
+  color: rgba(247,243,238,0.84);
 }
 
 /* Hero controls — frosted glass card on desktop, plain flex on mobile */

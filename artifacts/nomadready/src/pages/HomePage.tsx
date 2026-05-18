@@ -50,11 +50,6 @@ function formatMonths(months: ReadyData["best_season"]["overall_best_months"]): 
   return `${months[0]}–${months[months.length - 1]}`;
 }
 
-const HERO_IMGS = {
-  main:   "/assets/hero/hero-cinematic.jpg",
-  tropic: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=78&auto=format&fit=crop",
-  japan:  "/assets/hero/polaroid-japan.webp",
-};
 
 const REVEAL = {
   hidden:  { opacity: 0, y: 32 },
@@ -215,23 +210,11 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Mobile scene — decorative pill only; cinematic depth comes from home-hero-bg */}
           <div className="home-hero-mobile-scene" aria-hidden="true">
-            <div style={{ position: "relative", width: "100%", height: "185px", borderRadius: "1rem", overflow: "hidden" }}>
-              <img src={HERO_IMGS.main} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} loading="lazy" decoding="async" />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 38%, rgba(0,0,0,0.35) 100%)" }} />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,0.14) 0%, transparent 55%)" }} />
-              <div style={{ position: "absolute", top: "10px", right: "10px", transform: "rotate(3.5deg)", background: "#ffffff", padding: "5px 5px 18px", borderRadius: "3px", width: "82px", boxShadow: "0 6px 18px rgba(0,0,0,0.3)", zIndex: 10 }}>
-                <img src={HERO_IMGS.japan} alt="" style={{ width: "100%", height: "54px", objectFit: "cover", display: "block" }} loading="lazy" decoding="async" />
-              </div>
-              <div style={{ position: "absolute", top: "10px", left: "10px", transform: "rotate(-3deg)", width: "68px", height: "52px", borderRadius: "6px", overflow: "hidden", boxShadow: "0 4px 14px rgba(0,0,0,0.3), 0 0 0 2px rgba(255,255,255,0.65)", zIndex: 10 }}>
-                <img src={HERO_IMGS.tropic} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} loading="lazy" decoding="async" />
-              </div>
-              <div style={{ position: "absolute", bottom: "10px", left: 0, right: 0, display: "flex", justifyContent: "center" }}>
-                <span style={{ fontSize: "0.625rem", fontWeight: 600, letterSpacing: "0.07em", textTransform: "uppercase", color: "rgba(255,255,255,0.9)", background: "rgba(0,0,0,0.32)", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)", padding: "0.2rem 0.75rem", borderRadius: "9999px" }}>
-                  {availableDestinations.length} destinations
-                </span>
-              </div>
-            </div>
+            <span className="home-hero-mobile-scene-pill">
+              {availableDestinations.length} destinations
+            </span>
           </div>
         </div>
       </header>

@@ -45,6 +45,14 @@ export function DestinationPicker({ destinations, summaries, passportId }: Props
   const [paused, setPaused] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Preload every image in DEST_IMAGES on mount so off-screen pages don't blank
+  useEffect(() => {
+    Object.values(DEST_IMAGES).forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   const goTo = (p: number, d: number) => {
     setDir(d);
     setPage(p);
@@ -108,7 +116,7 @@ export function DestinationPicker({ destinations, summaries, passportId }: Props
                       src={img}
                       alt=""
                       className="feat-dest-card-bg"
-                      fetchPriority="low"
+                      fetchPriority="high"
                       decoding="async"
                       onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                     />

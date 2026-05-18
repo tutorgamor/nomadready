@@ -26,12 +26,23 @@ if (!basePath) {
   );
 }
 
+const wsKeepalive = {
+  name: "ws-keepalive",
+  configureServer(server: import("vite").ViteDevServer) {
+    const interval = setInterval(() => {
+      server.ws.send({ type: "custom", event: "keepalive" });
+    }, 15_000);
+    server.httpServer?.on("close", () => clearInterval(interval));
+  },
+};
+
 export default defineConfig({
   base: basePath,
   plugins: [
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),
+    wsKeepalive,
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
       ? [

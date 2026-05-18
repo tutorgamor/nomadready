@@ -51,15 +51,15 @@ const SLIDES: ReelSlide[] = [
     score:  79,
   },
   {
-    // Tbilisi — Narikala fortress over the old town
-    src:    "https://images.unsplash.com/photo-1578996978737-6e5cc4b1de8f?w=800&q=75&auto=format&fit=crop",
+    // Caucasus mountain valley — served locally, zero CDN latency
+    src:    "/assets/destinations/georgia.jpg",
     label:  "Georgia",
     region: "Caucasus",
     score:  78,
   },
   {
-    // Kuala Lumpur — Petronas towers
-    src:    "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&q=75&auto=format&fit=crop",
+    // Petronas towers at night — served locally, zero CDN latency
+    src:    "/assets/destinations/malaysia.jpg",
     label:  "Malaysia",
     region: "Southeast Asia",
     score:  75,

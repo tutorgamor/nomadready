@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // Poster frames — first-frame JPEG shown immediately while the video buffers.
-// Sizes: desktop 105 KB, mobile 103 KB (see poster re-encode note in mobile-performance-plan.md).
+// Sizes: desktop 78 KB, mobile 65 KB (re-encoded from corrected source, May 2026).
 const POSTER_DESKTOP = "/assets/hero/hero-loop-poster-desktop.jpg";
 const POSTER_MOBILE  = "/assets/hero/hero-loop-poster-mobile.jpg";
 
@@ -11,11 +11,11 @@ const POSTER_MOBILE  = "/assets/hero/hero-loop-poster-mobile.jpg";
 const STATIC_MOBILE  = "/assets/hero/hero-cinematic.jpg";
 const STATIC_DESKTOP = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=85&auto=format&fit=crop";
 
-// Encoded sizes (May 2026 encode):
-//   desktop.mp4  2.5 MB  desktop.webm 5.5 MB  → MP4 wins; list first
-//   mobile.mp4   1.75 MB mobile.webm  3.8 MB  → MP4 wins; list first
-// VP9/WebM is listed second so future re-encodes with 2-pass can reclaim the lead
-// without a source-order change.
+// Encoded sizes (corrected source, May 2026):
+//   desktop.mp4  2.6 MB  desktop.webm 5.9 MB  → MP4 wins; list first
+//   mobile.mp4   1.75 MB mobile.webm  4.1 MB  → MP4 wins; list first
+// VP9/WebM is listed second so future 2-pass re-encodes can reclaim the lead
+// without a source-order change in JSX.
 const DESKTOP_MP4  = "/assets/hero/hero-loop-desktop.mp4";
 const DESKTOP_WEBM = "/assets/hero/hero-loop-desktop.webm";
 const MOBILE_MP4   = "/assets/hero/hero-loop-mobile.mp4";

@@ -878,8 +878,14 @@ a:hover {
   padding-bottom: 3rem;
 }
 
-/* Homepage header — cinematic full-viewport on desktop */
+/* Homepage header — cinematic full-viewport hero on both mobile and desktop.
+   Mobile: min 65dvh so the video/poster fills a proper scene, not just a text block.
+   Flex column on both breakpoints so page-container's flex:1 + justify-content:flex-end
+   anchors text at the bottom of the scene — over the darkest part of the overlay. */
 .home-header {
+  min-height: 65dvh;
+  display: flex;
+  flex-direction: column;
   padding-top: 3.5rem;
   padding-bottom: 3.25rem; /* extra bottom room for terrain wave */
 }
@@ -887,8 +893,6 @@ a:hover {
 @media (min-width: 768px) {
   .home-header {
     min-height: 92dvh;
-    display: flex;
-    flex-direction: column;
     padding-top: 0;
     padding-bottom: 0;
   }

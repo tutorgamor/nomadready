@@ -1,0 +1,61 @@
+Stop iterating around the current Georgia and Malaysia carousel images.
+
+Problem:
+In the destination carousel, Georgia and Malaysia image areas show a blank/blurred placeholder before the image appears. This creates visible loading latency. Previous fixes did not solve it.
+
+Do NOT claim it is fixed unless you verify it visually in the running app.
+
+Required solution:
+Replace the Georgia and Malaysia card images completely.
+
+Do not reuse the current files, URLs, imports, or generated assets for:
+- Georgia
+- Malaysia
+
+Use new optimized local assets only.
+
+Rules:
+1. Find where destination card images are defined.
+2. Remove the current Georgia and Malaysia image references.
+3. Replace them with new reliable local images stored in the repo.
+4. Ensure both images are loaded the same way as Thailand, Turkey, Vietnam, and Indonesia.
+5. Optimize file size.
+6. Use the same aspect ratio and display behavior as the working cards.
+7. Add width/height or proper Next/Image sizing if applicable.
+8. Preload/eager-load the currently visible carousel images if needed.
+9. Do not introduce lazy-loading problems for visible carousel cards.
+
+Visual requirements:
+Georgia:
+- cinematic Tbilisi / Caucasus atmosphere
+- warm editorial travel photography
+- no blank beige placeholder look
+
+Malaysia:
+- cinematic Kuala Lumpur / Penang / night food hall atmosphere
+- warm premium editorial travel photography
+- no abstract blurred placeholder look
+
+Hard restrictions:
+- Do not keep the existing Georgia image.
+- Do not keep the existing Malaysia image.
+- Do not only change CSS blur/opacity.
+- Do not only tweak loading strategy.
+- Do not use remote URLs.
+- Do not leave placeholder backgrounds visible.
+- Do not modify unrelated carousel logic unless necessary.
+
+Verification required:
+After implementation:
+1. Run the app.
+2. Load the homepage fresh.
+3. Watch the carousel auto-slide.
+4. Manually navigate to Georgia and Malaysia.
+5. Confirm there is no blank/blurred placeholder state.
+6. Confirm the images appear immediately like the other cards.
+
+Output:
+- list exact files changed
+- list old image references removed
+- list new assets added
+- explain why this fixes the loading latency

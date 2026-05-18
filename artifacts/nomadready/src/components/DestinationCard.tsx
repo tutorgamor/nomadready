@@ -22,9 +22,9 @@ interface DestinationCardProps {
 // Unsplash URLs kept only for destinations without a local file yet.
 const COVER_IMAGES: Record<string, string> = {
   thailand:      "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80&auto=format&fit=crop",
-  malaysia:      "/assets/destinations/malaysia.jpg",
+  malaysia:      "/assets/destinations/malaysia-kl.jpg",
   indonesia:     "/assets/editorial/panels/panel-indonesia.png",
-  georgia:       "/assets/destinations/georgia.jpg",
+  georgia:       "/assets/destinations/georgia-tbilisi.jpg",
   turkey:        "/assets/destinations/turkey.jpg",
   vietnam:       "https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=600&q=80&auto=format&fit=crop",
   philippines:   "/assets/destinations/philippines.jpg",

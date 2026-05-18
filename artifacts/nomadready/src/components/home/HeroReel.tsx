@@ -52,14 +52,14 @@ const SLIDES: ReelSlide[] = [
   },
   {
     // Caucasus mountain valley — served locally, zero CDN latency
-    src:    "/assets/destinations/georgia.jpg",
+    src:    "/assets/destinations/georgia-tbilisi.jpg",
     label:  "Georgia",
     region: "Caucasus",
     score:  78,
   },
   {
     // Petronas towers at night — served locally, zero CDN latency
-    src:    "/assets/destinations/malaysia.jpg",
+    src:    "/assets/destinations/malaysia-kl.jpg",
     label:  "Malaysia",
     region: "Southeast Asia",
     score:  75,
